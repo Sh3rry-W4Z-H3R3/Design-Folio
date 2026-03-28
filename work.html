@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>All Work — Sherjeel Hussain</title>
+  <meta name="description" content="Full index of work by Sherjeel Hussain — digital brand identity, UI, ceramics, product design, and public installation." />
+  <link rel="canonical" href="https://sherjeelhussain.co.uk/work.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Syne:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── TOKENS ─────────────────────────────────────────── */
+    :root {
+      --bg:       #0a0a0a;
+      --fg:       #ede9e1;
+      --fg-dim:   #555;
+      --fg-mid:   #999;
+      --accent:   #e8547a;
+      --accent-2: #6dbf9e;
+      --gold:     #c8b882;
+      --serif:    'Cormorant', Georgia, serif;
+      --sans:     'Syne', sans-serif;
+      --body:     'DM Sans', sans-serif;
+      --ease:     cubic-bezier(0.25, 0.1, 0.25, 1);
+      --slow:     0.7s var(--ease);
+      --fast:     0.3s var(--ease);
+      --gutter:   clamp(1.2rem, 4vw, 3rem);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--body);
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* ─── CURSOR ──────────────────────────────────────────── */
+    .cursor {
+      position: fixed;
+      width: 10px; height: 10px;
+      background: var(--fg);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width var(--fast), height var(--fast), background var(--fast);
+    }
+    .cursor.grow {
+      width: 44px; height: 44px;
+      background: transparent;
+      border: 1px solid var(--fg);
+      opacity: 0.7;
+    }
+
+    /* ─── NAV ─────────────────────────────────────────────── */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 2rem var(--gutter);
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(10,10,10,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid #1a1a1a;
+    }
+    .nav__home {
+      font-family: var(--serif);
+      font-size: 1.1rem; font-weight: 300;
+      letter-spacing: 0.06em;
+      text-decoration: none; color: var(--fg);
+    }
+    .nav__home em { font-style: italic; color: var(--accent); }
+    .nav__links { display: flex; gap: 2.5rem; }
+    .nav__links a {
+      font-family: var(--sans);
+      font-size: 0.65rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      text-decoration: none; color: var(--fg-dim);
+      transition: color var(--fast);
+      position: relative;
+    }
+    .nav__links a::after {
+      content: ''; position: absolute;
+      bottom: -3px; left: 0; width: 0; height: 1px;
+      background: var(--accent); transition: width var(--fast);
+    }
+    .nav__links a:hover, .nav__links a.active { color: var(--fg); }
+    .nav__links a:hover::after, .nav__links a.active::after { width: 100%; }
+
+    /* ─── PAGE HEADER ─────────────────────────────────────── */
+    .page-header {
+      padding: 5rem var(--gutter) 4rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem; align-items: end;
+      opacity: 0;
+      animation: fadeUp 0.8s var(--ease) 0.1s forwards;
+    }
+    .page-header__eyebrow {
+      font-family: var(--sans);
+      font-size: 0.65rem; font-weight: 700;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1.2rem;
+      display: flex; align-items: center; gap: 0.8rem;
+    }
+    .page-header__eyebrow::before {
+      content: ''; display: block;
+      width: 2rem; height: 1px; background: var(--gold);
+    }
+    .page-header__title {
+      font-family: var(--serif);
+      font-size: clamp(3rem, 7vw, 6.5rem);
+      font-weight: 300; line-height: 0.95;
+    }
+    .page-header__title em { font-style: italic; display: block; }
+    .page-header__count {
+      font-family: var(--sans);
+      font-size: 0.6rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--fg-dim); margin-top: 1.4rem;
+    }
+    .page-header__count span { color: var(--fg); }
+    .page-header__desc {
+      font-family: var(--body);
+      font-size: 0.82rem; line-height: 1.85;
+      color: var(--fg-mid); max-width: 400px;
+      align-self: end; font-weight: 300;
+    }
+
+    /* ─── DISCIPLINE KEY ──────────────────────────────────── */
+    .discipline-bar {
+      display: flex; gap: 2.5rem;
+      padding: 0 var(--gutter) 1.8rem;
+      border-bottom: 1px solid #1a1a1a;
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: fadeUp 0.8s var(--ease) 0.2s forwards;
+    }
+    .discipline-bar__item {
+      display: flex; align-items: center; gap: 0.6rem;
+      font-family: var(--sans);
+      font-size: 0.58rem; font-weight: 700;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--fg-dim);
+    }
+    .discipline-bar__dot {
+      width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
+    }
+    .discipline-bar__dot--digital { background: var(--accent); }
+    .discipline-bar__dot--craft   { background: var(--accent-2); }
+    .discipline-bar__dot--product { background: var(--gold); }
+
+    /* ─── FILTER BAR ──────────────────────────────────────── */
+    .filter-bar {
+      display: flex; gap: 0.4rem;
+      padding: 0 var(--gutter) 3rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.8s var(--ease) 0.3s forwards;
+    }
+    .filter-btn {
+      font-family: var(--sans);
+      font-size: 0.62rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      background: transparent;
+      border: 1px solid #2a2a2a;
+      color: var(--fg-dim); padding: 0.55rem 1rem;
+      cursor: none;
+      transition: border-color var(--fast), color var(--fast), background var(--fast);
+    }
+    .filter-btn:hover, .filter-btn.active {
+      border-color: var(--fg); color: var(--fg);
+      background: rgba(237,233,225,0.05);
+    }
+
+    /* ─── PROJECT GRID ────────────────────────────────────── */
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 2px;
+      padding: 0 var(--gutter) 2rem;
+      opacity: 0;
+      animation: fadeUp 0.8s var(--ease) 0.4s forwards;
+    }
+
+    .card { grid-column: span 6; }
+    .card--wide { grid-column: span 8; }
+    .card--narrow { grid-column: span 4; }
+    .card--full { grid-column: span 12; }
+
+    .card {
+      position: relative; overflow: hidden;
+      cursor: none; aspect-ratio: 4/3;
+      background: #111; display: block;
+      text-decoration: none; color: inherit;
+    }
+    .card--wide { aspect-ratio: 16/7; }
+
+    .card__img {
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center;
+      transform: scale(1.04);
+      transition: transform var(--slow), filter var(--slow);
+      filter: grayscale(20%);
+    }
+    .card:hover .card__img { transform: scale(1); filter: grayscale(0%); }
+
+    .card__overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(10,10,10,0.88) 0%, rgba(10,10,10,0.2) 55%, transparent 100%);
+      transition: background var(--slow);
+    }
+    .card:hover .card__overlay {
+      background: linear-gradient(to top, rgba(10,10,10,0.75) 0%, rgba(10,10,10,0.1) 60%, transparent 100%);
+    }
+
+    .card__year {
+      position: absolute; top: 1.2rem; left: 1.4rem;
+      font-family: var(--sans); font-size: 0.58rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(237,233,225,0.3); z-index: 2;
+    }
+
+    /* discipline dot — top right */
+    .card__disc {
+      position: absolute; top: 1.3rem; right: 1.4rem;
+      width: 6px; height: 6px; border-radius: 50%; z-index: 2;
+    }
+    .card__disc--digital { background: var(--accent); }
+    .card__disc--craft   { background: var(--accent-2); }
+    .card__disc--product { background: var(--gold); }
+
+    .card__status {
+      position: absolute; top: 1.2rem; left: 50%; transform: translateX(-50%);
+      font-family: var(--sans); font-size: 0.5rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--gold); border: 1px solid rgba(200,184,130,0.3);
+      padding: 0.3rem 0.7rem; z-index: 2; white-space: nowrap;
+    }
+
+    .card__info {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 0 1.4rem 1.6rem; z-index: 3;
+      transform: translateY(4px);
+      transition: transform var(--slow);
+    }
+    .card:hover .card__info { transform: translateY(0); }
+
+    .card__tags {
+      display: flex; flex-wrap: wrap; gap: 0.3rem; margin-bottom: 0.5rem;
+    }
+    .card__tag {
+      font-family: var(--sans); font-size: 0.52rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: rgba(237,233,225,0.38);
+    }
+
+    .card__title {
+      font-family: var(--serif);
+      font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+      font-weight: 300; line-height: 1.1; margin-bottom: 0.4rem;
+    }
+    .card__title em { font-style: italic; }
+
+    .card__sub {
+      font-family: var(--body);
+      font-size: 0.72rem; line-height: 1.6;
+      color: rgba(237,233,225,0.5); font-weight: 300;
+      max-width: 340px;
+      opacity: 0; transform: translateY(6px);
+      transition: opacity 0.4s ease 0.05s, transform 0.4s ease 0.05s;
+    }
+    .card:hover .card__sub { opacity: 1; transform: translateY(0); }
+
+    .card__arrow {
+      position: absolute; bottom: 1.6rem; right: 1.4rem;
+      font-size: 1.2rem; color: rgba(237,233,225,0.25); z-index: 3;
+      transition: color var(--fast), transform var(--fast);
+    }
+    .card:hover .card__arrow { color: var(--fg); transform: translate(3px, -3px); }
+
+    /* accent line on hover — colour by discipline */
+    .card::before {
+      content: ''; position: absolute;
+      bottom: 0; left: 0; width: 0; height: 2px;
+      transition: width var(--slow); z-index: 3;
+    }
+    .card--digital::before { background: var(--accent); }
+    .card--craft::before   { background: var(--accent-2); }
+    .card--product::before { background: var(--gold); }
+    .card:hover::before    { width: 100%; }
+
+    /* ─── EXTERNAL LINKS BAR ──────────────────────────────── */
+    .ext-bar {
+      display: flex; gap: 1.5rem; flex-wrap: wrap;
+      padding: 2.5rem var(--gutter) 2.5rem;
+      border-top: 1px solid #1a1a1a;
+      margin-top: 2rem;
+    }
+    .ext-bar__label {
+      font-family: var(--sans); font-size: 0.58rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase; color: var(--fg-dim);
+      align-self: center; margin-right: 0.5rem;
+    }
+    .ext-bar a {
+      font-family: var(--sans); font-size: 0.62rem; font-weight: 700;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      text-decoration: none; color: var(--fg-dim);
+      border: 1px solid #2a2a2a;
+      padding: 0.55rem 1.1rem;
+      transition: border-color var(--fast), color var(--fast), background var(--fast);
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .ext-bar a:hover {
+      border-color: var(--gold); color: var(--gold);
+      background: rgba(200,184,130,0.05);
+    }
+
+    /* ─── FOOTER ──────────────────────────────────────────── */
+    footer {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 2.5rem var(--gutter) 3.5rem;
+      border-top: 1px solid #1a1a1a;
+    }
+    .footer__copy {
+      font-family: var(--sans); font-size: 0.62rem;
+      letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-dim);
+    }
+    .footer__links { display: flex; gap: 2rem; }
+    .footer__links a {
+      font-family: var(--sans); font-size: 0.62rem;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      text-decoration: none; color: var(--fg-dim);
+      transition: color var(--fast);
+    }
+    .footer__links a:hover { color: var(--fg); }
+
+    /* ─── KEYFRAMES ───────────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── MOBILE ──────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      body { cursor: auto; }
+      .cursor { display: none; }
+      .page-header { grid-template-columns: 1fr; padding: 3rem var(--gutter) 2.5rem; }
+      .page-header__desc { max-width: none; }
+      .card, .card--wide, .card--narrow, .card--full {
+        grid-column: span 12 !important;
+        aspect-ratio: 4/3 !important;
+      }
+      .nav__links { gap: 1.2rem; }
+      .discipline-bar { gap: 1.4rem; flex-wrap: wrap; }
+      footer { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+      .ext-bar { gap: 1rem; }
+    }
+    @media (max-width: 480px) {
+      .nav__links a { font-size: 0.56rem; letter-spacing: 0.12em; }
+      .filter-btn { font-size: 0.56rem; padding: 0.45rem 0.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+
+  <!-- ── NAV ──────────────────────────────────────────────── -->
+  <nav>
+    <a href="index.html" class="nav__home">Sherjeel <em>Hussain</em></a>
+    <div class="nav__links">
+      <a href="digital.html">Digital</a>
+      <a href="craft.html">Craft</a>
+      <a href="work.html" class="active">All Work</a>
+      <a href="about.html">About</a>
+    </div>
+  </nav>
+
+  <!-- ── PAGE HEADER ──────────────────────────────────────── -->
+  <header class="page-header">
+    <div>
+      <p class="page-header__eyebrow">Full Index</p>
+      <h1 class="page-header__title">
+        All
+        <em>Work</em>
+      </h1>
+      <p class="page-header__count"><span id="visibleCount">13</span> projects</p>
+    </div>
+    <p class="page-header__desc">
+      Everything — across digital brand identity, UI, web, ceramics, product design,
+      and public installation. Trained in industrial design and ceramic craft.
+      Self-taught in UI and branding.
+    </p>
+  </header>
+
+  <!-- ── DISCIPLINE KEY ───────────────────────────────────── -->
+  <div class="discipline-bar">
+    <div class="discipline-bar__item">
+      <div class="discipline-bar__dot discipline-bar__dot--digital"></div>
+      Digital &amp; Brand
+    </div>
+    <div class="discipline-bar__item">
+      <div class="discipline-bar__dot discipline-bar__dot--craft"></div>
+      Ceramics
+    </div>
+    <div class="discipline-bar__item">
+      <div class="discipline-bar__dot discipline-bar__dot--product"></div>
+      Product Design
+    </div>
+  </div>
+
+  <!-- ── FILTER BAR ───────────────────────────────────────── -->
+  <div class="filter-bar">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="digital">Digital &amp; Brand</button>
+    <button class="filter-btn" data-filter="ceramics">Ceramics</button>
+    <button class="filter-btn" data-filter="product">Product</button>
+    <button class="filter-btn" data-filter="exhibition">Exhibition</button>
+    <button class="filter-btn" data-filter="inprogress">In Progress</button>
+  </div>
+
+  <!-- ── PROJECT GRID ─────────────────────────────────────── -->
+  <main class="project-grid">
+
+    <!-- ─ DIGITAL & BRAND ─────────────────────────────────── -->
+
+    <!-- Clydeside Logistics — wide -->
+    <a href="clydeside.html" class="card card--wide card--digital" data-tags="digital brand web">
+      <div class="card__img" style="background-color:#0e0a12;"></div>
+      <div class="card__overlay"></div>
+      <span class="card__year">2026</span>
+      <div class="card__disc card__disc--digital"></div>
+      <div class="card__info">
+        <div class="card__tags">
+          <span class="card__tag">Brand Identity |</span>
+          <span class="card__tag">Web Design &amp; Development</span>
+        </div>
+        <h2 class="card__title">Clydeside <em>Logistics</em></h2>
+        <p class="card__sub">Brand identity system, vehicle livery, website design &amp; development.</p>
+      </div>
+      <span class="card__arrow">↗</span>
+    </a>
+
+    <!-- Andra's Garden Heaven — narrow -->
+    <a href="andras.html" class="card card--narrow card--digital" data-tags="digital brand web">
+      <div class="card__img" style="background-color:#0a100e;"></div>
+      <div class="card__overlay"></div>
+      <span class="card__year">2025</span>
+      <div class="card__disc card__disc--digital"></div>
+      <div class="card__info">
+        <div class="card__tags">
+          <span class="card__tag">Brand |</span>
+          <span class="card__tag">Web |</span>
+          <span class="card__tag">E-Commerce</span>
+        </div>
+        <h2 class="card__title">Andra's Garden <em>Heaven</em></h2>
+        <p class="card__sub">Shopify, UI/UX, branding, print.</p>
+      </div>
+      <span class="card__arrow">↗</span>
+    </a>
+
+    <!-- Just Rite Barbershop -->
+    <a href="just-rite.html" class="card card--digital" data-tags="digital print">
+      <div class="card__img" style="background-color:#0e0a0a;"></div>
+      <div class="card__overlay"></div>
+      <span class="card__year">2025</span>
+      <div class="card__disc card__disc--digital"></div>
+      <div class="card__info">
+        <div class="card__tags">
+          <span class="card__tag">Signage |</span>
+          <span class="card__tag">Project Management |</span>
+          <span class="card__tag">Retail</span>
+        </div>
+        <h2 class="card__title">Just Rite <em>Barbershop</em></h2>
+        <p class="card__sub">Shopfront redesign, council liaison, QR wayfinding system.</p>
+      </div>
+      <span class="card__arrow">↗</span>
+    </a>
+
+    <!-- Alastair Smith Ceramics -->
+    <a href="alastair-smith.html" class="card card--digital" data-tags="digital brand web">
+      <div class="card__img" style="background-color:#0e0e14;"></div>
+      <div class="card__overlay"></div>
+      <span class="card__year">2024</span>
+      <div class="card__disc card__disc--digital"></div>
+      <div class="card__info">
+        <div class="card__tags">
+          <span class="card__tag">Brand Identity |</span>
+          <span class="card__tag">Web Design &amp; Development</span>
+        </div>
+        <h2 class="card__title">Alastair Smith <em>Ceramics</em></h2>
+        <p class="card__sub">Logo, accessible colour system, mobile-first website build.</p>
+      </div>
+      <span class="card__arrow">↗</span>
+    </a>
+
+    <!-- Westgarth Auto -->
+    <a href="westgarth.html" class="card card--digital" data-tags="digital brand web">
+      <div class="card__img" style="background-color:#0c0c12;"></div>
+      <div class="card__overlay"></div>
+      <span class="card__year">2024</span>
+      <div class="card__disc card__disc--digital"></div>
+      <div class="card__info">
+        <div class="card__tags">
+          <span class="card__tag">Brand |</span>
+          <span class="card__tag">Web</span>
+        </div>
+        <h2 class="card__title">Westgarth <em>Auto</em></h2>
+        <p class="card__sub">Brand identity and mobile-first website.</p>
+      </div>
+      <span class="card__arrow">↗</span>
+    </a>
+
+    <!-- ─ CERAMICS ──────────────────────────────────────────── -->
+
+    <!-- Cycle Arts Festival — wide -->
+    <a href="cycle-arts.html" class="card card--wide card--craft" data-tags="ceramics exhibition">
+      <div class="card__img" style="background-image:url('./imgs-expo/CycleArtsFestival/CycleArtsHero.jpg');background-color:#0e1410;"></div>
+      <div class="card__overlay"></div>
+      <span class="card__year">2025</span>
+      <div class="card__disc card__disc--craft"></div>
+      <div class="card__info">
+        <div class="card__tags">
+          <span class="card__tag">Site-Specific |</span>
+          <span class="card__tag">Public Installation |</span>
+          <span class="card__tag">Ceramics</span>
+        </div>
+        <h2 class="card__title">Cycle Arts <em>Festival</em></h2>
+        <p class="card__sub">SCOPE Collective. Site-specific ceramic installations along Renfrewshire cycle routes.</p>
+      </div>
+      <span class="card__arrow">↗</span>
+    </a>
+
+    <!-- Multanni Hover Pot -->
+    <a href="hover-pot.html" class="card card--narrow card--craft" data-tags="ceramics">
+      <div class="card__img" style="background-image:url('img/hover-pot-hero.jpg');background-color:#1a1208;"></div>
+      <div class="card__overlay"></div>
+      <span class="card__year">2025</span>
+      <div class="card__disc card__disc--craft"></div>
+      <div class="card__info">
+        <div class="card__tags">
+          <span class="card__tag">Ceramics</span>
+        </div>
+        <h2 class="card__title">Multanni <em>Hover Pot</em></h2>
+        <p class="card__sub">Multanni mitti clay. Exploring material heritage through form.</p>
+      </div>
+      <span class="card__arrow">↗</span>
+    </a>
+
+    <!-- Kala Topi Table Setting — in progress -->
+    <a href="kala-topi.html" class="card card--narrow card--craft" data-tags="ceramics inprogress">
+      <div class="card__img" style="background-color:#10120e;"></div>
+      <div class="card__overlay"></div>
+      <span class="card__year">2025</span>
+      <span class="card__status">In Production</span>
+      <div class="card__disc card__disc--craft"></div>
+      <div class="card__info">
+        <div class="card__tags">
+          <span class="card__tag">Ceramics |</span>
+          <span class="card__tag">Brand Objects</span>
+        </div>
+        <h2 class="card__title">Kala Topi <em>Table Setting</em></h2>
+        <p class="card__sub">Three ceramic pieces for Di Kala Topi. Multanni mitti + stoneware.</p>
+      </div>
+    </a>
+
+    <!-- Slip Me A Large, Sarge! -->
+    <a href="slip-sarge.html" class="card card--narrow card--craft" data-tags="ceramics">
+      <div class="card__img" style="background-image:url('img/slip-sarge-hero.jpg');background-color:#161210;"></div>
+      <div class="card__overlay"></div>
+      <span class="card__year">2023</span>
+      <div class="card__disc card__disc--craft"></div>
+      <div class="card__info">
+        <div class="card__tags">
+          <span class="card__tag">Ceramics |</span>
+          <span class="card__tag">Slip Casting</span>
+        </div>
+        <h2 class="card__title">'Slip Me A <em>Large, Sarge!'</em></h2>
+        <p class="card__sub">Slip-cast ceramic series. Production run, 2023.</p>
+      </div>
+      <span class="card__arrow">↗</span>
+    </a>
+
+    <!-- Greene King -->
+    <a href="greene-king.html" class="card card--narrow card--craft" data-tags="ceramics">
+      <div class="card__img" style="background-image:url('img/greene-king-hero.jpg');background-color:#141210;"></div>
+      <div class="card__overlay"></div>
+      <span class="card__year">2022</span>
+      <div class="card__disc card__disc--craft"></div>
+      <div class="card__info">
+        <div class="card__tags">
+          <span class="card__tag">Ceramics |</span>
+          <span class="card__tag">Client Work</span>
+        </div>
+        <h2 class="card__title">Project 262 — <em>Greene King</em></h2>
+        <p class="card__sub">40 ceramic table number holders with blackboard paint. Graduate residency commission.</p>
+      </div>
+      <span class="card__arrow">↗</span>
+    </a>
+
+    <!-- Raku Club -->
+    <a href="raku-club.html" class="card card--craft" data-tags="ceramics exhibition">
+      <div class="card__img" style="background-image:url('img/raku-club-hero.jpg');background-color:#1a0e08;"></div>
+      <div class="card__overlay"></div>
+      <span class="card__year">2021</span>
+      <div class="card__disc card__disc--craft"></div>
+      <div class="card__info">
+        <div class="card__tags">
+          <span class="card__tag">Ceramics |</span>
+          <span class="card__tag">Community</span>
+        </div>
+        <h2 class="card__title">Raku <em>Club</em></h2>
+        <p class="card__sub">Founded informal firing club that became an official RGU University Society. Still running.</p>
+      </div>
+      <span class="card__arrow">↗</span>
+    </a>
+
+    <!-- ─ PRODUCT ─────────────────────────────────────────── -->
+
+    <!-- THUDPUK -->
+    <a href="thudpuk.html" class="card card--product" data-tags="product">
+      <div class="card__img" style="background-color:#0c120a;"></div>
+      <div class="card__overlay"></div>
+      <span class="card__year">2022</span>
+      <div class="card__disc card__disc--product"></div>
+      <div class="card__info">
+        <div class="card__tags">
+          <span class="card__tag">Product Design |</span>
+          <span class="card__tag">Recycled Plastic |</span>
+          <span class="card__tag">Injection Moulding</span>
+        </div>
+        <h2 class="card__title">Project 261 — <em>THUDPUK</em></h2>
+        <p class="card__sub">Low-cost injection-moulded flying toy designed for mass manufacture using recycled plastic.</p>
+      </div>
+      <span class="card__arrow">↗</span>
+    </a>
+
+    <!-- Origin Plastics — wide -->
+    <a href="origin.html" class="card card--wide card--product" data-tags="product">
+      <div class="card__img" style="background-color:#0c0e0a;"></div>
+      <div class="card__overlay"></div>
+      <span class="card__year">2021</span>
+      <div class="card__disc card__disc--product"></div>
+      <div class="card__info">
+        <div class="card__tags">
+          <span class="card__tag">Product Design |</span>
+          <span class="card__tag">Sustainable Manufacture</span>
+        </div>
+        <h2 class="card__title">Origin <em>Plastics</em></h2>
+        <p class="card__sub">Homeware from recycled plastic. Injection moulding, CAD, user research.</p>
+      </div>
+      <span class="card__arrow">↗</span>
+    </a>
+
+  </main>
+
+  <!-- ── EXTERNAL LINKS ────────────────────────────────────── -->
+  <div class="ext-bar">
+    <span class="ext-bar__label">Also on</span>
+    <a href="https://github.com/Sh3rry-W4Z-H3R3/Design-Folio" target="_blank" rel="noopener">
+      GitHub
+      <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 8L8 2M8 2H3M8 2V7" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <a href="https://sherjeelhussain9927.myportfolio.com/" target="_blank" rel="noopener">
+      Adobe Portfolio
+      <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 8L8 2M8 2H3M8 2V7" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+
+  <!-- ── FOOTER ────────────────────────────────────────────── -->
+  <footer>
+    <span class="footer__copy">© Sherjeel Hussain</span>
+    <div class="footer__links">
+      <a href="digital.html">Digital</a>
+      <a href="craft.html">Craft</a>
+      <a href="about.html">About</a>
+      <a href="about.html#contact">Contact</a>
+    </div>
+  </footer>
+
+  <!-- ── SCRIPTS ───────────────────────────────────────────── -->
+  <script>
+    // Cursor
+    const cursor = document.getElementById('cursor');
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top  = e.clientY + 'px';
+    });
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('grow'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('grow'));
+    });
+
+    // Filter with live count
+    const cards    = document.querySelectorAll('.card');
+    const countEl  = document.getElementById('visibleCount');
+
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        let visible = 0;
+        cards.forEach(card => {
+          const tags  = card.dataset.tags || '';
+          const match = filter === 'all' || tags.includes(filter);
+          card.style.opacity       = match ? '1' : '0.1';
+          card.style.pointerEvents = match ? 'auto' : 'none';
+          card.style.transition    = 'opacity 0.35s ease';
+          if (match) visible++;
+        });
+        countEl.textContent = visible;
+      });
+    });
+  </script>
+
+</body>
+</html>

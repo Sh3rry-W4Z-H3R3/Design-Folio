@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crafted By Design — Sherjeel Hussain</title>
+  <meta name="description" content="Crafted By Design — group exhibition curated and organised by Sherjeel Hussain at The Courtyard Artspace, Aberdeen, 2023. Showcasing emerging designers and makers from Gray's School of Art." />
+  <link rel="canonical" href="https://sherjeelhussain.co.uk/crafted-by-design.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Syne:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg:       #0a0a0a;
+      --fg:       #ede9e1;
+      --fg-dim:   #555;
+      --fg-mid:   #999;
+      --accent:   #6dbf9e;
+      --accent-2: #e8547a;
+      --gold:     #c8b882;
+      --serif:    'Cormorant', Georgia, serif;
+      --sans:     'Syne', sans-serif;
+      --body:     'DM Sans', sans-serif;
+      --ease:     cubic-bezier(0.25, 0.1, 0.25, 1);
+      --slow:     0.7s var(--ease);
+      --fast:     0.3s var(--ease);
+      --gutter:   clamp(1.2rem, 4vw, 3rem);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--fg); font-family: var(--body); overflow-x: hidden; cursor: none; }
+
+    .cursor { position: fixed; width: 10px; height: 10px; background: var(--fg); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: width var(--fast), height var(--fast), background var(--fast); }
+    .cursor.grow { width: 44px; height: 44px; background: transparent; border: 1px solid var(--accent); opacity: 0.7; }
+
+    nav { display: flex; align-items: center; justify-content: space-between; padding: 2rem var(--gutter); position: sticky; top: 0; z-index: 100; background: rgba(10,10,10,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid #1a1a1a; }
+    .nav__home { font-family: var(--serif); font-size: 1.1rem; font-weight: 300; letter-spacing: 0.06em; text-decoration: none; color: var(--fg); }
+    .nav__home em { font-style: italic; color: var(--accent-2); }
+    .nav__links { display: flex; gap: 2.5rem; }
+    .nav__links a { font-family: var(--sans); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none; color: var(--fg-dim); transition: color var(--fast); position: relative; }
+    .nav__links a::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 1px; background: var(--accent); transition: width var(--fast); }
+    .nav__links a:hover, .nav__links a.active { color: var(--fg); }
+    .nav__links a:hover::after, .nav__links a.active::after { width: 100%; }
+
+    .project-hero { padding: 5rem var(--gutter) 0; opacity: 0; animation: fadeUp 0.8s var(--ease) 0.1s forwards; }
+    .project-hero__eyebrow { font-family: var(--sans); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.8rem; }
+    .project-hero__eyebrow::before { content: ''; display: block; width: 2rem; height: 1px; background: var(--accent); }
+    .project-hero__title { font-family: var(--serif); font-size: clamp(3rem, 8vw, 7rem); font-weight: 300; line-height: 0.92; letter-spacing: -0.01em; }
+    .project-hero__title em { font-style: italic; display: block; }
+
+    .meta-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; margin: 3rem 0 0; border-top: 1px solid #1a1a1a; opacity: 0; animation: fadeUp 0.8s var(--ease) 0.3s forwards; }
+    .meta-strip__item { padding: 1.8rem var(--gutter); border-right: 1px solid #1a1a1a; }
+    .meta-strip__item:last-child { border-right: none; }
+    .meta-strip__label { font-family: var(--sans); font-size: 0.55rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--fg-dim); margin-bottom: 0.6rem; }
+    .meta-strip__value { font-family: var(--serif); font-size: 1rem; font-weight: 300; color: var(--fg); line-height: 1.5; }
+    .meta-strip__value em { font-style: italic; color: var(--accent); }
+
+    .hero-img { width: 100%; aspect-ratio: 16/7; background: #111; overflow: hidden; position: relative; opacity: 0; animation: fadeUp 0.8s var(--ease) 0.45s forwards; }
+    .hero-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .hero-img__placeholder { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.8rem; background: linear-gradient(135deg, #0d0e0a 0%, #131410 50%, #0d0e0a 100%); }
+    .hero-img__placeholder em { font-family: var(--serif); font-size: clamp(1.2rem, 2.5vw, 2rem); font-weight: 300; font-style: italic; color: rgba(237,233,225,0.35); }
+    .hero-img__placeholder span { font-family: var(--sans); font-size: 0.55rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--fg-dim); }
+
+    .section { padding: 6rem var(--gutter); border-top: 1px solid #1a1a1a; }
+    .section--split { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+    .section__num { font-family: var(--sans); font-size: 0.58rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.8rem; }
+    .section__num::before { content: ''; display: block; width: 1.5rem; height: 1px; background: var(--accent); }
+    .section__heading { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 300; line-height: 1; margin-bottom: 2rem; }
+    .section__heading em { font-style: italic; }
+    .section__body { font-family: var(--body); font-size: 0.88rem; line-height: 1.9; color: var(--fg-mid); font-weight: 300; max-width: 52ch; }
+    .section__body + .section__body { margin-top: 1.2rem; }
+    .section__body strong { color: var(--fg); font-weight: 400; }
+
+    .callout { margin: 2.5rem 0; padding: 2rem 2.2rem; border-left: 2px solid var(--accent); background: rgba(109,191,158,0.04); }
+    .callout__text { font-family: var(--serif); font-size: clamp(1.1rem, 2vw, 1.5rem); font-weight: 300; line-height: 1.55; color: var(--fg); }
+    .callout__text em { font-style: italic; color: var(--accent); }
+
+    .img-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; padding: 0 var(--gutter); }
+    .img-grid__item { aspect-ratio: 4/3; background: #111; overflow: hidden; position: relative; }
+    .img-grid__item img { width: 100%; height: 100%; object-fit: cover; }
+    .img-grid__item--tall { aspect-ratio: 3/4; }
+    .img-grid__placeholder { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.6rem; background: #111; }
+    .img-grid__placeholder span { font-family: var(--sans); font-size: 0.55rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--fg-dim); }
+
+    .process-steps { counter-reset: step; display: flex; flex-direction: column; gap: 0; margin-bottom: 0; }
+    .process-step { display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; padding: 2.5rem 0; border-bottom: 1px solid #1a1a1a; counter-increment: step; align-items: start; }
+    .process-step:first-child { border-top: 1px solid #1a1a1a; }
+    .process-step__num { font-family: var(--sans); font-size: 0.58rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--fg-dim); padding-top: 0.25rem; }
+    .process-step__num::before { content: "0" counter(step); }
+    .process-step__heading { font-family: var(--serif); font-size: 1.25rem; font-weight: 300; margin-bottom: 0.8rem; line-height: 1.2; }
+    .process-step__heading em { font-style: italic; }
+    .process-step__body { font-family: var(--body); font-size: 0.82rem; line-height: 1.85; color: var(--fg-mid); font-weight: 300; max-width: 48ch; }
+
+    .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 4rem; }
+    .stat { padding: 2.5rem 2rem; background: #111; border-top: 1px solid #222; transition: border-top-color var(--fast); }
+    .stat:hover { border-top-color: var(--accent); }
+    .stat__num { font-family: var(--serif); font-size: clamp(2.8rem, 5vw, 4.5rem); font-weight: 300; line-height: 1; color: var(--fg); margin-bottom: 0.6rem; }
+    .stat__num em { font-style: italic; color: var(--accent); }
+    .stat__label { font-family: var(--sans); font-size: 0.6rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--fg-dim); }
+
+    .next-project { display: block; text-decoration: none; color: inherit; padding: 5rem var(--gutter); border-top: 1px solid #1a1a1a; position: relative; overflow: hidden; transition: background var(--fast); }
+    .next-project:hover { background: #0d0d0d; }
+    .next-project__label { font-family: var(--sans); font-size: 0.58rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--fg-dim); margin-bottom: 1.2rem; display: block; }
+    .next-project__title { font-family: var(--serif); font-size: clamp(2rem, 5vw, 4rem); font-weight: 300; line-height: 1; }
+    .next-project__title em { font-style: italic; color: var(--accent-2); }
+    .next-project__arrow { position: absolute; right: var(--gutter); top: 50%; transform: translateY(-50%); font-size: 2.5rem; color: var(--fg-dim); transition: color var(--fast), transform var(--fast); }
+    .next-project:hover .next-project__arrow { color: var(--fg); transform: translate(6px, -50%); }
+
+    footer { display: flex; align-items: center; justify-content: space-between; padding: 2.5rem var(--gutter) 3.5rem; border-top: 1px solid #1a1a1a; }
+    .footer__copy { font-family: var(--sans); font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-dim); }
+    .footer__links { display: flex; gap: 2rem; }
+    .footer__links a { font-family: var(--sans); font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; color: var(--fg-dim); transition: color var(--fast); }
+    .footer__links a:hover { color: var(--fg); }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+    @media (max-width: 768px) {
+      body { cursor: auto; } .cursor { display: none; }
+      .meta-strip { grid-template-columns: 1fr 1fr; }
+      .meta-strip__item { border-right: none; border-bottom: 1px solid #1a1a1a; }
+      .meta-strip__item:nth-child(odd) { border-right: 1px solid #1a1a1a; }
+      .section--split { grid-template-columns: 1fr; gap: 2rem; }
+      .img-grid { grid-template-columns: 1fr; }
+      .img-grid__item--tall { aspect-ratio: 4/3; }
+      .stat-row { grid-template-columns: 1fr; }
+      .process-step { grid-template-columns: 1fr; gap: 0.8rem; }
+      .nav__links { gap: 1.2rem; }
+      .next-project__arrow { display: none; }
+      footer { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+      .hero-img { aspect-ratio: 4/3; }
+    }
+    @media (max-width: 480px) { .nav__links a { font-size: 0.56rem; letter-spacing: 0.12em; } }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+
+  <nav>
+    <a href="index.html" class="nav__home">Sherjeel <em>Hussain</em></a>
+    <div class="nav__links">
+      <a href="digital.html">Digital</a>
+      <a href="craft.html" class="active">Craft</a>
+      <a href="work.html">All Work</a>
+      <a href="about.html">About</a>
+    </div>
+  </nav>
+
+  <header class="project-hero">
+    <p class="project-hero__eyebrow">02 — Exhibition &nbsp;·&nbsp; Curator &amp; Organiser · Aberdeen</p>
+    <h1 class="project-hero__title">
+      Crafted
+      <em>By Design</em>
+    </h1>
+  </header>
+
+  <div class="meta-strip">
+    <div class="meta-strip__item">
+      <p class="meta-strip__label">Year</p>
+      <p class="meta-strip__value">2023</p>
+    </div>
+    <div class="meta-strip__item">
+      <p class="meta-strip__label">Role</p>
+      <p class="meta-strip__value">Curator<br><em>&amp; Organiser</em></p>
+    </div>
+    <div class="meta-strip__item">
+      <p class="meta-strip__label">Venue</p>
+      <p class="meta-strip__value">The Courtyard<br>Artspace, Aberdeen</p>
+    </div>
+    <div class="meta-strip__item">
+      <p class="meta-strip__label">Artists</p>
+      <p class="meta-strip__value">Gray's School<br>of Art Graduates</p>
+    </div>
+  </div>
+
+  <div class="hero-img">
+    <!-- Replace with: <img src="img/cbd-hero.jpg" alt="Crafted By Design exhibition at The Courtyard Artspace, Aberdeen, 2023"> -->
+    <div class="hero-img__placeholder">
+      <em>Crafted By Design — The Courtyard Artspace, Aberdeen, 2023</em>
+      <span>Replace with: img/cbd-hero.jpg</span>
+    </div>
+  </div>
+
+  <!-- 01 THE EXHIBITION -->
+  <section class="section section--split">
+    <div>
+      <p class="section__num">01 — The Exhibition</p>
+      <h2 class="section__heading">Making <em>It Happen</em></h2>
+    </div>
+    <div>
+      <p class="section__body">
+        Crafted By Design came out of something that felt like a gap — there wasn't a straightforward way for early-career makers from Gray's to show and sell work in Aberdeen outside of degree shows and open studios. The idea was simple: put together a group exhibition that gave that work a proper context, in a real venue, with a real public.
+      </p>
+      <p class="section__body">
+        I curated and organised it end-to-end — selecting the artists, planning the layout, handling the logistics, and running promotion in the lead-up. The exhibition poster was designed by <strong>Louise Calder</strong>. It ran for two weeks at The Courtyard Artspace, following a one-month preparation period, and included my own ceramics alongside work from other makers from Gray's.
+      </p>
+      <div class="callout">
+        <p class="callout__text">
+          An exhibition built to give early-career work a proper platform. <em>Not a degree show, not a market — something in between.</em>
+        </p>
+      </div>
+      <p class="section__body">
+        This was also the first time selected pieces from the <a href="multanni.html" style="color:var(--accent);text-decoration:none;">multanni mitti material study</a> were exhibited and made available to buy. Work that had started as research during the residency found its first public context here.
+      </p>
+    </div>
+  </section>
+
+  <!-- IMAGE GRID 1 -->
+  <div class="img-grid">
+    <div class="img-grid__item">
+      <!-- Replace with: <img src="img/cbd-install-view.jpg" alt="Exhibition install view, The Courtyard Artspace"> -->
+      <div class="img-grid__placeholder"><span>Add image: install view</span></div>
+    </div>
+    <div class="img-grid__item">
+      <!-- Replace with: <img src="img/cbd-poster.jpg" alt="Exhibition poster by Louise Calder"> -->
+      <div class="img-grid__placeholder"><span>Add image: exhibition poster by Louise Calder</span></div>
+    </div>
+  </div>
+
+  <!-- 02 THE ROLE -->
+  <section class="section">
+    <p class="section__num">02 — The Role</p>
+    <h2 class="section__heading" style="margin-bottom: 3rem;">Curating &amp; <em>Organising</em></h2>
+
+    <div class="process-steps">
+      <div class="process-step">
+        <div><p class="process-step__num"></p></div>
+        <div>
+          <h3 class="process-step__heading">Artist Selection &amp; <em>Coordination</em></h3>
+          <p class="process-step__body">
+            Selecting who was in the show and making sure the work held together as a group — not just a collection of individual displays. The aim was a coherent standard of presentation while keeping the range across disciplines that made it interesting as an exhibition rather than a single-medium show.
+          </p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div><p class="process-step__num"></p></div>
+        <div>
+          <h3 class="process-step__heading">Spatial Planning &amp; <em>Installation</em></h3>
+          <p class="process-step__body">
+            The Courtyard Artspace was configured to support both browsing and conversation — longer dwell time, informal interaction. The layout was planned to balance individual visibility against overall coherence, so work could be encountered as part of something rather than in isolation.
+          </p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div><p class="process-step__num"></p></div>
+        <div>
+          <h3 class="process-step__heading">Logistics &amp; <em>Timeline Management</em></h3>
+          <p class="process-step__body">
+            One month of planning and prep before the exhibition opened. Artist coordination, venue communication, installation schedule, and making sure everything was actually in the right place at the right time. Two weeks of run, then takedown.
+          </p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div><p class="process-step__num"></p></div>
+        <div>
+          <h3 class="process-step__heading">Promotion &amp; <em>Public Communication</em></h3>
+          <p class="process-step__body">
+            Social media promotion across platforms to drive local engagement and footfall. The goal was to reach people who wouldn't normally come looking for a craft exhibition — the kind of passing interest that builds when the work is framed accessibly and the promotion is consistent.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat">
+        <p class="stat__num">2<em>wks</em></p>
+        <p class="stat__label">Exhibition Run</p>
+      </div>
+      <div class="stat">
+        <p class="stat__num">1<em>mo</em></p>
+        <p class="stat__label">Planning &amp; Preparation</p>
+      </div>
+      <div class="stat">
+        <p class="stat__num"><em>1st</em></p>
+        <p class="stat__label">Public Sale of Multanni Work</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- IMAGE GRID 2 -->
+  <div class="img-grid" style="padding-bottom: 0;">
+    <div class="img-grid__item img-grid__item--tall">
+      <!-- Replace with: <img src="img/cbd-ceramics.jpg" alt="Ceramics by Sherjeel Hussain at Crafted By Design"> -->
+      <div class="img-grid__placeholder"><span>Add image: ceramics on display</span></div>
+    </div>
+    <div class="img-grid__item img-grid__item--tall">
+      <!-- Replace with: <img src="img/cbd-lampshades.jpg" alt="Lampshades by Mhairi McBeath at Crafted By Design"> -->
+      <div class="img-grid__placeholder"><span>Add image: lampshades by Mhairi McBeath</span></div>
+    </div>
+  </div>
+
+  <a href="multanni.html" class="next-project">
+    <span class="next-project__label">Next Project</span>
+    <h2 class="next-project__title">Multanni <em>Mitti</em></h2>
+    <span class="next-project__arrow">→</span>
+  </a>
+
+  <footer>
+    <span class="footer__copy">© Sherjeel Hussain</span>
+    <div class="footer__links">
+      <a href="craft.html">← Craft</a>
+      <a href="work.html">All Work</a>
+      <a href="about.html">About</a>
+    </div>
+  </footer>
+
+  <script>
+    const cursor = document.getElementById('cursor');
+    document.addEventListener('mousemove', e => { cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px'; });
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('grow'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('grow'));
+    });
+  </script>
+</body>
+</html>

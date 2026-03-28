@@ -1,0 +1,942 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Andra's Garden Heaven · Sherjeel Hussain</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Syne:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #0a0a0a;
+        --fg: #ede9e1;
+        --fg-dim: #555;
+        --fg-mid: #999;
+        --accent: #e8547a;
+        --accent-green: #6dbf9e;
+        --serif: "Cormorant", Georgia, serif;
+        --sans: "Syne", sans-serif;
+        --body: "DM Sans", sans-serif;
+        --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+        --slow: 0.7s var(--ease);
+        --fast: 0.3s var(--ease);
+        --gutter: clamp(1.4rem, 5vw, 5rem);
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        font-size: 16px;
+        scroll-behavior: smooth;
+      }
+      body {
+        background: var(--bg);
+        color: var(--fg);
+        font-family: var(--body);
+        overflow-x: hidden;
+        cursor: none;
+      }
+      .cursor {
+        position: fixed;
+        width: 10px;
+        height: 10px;
+        background: var(--fg);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+        transform: translate(-50%, -50%);
+        transition:
+          width var(--fast),
+          height var(--fast),
+          background var(--fast);
+      }
+      .cursor.grow {
+        width: 44px;
+        height: 44px;
+        background: transparent;
+        border: 1px solid var(--accent);
+        opacity: 0.7;
+      }
+      .cursor-icon {
+        position: fixed;
+        pointer-events: none;
+        z-index: 9998;
+        transform: translate(10px, -50%);
+        opacity: 0;
+        transition: opacity 0.2s ease;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .cursor-icon.visible {
+        opacity: 1;
+      }
+      .cursor-icon svg {
+        display: block;
+      }
+      .cursor-icon span {
+        font-family: var(--sans);
+        font-size: 0.5rem;
+        font-weight: 700;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-top: 4px;
+      }
+      nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 2rem var(--gutter);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(10, 10, 10, 0.92);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid #1a1a1a;
+      }
+      .nav__home {
+        font-family: var(--serif);
+        font-size: 1.1rem;
+        font-weight: 300;
+        letter-spacing: 0.06em;
+        text-decoration: none;
+        color: var(--fg);
+      }
+      .nav__home em {
+        font-style: italic;
+        color: var(--accent);
+      }
+      .nav__links {
+        display: flex;
+        gap: 2.5rem;
+      }
+      .nav__links a {
+        font-family: var(--sans);
+        font-size: 0.65rem;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        text-decoration: none;
+        color: var(--fg-dim);
+        transition: color var(--fast);
+        position: relative;
+      }
+      .nav__links a::after {
+        content: "";
+        position: absolute;
+        bottom: -3px;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background: var(--accent);
+        transition: width var(--fast);
+      }
+      .nav__links a:hover {
+        color: var(--fg);
+      }
+      .nav__links a:hover::after {
+        width: 100%;
+      }
+      .nav__back {
+        font-family: var(--sans);
+        font-size: 0.62rem;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        text-decoration: none;
+        color: var(--fg-dim);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: color var(--fast);
+      }
+      .nav__back:hover {
+        color: var(--fg);
+      }
+      .nav__back::before {
+        content: "←";
+      }
+
+      .hero {
+        min-height: 88vh;
+        display: grid;
+        grid-template-rows: 1fr auto;
+        position: relative;
+        overflow: hidden;
+        background: #080e08;
+      }
+      .hero__img {
+        position: absolute;
+        inset: 0;
+        background-image: url("img/andras-hero.jpg");
+        background-size: cover;
+        background-position: center;
+        filter: brightness(0.4) saturate(0.9);
+        transition: filter var(--slow);
+      }
+      .hero:hover .hero__img {
+        filter: brightness(0.52) saturate(1);
+      }
+      .hero__content {
+        position: relative;
+        z-index: 2;
+        padding: 8rem var(--gutter) 4rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+      }
+      .hero__breadcrumb {
+        font-family: var(--sans);
+        font-size: 0.62rem;
+        font-weight: 700;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--accent-green);
+        margin-bottom: 1.8rem;
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        opacity: 0;
+        animation: fadeUp 0.8s var(--ease) 0.1s forwards;
+      }
+      .hero__breadcrumb::before {
+        content: "";
+        display: block;
+        width: 1.5rem;
+        height: 1px;
+        background: var(--accent-green);
+      }
+      .hero__title {
+        font-family: var(--serif);
+        font-size: clamp(3.5rem, 10vw, 9rem);
+        font-weight: 300;
+        line-height: 0.9;
+        color: var(--fg);
+        opacity: 0;
+        animation: fadeUp 0.9s var(--ease) 0.2s forwards;
+      }
+      .hero__title em {
+        font-style: italic;
+        color: var(--accent-green);
+      }
+      .hero__subtitle {
+        margin-top: 1.5rem;
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: clamp(1rem, 2vw, 1.35rem);
+        font-weight: 300;
+        color: rgba(237, 233, 225, 0.65);
+        max-width: 580px;
+        line-height: 1.5;
+        opacity: 0;
+        animation: fadeUp 0.9s var(--ease) 0.3s forwards;
+      }
+      .hero__meta {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        gap: 3rem;
+        flex-wrap: wrap;
+        padding: 2rem var(--gutter);
+        border-top: 1px solid rgba(237, 233, 225, 0.12);
+        opacity: 0;
+        animation: fadeUp 0.8s var(--ease) 0.45s forwards;
+      }
+      .meta-item__label {
+        font-family: var(--sans);
+        font-size: 0.56rem;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: rgba(237, 233, 225, 0.35);
+        margin-bottom: 0.35rem;
+      }
+      .meta-item__value {
+        font-family: var(--body);
+        font-size: 0.82rem;
+        color: var(--fg);
+        font-weight: 300;
+      }
+
+      .case-section {
+        padding: 6rem var(--gutter);
+        border-bottom: 1px solid #1a1a1a;
+      }
+      .two-col {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 6rem;
+        align-items: start;
+      }
+      .section-label {
+        font-family: var(--sans);
+        font-size: 0.62rem;
+        font-weight: 700;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--accent-green);
+        position: sticky;
+        top: 6rem;
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+      }
+      .section-label::before {
+        content: "";
+        display: block;
+        width: 1.5rem;
+        height: 1px;
+        background: var(--accent-green);
+      }
+      .body-text {
+        font-size: 0.92rem;
+        line-height: 1.95;
+        color: var(--fg-mid);
+        font-weight: 300;
+        max-width: 640px;
+      }
+      .body-text p + p {
+        margin-top: 1.3em;
+      }
+      .body-text strong {
+        color: var(--fg);
+        font-weight: 500;
+      }
+      .body-text em {
+        font-style: italic;
+        color: var(--fg);
+      }
+
+      /* ORIGIN PANEL — the Andra story */
+      .origin-panel {
+        background: #080e08;
+        border: 1px solid #1a2a1a;
+        padding: 4rem var(--gutter);
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 4rem;
+        align-items: center;
+        border-left: 3px solid var(--accent-green);
+      }
+      .origin-panel__symbol {
+        font-family: var(--serif);
+        font-size: 5rem;
+        font-weight: 300;
+        color: var(--accent-green);
+        opacity: 0.4;
+        line-height: 1;
+        flex-shrink: 0;
+      }
+      .origin-panel__heading {
+        font-family: var(--serif);
+        font-size: clamp(1.5rem, 3vw, 2.5rem);
+        font-weight: 300;
+        line-height: 1.15;
+        color: var(--fg);
+        margin-bottom: 1.2rem;
+      }
+      .origin-panel__heading em {
+        font-style: italic;
+        color: var(--accent-green);
+      }
+      .origin-panel__body {
+        font-size: 0.88rem;
+        line-height: 1.9;
+        color: var(--fg-mid);
+        font-weight: 300;
+      }
+      .origin-panel__body p + p {
+        margin-top: 1em;
+      }
+
+      .img-full {
+        width: 100%;
+        background-size: cover;
+        background-position: center;
+        background-color: #111;
+      }
+      .img-grid {
+        display: grid;
+        gap: 2px;
+      }
+      .img-grid--2 {
+        grid-template-columns: 1fr 1fr;
+      }
+      .img-grid--3 {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+      .img-slot {
+        background: #111;
+        background-size: cover;
+        background-position: center;
+        aspect-ratio: 4/3;
+        display: block;
+      }
+      .img-slot--wide {
+        aspect-ratio: 16/9;
+      }
+      .img-slot--tall {
+        aspect-ratio: 3/4;
+      }
+
+      /* MARK SPLIT */
+      .mark-split {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2px;
+        align-items: stretch;
+        border-bottom: 1px solid #1a1a1a;
+      }
+      .mark-visual {
+        background: #0a140a;
+        min-height: 400px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .mark-visual__inner {
+        background-image: url("./imgs-digital/AGH/AGH\ Logo\ GreenAsset\ 1@2x.png");
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 100%;
+        height: 100%;
+        min-height: 400px;
+        padding: 3rem;
+      }
+      .mark-info {
+        padding: 4rem 3rem;
+        background: #0e0e0e;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .mark-info__label {
+        font-family: var(--sans);
+        font-size: 0.58rem;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--accent-green);
+        margin-bottom: 1.5rem;
+      }
+      .mark-info__title {
+        font-family: var(--serif);
+        font-size: clamp(1.8rem, 3vw, 2.8rem);
+        font-weight: 300;
+        line-height: 1.1;
+        color: var(--fg);
+        margin-bottom: 1.5rem;
+      }
+      .mark-info__title em {
+        font-style: italic;
+        color: var(--accent-green);
+      }
+      .mark-info__body {
+        font-size: 0.88rem;
+        line-height: 1.9;
+        color: var(--fg-mid);
+        font-weight: 300;
+      }
+      .mark-info__body p + p {
+        margin-top: 1em;
+      }
+
+      .pull-quote {
+        padding: 6rem var(--gutter);
+        background: #080e08;
+        border-top: 1px solid #1a1a1a;
+        border-bottom: 1px solid #1a1a1a;
+      }
+      .pull-quote blockquote {
+        font-family: var(--serif);
+        font-size: clamp(1.6rem, 3.5vw, 3rem);
+        font-weight: 300;
+        font-style: italic;
+        line-height: 1.3;
+        color: var(--fg);
+        max-width: 820px;
+      }
+      .pull-quote blockquote em {
+        color: var(--accent-green);
+        font-style: normal;
+      }
+      .pull-quote cite {
+        display: block;
+        margin-top: 2rem;
+        font-family: var(--sans);
+        font-size: 0.6rem;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--fg-dim);
+        font-style: normal;
+      }
+
+      .spec-table {
+        width: 100%;
+        max-width: 640px;
+        border-collapse: collapse;
+      }
+      .spec-table tr {
+        border-bottom: 1px solid #1e1e1e;
+      }
+      .spec-table td {
+        padding: 1rem 0;
+        font-size: 0.82rem;
+        font-weight: 300;
+        vertical-align: top;
+      }
+      .spec-table td:first-child {
+        font-family: var(--sans);
+        font-size: 0.6rem;
+        font-weight: 700;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--accent-green);
+        width: 9rem;
+        padding-right: 2rem;
+        padding-top: 1.1rem;
+      }
+      .spec-table td:last-child {
+        color: var(--fg-mid);
+        line-height: 1.6;
+      }
+
+      .next-project {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 2rem;
+        padding: 5rem var(--gutter);
+        border-top: 1px solid #1a1a1a;
+      }
+      .next-project__label {
+        font-family: var(--sans);
+        font-size: 0.62rem;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--fg-dim);
+        margin-bottom: 0.8rem;
+      }
+      .next-project__title {
+        font-family: var(--serif);
+        font-size: clamp(1.8rem, 3.5vw, 3.2rem);
+        font-weight: 300;
+        color: var(--fg);
+        text-decoration: none;
+        display: block;
+        transition: color var(--fast);
+      }
+      .next-project__title em {
+        font-style: italic;
+        color: var(--accent);
+      }
+      .next-project__title:hover {
+        color: var(--fg-mid);
+      }
+      .next-project__arrow {
+        font-size: 3rem;
+        color: var(--fg-dim);
+        text-decoration: none;
+        transition:
+          color var(--fast),
+          transform var(--fast);
+      }
+      .next-project__arrow:hover {
+        color: var(--accent);
+        transform: translateX(8px);
+      }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @media (max-width: 1024px) {
+        .mark-split {
+          grid-template-columns: 1fr;
+        }
+        .origin-panel {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+      }
+      @media (max-width: 768px) {
+        body {
+          cursor: auto;
+        }
+        .cursor,
+        .cursor-icon {
+          display: none;
+        }
+        .hero__content {
+          padding: 5rem 1.4rem 3rem;
+        }
+        .two-col {
+          grid-template-columns: 1fr;
+          gap: 2.5rem;
+        }
+        .section-label {
+          position: static;
+        }
+        .case-section {
+          padding: 4rem 1.4rem;
+        }
+        .img-grid--2,
+        .img-grid--3 {
+          grid-template-columns: 1fr;
+        }
+        .origin-panel {
+          padding: 3rem 1.4rem;
+        }
+        .pull-quote {
+          padding: 4rem 1.4rem;
+        }
+        .nav__links {
+          gap: 1.2rem;
+        }
+      }
+      @media (max-width: 480px) {
+        nav {
+          padding: 1.2rem 1rem;
+        }
+        .nav__links a {
+          font-size: 0.56rem;
+          letter-spacing: 0.1em;
+        }
+      }
+
+      .ViewLive {
+        display: flex;
+        justify-content: center;
+        margin: 2rem;
+        width: 100%;
+      }
+      .LiveSite {
+        display: inline-flex; /* Allows centering text inside */
+        align-items: center;
+        justify-content: center;
+
+        /* Dimensions & Spacing */
+        padding: 0.8rem 1.5rem;
+        min-width: 10rem;
+
+        /* Visuals */
+        background: var(--accent-green);
+        color: var(--bg);
+        font-family: var(--sans);
+        font-size: 0.62rem;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        text-decoration: none;
+
+        /* Interaction */
+        cursor: pointer;
+        transition: background var(--fast);
+      }
+
+      .LiveSite:hover {
+        filter: brightness(1.1); /* Simple hover effect */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-icon" id="cursorIcon"></div>
+
+    <nav>
+      <a href="index.html" class="nav__home">Sherjeel <em>Hussain</em></a>
+      <div style="display: flex; align-items: center; gap: 3rem">
+        <a href="digital.html" class="nav__back">Digital</a>
+        <div class="nav__links">
+          <a href="digital.html" data-cursor="monitor">Digital</a>
+          <a href="craft.html" data-cursor="pot">Craft</a>
+          <a href="kala-topi.html">Kala Topi</a>
+          <a href="about.html">About</a>
+        </div>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <div class="hero__img"></div>
+      <!-- img/andras-hero.jpg — MacBook mockup or garden product photo -->
+      <div class="hero__content">
+        <p class="hero__breadcrumb">
+          Brand Identity · Shopify · Print &amp; Signage — 2024
+        </p>
+        <h1 class="hero__title">Andra's Garden<br /><em>Heaven</em></h1>
+        <p class="hero__subtitle">
+          A garden furniture retailer named in honour of a friend who helped
+          build something before he was gone. The brand had to carry that
+          without ever being heavy.
+        </p>
+      </div>
+      <div class="hero__meta">
+        <div class="meta-item">
+          <p class="meta-item__label">Client</p>
+          <p class="meta-item__value">Andra's Garden Heaven</p>
+        </div>
+        <div class="meta-item">
+          <p class="meta-item__label">Sector</p>
+          <p class="meta-item__value">Garden Furniture Retail</p>
+        </div>
+        <div class="meta-item">
+          <p class="meta-item__label">Scope</p>
+          <p class="meta-item__value">
+            Brand Identity · Shopify Build · Print · Signage
+          </p>
+        </div>
+        <div class="meta-item">
+          <p class="meta-item__label">Platform</p>
+          <p class="meta-item__value">Shopify</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- THE ORIGIN — lead with the story -->
+    <div class="origin-panel">
+      <div class="origin-panel__symbol">"</div>
+      <div>
+        <h2 class="origin-panel__heading">
+          Named for a man who helped them<br /><em
+            >build their own slice of heaven</em
+          >
+        </h2>
+        <div class="origin-panel__body">
+          <p>
+            Before this business existed, there was Andra — a dear friend of the
+            founders who helped them establish their own garden and early
+            ventures before he passed. The name Andra's Garden Heaven wasn't a
+            marketing decision. It was a memorial, and an intention: to sell
+            products that allow buyers to feel at peace in their own outdoor
+            space.
+          </p>
+          <p>
+            That origin story shaped every design decision. The brand needed
+            warmth and optimism without sentimentality. Growth without grief. A
+            name with weight, worn lightly.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- THE MARK -->
+    <div class="mark-split">
+      <div class="mark-visual">
+        <div class="mark-visual__inner"></div>
+      </div>
+      <div class="mark-info">
+        <p class="mark-info__label">The Mark</p>
+        <h2 class="mark-info__title">
+          A and G form a trunk.<br /><em>Roots at the base.</em>
+        </h2>
+        <div class="mark-info__body">
+          <p>
+            The logo is structural. The letterforms A and G, overlaid and
+            resolved, naturally form a tree trunk — the vertical stroke of the A
+            becoming the trunk, the curve of the G forming the canopy line.
+            Roots are drawn at the base. It reads as a tree before it reads as
+            letters.
+          </p>
+          <p>
+            Rooted. Alive. Reaching upward. Those three qualities were the brief
+            in everything but name — and the mark delivers all three without
+            explaining itself. The founders recognised it immediately, which is
+            usually the sign that a mark is working.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- MACBOOK MOCKUP — your strongest asset for this project -->
+    <div
+      class="img-full"
+      style="
+        aspect-ratio: 16/9;
+        background-image: url(&quot;./imgs-digital/AGH/Macbook\ Mockup\ Front\ View\ UV.png&quot;);
+      "
+    >
+      <!-- img/andras-macbook.png — Macbook_Mockup_Front_View_UV.png -->
+    </div>
+
+    <!-- THE SHOPIFY BUILD -->
+    <div class="case-section">
+      <div class="two-col">
+        <p class="section-label">The Build</p>
+        <div class="body-text">
+          <p>
+            The site is a full Shopify store build — product catalogue,
+            collections, checkout flow, and brand-consistent theme
+            customisation. The platform choice was driven by the client's need
+            to manage inventory themselves without a developer on call. Shopify
+            provides that capability; the job was to make it not look like
+            Shopify.
+          </p>
+          <p>
+            The design challenge with garden furniture retail online is
+            <strong>scale and context</strong>. A chair photographed against a
+            white studio background tells you very little about whether it will
+            look right in a garden. The layout was structured to prioritise
+            lifestyle imagery — pieces shown in situ, in light, in use — over
+            clinical product shots.
+          </p>
+          <p>
+            The mobile experience was prioritised throughout.
+            <em>Most garden furniture browsing happens on a phone</em>, often
+            while someone is physically in their outdoor space considering what
+            they want. The mobile layout is clean, fast, and makes the purchase
+            path as short as possible.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- MOBILE MOCKUP -->
+    <div class="img-grid img-grid--3">
+      <img
+        src="./imgs-digital/AGH/iPhone 15 Mockup, Perspective -Product Page.png"
+        alt=""
+        srcset=""
+      />
+      <!-- <div
+        class="img-slot"
+        style="background-image: url('./imgs-digital/AGH/iPhone_15_Mockup__Perspective-HomeScreen_Product.png')"
+      ></div> -->
+      <!-- img/andras-mobile-1.jpg — iPhone_15_Mockup__Perspective-HomeScreen_Product.png -->
+      <div class="img-slot">
+        <img
+          src="./imgs-digital/AGH/iPhone 15 Mockup, Perspective-HomeScreen+Product.png"
+          alt=""
+          srcset=""
+        />
+      </div>
+      <!-- img/andras-mobile-2.jpg — second mobile screen, product or cart -->
+      <div
+        class="img-slot"
+        style="
+          background-image: url(&quot;./imgs-digital/AGH/iPhone_15_Mockup__Perspective-HomeScreen_Product.png&quot;);
+        "
+      ></div>
+      <!-- img/andras-print.jpg — signage or print material mockup -->
+    </div>
+
+    <!-- PULL QUOTE -->
+    <div class="pull-quote">
+      <blockquote>
+        Products that allow buyers to feel <em>at peace</em> in their own slice
+        of heaven.
+        <cite>— Brand Positioning, Andra's Garden Heaven</cite>
+      </blockquote>
+    </div>
+
+    <!-- SPEC -->
+    <div class="case-section">
+      <div class="two-col">
+        <p class="section-label">Specification</p>
+        <table class="spec-table">
+          <tr>
+            <td>Identity</td>
+            <td>
+              Logo, wordmark, brandmark variants. Colour palette grounded in
+              garden and natural materials.
+            </td>
+          </tr>
+          <tr>
+            <td>Platform</td>
+            <td>
+              Shopify — full store build. Theme customisation, product setup,
+              collection architecture, checkout configuration.
+            </td>
+          </tr>
+          <tr>
+            <td>Site Design</td>
+            <td>Lifestyle-led layout. Mobile-first. Short purchase path.</td>
+          </tr>
+          <tr>
+            <td>Print</td>
+            <td>
+              Signage system and print materials consistent with digital
+              identity.
+            </td>
+          </tr>
+          <tr>
+            <td>Handover</td>
+            <td>
+              Full client training on Shopify admin. Store management
+              transferred on launch day.
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="ViewLive">
+      <a
+        href="https://andrasgardenheaven.uk/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="LiveSite"
+        >View Live</a
+      >
+    </div>
+
+    <div class="next-project">
+      <div>
+        <p class="next-project__label">Next Project</p>
+        <a href="westgarth.html" class="next-project__title"
+          >Westgarth <em>Auto</em></a
+        >
+      </div>
+      <a href="westgarth.html" class="next-project__arrow">→</a>
+    </div>
+
+    <script>
+      const cursor = document.getElementById("cursor"),
+        cursorIcon = document.getElementById("cursorIcon");
+      const ICONS = {
+        monitor: `<svg width="28" height="22" viewBox="0 0 28 22" fill="none"><rect x="1" y="1" width="26" height="17" rx="2" stroke="#e8547a" stroke-width="1.5"/><rect x="9" y="18" width="10" height="2" fill="#e8547a" opacity=".5"/><rect x="6" y="20" width="16" height="1.5" fill="#e8547a" opacity=".5"/><circle cx="14" cy="9.5" r="1.5" fill="#e8547a" opacity=".4"/></svg><span>Digital</span>`,
+        pot: `<svg width="22" height="26" viewBox="0 0 22 26" fill="none"><path d="M7 4C5 4 2 7 2 13C2 19 5 23 11 23C17 23 20 19 20 13C20 7 17 4 15 4Z" stroke="#6dbf9e" stroke-width="1.5" fill="none"/><path d="M7 4C8 2 10 1 11 1C12 1 14 2 15 4" stroke="#6dbf9e" stroke-width="1.5" fill="none"/></svg><span>Craft</span>`,
+      };
+      document.addEventListener("mousemove", (e) => {
+        cursor.style.left = e.clientX + "px";
+        cursor.style.top = e.clientY + "px";
+        cursorIcon.style.left = e.clientX + 18 + "px";
+        cursorIcon.style.top = e.clientY + "px";
+      });
+      document.querySelectorAll("[data-cursor]").forEach((el) => {
+        el.addEventListener("mouseenter", () => {
+          cursor.classList.add("grow");
+          cursorIcon.innerHTML = ICONS[el.dataset.cursor] || "";
+          cursorIcon.classList.add("visible");
+        });
+        el.addEventListener("mouseleave", () => {
+          cursor.classList.remove("grow");
+          cursorIcon.classList.remove("visible");
+        });
+      });
+      document.querySelectorAll("a:not([data-cursor])").forEach((el) => {
+        el.addEventListener("mouseenter", () => cursor.classList.add("grow"));
+        el.addEventListener("mouseleave", () =>
+          cursor.classList.remove("grow"),
+        );
+      });
+    </script>
+  </body>
+</html>

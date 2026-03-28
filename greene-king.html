@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Greene King — Sherjeel Hussain</title>
+  <meta name="description" content="40 ceramic table number holders with blackboard paint for Greene King pub and grill. Graduate residency commission, 2022." />
+  <link rel="canonical" href="https://sherjeelhussain.co.uk/greene-king.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Syne:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── TOKENS ─────────────────────────────────────────── */
+    :root {
+      --bg:       #0a0a0a;
+      --fg:       #ede9e1;
+      --fg-dim:   #555;
+      --fg-mid:   #999;
+      --accent:   #6dbf9e;   /* craft mint */
+      --accent-2: #e8547a;
+      --gold:     #c8b882;
+      --serif:    'Cormorant', Georgia, serif;
+      --sans:     'Syne', sans-serif;
+      --body:     'DM Sans', sans-serif;
+      --ease:     cubic-bezier(0.25, 0.1, 0.25, 1);
+      --slow:     0.7s var(--ease);
+      --fast:     0.3s var(--ease);
+      --gutter:   clamp(1.2rem, 4vw, 3rem);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--body);
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* ─── CURSOR ──────────────────────────────────────────── */
+    .cursor {
+      position: fixed;
+      width: 10px; height: 10px;
+      background: var(--fg); border-radius: 50%;
+      pointer-events: none; z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width var(--fast), height var(--fast), background var(--fast);
+    }
+    .cursor.grow {
+      width: 44px; height: 44px;
+      background: transparent;
+      border: 1px solid var(--accent); opacity: 0.7;
+    }
+
+    /* ─── NAV ─────────────────────────────────────────────── */
+    nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 2rem var(--gutter);
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(10,10,10,0.92); backdrop-filter: blur(12px);
+      border-bottom: 1px solid #1a1a1a;
+    }
+    .nav__home {
+      font-family: var(--serif); font-size: 1.1rem; font-weight: 300;
+      letter-spacing: 0.06em; text-decoration: none; color: var(--fg);
+    }
+    .nav__home em { font-style: italic; color: var(--accent-2); }
+    .nav__links { display: flex; gap: 2.5rem; }
+    .nav__links a {
+      font-family: var(--sans); font-size: 0.65rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      text-decoration: none; color: var(--fg-dim);
+      transition: color var(--fast); position: relative;
+    }
+    .nav__links a::after {
+      content: ''; position: absolute; bottom: -3px; left: 0;
+      width: 0; height: 1px; background: var(--accent); transition: width var(--fast);
+    }
+    .nav__links a:hover, .nav__links a.active { color: var(--fg); }
+    .nav__links a:hover::after, .nav__links a.active::after { width: 100%; }
+
+    /* ─── PROJECT HERO ────────────────────────────────────── */
+    .project-hero {
+      padding: 5rem var(--gutter) 0;
+      opacity: 0; animation: fadeUp 0.8s var(--ease) 0.1s forwards;
+    }
+    .project-hero__eyebrow {
+      font-family: var(--sans); font-size: 0.62rem; font-weight: 700;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 1.5rem;
+      display: flex; align-items: center; gap: 0.8rem;
+    }
+    .project-hero__eyebrow::before {
+      content: ''; display: block; width: 2rem; height: 1px; background: var(--accent);
+    }
+    .project-hero__title {
+      font-family: var(--serif);
+      font-size: clamp(3.5rem, 9vw, 8rem);
+      font-weight: 300; line-height: 0.92;
+      letter-spacing: -0.01em;
+    }
+    .project-hero__title em { font-style: italic; display: block; }
+
+    /* ─── META STRIP ──────────────────────────────────────── */
+    .meta-strip {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 2px; margin: 3rem 0 0;
+      border-top: 1px solid #1a1a1a;
+      opacity: 0; animation: fadeUp 0.8s var(--ease) 0.3s forwards;
+    }
+    .meta-strip__item {
+      padding: 1.8rem var(--gutter);
+      border-right: 1px solid #1a1a1a;
+    }
+    .meta-strip__item:last-child { border-right: none; }
+    .meta-strip__label {
+      font-family: var(--sans); font-size: 0.55rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--fg-dim); margin-bottom: 0.6rem;
+    }
+    .meta-strip__value {
+      font-family: var(--serif); font-size: 1rem; font-weight: 300;
+      color: var(--fg); line-height: 1.5;
+    }
+    .meta-strip__value em { font-style: italic; color: var(--accent); }
+
+    /* ─── HERO IMAGE ──────────────────────────────────────── */
+    .hero-img {
+      width: 100%; aspect-ratio: 16/7;
+      background: #111; overflow: hidden; position: relative;
+      opacity: 0; animation: fadeUp 0.8s var(--ease) 0.45s forwards;
+    }
+    .hero-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .hero-img__placeholder {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 0.8rem;
+      background: linear-gradient(135deg, #141210 0%, #1c1814 50%, #141210 100%);
+    }
+    .hero-img__placeholder em {
+      font-family: var(--serif); font-size: clamp(1.2rem, 2.5vw, 2rem);
+      font-weight: 300; font-style: italic; color: rgba(237,233,225,0.35);
+    }
+    .hero-img__placeholder span {
+      font-family: var(--sans); font-size: 0.55rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase; color: var(--fg-dim);
+    }
+
+    /* ─── SECTIONS ────────────────────────────────────────── */
+    .section {
+      padding: 6rem var(--gutter);
+      border-top: 1px solid #1a1a1a;
+    }
+    .section--split {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 4rem; align-items: start;
+    }
+    .section__num {
+      font-family: var(--sans); font-size: 0.58rem; font-weight: 700;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 1.5rem;
+      display: flex; align-items: center; gap: 0.8rem;
+    }
+    .section__num::before {
+      content: ''; display: block; width: 1.5rem; height: 1px; background: var(--accent);
+    }
+    .section__heading {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 300; line-height: 1; margin-bottom: 2rem;
+    }
+    .section__heading em { font-style: italic; }
+    .section__body {
+      font-family: var(--body); font-size: 0.88rem; line-height: 1.9;
+      color: var(--fg-mid); font-weight: 300; max-width: 52ch;
+    }
+    .section__body + .section__body { margin-top: 1.2rem; }
+    .section__body strong { color: var(--fg); font-weight: 400; }
+
+    /* ─── CALLOUT ─────────────────────────────────────────── */
+    .callout {
+      margin: 2.5rem 0;
+      padding: 2rem 2.2rem;
+      border-left: 2px solid var(--accent);
+      background: rgba(109,191,158,0.04);
+    }
+    .callout__text {
+      font-family: var(--serif); font-size: clamp(1.1rem, 2vw, 1.5rem);
+      font-weight: 300; line-height: 1.55; color: var(--fg);
+    }
+    .callout__text em { font-style: italic; color: var(--accent); }
+
+    /* ─── IMAGE GRID ──────────────────────────────────────── */
+    .img-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 2px; padding: 0 var(--gutter);
+    }
+    .img-grid__item {
+      aspect-ratio: 4/3; background: #111;
+      overflow: hidden; position: relative;
+    }
+    .img-grid__item img {
+      width: 100%; height: 100%; object-fit: cover;
+    }
+    .img-grid__item--tall { aspect-ratio: 3/4; }
+    .img-grid__placeholder {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 0.6rem;
+      background: #111;
+    }
+    .img-grid__placeholder span {
+      font-family: var(--sans); font-size: 0.55rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase; color: var(--fg-dim);
+    }
+
+    /* ─── PROCESS STEPS ───────────────────────────────────── */
+    .process-steps {
+      counter-reset: step;
+      display: flex; flex-direction: column; gap: 0;
+      margin-bottom: 0;
+    }
+    .process-step {
+      display: grid; grid-template-columns: 1fr 2fr; gap: 3rem;
+      padding: 2.5rem 0;
+      border-bottom: 1px solid #1a1a1a;
+      counter-increment: step;
+      align-items: start;
+    }
+    .process-step:first-child { border-top: 1px solid #1a1a1a; }
+    .process-step__num {
+      font-family: var(--sans); font-size: 0.58rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase; color: var(--fg-dim);
+      padding-top: 0.25rem;
+    }
+    .process-step__num::before { content: "0" counter(step); }
+    .process-step__heading {
+      font-family: var(--serif); font-size: 1.25rem; font-weight: 300;
+      margin-bottom: 0.8rem; line-height: 1.2;
+    }
+    .process-step__heading em { font-style: italic; }
+    .process-step__body {
+      font-family: var(--body); font-size: 0.82rem; line-height: 1.85;
+      color: var(--fg-mid); font-weight: 300; max-width: 48ch;
+    }
+
+    /* ─── STAT ROW ────────────────────────────────────────── */
+    .stat-row {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 2px; margin-top: 4rem;
+    }
+    .stat {
+      padding: 2.5rem 2rem; background: #111;
+      border-top: 1px solid #222;
+      transition: border-top-color var(--fast);
+    }
+    .stat:hover { border-top-color: var(--accent); }
+    .stat__num {
+      font-family: var(--serif);
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      font-weight: 300; line-height: 1;
+      color: var(--fg); margin-bottom: 0.6rem;
+    }
+    .stat__num em { font-style: italic; color: var(--accent); }
+    .stat__label {
+      font-family: var(--sans); font-size: 0.6rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase; color: var(--fg-dim);
+    }
+
+    /* ─── NEXT PROJECT ────────────────────────────────────── */
+    .next-project {
+      display: block; text-decoration: none; color: inherit;
+      padding: 5rem var(--gutter);
+      border-top: 1px solid #1a1a1a;
+      position: relative; overflow: hidden;
+      transition: background var(--fast);
+    }
+    .next-project:hover { background: #0d0d0d; }
+    .next-project__label {
+      font-family: var(--sans); font-size: 0.58rem; font-weight: 700;
+      letter-spacing: 0.22em; text-transform: uppercase; color: var(--fg-dim);
+      margin-bottom: 1.2rem; display: block;
+    }
+    .next-project__title {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 5vw, 4rem);
+      font-weight: 300; line-height: 1;
+    }
+    .next-project__title em { font-style: italic; color: var(--accent-2); }
+    .next-project__arrow {
+      position: absolute; right: var(--gutter); top: 50%;
+      transform: translateY(-50%);
+      font-size: 2.5rem; color: var(--fg-dim);
+      transition: color var(--fast), transform var(--fast);
+    }
+    .next-project:hover .next-project__arrow {
+      color: var(--fg); transform: translate(6px, -50%);
+    }
+
+    /* ─── FOOTER ──────────────────────────────────────────── */
+    footer {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 2.5rem var(--gutter) 3.5rem;
+      border-top: 1px solid #1a1a1a;
+    }
+    .footer__copy {
+      font-family: var(--sans); font-size: 0.62rem;
+      letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-dim);
+    }
+    .footer__links { display: flex; gap: 2rem; }
+    .footer__links a {
+      font-family: var(--sans); font-size: 0.62rem;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      text-decoration: none; color: var(--fg-dim);
+      transition: color var(--fast);
+    }
+    .footer__links a:hover { color: var(--fg); }
+
+    /* ─── KEYFRAMES ───────────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── MOBILE ──────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      body { cursor: auto; }
+      .cursor { display: none; }
+      .meta-strip { grid-template-columns: 1fr 1fr; }
+      .meta-strip__item { border-right: none; border-bottom: 1px solid #1a1a1a; }
+      .meta-strip__item:nth-child(odd) { border-right: 1px solid #1a1a1a; }
+      .section--split { grid-template-columns: 1fr; gap: 2rem; }
+      .img-grid { grid-template-columns: 1fr; }
+      .img-grid__item--tall { aspect-ratio: 4/3; }
+      .stat-row { grid-template-columns: 1fr; }
+      .process-step { grid-template-columns: 1fr; gap: 0.8rem; }
+      .nav__links { gap: 1.2rem; }
+      .next-project__arrow { display: none; }
+      footer { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+      .hero-img { aspect-ratio: 4/3; }
+    }
+    @media (max-width: 480px) {
+      .nav__links a { font-size: 0.56rem; letter-spacing: 0.12em; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+
+  <!-- ── NAV ──────────────────────────────────────────────── -->
+  <nav>
+    <a href="index.html" class="nav__home">Sherjeel <em>Hussain</em></a>
+    <div class="nav__links">
+      <a href="digital.html">Digital</a>
+      <a href="craft.html" class="active">Craft</a>
+      <a href="work.html">All Work</a>
+      <a href="about.html">About</a>
+    </div>
+  </nav>
+
+  <!-- ── PROJECT HERO ─────────────────────────────────────── -->
+  <header class="project-hero">
+    <p class="project-hero__eyebrow">02 — Ceramics &amp; Client Work &nbsp;·&nbsp; Project 262</p>
+    <h1 class="project-hero__title">
+      Greene
+      <em>King</em>
+    </h1>
+  </header>
+
+  <!-- ── META STRIP ───────────────────────────────────────── -->
+  <div class="meta-strip">
+    <div class="meta-strip__item">
+      <p class="meta-strip__label">Year</p>
+      <p class="meta-strip__value">2022</p>
+    </div>
+    <div class="meta-strip__item">
+      <p class="meta-strip__label">Client</p>
+      <p class="meta-strip__value">Greene King<br><em>Pub &amp; Grill</em></p>
+    </div>
+    <div class="meta-strip__item">
+      <p class="meta-strip__label">Discipline</p>
+      <p class="meta-strip__value">Ceramics<br>Product Design</p>
+    </div>
+    <div class="meta-strip__item">
+      <p class="meta-strip__label">Deliverable</p>
+      <p class="meta-strip__value">40 ceramic<br>table number holders</p>
+    </div>
+  </div>
+
+  <!-- ── HERO IMAGE ───────────────────────────────────────── -->
+  <div class="hero-img">
+    <!-- Replace with: <img src="img/greene-king-hero.jpg" alt="Greene King ceramic table number holders"> -->
+    <div class="hero-img__placeholder">
+      <em>Greene King — Table Number Series, 2022</em>
+      <span>Replace with: img/greene-king-hero.jpg</span>
+    </div>
+  </div>
+
+  <!-- ── 01 BRIEF ─────────────────────────────────────────── -->
+  <section class="section section--split">
+    <div>
+      <p class="section__num">01 — Brief</p>
+      <h2 class="section__heading">The <em>Problem</em></h2>
+    </div>
+    <div>
+      <p class="section__body">
+        Greene King were opening a new beer garden to expand their pub and grill. The addition created an immediate operational challenge: tables now existed <strong>both inside and outside the venue</strong>, across two distinct zones with layouts that shifted regularly — different every weekend, different for private events, different across seasons.
+      </p>
+      <div class="callout">
+        <p class="callout__text">
+          Waiters couldn't reliably identify tables. <em>The layout changed. The numbering didn't.</em>
+        </p>
+      </div>
+      <p class="section__body">
+        Existing systems — printed cards, chalkboard panels, fixed signs — assumed a static arrangement. Every reconfiguration broke them. The commission was to design a table number solution that could flex with the space, work indoors and outdoors, and hold up through regular use.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── IMAGE GRID 1 ─────────────────────────────────────── -->
+  <div class="img-grid">
+    <div class="img-grid__item">
+      <!-- Replace with: <img src="img/greene-king-throw.jpg" alt="Throwing the vessels on the wheel"> -->
+      <div class="img-grid__placeholder">
+        <span>Add image: throwing / forming</span>
+      </div>
+    </div>
+    <div class="img-grid__item">
+      <!-- Replace with: <img src="img/greene-king-dry.jpg" alt="Raw pieces drying before bisque firing"> -->
+      <div class="img-grid__placeholder">
+        <span>Add image: raw pieces drying</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 02 SOLUTION ──────────────────────────────────────── -->
+  <section class="section section--split">
+    <div>
+      <p class="section__num">02 — Solution</p>
+      <h2 class="section__heading">Pottery &amp;<br><em>Blackboard Paint</em></h2>
+    </div>
+    <div>
+      <p class="section__body">
+        The answer was material rather than mechanical. Each piece is a hand-thrown ceramic vessel — compact, low-centred, stable on uneven garden surfaces and resistant to being knocked. The form reads as intentional on a table. It belongs there.
+      </p>
+      <p class="section__body">
+        The exterior surface is coated in <strong>blackboard paint</strong>, applied post-bisque, turning every piece into a rewritable surface. Numbers are written in chalk and wiped clean whenever the layout changes. No reprinting. No replacing. Any configuration of tables — inside or outside — can be numbered in under a minute.
+      </p>
+      <div class="callout">
+        <p class="callout__text">
+          The blackboard surface doesn't just solve the problem — <em>it absorbs it entirely.</em>
+        </p>
+      </div>
+      <p class="section__body">
+        A fired ceramic vessel also does something a printed card or plastic holder can't: it adds to the atmosphere of the space. The weight, texture, and permanence of the material signal care without demanding attention.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── IMAGE GRID 2 ─────────────────────────────────────── -->
+  <div class="img-grid">
+    <div class="img-grid__item img-grid__item--tall">
+      <!-- Replace with: <img src="img/greene-king-finished.jpg" alt="Finished piece with chalk number"> -->
+      <div class="img-grid__placeholder">
+        <span>Add image: finished piece with chalk number</span>
+      </div>
+    </div>
+    <div class="img-grid__item img-grid__item--tall">
+      <!-- Replace with: <img src="img/greene-king-venue.jpg" alt="Pieces in venue setting"> -->
+      <div class="img-grid__placeholder">
+        <span>Add image: pieces in venue setting</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 03 PROCESS ───────────────────────────────────────── -->
+  <section class="section">
+    <p class="section__num">03 — Making</p>
+    <h2 class="section__heading" style="margin-bottom: 3rem;">Process</h2>
+
+    <div class="process-steps">
+      <div class="process-step">
+        <div><p class="process-step__num"></p></div>
+        <div>
+          <h3 class="process-step__heading">Throwing &amp; <em>Forming</em></h3>
+          <p class="process-step__body">
+            Each vessel thrown on the wheel using stoneware clay. The form is compact and weighted low — stable on uneven garden paving, unlikely to be knocked. Wall thickness kept consistent across the run.
+          </p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div><p class="process-step__num"></p></div>
+        <div>
+          <h3 class="process-step__heading">Bisque &amp; <em>Surface Prep</em></h3>
+          <p class="process-step__body">
+            Fired to bisque temperature. The exterior is left unglazed — the slight tooth of the bisque surface is essential for the blackboard paint to bond properly and survive repeated wiping without flaking.
+          </p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div><p class="process-step__num"></p></div>
+        <div>
+          <h3 class="process-step__heading">Blackboard <em>Paint Application</em></h3>
+          <p class="process-step__body">
+            Blackboard paint applied to the exterior body in controlled coats, masked to keep the rim and interior clean. Cured and conditioned with chalk before delivery — ready to write on from day one, with no ghosting.
+          </p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div><p class="process-step__num"></p></div>
+        <div>
+          <h3 class="process-step__heading">Production <em>Run of 40</em></h3>
+          <p class="process-step__body">
+            40 units produced across multiple sessions to maintain consistency across the batch. Each piece handled individually for finishing. Delivered ready for immediate use across both the indoor and beer garden zones.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="stat-row">
+      <div class="stat">
+        <p class="stat__num">4<em>0</em></p>
+        <p class="stat__label">Units Produced</p>
+      </div>
+      <div class="stat">
+        <p class="stat__num"><em>∞</em></p>
+        <p class="stat__label">Rewritable Configurations</p>
+      </div>
+      <div class="stat">
+        <p class="stat__num">2<em>×</em></p>
+        <p class="stat__label">Venue Zones Covered</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── IMAGE GRID 3 ─────────────────────────────────────── -->
+  <div class="img-grid" style="padding-bottom: 0;">
+    <div class="img-grid__item">
+      <!-- Replace with: <img src="img/greene-king-batch.jpg" alt="Full batch of 40 units"> -->
+      <div class="img-grid__placeholder">
+        <span>Add image: full batch of 40</span>
+      </div>
+    </div>
+    <div class="img-grid__item">
+      <!-- Replace with: <img src="img/greene-king-detail.jpg" alt="Surface detail and blackboard paint texture"> -->
+      <div class="img-grid__placeholder">
+        <span>Add image: surface detail / blackboard texture</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── NEXT PROJECT ──────────────────────────────────────── -->
+  <a href="raku-club.html" class="next-project">
+    <span class="next-project__label">Next Project</span>
+    <h2 class="next-project__title">Raku <em>Club</em></h2>
+    <span class="next-project__arrow">→</span>
+  </a>
+
+  <!-- ── FOOTER ────────────────────────────────────────────── -->
+  <footer>
+    <span class="footer__copy">© Sherjeel Hussain</span>
+    <div class="footer__links">
+      <a href="craft.html">← Craft</a>
+      <a href="work.html">All Work</a>
+      <a href="about.html">About</a>
+    </div>
+  </footer>
+
+  <!-- ── CURSOR SCRIPT ─────────────────────────────────────── -->
+  <script>
+    const cursor = document.getElementById('cursor');
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top  = e.clientY + 'px';
+    });
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('grow'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('grow'));
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alastair Smith Ceramics · Sherjeel Hussain</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Syne:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:#0a0a0a; --fg:#ede9e1; --fg-dim:#555; --fg-mid:#999;
+      --accent:#e8547a; --accent-2:#6dbf9e;
+      --serif:'Cormorant',Georgia,serif; --sans:'Syne',sans-serif; --body:'DM Sans',sans-serif;
+      --ease:cubic-bezier(0.25,0.1,0.25,1); --slow:0.7s var(--ease); --fast:0.3s var(--ease);
+      --gutter:clamp(1.4rem,5vw,5rem);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{font-size:16px;scroll-behavior:smooth;}
+    body{background:var(--bg);color:var(--fg);font-family:var(--body);overflow-x:hidden;cursor:none;}
+    .cursor{position:fixed;width:10px;height:10px;background:var(--fg);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width var(--fast),height var(--fast),background var(--fast);}
+    .cursor.grow{width:44px;height:44px;background:transparent;border:1px solid var(--accent);opacity:.7;}
+    .cursor-icon{position:fixed;pointer-events:none;z-index:9998;transform:translate(10px,-50%);opacity:0;transition:opacity .2s ease;display:flex;flex-direction:column;align-items:center;}
+    .cursor-icon.visible{opacity:1;}
+    .cursor-icon svg{display:block;}
+    .cursor-icon span{font-family:var(--sans);font-size:.5rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-top:4px;}
+    nav{display:flex;align-items:center;justify-content:space-between;padding:2rem var(--gutter);position:sticky;top:0;z-index:100;background:rgba(10,10,10,.92);backdrop-filter:blur(12px);border-bottom:1px solid #1a1a1a;}
+    .nav__home{font-family:var(--serif);font-size:1.1rem;font-weight:300;letter-spacing:.06em;text-decoration:none;color:var(--fg);}
+    .nav__home em{font-style:italic;color:var(--accent);}
+    .nav__links{display:flex;gap:2.5rem;}
+    .nav__links a{font-family:var(--sans);font-size:.65rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;color:var(--fg-dim);transition:color var(--fast);position:relative;}
+    .nav__links a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;background:var(--accent);transition:width var(--fast);}
+    .nav__links a:hover{color:var(--fg);}
+    .nav__links a:hover::after{width:100%;}
+    .nav__back{font-family:var(--sans);font-size:.62rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;text-decoration:none;color:var(--fg-dim);display:flex;align-items:center;gap:.5rem;transition:color var(--fast);}
+    .nav__back:hover{color:var(--fg);}
+    .nav__back::before{content:'←';}
+
+    /* HERO */
+    .hero{min-height:88vh;display:grid;grid-template-rows:1fr auto;position:relative;overflow:hidden;background:#120e0e;}
+    .hero__img{position:absolute;inset:0;background-image:url('img/alastair-hero.jpg');background-size:cover;background-position:center;filter:brightness(.45) saturate(.8);transition:filter var(--slow);}
+    .hero:hover .hero__img{filter:brightness(.55) saturate(.95);}
+    .hero__content{position:relative;z-index:2;padding:8rem var(--gutter) 4rem;display:flex;flex-direction:column;justify-content:flex-end;}
+    .hero__breadcrumb{font-family:var(--sans);font-size:.62rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:1.8rem;display:flex;align-items:center;gap:.8rem;opacity:0;animation:fadeUp .8s var(--ease) .1s forwards;}
+    .hero__breadcrumb::before{content:'';display:block;width:1.5rem;height:1px;background:var(--accent);}
+    .hero__title{font-family:var(--serif);font-size:clamp(3.5rem,10vw,9rem);font-weight:300;line-height:.9;color:var(--fg);opacity:0;animation:fadeUp .9s var(--ease) .2s forwards;}
+    .hero__title em{font-style:italic;color:var(--accent);}
+    .hero__subtitle{margin-top:1.5rem;font-family:var(--serif);font-style:italic;font-size:clamp(1rem,2vw,1.35rem);font-weight:300;color:rgba(237,233,225,.65);max-width:580px;line-height:1.5;opacity:0;animation:fadeUp .9s var(--ease) .3s forwards;}
+    .hero__meta{position:relative;z-index:2;display:flex;gap:3rem;flex-wrap:wrap;padding:2rem var(--gutter);border-top:1px solid rgba(237,233,225,.12);opacity:0;animation:fadeUp .8s var(--ease) .45s forwards;}
+    .meta-item__label{font-family:var(--sans);font-size:.56rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(237,233,225,.35);margin-bottom:.35rem;}
+    .meta-item__value{font-family:var(--body);font-size:.82rem;color:var(--fg);font-weight:300;}
+
+    /* SECTIONS */
+    .case-section{padding:6rem var(--gutter);border-bottom:1px solid #1a1a1a;}
+    .two-col{display:grid;grid-template-columns:1fr 2fr;gap:6rem;align-items:start;}
+    .section-label{font-family:var(--sans);font-size:.62rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);position:sticky;top:6rem;display:flex;align-items:center;gap:.8rem;}
+    .section-label::before{content:'';display:block;width:1.5rem;height:1px;background:var(--accent);}
+    .body-text{font-size:.92rem;line-height:1.95;color:var(--fg-mid);font-weight:300;max-width:640px;}
+    .body-text p+p{margin-top:1.3em;}
+    .body-text strong{color:var(--fg);font-weight:500;}
+    .body-text em{font-style:italic;color:var(--fg);}
+
+    /* IMAGES */
+    .img-full{width:100%;background-size:cover;background-position:center;background-color:#111;}
+    .img-grid{display:grid;gap:2px;}
+    .img-grid--2{grid-template-columns:1fr 1fr;}
+    .img-grid--3{grid-template-columns:1fr 1fr 1fr;}
+    .img-grid--asymm{grid-template-columns:2fr 1fr;}
+    .img-slot{background:#111;background-size:cover;background-position:center;aspect-ratio:4/3;display:block;}
+    .img-slot--tall{aspect-ratio:3/4;}
+    .img-slot--port{aspect-ratio:9/16;}
+
+    /* MARK SECTION */
+    .mark-split{display:grid;grid-template-columns:1fr 1fr;gap:2px;align-items:stretch;}
+    .mark-visual{background:#111;min-height:400px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+    .mark-visual__img{width:100%;height:100%;object-fit:contain;padding:3rem;background-image:url('img/alastair-logo.svg');background-size:contain;background-repeat:no-repeat;background-position:center;}
+    .mark-info{padding:4rem 3rem;background:#0e0e0e;display:flex;flex-direction:column;justify-content:center;}
+    .mark-info__label{font-family:var(--sans);font-size:.58rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:1.5rem;}
+    .mark-info__title{font-family:var(--serif);font-size:clamp(1.8rem,3vw,2.8rem);font-weight:300;line-height:1.1;color:var(--fg);margin-bottom:1.5rem;}
+    .mark-info__title em{font-style:italic;color:var(--accent);}
+    .mark-info__body{font-size:.88rem;line-height:1.9;color:var(--fg-mid);font-weight:300;}
+    .mark-info__body p+p{margin-top:1em;}
+
+    /* DEVICE MOCKUPS */
+    .device-row{display:grid;grid-template-columns:2fr 1fr;gap:2px;}
+
+    /* SPEC TABLE */
+    .spec-table{width:100%;max-width:640px;border-collapse:collapse;}
+    .spec-table tr{border-bottom:1px solid #1e1e1e;}
+    .spec-table td{padding:1rem 0;font-size:.82rem;font-weight:300;vertical-align:top;}
+    .spec-table td:first-child{font-family:var(--sans);font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);width:9rem;padding-right:2rem;padding-top:1.1rem;}
+    .spec-table td:last-child{color:var(--fg-mid);line-height:1.6;}
+
+    /* PULL QUOTE */
+    .pull-quote{padding:6rem var(--gutter);background:#0e0e0e;border-top:1px solid #1a1a1a;border-bottom:1px solid #1a1a1a;}
+    .pull-quote blockquote{font-family:var(--serif);font-size:clamp(1.6rem,3.5vw,3rem);font-weight:300;font-style:italic;line-height:1.3;color:var(--fg);max-width:820px;}
+    .pull-quote blockquote em{color:var(--accent);font-style:normal;}
+    .pull-quote cite{display:block;margin-top:2rem;font-family:var(--sans);font-size:.6rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--fg-dim);font-style:normal;}
+
+    /* NOTICE BANNER */
+    .notice{margin:0 var(--gutter);padding:1.5rem 2rem;background:#0e0e0e;border-left:2px solid #333;display:flex;align-items:flex-start;gap:1.2rem;}
+    .notice__icon{font-size:1rem;color:var(--fg-dim);flex-shrink:0;padding-top:.1rem;}
+    .notice__text{font-size:.78rem;line-height:1.7;color:var(--fg-mid);font-weight:300;}
+    .notice__text strong{color:var(--fg);font-weight:500;}
+
+    /* NEXT */
+    .next-project{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:2rem;padding:5rem var(--gutter);border-top:1px solid #1a1a1a;}
+    .next-project__label{font-family:var(--sans);font-size:.62rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--fg-dim);margin-bottom:.8rem;}
+    .next-project__title{font-family:var(--serif);font-size:clamp(1.8rem,3.5vw,3.2rem);font-weight:300;color:var(--fg);text-decoration:none;display:block;transition:color var(--fast);}
+    .next-project__title em{font-style:italic;color:var(--accent);}
+    .next-project__title:hover{color:var(--fg-mid);}
+    .next-project__arrow{font-size:3rem;color:var(--fg-dim);text-decoration:none;transition:color var(--fast),transform var(--fast);}
+    .next-project__arrow:hover{color:var(--accent);transform:translateX(8px);}
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+    @media(max-width:1024px){.mark-split,.device-row{grid-template-columns:1fr;}}
+    @media(max-width:768px){
+      body{cursor:auto;}.cursor,.cursor-icon{display:none;}
+      .hero__content{padding:5rem 1.4rem 3rem;}
+      .two-col{grid-template-columns:1fr;gap:2.5rem;}
+      .section-label{position:static;}
+      .case-section{padding:4rem 1.4rem;}
+      .img-grid--2,.img-grid--3,.img-grid--asymm{grid-template-columns:1fr;}
+      .pull-quote{padding:4rem 1.4rem;}
+      .nav__links{gap:1.2rem;}
+      .notice{margin:0 1.4rem;}
+    }
+    @media(max-width:480px){
+      nav{padding:1.2rem 1rem;}
+      .nav__links a{font-size:.56rem;letter-spacing:.1em;}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-icon" id="cursorIcon"></div>
+
+  <nav>
+    <a href="index.html" class="nav__home">Sherjeel <em>Hussain</em></a>
+    <div style="display:flex;align-items:center;gap:3rem;">
+      <a href="digital.html" class="nav__back">Digital</a>
+      <div class="nav__links">
+        <a href="digital.html" data-cursor="monitor">Digital</a>
+        <a href="craft.html" data-cursor="pot">Craft</a>
+        <a href="kala-topi.html">Kala Topi</a>
+        <a href="about.html">About</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero__img"></div>
+    <!-- img/alastair-hero.jpg — best ceramics product photo from the shoot -->
+    <div class="hero__content">
+      <p class="hero__breadcrumb">Brand Identity · Web Design &amp; Build · Print — 2024</p>
+      <h1 class="hero__title">Alastair Smith<br><em>Ceramics</em></h1>
+      <p class="hero__subtitle">A working ceramicist deserved a site that worked as hard as he does. Built to show the craft — and sell it.</p>
+    </div>
+    <div class="hero__meta">
+      <div class="meta-item"><p class="meta-item__label">Client</p><p class="meta-item__value">Alastair Smith</p></div>
+      <div class="meta-item"><p class="meta-item__label">Scope</p><p class="meta-item__value">Brand Identity · Web Design · Build · Print</p></div>
+      <div class="meta-item"><p class="meta-item__label">Location</p><p class="meta-item__value">Deemouth Artist Studios, Aberdeen</p></div>
+      <div class="meta-item"><p class="meta-item__label">Stack</p><p class="meta-item__value">HTML · CSS · JavaScript · Shopify (linked)</p></div>
+      <div class="meta-item"><p class="meta-item__label">Status</p><p class="meta-item__value">Live — Netlify</p></div>
+    </div>
+  </section>
+
+  <!-- THE BRIEF -->
+  <div class="case-section">
+    <div class="two-col">
+      <p class="section-label">The Brief</p>
+      <div class="body-text">
+        <p>Alastair Smith is a ceramicist working from Deemouth Artist Studios in Aberdeen, producing <strong>handcrafted, wood and gas fired functional wares</strong> — mugs, bowls, plates — made for everyday use. The work is serious. The existing digital presence wasn't.</p>
+        <p>The brief was to build a site that matched the quality of the ceramics: warm without being rustic, professional without being cold. It needed to do two things simultaneously — <em>tell the story of the maker</em>, and <em>convert visitors into buyers</em> via a linked Shopify store. Most ceramics sites manage one of those. This one had to hold both.</p>
+        <p>Alongside the site: a full brand identity including logo and business cards. Everything from first mark to final deployment delivered by SCM Design Studio.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FULL IMAGE -->
+  <div class="img-full" style="aspect-ratio:21/9;background-image:url('img/alastair-wide.jpg');">
+    <!-- img/alastair-wide.jpg — wide ceramics flat lay or studio shot -->
+  </div>
+
+  <!-- THE MARK -->
+  <div class="case-section" style="padding:0;border-bottom:1px solid #1a1a1a;">
+    <div class="mark-split">
+      <div class="mark-visual">
+        <div class="mark-visual__img"></div>
+        <!-- img/alastair-logo.svg or img/alastair-logo.png — logo on dark bg -->
+      </div>
+      <div class="mark-info">
+        <p class="mark-info__label">The Mark</p>
+        <h2 class="mark-info__title">A pottery wheel that's also<br>a <em>St Andrew's Cross</em></h2>
+        <div class="mark-info__body">
+          <p>The brief for the logo was to make something that felt genuinely Scottish and genuinely ceramic at the same time — without being obvious about either. The solution was structural: the spokes of a pottery wheel, rotated 45°, form the exact geometry of the Saltire.</p>
+          <p>One mark. Two readings. Neither one announced. The dark chocolate colour was Alastair's own — pulled from the fired clay surfaces he produces, deep and warm without being brown.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- IMAGE TRIO — desktop, mobile, cards -->
+  <div class="img-grid img-grid--3" style="margin-bottom:2px;">
+    <div class="img-slot" style="background-image:url('img/alastair-desktop.jpg');"></div>
+    <!-- img/alastair-desktop.jpg — desktop browser mockup -->
+    <div class="img-slot" style="background-image:url('img/alastair-mobile.jpg');"></div>
+    <!-- img/alastair-mobile.jpg — mobile view (IOSheropage.jpg) -->
+    <div class="img-slot" style="background-image:url('img/alastair-cards.jpg');"></div>
+    <!-- img/alastair-cards.jpg — business card print mockup -->
+  </div>
+
+  <!-- THE SITE -->
+  <div class="case-section">
+    <div class="two-col">
+      <p class="section-label">The Site</p>
+      <div class="body-text">
+        <p>Five pages, fully coded. Home, About, Process, Gallery, Contact. The navigation structure was designed to serve two distinct journeys: someone who arrived ready to buy, and someone who arrived curious about the maker and needed to be convinced.</p>
+        <p>The <strong>Process page</strong> does the heaviest strategic work — it's the section that turns a browser into a buyer by making the labour visible. Wood-firing and Raku are slow, skilled, physically demanding processes. Showing that process isn't just storytelling — it's <em>price justification</em>. A handmade piece that's been through a 12-hour wood firing isn't priced the same as factory ceramics, and the site makes sure the visitor understands why before they reach the shop.</p>
+        <p>The <strong>Gallery</strong> is filterable by type. The photography — all shot by Alastair — was excellent raw material. The grid layout was designed to let the pieces breathe without becoming a catalogue.</p>
+        <p>The Shopify store was designed to sit as a linked destination from the site rather than being embedded. The integration was complete on the development side — an unresolved payment dispute with the client meant the store was never activated. The site is live on Netlify and demonstrates the full scope of the build.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- NOTICE -->
+  <div class="notice" style="margin-bottom:0;">
+    <span class="notice__icon">↗</span>
+    <p class="notice__text"><strong>Site is live:</strong> <a href="https://frabjous-frangipane-243c8e.netlify.app/" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;">frabjous-frangipane-243c8e.netlify.app</a> — Shopify integration was completed on the build side but not activated due to a client payment dispute. The design and build scope is fully represented by the live site.</p>
+  </div>
+
+  <!-- PULL QUOTE -->
+  <div class="pull-quote" style="margin-top:2px;">
+    <blockquote>
+      The mark had to be Scottish and ceramic at the same time — without <em>announcing</em> either one.
+      <cite>— Design Rationale, Alastair Smith Ceramics, 2024</cite>
+    </blockquote>
+  </div>
+
+  <!-- SPEC -->
+  <div class="case-section">
+    <div class="two-col">
+      <p class="section-label">Specification</p>
+      <table class="spec-table">
+        <tr><td>Identity</td><td>Logo, wordmark and brandmark variants. Dark chocolate primary colour pulled from fired clay surfaces.</td></tr>
+        <tr><td>Site</td><td>Five-page coded site. Home, About, Process, Gallery, Contact.</td></tr>
+        <tr><td>Stack</td><td>HTML, CSS, JavaScript. Hosted on Netlify. Shopify store linked as external destination.</td></tr>
+        <tr><td>Mobile</td><td>Fully responsive. Mobile-first layout on gallery and process pages.</td></tr>
+        <tr><td>Print</td><td>Business cards. Dark chocolate on cream stock, logo and wordmark, contact details.</td></tr>
+        <tr><td>Photography</td><td>Existing photoshoot by client — 50+ product images. Curated and organised for web delivery.</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- NEXT PROJECT -->
+  <div class="next-project">
+    <div>
+      <p class="next-project__label">Next Project</p>
+      <a href="andras.html" class="next-project__title">Andra's Garden <em>Heaven</em></a>
+    </div>
+    <a href="andras.html" class="next-project__arrow">→</a>
+  </div>
+
+  <script>
+    const cursor=document.getElementById("cursor"),cursorIcon=document.getElementById("cursorIcon");
+    const ICONS={
+      monitor:`<svg width="28" height="22" viewBox="0 0 28 22" fill="none"><rect x="1" y="1" width="26" height="17" rx="2" stroke="#e8547a" stroke-width="1.5"/><rect x="9" y="18" width="10" height="2" fill="#e8547a" opacity=".5"/><rect x="6" y="20" width="16" height="1.5" fill="#e8547a" opacity=".5"/><circle cx="14" cy="9.5" r="1.5" fill="#e8547a" opacity=".4"/></svg><span>Digital</span>`,
+      pot:`<svg width="22" height="26" viewBox="0 0 22 26" fill="none"><path d="M7 4C5 4 2 7 2 13C2 19 5 23 11 23C17 23 20 19 20 13C20 7 17 4 15 4Z" stroke="#6dbf9e" stroke-width="1.5" fill="none"/><path d="M7 4C8 2 10 1 11 1C12 1 14 2 15 4" stroke="#6dbf9e" stroke-width="1.5" fill="none"/></svg><span>Craft</span>`
+    };
+    document.addEventListener("mousemove",e=>{
+      cursor.style.left=e.clientX+"px";cursor.style.top=e.clientY+"px";
+      cursorIcon.style.left=(e.clientX+18)+"px";cursorIcon.style.top=e.clientY+"px";
+    });
+    document.querySelectorAll("[data-cursor]").forEach(el=>{
+      el.addEventListener("mouseenter",()=>{cursor.classList.add("grow");cursorIcon.innerHTML=ICONS[el.dataset.cursor]||"";cursorIcon.classList.add("visible");});
+      el.addEventListener("mouseleave",()=>{cursor.classList.remove("grow");cursorIcon.classList.remove("visible");});
+    });
+    document.querySelectorAll("a:not([data-cursor])").forEach(el=>{
+      el.addEventListener("mouseenter",()=>cursor.classList.add("grow"));
+      el.addEventListener("mouseleave",()=>cursor.classList.remove("grow"));
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sherjeel Hussain</title>
+  <meta name="description" content="Sherjeel Hussain is a product designer, UI designer, and ceramicist based in Glasgow, Scotland. Working across digital brand identity, web design, and ceramic practice using multanni mitti and British stoneware." />
+  <meta name="keywords" content="Sherjeel Hussain, designer Glasgow, ceramicist Glasgow, UI designer Scotland, product designer Glasgow, brand identity Glasgow" />
+  <meta name="author" content="Sherjeel Hussain" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://sherjeelhussain.co.uk/index.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Sherjeel Hussain — Designer & Ceramicist, Glasgow" />
+  <meta property="og:description" content="Sherjeel Hussain is a product designer, UI designer, and ceramicist based in Glasgow, Scotland. Working across digital brand identity, web design, and ceramic practice using multanni mitti and British stoneware." />
+  <meta property="og:url" content="https://sherjeelhussain.co.uk/index.html" />
+  <meta property="og:image" content="https://sherjeelhussain.co.uk/img/og-default.jpg" />
+  <meta property="og:site_name" content="Sherjeel Hussain — Designer & Ceramicist" />
+  <meta property="og:locale" content="en_GB" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Sherjeel Hussain — Designer & Ceramicist, Glasgow" />
+  <meta name="twitter:description" content="Sherjeel Hussain is a product designer, UI designer, and ceramicist based in Glasgow, Scotland. Working across digital brand identity, web design, and ceramic practice using multanni mitti and British stoneware." />
+  <meta name="twitter:image" content="https://sherjeelhussain.co.uk/img/og-default.jpg" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Sherjeel Hussain",
+    "url": "https://sherjeelhussain.co.uk",
+    "jobTitle": ["UI Designer", "Product Designer", "Ceramicist"],
+    "worksFor": {"@type": "Organization", "name": "SCM Design Studio"},
+    "alumniOf": [{"@type": "EducationalOrganization", "name": "Robert Gordon University, Aberdeen"}, {"@type": "EducationalOrganization", "name": "Gray's School of Art, Aberdeen"}],
+    "address": {"@type": "PostalAddress", "addressLocality": "Glasgow", "addressCountry": "GB"},
+    "knowsAbout": ["UI Design", "Product Design", "Ceramics", "Brand Identity", "Multanni Mitti", "Raku Firing", "Shopify", "Web Development"],
+    "sameAs": ["https://www.linkedin.com/in/sherjeel-hussain-0652431b9/", "https://www.instagram.com/sherjeel_h27_design_/"]
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Syne:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── TOKENS ─────────────────────────────────────────── */
+    :root {
+      --bg:        #0a0a0a;
+      --fg:        #ede9e1;
+      --fg-dim:    #7a7a7a;
+      --accent:    #e8547a;   /* jacket pink  */
+      --accent-2:  #6dbf9e;   /* jacket mint  */
+      --gold:      #c8b882;   /* jacket champagne */
+      --panel-l:   #0e0e10;   /* digital side */
+      --panel-r:   #0e100e;   /* craft side   */
+      --overlay:   rgba(10, 10, 10, 0.52);
+      --overlay-h: rgba(10, 10, 10, 0.28);
+      --serif:     'Cormorant', Georgia, serif;
+      --sans:      'Syne', sans-serif;
+      --ease:      cubic-bezier(0.25, 0.1, 0.25, 1);
+      --slow:      0.6s var(--ease);
+      --fast:      0.3s var(--ease);
+    }
+
+    /* ─── RESET ──────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--sans);
+      min-height: 100vh;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* ─── CUSTOM CURSOR ──────────────────────────────────── */
+    .cursor {
+      position: fixed;
+      width: 10px; height: 10px;
+      background: var(--fg);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width var(--fast), height var(--fast),
+                  background var(--fast), opacity var(--fast);
+    }
+    .cursor.grow {
+      width: 40px; height: 40px;
+      background: transparent;
+      border: 1px solid var(--fg);
+      opacity: 0.6;
+    }
+    .cursor-icon {
+      position: fixed; pointer-events: none; z-index: 9998;
+      transform: translate(10px, -50%); opacity: 0;
+      transition: opacity 0.2s ease;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .cursor-icon.visible { opacity: 1; }
+    .cursor-icon svg { display: block; }
+    .cursor-icon span {
+      font-family: var(--sans); font-size: 0.5rem; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--fg); margin-top: 4px;
+    }
+
+    /* ─── HEADER ─────────────────────────────────────────── */
+    header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 4.5rem 2rem 3rem;
+      text-align: center;
+      position: relative;
+      z-index: 10;
+      /* fade in on load */
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.9s var(--ease) 0.1s forwards;
+    }
+
+    .site-name {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: clamp(2.8rem, 7vw, 6rem);
+      letter-spacing: 0.06em;
+      line-height: 1;
+      color: var(--fg);
+    }
+
+    .site-name span {
+      font-style: italic;
+      color: var(--accent); /* jacket pink */
+    }
+
+    .site-tagline {
+      margin-top: 1.4rem;
+      max-width: 540px;
+      font-family: var(--sans);
+      font-size: clamp(0.75rem, 1.4vw, 0.9rem);
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      line-height: 1.75;
+      color: var(--fg-dim);
+    }
+
+    /* ─── SPLIT SCREEN ───────────────────────────────────── */
+    .gateway {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      height: clamp(360px, 60vh, 680px);
+      margin: 0 2rem;
+      gap: 2px;
+      opacity: 0;
+      animation: fadeUp 0.9s var(--ease) 0.4s forwards;
+    }
+
+    .panel {
+      position: relative;
+      overflow: hidden;
+      cursor: none;
+    }
+
+    /* Placeholder gradient bg — swap for real <img> or background-image */
+    .panel__bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      transform: scale(1.04);
+      transition: transform var(--slow), filter var(--slow);
+      filter: grayscale(30%);
+    }
+
+    .panel--digital .panel__bg {
+      /* REPLACE: background-image: url('your-digital-image.jpg'); */
+      background: linear-gradient(135deg, #1a1020 0%, #0e0a18 40%, #160d1e 100%);
+    }
+    .panel--craft .panel__bg {
+      /* REPLACE: background-image: url('your-craft-image.jpg'); */
+      background: linear-gradient(135deg, #0a1610 0%, #081208 40%, #0d1a10 100%);
+    }
+
+    .panel__overlay {
+      position: absolute;
+      inset: 0;
+      background: var(--overlay);
+      transition: background var(--slow);
+    }
+
+    /* Grain texture overlay */
+    .panel__overlay::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.06'/%3E%3C/svg%3E");
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    /* Panel label — sits top-left */
+    .panel__label {
+      position: absolute;
+      top: 1.6rem;
+      left: 1.8rem;
+      font-family: var(--sans);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--fg-dim);
+      transition: color var(--fast);
+      z-index: 2;
+    }
+
+    /* Discipline title — large, sits bottom */
+    .panel__title {
+      position: absolute;
+      bottom: 5.5rem;
+      left: 1.8rem;
+      right: 1.8rem;
+      font-family: var(--serif);
+      font-size: clamp(1.8rem, 3.5vw, 3rem);
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--fg);
+      opacity: 0.6;
+      transition: opacity var(--slow);
+      z-index: 2;
+    }
+
+    .panel__title em {
+      font-style: italic;
+      display: block;
+    }
+
+    /* Enter button */
+    .panel__btn {
+      position: absolute;
+      bottom: 1.8rem;
+      left: 1.8rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: var(--sans);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--fg);
+      border: 1px solid rgba(237,233,225,0.25);
+      padding: 0.75rem 1.4rem;
+      transition: border-color var(--fast), color var(--fast),
+                  background var(--fast), gap var(--fast);
+      z-index: 2;
+    }
+
+    .panel__btn .arrow {
+      display: inline-block;
+      transition: transform var(--fast);
+    }
+
+    /* ─── HOVER STATES ───────────────────────────────────── */
+    .panel:hover .panel__bg {
+      transform: scale(1);
+      filter: grayscale(0%);
+    }
+    .panel:hover .panel__overlay {
+      background: var(--overlay-h);
+    }
+    .panel:hover .panel__title {
+      opacity: 1;
+    }
+    .panel:hover .panel__btn {
+      gap: 0.9rem;
+    }
+    .panel:hover .panel__btn .arrow {
+      transform: translateX(4px);
+    }
+
+    /* Accent line that grows on hover */
+    .panel::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 2px;
+      transition: width var(--slow);
+      z-index: 3;
+    }
+    .panel--digital::before { background: var(--accent); }
+    .panel--craft::before   { background: var(--accent-2); }
+    .panel:hover::before {
+      width: 100%;
+    }
+    .panel--digital:hover .panel__label { color: var(--accent); }
+    .panel--craft:hover .panel__label   { color: var(--accent-2); }
+    .panel--digital:hover .panel__btn { border-color: var(--accent); background: var(--accent); color: #fff; }
+    .panel--craft:hover .panel__btn   { border-color: var(--accent-2); background: var(--accent-2); color: #0a0a0a; }
+
+    /* ─── FOOTER LINKS ───────────────────────────────────── */
+    .footer-nav {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      padding: 2.8rem 2rem 3.5rem;
+      gap: 1rem;
+      opacity: 0;
+      animation: fadeUp 0.9s var(--ease) 0.7s forwards;
+    }
+
+    .footer-nav__left {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+    }
+
+    .footer-nav a {
+      font-family: var(--sans);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--fg-dim);
+      position: relative;
+      transition: color var(--fast);
+    }
+
+    .footer-nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 0;
+      width: 0; height: 1px;
+      background: var(--accent);
+      transition: width var(--fast);
+    }
+
+    .footer-nav a:hover {
+      color: var(--fg);
+    }
+    .footer-nav a:hover::after {
+      width: 100%;
+    }
+
+    .footer-nav__all {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1rem;
+      color: var(--fg-dim) !important;
+      letter-spacing: 0.02em !important;
+    }
+
+    .footer-nav__all:hover {
+      color: var(--fg) !important;
+    }
+
+    .divider {
+      width: 1px;
+      height: 14px;
+      background: #333;
+      flex-shrink: 0;
+    }
+
+    /* ─── KEYFRAMES ──────────────────────────────────────── */
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── MOBILE ─────────────────────────────────────────── */
+    @media (max-width: 640px) {
+      body { cursor: auto; }
+      .cursor, .cursor-icon { display: none; }
+
+      .gateway {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+        margin: 0 1rem;
+        height: clamp(500px, 80vh, 720px);
+      }
+      .panel__title { font-size: 1.6rem; }
+
+      .footer-nav {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.2rem;
+        padding: 2rem 1rem 3rem;
+      }
+      .footer-nav__left { flex-wrap: wrap; gap: 1rem; }
+    }
+    @media (max-width: 480px) {
+      .gateway { height: clamp(420px, 90vh, 640px); margin: 0 0.5rem; }
+      .panel__title { font-size: 1.4rem; }
+      header { padding: 3rem 1.2rem 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Custom cursor -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-icon" id="cursorIcon"></div>
+
+  <!-- ── HEADER ────────────────────────────────────────── -->
+  <header>
+    <h1 class="site-name">Sherjeel <span>Hussain</span></h1>
+    <p class="site-tagline">
+      Designer working across physical and digital form. Trained in industrial
+      design and ceramic craft — practice rooted in material honesty, systems
+      thinking, and the productive tension between the two.
+    </p>
+  </header>
+
+  <!-- ── SPLIT GATEWAY ─────────────────────────────────── -->
+  <main>
+    <div class="gateway">
+
+      <!-- Left: Digital & Brand -->
+      <div class="panel panel--digital" data-cursor="monitor">
+        <div class="panel__bg"></div>
+        <div class="panel__overlay"></div>
+        <span class="panel__label">01 — Digital &amp; Brand</span>
+        <h2 class="panel__title">
+          UI &amp; Product
+          <em>Design</em>
+        </h2>
+        <a href="digital.html" class="panel__btn">
+          Enter <span class="arrow">→</span>
+        </a>
+      </div>
+
+      <!-- Right: Product & Craft -->
+      <div class="panel panel--craft" data-cursor="pot">
+        <div class="panel__bg"></div>
+        <div class="panel__overlay"></div>
+        <span class="panel__label">02 — Product &amp; Craft</span>
+        <h2 class="panel__title">
+          Physical &amp;
+          <em>Making</em>
+        </h2>
+        <a href="craft.html" class="panel__btn">
+          Enter <span class="arrow">→</span>
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ── FOOTER NAV ─────────────────────────────────────── -->
+  <nav class="footer-nav">
+    <div class="footer-nav__left">
+      <a href="work.html" class="footer-nav__all">View all work &nbsp;↗</a>
+      <div class="divider"></div>
+      <a href="craft.html">Craft</a>
+      <a href="digital.html">Digital</a>
+      <a href="about.html">About</a>
+      <a href="about.html#contact">Contact</a>
+    </div>
+    <div class="footer-nav__right">
+      <a href="https://www.linkedin.com/in/sherjeel-hussain-0652431b9/" target="_blank" rel="noopener">LinkedIn</a>
+      &nbsp;&nbsp;
+      <a href="https://www.instagram.com/sherjeel_h27_design_/" target="_blank" rel="noopener">Instagram</a>
+    </div>
+  </nav>
+
+  <!-- ── CURSOR SCRIPT ──────────────────────────────────── -->
+  <script>
+    const cursor     = document.getElementById('cursor');
+    const cursorIcon = document.getElementById('cursorIcon');
+    const ICONS = {
+      monitor: `<svg width="28" height="22" viewBox="0 0 28 22" fill="none"><rect x="1" y="1" width="26" height="17" rx="2" stroke="#e8547a" stroke-width="1.5"/><rect x="9" y="18" width="10" height="2" fill="#e8547a" opacity="0.5"/><rect x="6" y="20" width="16" height="1.5" fill="#e8547a" opacity="0.5"/><circle cx="14" cy="9.5" r="1.5" fill="#e8547a" opacity="0.4"/></svg><span>Digital</span>`,
+      pot:     `<svg width="22" height="26" viewBox="0 0 22 26" fill="none"><path d="M7 4 C5 4 2 7 2 13 C2 19 5 23 11 23 C17 23 20 19 20 13 C20 7 17 4 15 4 Z" stroke="#6dbf9e" stroke-width="1.5" fill="none"/><path d="M7 4 C8 2 10 1 11 1 C12 1 14 2 15 4" stroke="#6dbf9e" stroke-width="1.5" fill="none"/><path d="M5 10 C3 9.5 2.5 8 3 7" stroke="#6dbf9e" stroke-width="1.2" stroke-linecap="round" fill="none"/></svg><span>Craft</span>`
+    };
+
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top  = e.clientY + 'px';
+      cursorIcon.style.left = (e.clientX + 18) + 'px';
+      cursorIcon.style.top  = e.clientY + 'px';
+    });
+
+    document.querySelectorAll('[data-cursor]').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursor.classList.add('grow');
+        cursorIcon.innerHTML = ICONS[el.dataset.cursor] || '';
+        cursorIcon.classList.add('visible');
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.classList.remove('grow');
+        cursorIcon.classList.remove('visible');
+      });
+    });
+
+    document.querySelectorAll('a:not([data-cursor])').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('grow'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('grow'));
+    });
+  </script>
+
+</body>
+</html>

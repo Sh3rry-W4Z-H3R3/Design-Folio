@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Product & Craft — Sherjeel Hussain</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Syne:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --bg: #0a0a0a;
+  --fg: #ede9e1;
+  --fg-dim: #555;
+  --fg-mid: #999;
+  --accent: #6dbf9e;
+  --accent-2: #e8547a;
+  --serif: 'Cormorant', Georgia, serif;
+  --sans: 'Syne', sans-serif;
+  --body: 'DM Sans', sans-serif;
+  --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --slow: 0.7s var(--ease);
+  --fast: 0.3s var(--ease);
+  --gutter: clamp(1.2rem, 4vw, 3rem);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--body);
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ── CURSOR ───────────────────────────────────────────── */
+.cursor {
+  position: fixed;
+  width: 10px; height: 10px;
+  background: var(--fg);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width var(--fast), height var(--fast), background var(--fast);
+}
+.cursor.grow {
+  width: 44px; height: 44px;
+  background: transparent;
+  border: 1px solid var(--accent);
+  opacity: 0.7;
+}
+.cursor-icon {
+  position: fixed; pointer-events: none; z-index: 9998;
+  transform: translate(10px, -50%);
+  opacity: 0; transition: opacity 0.2s ease;
+  display: flex; flex-direction: column; align-items: center;
+}
+.cursor-icon.visible { opacity: 1; }
+.cursor-icon svg { display: block; }
+.cursor-icon span {
+  font-family: var(--sans); font-size: 0.5rem; font-weight: 700;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--accent); margin-top: 4px;
+}
+
+/* ── NAV ──────────────────────────────────────────────── */
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem var(--gutter);
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(10,10,10,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid #1a1a1a;
+}
+.nav__home {
+  font-family: var(--serif);
+  font-size: 1.1rem; font-weight: 300;
+  letter-spacing: 0.06em;
+  text-decoration: none; color: var(--fg);
+}
+.nav__home em { font-style: italic; color: var(--accent-2); }
+.nav__links { display: flex; gap: 2.5rem; }
+.nav__links a {
+  font-family: var(--sans);
+  font-size: 0.65rem; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  text-decoration: none; color: var(--fg-dim);
+  transition: color var(--fast);
+  position: relative;
+}
+.nav__links a::after {
+  content: ''; position: absolute;
+  bottom: -3px; left: 0; width: 0; height: 1px;
+  background: var(--accent); transition: width var(--fast);
+}
+.nav__links a:hover, .nav__links a.active { color: var(--fg); }
+.nav__links a:hover::after, .nav__links a.active::after { width: 100%; }
+
+/* ── PAGE HEADER ──────────────────────────────────────── */
+.page-header {
+  padding: 5rem var(--gutter) 4rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem; align-items: end;
+  opacity: 0;
+  animation: fadeUp 0.8s var(--ease) 0.1s forwards;
+}
+.page-header__eyebrow {
+  font-family: var(--sans);
+  font-size: 0.65rem; font-weight: 700;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 1.2rem;
+  display: flex; align-items: center; gap: 0.8rem;
+}
+.page-header__eyebrow::before {
+  content: ''; display: block;
+  width: 2rem; height: 1px; background: var(--accent);
+}
+.page-header__title {
+  font-family: var(--serif);
+  font-size: clamp(3rem, 7vw, 6.5rem);
+  font-weight: 300; line-height: 0.95;
+}
+.page-header__title em { font-style: italic; display: block; }
+.page-header__desc {
+  font-family: var(--body);
+  font-size: 0.82rem; line-height: 1.85;
+  color: var(--fg-mid); max-width: 400px;
+  align-self: end; font-weight: 300;
+}
+
+/* ── PHILOSOPHY STRIP ─────────────────────────────────── */
+.philosophy {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2px;
+  padding: 0 var(--gutter) 4rem;
+  opacity: 0;
+  animation: fadeUp 0.8s var(--ease) 0.25s forwards;
+}
+.philosophy-card {
+  padding: 2rem 1.8rem;
+  background: #111;
+  border-top: 1px solid #222;
+  transition: border-color var(--fast);
+}
+.philosophy-card:hover { border-top-color: var(--accent); }
+.philosophy-card__num {
+  font-family: var(--sans);
+  font-size: 0.58rem; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 1rem;
+}
+.philosophy-card__heading {
+  font-family: var(--serif);
+  font-size: 1.2rem; font-weight: 300;
+  color: var(--fg); margin-bottom: 0.8rem;
+  line-height: 1.2;
+}
+.philosophy-card__heading em { font-style: italic; }
+.philosophy-card__body {
+  font-size: 0.78rem; line-height: 1.75;
+  color: var(--fg-mid); font-weight: 300;
+}
+
+/* ── FILTER BAR ───────────────────────────────────────── */
+.filter-bar {
+  display: flex; gap: 0.4rem;
+  padding: 0 var(--gutter) 3rem;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeUp 0.8s var(--ease) 0.3s forwards;
+}
+.filter-btn {
+  font-family: var(--sans);
+  font-size: 0.62rem; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  background: transparent;
+  border: 1px solid #2a2a2a;
+  color: var(--fg-dim); padding: 0.55rem 1rem;
+  cursor: none;
+  transition: border-color var(--fast), color var(--fast), background var(--fast);
+}
+.filter-btn:hover, .filter-btn.active {
+  border-color: var(--accent); color: var(--accent);
+  background: rgba(109, 191, 158, 0.08);
+}
+
+/* ── PROJECT GRID ─────────────────────────────────────── */
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 2px;
+  padding: 0 var(--gutter) 2rem;
+  opacity: 0;
+  animation: fadeUp 0.8s var(--ease) 0.4s forwards;
+}
+
+.card { grid-column: span 6; }
+.card--wide { grid-column: span 8; }
+.card--narrow { grid-column: span 4; }
+.card--full { grid-column: span 12; }
+.card--third { grid-column: span 4; }
+
+.card {
+  position: relative; overflow: hidden;
+  cursor: none; aspect-ratio: 4/3;
+  background: #111; display: block;
+  text-decoration: none; color: inherit;
+}
+.card--tall { aspect-ratio: 3/4; }
+.card--wide { aspect-ratio: 16/7; }
+.card--cinema { aspect-ratio: 21/9; }
+
+.card__img {
+  position: absolute; inset: 0;
+  background-size: cover; background-position: center;
+  transform: scale(1.05);
+  transition: transform var(--slow), filter var(--slow);
+  filter: grayscale(20%) brightness(0.75);
+  object-fit: contain;
+}
+
+.card--canti .card__img {
+  background-image: url('./imgs-craft/Canti/LandscapeHero.png');
+  background-color: #1a1208;
+  background-position: center;
+}
+.card--residency .card__img {
+  background-image: url('./imgs-craft/BLEND/gcs pics-2.jpg');
+  background-color: #181410;
+  background-position: center;
+}
+.card--thudpuk .card__img {
+  background-image: url('./imgs-craft/Thudpuk/FINAL RENDER.jpeg');
+  background-color: #161210;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.card--origin .card__img {
+  background-image: url('./imgs-craft/Origin/lamp proto rear 34.jpg');
+  background-color: #101418;
+  background-position: center;
+  background-size: 80%;
+  background-repeat: no-repeat;
+}
+.card--multanni .card__img {
+  background-image: url('img/multanni-hero.jpg');
+  background-color: #1a1208;
+  background-position: center;
+}
+.card--kt-ceramics .card__img {
+  background-image: url('img/kt-ceramics-hero.jpg');
+  background-color: #1a0e08;
+  background-position: center;
+}
+
+.card__overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.88) 0%,
+    rgba(0,0,0,0.2) 50%,
+    rgba(0,0,0,0) 100%
+  );
+}
+.card__info {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 1.6rem 1.8rem; z-index: 2;
+  transform: translateY(4px);
+  transition: transform var(--slow);
+}
+.card__tags {
+  display: flex; gap: 0.5rem;
+  flex-wrap: wrap; margin-bottom: 0.7rem;
+}
+.card__tag {
+  font-family: var(--sans);
+  font-size: 0.58rem; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--accent); opacity: 0;
+  transform: translateY(6px);
+  transition: opacity var(--fast), transform var(--fast);
+}
+.card__title {
+  font-family: var(--serif);
+  font-size: clamp(1.1rem, 2vw, 1.7rem);
+  font-weight: 300; line-height: 1.15; color: var(--fg);
+}
+.card__title em { font-style: italic; }
+.card__sub {
+  font-family: var(--body);
+  font-size: 0.68rem; color: var(--fg-mid);
+  margin-top: 0.35rem; letter-spacing: 0.04em;
+  font-weight: 300; opacity: 0;
+  transform: translateY(6px);
+  transition: opacity var(--fast) 0.05s, transform var(--fast) 0.05s;
+}
+.card__arrow {
+  position: absolute; top: 1.4rem; right: 1.6rem;
+  font-size: 1rem; color: var(--fg); opacity: 0;
+  transform: translate(-6px, 6px);
+  transition: opacity var(--fast), transform var(--fast);
+  z-index: 2;
+}
+.card__year {
+  position: absolute; top: 1.4rem; left: 1.8rem;
+  font-family: var(--sans);
+  font-size: 0.6rem; font-weight: 700;
+  letter-spacing: 0.18em;
+  color: rgba(237,233,225,0.3); z-index: 2;
+}
+.card__status {
+  position: absolute; top: 1.4rem; right: 1.6rem;
+  font-family: var(--sans);
+  font-size: 0.55rem; font-weight: 700;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--accent);
+  background: rgba(109,191,158,0.12);
+  border: 1px solid rgba(109,191,158,0.3);
+  padding: 0.3rem 0.6rem; z-index: 2;
+  display: flex; align-items: center; gap: 0.4rem;
+}
+.card__status::before {
+  content: '●'; font-size: 0.4rem;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* ── HOVER ────────────────────────────────────────────── */
+.card:hover .card__img { transform: scale(1); filter: grayscale(0%) brightness(0.9); }
+.card:hover .card__info { transform: translateY(0); }
+.card:hover .card__tag { opacity: 1; transform: translateY(0); }
+.card:hover .card__sub { opacity: 1; transform: translateY(0); }
+.card:hover .card__arrow { opacity: 1; transform: translate(0,0); }
+.card::after {
+  content: ''; position: absolute;
+  bottom: 0; left: 0; width: 0; height: 2px;
+  background: var(--accent);
+  transition: width var(--slow); z-index: 3;
+}
+.card:hover::after { width: 100%; }
+
+/* ── MATERIAL NOTE ────────────────────────────────────── */
+.material-note {
+  margin: 0 var(--gutter) 4rem;
+  padding: 3rem;
+  background: #0e0e0e;
+  border-left: 2px solid var(--accent);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 3rem;
+  align-items: center;
+  opacity: 0;
+  animation: fadeUp 0.8s var(--ease) 0.5s forwards;
+}
+.material-note__label {
+  font-family: var(--sans);
+  font-size: 0.62rem; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--accent); writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+.material-note__text {
+  font-family: var(--serif);
+  font-size: clamp(1rem, 1.8vw, 1.35rem);
+  font-weight: 300; line-height: 1.6;
+  color: var(--fg-mid);
+}
+.material-note__text em { font-style: italic; color: var(--fg); }
+
+/* ── FOOTER ───────────────────────────────────────────── */
+footer {
+  border-top: 1px solid #1a1a1a;
+  padding: 2.5rem var(--gutter);
+  display: flex; justify-content: space-between;
+  align-items: center; flex-wrap: wrap; gap: 1rem;
+}
+.footer__copy {
+  font-family: var(--sans);
+  font-size: 0.62rem; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--fg-dim);
+}
+.footer__links { display: flex; gap: 2rem; }
+.footer__links a {
+  font-family: var(--sans);
+  font-size: 0.62rem; letter-spacing: 0.12em;
+  text-transform: uppercase; text-decoration: none;
+  color: var(--fg-dim); transition: color var(--fast);
+}
+.footer__links a:hover { color: var(--fg); }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; } 50% { opacity: 0.3; }
+}
+
+/* ── MOBILE ───────────────────────────────────────────── */
+@media (max-width: 768px) {
+  body { cursor: auto; }
+  .cursor, .cursor-icon { display: none; }
+  .page-header { grid-template-columns: 1fr; padding: 3rem var(--gutter) 2.5rem; }
+  .philosophy { grid-template-columns: 1fr; }
+  .card, .card--wide, .card--narrow, .card--full, .card--third {
+    grid-column: span 12; aspect-ratio: 4/3;
+  }
+  .material-note { grid-template-columns: 1fr; gap: 1.5rem; }
+  .material-note__label { writing-mode: horizontal-tb; transform: none; }
+  .nav__links { gap: 1.2rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-icon" id="cursorIcon"></div>
+
+<!-- ── NAV ──────────────────────────────────────────────── -->
+<nav>
+  <a href="index.html" class="nav__home">Sherjeel <em>Hussain</em></a>
+  <div class="nav__links">
+    <a href="digital.html" data-cursor="monitor">Digital</a>
+    <a href="craft.html" class="active" data-cursor="pot">Craft</a>
+    <a href="work.html">All Work</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</nav>
+
+<!-- ── PAGE HEADER ──────────────────────────────────────── -->
+<header class="page-header">
+  <div>
+    <p class="page-header__eyebrow">02 — Product &amp; Craft</p>
+    <h1 class="page-header__title">
+      Physical &amp;
+      <em>Making</em>
+    </h1>
+  </div>
+  <p class="page-header__desc">
+    Industrial design, ceramics, and physical prototyping.
+    Work that begins with material behaviour — what a thing
+    wants to be before it's told what to do.
+  </p>
+</header>
+
+<!-- ── PHILOSOPHY CARDS ─────────────────────────────────── -->
+<div class="philosophy">
+  <div class="philosophy-card">
+    <p class="philosophy-card__num">Tension 01</p>
+    <h3 class="philosophy-card__heading">Raku &amp; <em>Design Systems</em></h3>
+    <p class="philosophy-card__body">Raku is uncontrollable by definition. Design systems are control by definition. The practice lives in the gap between the two — where chance informs structure and structure makes room for chance.</p>
+  </div>
+  <div class="philosophy-card">
+    <p class="philosophy-card__num">Tension 02</p>
+    <h3 class="philosophy-card__heading">Multanni Mitti &amp; <em>British Stoneware</em></h3>
+    <p class="philosophy-card__body">Pakistani clay thrown alongside British stoneware. Two material traditions that don't typically share a kiln. The objects that result belong to both lineages and neither exclusively.</p>
+  </div>
+  <div class="philosophy-card">
+    <p class="philosophy-card__num">Tension 03</p>
+    <h3 class="philosophy-card__heading">Luxury &amp; <em>The Overlooked</em></h3>
+    <p class="philosophy-card__body">Recycled plastic as a premium surface. Waste material treated with the same rigour as hardwood. The practice consistently asks what becomes valuable when handled with enough care and intention.</p>
+  </div>
+</div>
+
+<!-- ── FILTER ────────────────────────────────────────────── -->
+<div class="filter-bar">
+  <button class="filter-btn active" data-filter="all">All</button>
+  <button class="filter-btn" data-filter="ceramics">Ceramics</button>
+  <button class="filter-btn" data-filter="product">Product Design</button>
+  <button class="filter-btn" data-filter="exhibition">Exhibition</button>
+  <button class="filter-btn" data-filter="inprogress">In Progress</button>
+</div>
+
+<!-- ── PROJECT GRID ──────────────────────────────────────── -->
+<main class="project-grid">
+
+  <!-- CANTI — full width, leads. Best physical work. -->
+  <a href="canti.html" class="card card--full card--canti" data-tags="product exhibition">
+    <div class="card__img"></div>
+    <div class="card__overlay"></div>
+    <span class="card__year">2022</span>
+    <div class="card__info">
+      <div class="card__tags">
+        <span class="card__tag">Product Design</span>
+        <span class="card__tag">Sustainable Materials</span>
+        <span class="card__tag">Exhibition</span>
+      </div>
+      <h2 class="card__title">CANTI — <em>001</em></h2>
+      <p class="card__sub">Solid oak, mahogany + recycled plastic table. Cradle-to-cradle framework. New Designers, London.</p>
+    </div>
+    <span class="card__arrow">↗</span>
+  </a>
+
+  <!-- Graduate Residency ceramics + Multanni practice — side by side -->
+  <a href="residency.html" class="card card--wide card--residency" data-tags="ceramics exhibition">
+    <div class="card__img"></div>
+    <div class="card__overlay"></div>
+    <span class="card__year">2022–23</span>
+    <div class="card__info">
+      <div class="card__tags">
+        <span class="card__tag">Ceramics |</span>
+        <span class="card__tag">Practice Development |</span>
+                <span class="card__tag">Exhibition</span>
+
+      </div>
+      <h2 class="card__title">Graduate in <em>Residence</em></h2>
+      <p class="card__sub">Gray's School of Art. Tableware series, glaze development, 20+ exhibited pieces.</p>
+    </div>
+    <span class="card__arrow">↗</span>
+  </a>
+
+  <a href="multanni.html" class="card card--narrow card--multanni" data-tags="ceramics">
+    <div class="card__img"></div>
+    <div class="card__overlay"></div>
+    <span class="card__year">Ongoing</span>
+    <div class="card__info">
+      <div class="card__tags">
+        <span class="card__tag">Ceramics |</span>
+        <span class="card__tag">Cultural Practice</span>
+      </div>
+      <h2 class="card__title">Multanni <em>Mitti</em></h2>
+      <p class="card__sub">Pakistani clay + British stoneware. Personal practice exploring material identity.</p>
+    </div>
+    <span class="card__arrow">↗</span>
+  </a>
+
+  <!-- Cycle Arts Festival — wide -->
+  <a href="cycle-arts.html" class="card card--wide card--cycle" data-tags="ceramics exhibition">
+    <div class="card__img" style="background-image:url('./imgs-expo/CycleArtsFestival/CycleArtsHero.jpg');background-color:#0e1410;"></div>
+    <div class="card__overlay"></div>
+    <span class="card__year">2025</span>
+    <div class="card__info">
+      <div class="card__tags">
+        <span class="card__tag">Site-Specific |</span>
+        <span class="card__tag">Public Installation |</span>
+        <span class="card__tag">Ceramics</span>
+      </div>
+      <h2 class="card__title">Cycle Arts <em>Festival</em></h2>
+      <p class="card__sub">SCOPE Collective. Site-specific ceramic installations along Renfrewshire cycle routes.</p>
+    </div>
+    <span class="card__arrow">↗</span>
+  </a>
+
+  <!-- Multanni Hover Pot -->
+  <a href="hover-pot.html" class="card card--narrow card--kt-ceramics" data-tags="ceramics">
+    <div class="card__img" style="background-image:url('img/hover-pot-hero.jpg');background-color:#1a1208;"></div>
+    <div class="card__overlay"></div>
+    <span class="card__year">2025</span>
+    <div class="card__info">
+      <div class="card__tags">
+        <span class="card__tag">Ceramics</span>
+      </div>
+      <h2 class="card__title">Multanni <em>Hover Pot</em></h2>
+      <p class="card__sub">Multanni mitti clay. Exploring material heritage through form.</p>
+    </div>
+    <span class="card__arrow">↗</span>
+  </a>
+
+  <!-- Kala Topi ceramics (in progress) -->
+  <a href="kala-topi.html" class="card card--narrow card--kt-ceramics" data-tags="ceramics inprogress">
+    <div class="card__img"></div>
+    <div class="card__overlay"></div>
+    <span class="card__year">2025</span>
+    <span class="card__status">In Production</span>
+    <div class="card__info">
+      <div class="card__tags">
+        <span class="card__tag">Ceramics |</span>
+        <span class="card__tag">Brand Objects</span>
+      </div>
+      <h2 class="card__title">Kala Topi <em>Table Setting</em></h2>
+      <p class="card__sub">Three ceramic pieces for Di Kala Topi. Multanni mitti + stoneware.</p>
+    </div>
+  </a>
+
+  <!-- Slip Me A Large, Sarge! -->
+  <a href="slip-sarge.html" class="card card--narrow card--thudpuk" data-tags="ceramics">
+    <div class="card__img" style="background-image:url('img/slip-sarge-hero.jpg');background-color:#161210;"></div>
+    <div class="card__overlay"></div>
+    <span class="card__year">2023</span>
+    <div class="card__info">
+      <div class="card__tags">
+        <span class="card__tag">Product Design |</span>
+        <span class="card__tag">Recycled Plastic |</span>
+        <span class="card__tag">Injection Moulding</span>
+      </div>
+      <h2 class="card__title">'Slip Me A <em>Large, Sarge!'</em></h2>
+      <p class="card__sub">Slip-cast ceramic series. Production run, 2023.</p>
+    </div>
+    <span class="card__arrow">↗</span>
+  </a>
+
+  <!-- THUDPUK -->
+  <a href="thudpuk.html" class="card card--narrow card--thudpuk" data-tags="ceramics product">
+    <div class="card__img"></div>
+    <div class="card__overlay"></div>
+    <span class="card__year">2022</span>
+    <div class="card__info">
+      <div class="card__tags">
+        <span class="card__tag">Product Design |</span>
+        <span class="card__tag">Recycled Plastic |</span>
+        <span class="card__tag">Injection Moulding</span>
+      </div>
+      <h2 class="card__title">Project 261 — <em>THUDPUK</em></h2>
+      <p class="card__sub">Low-cost, injection-moulded flying toy designed for mass manufacture using recycled plastic</p>
+    </div>
+    <span class="card__arrow">↗</span>
+  </a>
+
+  <!-- Greene King -->
+  <a href="greene-king.html" class="card card--narrow card--residency" data-tags="ceramics">
+    <div class="card__img" style="background-image:url('img/greene-king-hero.jpg');background-color:#141214;"></div>
+    <div class="card__overlay"></div>
+    <span class="card__year">2022</span>
+    <div class="card__info">
+      <div class="card__tags">
+        <span class="card__tag">Ceramics |</span>
+        <span class="card__tag">Client Work</span>
+      </div>
+      <h2 class="card__title">Project 262 — <em>Greene King</em></h2>
+      <p class="card__sub">Ceramic tableware commission. Graduate residency client project.</p>
+    </div>
+    <span class="card__arrow">↗</span>
+  </a>
+
+  <!-- Raku Club -->
+  <a href="raku-club.html" class="card card--narrow card--multanni" data-tags="ceramics exhibition">
+    <div class="card__img" style="background-image:url('img/raku-club-hero.jpg');background-color:#1a0e08;"></div>
+    <div class="card__overlay"></div>
+    <span class="card__year">2021</span>
+    <div class="card__info">
+      <div class="card__tags">
+        <span class="card__tag">Ceramics |</span>
+        <span class="card__tag">Community</span>
+      </div>
+      <h2 class="card__title">Raku <em>Club</em></h2>
+      <p class="card__sub">Founded informal firing club that became an official RGU University Society. Still running.</p>
+    </div>
+    <span class="card__arrow">↗</span>
+  </a>
+
+  <!-- Origin Plastics -->
+  <a href="origin.html" class="card card--wide card--origin" data-tags="product">
+    <div class="card__img"></div>
+    <div class="card__overlay"></div>
+    <span class="card__year">2021</span>
+    <div class="card__info">
+      <div class="card__tags">
+        <span class="card__tag">Product Design |</span>
+        <span class="card__tag">Sustainable Manufacture</span>
+      </div>
+      <h2 class="card__title">Origin <em>Plastics</em></h2>
+      <p class="card__sub">Homeware from recycled plastic. Injection moulding, CAD, user research.</p>
+    </div>
+    <span class="card__arrow">↗</span>
+  </a>
+
+</main>
+
+<!-- ── MATERIAL NOTE ─────────────────────────────────────── -->
+<div class="material-note">
+  <span class="material-note__label">Material</span>
+  <p class="material-note__text">
+    <em>Multanni mitti</em> — a fine-grained PakSistani clay used for centuries in skincare,
+    traditional ceramics and ritual objects across Punjab and Kashmir — is thrown here
+    alongside British stoneware. Two clay bodies with different memories,
+    different responses to heat, different relationships to water.
+    The work that results carries both histories without resolving the tension between them.
+  </p>
+</div>
+
+<!-- ── FOOTER ────────────────────────────────────────────── -->
+<footer>
+  <span class="footer__copy">© Sherjeel Hussain</span>
+  <div class="footer__links">
+    <a href="digital.html">Digital</a>
+    <a href="craft.html">Craft</a>
+    <a href="work.html">All Work</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Get in touch</a>
+  </div>
+</footer>
+
+<script>
+const cursor = document.getElementById('cursor');
+const cursorIcon = document.getElementById('cursorIcon');
+const ICONS = {
+  monitor: `<svg width="28" height="22" viewBox="0 0 28 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="1" y="1" width="26" height="17" rx="2" stroke="#e8547a" stroke-width="1.5"/>
+    <rect x="9" y="18" width="10" height="2" fill="#e8547a" opacity="0.5"/>
+    <rect x="6" y="20" width="16" height="1.5" fill="#e8547a" opacity="0.5"/>
+    <circle cx="14" cy="9.5" r="1.5" fill="#e8547a" opacity="0.4"/>
+  </svg><span>Digital</span>`,
+  pot: `<svg width="22" height="26" viewBox="0 0 22 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M7 4 C5 4 2 7 2 13 C2 19 5 23 11 23 C17 23 20 19 20 13 C20 7 17 4 15 4 Z" stroke="#6dbf9e" stroke-width="1.5" fill="none"/>
+    <path d="M7 4 C8 2 10 1 11 1 C12 1 14 2 15 4" stroke="#6dbf9e" stroke-width="1.5" fill="none"/>
+    <path d="M5 10 C3 9.5 2.5 8 3 7" stroke="#6dbf9e" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+  </svg><span>Craft</span>`
+};
+
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top = e.clientY + 'px';
+  cursorIcon.style.left = (e.clientX + 18) + 'px';
+  cursorIcon.style.top = e.clientY + 'px';
+});
+
+document.querySelectorAll('[data-cursor]').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.classList.add('grow');
+    cursorIcon.innerHTML = ICONS[el.dataset.cursor] || '';
+    cursorIcon.classList.add('visible');
+  });
+  el.addEventListener('mouseleave', () => {
+    cursor.classList.remove('grow');
+    cursorIcon.classList.remove('visible');
+  });
+});
+
+document.querySelectorAll('a:not([data-cursor]), button').forEach(el => {
+  el.addEventListener('mouseenter', () => cursor.classList.add('grow'));
+  el.addEventListener('mouseleave', () => cursor.classList.remove('grow'));
+});
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const filter = btn.dataset.filter;
+    document.querySelectorAll('.card').forEach(card => {
+      const tags = card.dataset.tags || '';
+      const match = filter === 'all' || tags.includes(filter);
+      card.style.opacity = match ? '1' : '0.12';
+      card.style.pointerEvents = match ? 'auto' : 'none';
+      card.style.transition = 'opacity 0.35s ease';
+    });
+  });
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Digital & Brand — Sherjeel Hussain</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Syne:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg:       #0a0a0a;
+      --fg:       #ede9e1;
+      --fg-dim:   #555;
+      --fg-mid:   #999;
+      --accent:   #e8547a;
+      --accent-2: #6dbf9e;
+      --serif:    'Cormorant', Georgia, serif;
+      --sans:     'Syne', sans-serif;
+      --ease:     cubic-bezier(0.25, 0.1, 0.25, 1);
+      --slow:     0.6s var(--ease);
+      --fast:     0.3s var(--ease);
+      --gutter:   clamp(1.2rem, 4vw, 3rem);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--sans);
+      min-height: 100vh;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* ── CURSOR ───────────────────────────────────────────── */
+    .cursor {
+      position: fixed;
+      width: 10px; height: 10px;
+      background: var(--fg);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width var(--fast), height var(--fast),
+                  background var(--fast), opacity var(--fast);
+    }
+    .cursor.grow {
+      width: 40px; height: 40px;
+      background: transparent;
+      border: 1px solid var(--accent);
+      opacity: 0.7;
+    }
+
+    /* ── NAV ──────────────────────────────────────────────── */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 2rem var(--gutter);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10,10,10,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid #1a1a1a;
+    }
+    .nav__home {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-weight: 300;
+      letter-spacing: 0.06em;
+      text-decoration: none;
+      color: var(--fg);
+      transition: color var(--fast);
+    }
+    .nav__home em { font-style: italic; color: var(--accent); }
+    .nav__home:hover { color: var(--fg-mid); }
+    .nav__links { display: flex; gap: 2.5rem; align-items: center; }
+    .nav__links a {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--fg-dim);
+      transition: color var(--fast);
+      position: relative;
+    }
+    .nav__links a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 0;
+      width: 0; height: 1px;
+      background: var(--accent);
+      transition: width var(--fast);
+    }
+    .nav__links a:hover,
+    .nav__links a.active { color: var(--fg); }
+    .nav__links a:hover::after,
+    .nav__links a.active::after { width: 100%; }
+
+    /* ── PAGE HEADER ──────────────────────────────────────── */
+    .page-header {
+      padding: 5rem var(--gutter) 4rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: end;
+      opacity: 0;
+      animation: fadeUp 0.8s var(--ease) 0.1s forwards;
+    }
+    .page-header__eyebrow {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .page-header__eyebrow::before {
+      content: '';
+      display: block;
+      width: 2rem; height: 1px;
+      background: var(--accent);
+    }
+    .page-header__title {
+      font-family: var(--serif);
+      font-size: clamp(3rem, 7vw, 6.5rem);
+      font-weight: 300;
+      line-height: 0.95;
+    }
+    .page-header__title em { font-style: italic; display: block; }
+    .page-header__desc {
+      font-size: 0.82rem;
+      line-height: 1.85;
+      color: var(--fg-mid);
+      max-width: 400px;
+      align-self: end;
+    }
+
+    /* ── FILTER BAR ───────────────────────────────────────── */
+    .filter-bar {
+      display: flex;
+      gap: 0.4rem;
+      padding: 0 var(--gutter) 3rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.8s var(--ease) 0.25s forwards;
+    }
+    .filter-btn {
+      font-family: var(--sans);
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      background: transparent;
+      border: 1px solid #2a2a2a;
+      color: var(--fg-dim);
+      padding: 0.55rem 1rem;
+      cursor: none;
+      transition: border-color var(--fast), color var(--fast), background var(--fast);
+    }
+    .filter-btn:hover,
+    .filter-btn.active {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(232, 84, 122, 0.08);
+    }
+
+    /* ── PROJECT GRID ─────────────────────────────────────── */
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 2px;
+      padding: 0 var(--gutter) 6rem;
+      opacity: 0;
+      animation: fadeUp 0.8s var(--ease) 0.4s forwards;
+    }
+
+    /* Span rules */
+    .card          { grid-column: span 6; }
+    .card--wide    { grid-column: span 8; }
+    .card--narrow  { grid-column: span 4; }
+    .card--full    { grid-column: span 12; }
+    .card--third   { grid-column: span 4; }
+
+    /* Base card */
+    .card {
+      position: relative;
+      overflow: hidden;
+      cursor: none;
+      aspect-ratio: 4/3;
+      background: #111;
+      display: block;
+      text-decoration: none;
+      color: inherit;
+    }
+    .card--wide  { aspect-ratio: 16/7; }
+    .card--full  { aspect-ratio: 21/8; }
+    .card--tall  { aspect-ratio: 3/4; }
+
+    /* Card image */
+    .card__img {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      transform: scale(1.05);
+      transition: transform var(--slow), filter var(--slow);
+      filter: grayscale(15%) brightness(0.8);
+      object-fit: contain;
+    }
+
+    /* ── INDIVIDUAL IMAGE TARGETS ─────────────────────────
+       Rename your files to match, then drop them in /img/
+       ─────────────────────────────────────────────────── */
+
+    /* 1. Alastair Smith — use IOSheropage.jpg */
+    .card--alastair .card__img {
+      background-image: url('./imgs-digital/ASC/Light.png');
+      background-color: #1e1008;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center 10%;
+      background-size: 100%;
+
+
+    }
+
+    /* 2. Andra's Garden Heaven — use Macbook_Mockup_Front_View_UV.png */
+    .card--andras .card__img {
+      background-image: url('./imgs-digital/AGH/Macbook\ Mockup\ Front\ View\ UV.png');
+      background-color: #1C6F8D;
+      background-size: cover;
+      background-position: center;
+    }
+
+    /* 3. Andra's mobile — use iPhone_15_Mockup__Perspective-HomeScreen_Product.png */
+    .card--andras-mobile .card__img {
+      background-image: url('./imgs-digital/AGH/iPhone\ 15\ Mockup\,\ Perspective-HomeScreen+Product.png');
+      background-color: #1C6F8D;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    /* 4. Clydeside — use BizCard_FrontAsset_2.png */
+    .card--clydeside .card__img {
+      background-image: url('./imgs-digital/Clydeside/BizCard\ FrontAsset\ 2@2x.png');
+      background-color: #0A4C88;
+      background-size: 100%;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    /* 5. Just Rite — use IMG-20250922-WA0005.jpg */
+    .card--justrite .card__img {
+      background-image: url('./imgs-craft/JustRite/IMG-20250828-WA0007.jpg');
+      background-color: #0a0a0a;
+      background-size: cover;
+      background-position: center top;
+    }
+
+    /* 6. Westgarth — use iPhone_Mockup__Perspective.png */
+    .card--westgarth .card__img {
+      background-image: url('./imgs-digital/Westgarth/Westgarth/iPhone\ Mockup\,\ Perspective.png');
+      background-color: #B7B4A1;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    .card__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(0,0,0,0.85) 0%,
+        rgba(0,0,0,0.2)  50%,
+        rgba(0,0,0,0)    100%
+      );
+      transition: opacity var(--slow);
+    }
+
+    /* Card info block */
+    .card__info {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 1.6rem 1.8rem;
+      z-index: 2;
+      transform: translateY(4px);
+      transition: transform var(--slow);
+    }
+    .card__tags {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.7rem;
+    }
+    .card__tag {
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity var(--fast), transform var(--fast);
+    }
+    .card__title {
+      font-family: var(--serif);
+      font-size: clamp(1.1rem, 2vw, 1.7rem);
+      font-weight: 300;
+      line-height: 1.15;
+      color: var(--fg);
+    }
+    .card__title em { font-style: italic; }
+    .card__sub {
+      font-size: 0.68rem;
+      color: var(--fg-mid);
+      margin-top: 0.35rem;
+      letter-spacing: 0.04em;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity var(--fast) 0.05s, transform var(--fast) 0.05s;
+    }
+    .card__arrow {
+      position: absolute;
+      top: 1.4rem; right: 1.6rem;
+      font-size: 1rem;
+      color: var(--fg);
+      opacity: 0;
+      transform: translate(-6px, 6px);
+      transition: opacity var(--fast), transform var(--fast);
+      z-index: 2;
+    }
+    .card__year {
+      position: absolute;
+      top: 1.4rem; left: 1.8rem;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      color: rgba(237,233,225,0.3);
+      z-index: 2;
+    }
+
+    /* ── HOVER ────────────────────────────────────────────── */
+    .card:hover .card__img    { transform: scale(1); filter: grayscale(0%) brightness(0.95); }
+    .card:hover .card__info   { transform: translateY(0); }
+    .card:hover .card__tag    { opacity: 1; transform: translateY(0); }
+    .card:hover .card__sub    { opacity: 1; transform: translateY(0); }
+    .card:hover .card__arrow  { opacity: 1; transform: translate(0,0); }
+
+    .card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 2px;
+      background: var(--accent);
+      transition: width var(--slow);
+      z-index: 3;
+    }
+    .card:hover::after { width: 100%; }
+
+    /* ── FOOTER ───────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid #1a1a1a;
+      padding: 2.5rem var(--gutter);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer__copy {
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--fg-dim);
+    }
+    .footer__links { display: flex; gap: 2rem; }
+    .footer__links a {
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--fg-dim);
+      transition: color var(--fast);
+    }
+    .footer__links a:hover { color: var(--fg); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── MOBILE ───────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      body { cursor: auto; }
+      .cursor { display: none; }
+      .page-header { grid-template-columns: 1fr; padding: 3rem var(--gutter) 2.5rem; }
+      .card, .card--wide, .card--narrow, .card--full, .card--third {
+        grid-column: span 12;
+        aspect-ratio: 4/3;
+      }
+      .nav__links { gap: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+
+  <!-- ── NAV ──────────────────────────────────────────────── -->
+  <nav>
+    <a href="index.html" class="nav__home">Sherjeel <em>Hussain</em></a>
+    <div class="nav__links">
+      <a href="digital.html" class="active">Digital</a>
+      <a href="craft.html">Craft</a>
+      <a href="work.html">All Work</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </nav>
+
+  <!-- ── PAGE HEADER ──────────────────────────────────────── -->
+  <header class="page-header">
+    <div>
+      <p class="page-header__eyebrow">01 — Digital &amp; Brand</p>
+      <h1 class="page-header__title">
+        UI &amp; Product
+        <em>Design</em>
+      </h1>
+    </div>
+    <p class="page-header__desc">
+      Brand systems, digital interfaces, and web builds.
+      Each project is approached as a material problem —
+      structure first, then surface. Systems that function
+      across every context they're placed in.
+    </p>
+  </header>
+
+  <!-- ── FILTER BAR ───────────────────────────────────────── -->
+  <div class="filter-bar">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="brand">Brand Identity</button>
+    <button class="filter-btn" data-filter="web">Web Build</button>
+    <button class="filter-btn" data-filter="print">Print &amp; Signage</button>
+  </div>
+
+  <!-- ── PROJECT GRID ─────────────────────────────────────── -->
+  <!--
+    FILE RENAME GUIDE — save your images to /img/ with these names:
+    IOSheropage.jpg                              → img/alastair-mobile.jpg
+    Macbook_Mockup_Front_View_UV.png             → img/andras-macbook.png
+    iPhone_15_Mockup__Perspective-HomeScreen_Product.png → img/andras-mobile.png
+    BizCard_FrontAsset_2.png                     → img/clydeside-logo.png
+    IMG-20250922-WA0005.jpg                      → img/justrite-shopfront.jpg
+    iPhone_Mockup__Perspective.png               → img/westgarth-mobile.png
+  -->
+  <main class="project-grid">
+
+    <!-- ROW 1: Alastair Smith (wide, best work leads) + Andra's mobile -->
+    <a href="alastair-smith.html" class="card card--wide card--alastair" data-tags="brand web">
+      <div class="card__img"></div>
+      <div class="card__overlay"></div>
+      <span class="card__year">2024</span>
+      <div class="card__info">
+        <div class="card__tags">
+          <span class="card__tag">Brand Identity |</span>
+          <span class="card__tag">Web Design & Development</span>
+        </div>
+        <h2 class="card__title">Alastair Smith <em>Ceramics</em></h2>
+        <p class="card__sub">Logo, accessible colour system, mobile-first website build</p>
+      </div>
+      <span class="card__arrow">↗</span>
+    </a>
+<!-- 
+    <a href="andras.html" class="card card--narrow card--andras-mobile" data-tags="brand web">
+      <div class="card__img"></div>
+      <div class="card__overlay"></div>
+      <span class="card__year">2025</span>
+      <div class="card__info">
+        <div class="card__tags">
+          <span class="card__tag">Brand Design |</span>
+
+          <span class="card__tag">E-Commerce + Shopify Development</span>
+        </div>
+        <h2 class="card__title">Andra's Garden <em>Heaven</em></h2>
+        <p class="card__sub">Shopify, UI/UX, branding, print</p>
+      </div>
+      <span class="card__arrow">↗</span>
+    </a> -->
+
+    <!-- ROW 2: Andra's desktop (full width) -->
+    <a href="andras.html" class="card card--full card--andras" data-tags="brand web">
+      <div class="card__img"></div>
+      <div class="card__overlay"></div>
+      <span class="card__year">2025</span>
+      <div class="card__info">
+        <div class="card__tags">
+          <span class="card__tag">Brand</span>
+          <span class="card__tag">Web</span>
+          <span class="card__tag">E-Commerce</span>
+        </div>
+        <h2 class="card__title">Andra's Garden <em>Heaven</em></h2>
+        <p class="card__sub">Shopify, UI/UX, branding, print</p>
+      </div>
+      <span class="card__arrow">↗</span>
+    </a>
+
+    <!-- ROW 3: Clydeside + Just Rite -->
+    <a href="clydeside.html" class="card card--clydeside" data-tags="brand web">
+      <div class="card__img"></div>
+      <div class="card__overlay"></div>
+      <span class="card__year">2026</span>
+      <div class="card__info">
+        <div class="card__tags">
+          <span class="card__tag">Brand Identity |</span>
+          <span class="card__tag">Web Design & Development</span>
+        </div>
+        <h2 class="card__title">Clydeside <em>Logistics</em></h2>
+        <p class="card__sub">Brand Identity system, vehicle livery, website design & Development</p>
+      </div>
+      <span class="card__arrow">↗</span>
+    </a>
+
+    <a href="just-rite.html" class="card card--justrite" data-tags="print">
+      <div class="card__img"></div>
+      <div class="card__overlay"></div>
+      <span class="card__year">2025</span>
+      <div class="card__info">
+        <div class="card__tags">
+          <span class="card__tag">Signage |</span>
+          <span class="card__tag">Project Management |</span>
+
+          <span class="card__tag">Retail</span>
+        </div>
+        <h2 class="card__title">Just Rite <em>Barbershop</em></h2>
+        <p class="card__sub">Shopfront redesign, council liaison, QR wayfinding system</p>
+      </div>
+      <span class="card__arrow">↗</span>
+    </a>
+
+    <!-- ROW 4: Westgarth — last and narrow, honest about its level -->
+    <a href="westgarth.html" class="card card--narrow card--westgarth" data-tags="brand web">
+      <div class="card__img"></div>
+      <div class="card__overlay"></div>
+      <span class="card__year">2024</span>
+      <div class="card__info">
+        <div class="card__tags">
+          <span class="card__tag">Brand</span>
+          <span class="card__tag">Web</span>
+        </div>
+        <h2 class="card__title">Westgarth <em>Auto</em></h2>
+        <p class="card__sub">Brand identity and mobile-first website</p>
+      </div>
+      <span class="card__arrow">↗</span>
+    </a>
+
+  </main>
+
+  <!-- ── FOOTER ────────────────────────────────────────────── -->
+  <footer>
+    <span class="footer__copy">Sherjeel Hussain — Digital &amp; Brand</span>
+    <div class="footer__links">
+      <a href="craft.html">→ Craft &amp; Product</a>
+      <a href="contact.html">Get in touch</a>
+    </div>
+  </footer>
+
+  <script>
+    // Cursor
+    const cursor = document.getElementById('cursor');
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top  = e.clientY + 'px';
+    });
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('grow'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('grow'));
+    });
+
+    // Filter — fades non-matching cards rather than hiding
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        document.querySelectorAll('.card').forEach(card => {
+          const tags = card.dataset.tags || '';
+          const match = filter === 'all' || tags.includes(filter);
+          card.style.opacity = match ? '1' : '0.15';
+          card.style.pointerEvents = match ? 'auto' : 'none';
+          card.style.transition = 'opacity 0.35s ease';
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>

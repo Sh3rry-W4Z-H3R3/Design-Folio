@@ -1,0 +1,609 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CANTI — 001 — Sherjeel Hussain</title>
+  <meta name="description" content="CANTI 001 — Self-directed honours project. A luxury table prototype built from solid oak, mahogany, and SMILE recycled plastic, designed for cradle-to-cradle production." />
+  <link rel="canonical" href="https://sherjeelhussain.co.uk/canti.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Syne:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── TOKENS ─────────────────────────────────────────── */
+    :root {
+      --bg:       #0a0a0a;
+      --fg:       #ede9e1;
+      --fg-dim:   #555;
+      --fg-mid:   #999;
+      --accent:   #6dbf9e;   /* craft mint */
+      --accent-2: #e8547a;
+      --gold:     #c8b882;
+      --serif:    'Cormorant', Georgia, serif;
+      --sans:     'Syne', sans-serif;
+      --body:     'DM Sans', sans-serif;
+      --ease:     cubic-bezier(0.25, 0.1, 0.25, 1);
+      --slow:     0.7s var(--ease);
+      --fast:     0.3s var(--ease);
+      --gutter:   clamp(1.2rem, 4vw, 3rem);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--body);
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* ─── CURSOR ──────────────────────────────────────────── */
+    .cursor {
+      position: fixed;
+      width: 10px; height: 10px;
+      background: var(--fg); border-radius: 50%;
+      pointer-events: none; z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width var(--fast), height var(--fast), background var(--fast);
+    }
+    .cursor.grow {
+      width: 44px; height: 44px;
+      background: transparent;
+      border: 1px solid var(--accent); opacity: 0.7;
+    }
+
+    /* ─── NAV ─────────────────────────────────────────────── */
+    nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 2rem var(--gutter);
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(10,10,10,0.92); backdrop-filter: blur(12px);
+      border-bottom: 1px solid #1a1a1a;
+    }
+    .nav__home {
+      font-family: var(--serif); font-size: 1.1rem; font-weight: 300;
+      letter-spacing: 0.06em; text-decoration: none; color: var(--fg);
+    }
+    .nav__home em { font-style: italic; color: var(--accent-2); }
+    .nav__links { display: flex; gap: 2.5rem; }
+    .nav__links a {
+      font-family: var(--sans); font-size: 0.65rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      text-decoration: none; color: var(--fg-dim);
+      transition: color var(--fast); position: relative;
+    }
+    .nav__links a::after {
+      content: ''; position: absolute; bottom: -3px; left: 0;
+      width: 0; height: 1px; background: var(--accent); transition: width var(--fast);
+    }
+    .nav__links a:hover, .nav__links a.active { color: var(--fg); }
+    .nav__links a:hover::after, .nav__links a.active::after { width: 100%; }
+
+    /* ─── PROJECT HERO ────────────────────────────────────── */
+    .project-hero {
+      padding: 5rem var(--gutter) 0;
+      opacity: 0; animation: fadeUp 0.8s var(--ease) 0.1s forwards;
+    }
+    .project-hero__eyebrow {
+      font-family: var(--sans); font-size: 0.62rem; font-weight: 700;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 1.5rem;
+      display: flex; align-items: center; gap: 0.8rem;
+    }
+    .project-hero__eyebrow::before {
+      content: ''; display: block; width: 2rem; height: 1px; background: var(--accent);
+    }
+    .project-hero__title {
+      font-family: var(--serif);
+      font-size: clamp(3.5rem, 9vw, 8rem);
+      font-weight: 300; line-height: 0.92;
+      letter-spacing: -0.01em;
+    }
+    .project-hero__title em { font-style: italic; display: block; }
+
+    /* ─── META STRIP ──────────────────────────────────────── */
+    .meta-strip {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 2px; margin: 3rem 0 0;
+      border-top: 1px solid #1a1a1a;
+      opacity: 0; animation: fadeUp 0.8s var(--ease) 0.3s forwards;
+    }
+    .meta-strip__item {
+      padding: 1.8rem var(--gutter);
+      border-right: 1px solid #1a1a1a;
+    }
+    .meta-strip__item:last-child { border-right: none; }
+    .meta-strip__label {
+      font-family: var(--sans); font-size: 0.55rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--fg-dim); margin-bottom: 0.6rem;
+    }
+    .meta-strip__value {
+      font-family: var(--serif); font-size: 1rem; font-weight: 300;
+      color: var(--fg); line-height: 1.5;
+    }
+    .meta-strip__value em { font-style: italic; color: var(--accent); }
+
+    /* ─── HERO IMAGE ──────────────────────────────────────── */
+    .hero-img {
+      width: 100%; aspect-ratio: 16/7;
+      background: #111; overflow: hidden; position: relative;
+      opacity: 0; animation: fadeUp 0.8s var(--ease) 0.45s forwards;
+    }
+    .hero-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .hero-img__placeholder {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 0.8rem;
+      background: linear-gradient(135deg, #0e100e 0%, #121610 50%, #0e100e 100%);
+    }
+    .hero-img__placeholder em {
+      font-family: var(--serif); font-size: clamp(1.2rem, 2.5vw, 2rem);
+      font-weight: 300; font-style: italic; color: rgba(237,233,225,0.35);
+    }
+    .hero-img__placeholder span {
+      font-family: var(--sans); font-size: 0.55rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase; color: var(--fg-dim);
+    }
+
+    /* ─── SECTIONS ────────────────────────────────────────── */
+    .section {
+      padding: 6rem var(--gutter);
+      border-top: 1px solid #1a1a1a;
+    }
+    .section--split {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 4rem; align-items: start;
+    }
+    .section__num {
+      font-family: var(--sans); font-size: 0.58rem; font-weight: 700;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 1.5rem;
+      display: flex; align-items: center; gap: 0.8rem;
+    }
+    .section__num::before {
+      content: ''; display: block; width: 1.5rem; height: 1px; background: var(--accent);
+    }
+    .section__heading {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 300; line-height: 1; margin-bottom: 2rem;
+    }
+    .section__heading em { font-style: italic; }
+    .section__body {
+      font-family: var(--body); font-size: 0.88rem; line-height: 1.9;
+      color: var(--fg-mid); font-weight: 300; max-width: 52ch;
+    }
+    .section__body + .section__body { margin-top: 1.2rem; }
+    .section__body strong { color: var(--fg); font-weight: 400; }
+
+    /* ─── CALLOUT ─────────────────────────────────────────── */
+    .callout {
+      margin: 2.5rem 0;
+      padding: 2rem 2.2rem;
+      border-left: 2px solid var(--accent);
+      background: rgba(109,191,158,0.04);
+    }
+    .callout__text {
+      font-family: var(--serif); font-size: clamp(1.1rem, 2vw, 1.5rem);
+      font-weight: 300; line-height: 1.55; color: var(--fg);
+    }
+    .callout__text em { font-style: italic; color: var(--accent); }
+
+    /* ─── IMAGE GRID ──────────────────────────────────────── */
+    .img-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 2px; padding: 0 var(--gutter);
+    }
+    .img-grid__item {
+      aspect-ratio: 4/3; background: #111;
+      overflow: hidden; position: relative;
+    }
+    .img-grid__item img {
+      width: 100%; height: 100%; object-fit: cover;
+    }
+    .img-grid__item--tall { aspect-ratio: 3/4; }
+    .img-grid__placeholder {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 0.6rem;
+      background: #111;
+    }
+    .img-grid__placeholder span {
+      font-family: var(--sans); font-size: 0.55rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase; color: var(--fg-dim);
+    }
+
+    /* ─── PROCESS STEPS ───────────────────────────────────── */
+    .process-steps {
+      counter-reset: step;
+      display: flex; flex-direction: column; gap: 0;
+      margin-bottom: 0;
+    }
+    .process-step {
+      display: grid; grid-template-columns: 1fr 2fr; gap: 3rem;
+      padding: 2.5rem 0;
+      border-bottom: 1px solid #1a1a1a;
+      counter-increment: step;
+      align-items: start;
+    }
+    .process-step:first-child { border-top: 1px solid #1a1a1a; }
+    .process-step__num {
+      font-family: var(--sans); font-size: 0.58rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase; color: var(--fg-dim);
+      padding-top: 0.25rem;
+    }
+    .process-step__num::before { content: "0" counter(step); }
+    .process-step__heading {
+      font-family: var(--serif); font-size: 1.25rem; font-weight: 300;
+      margin-bottom: 0.8rem; line-height: 1.2;
+    }
+    .process-step__heading em { font-style: italic; }
+    .process-step__body {
+      font-family: var(--body); font-size: 0.82rem; line-height: 1.85;
+      color: var(--fg-mid); font-weight: 300; max-width: 48ch;
+    }
+
+    /* ─── STAT ROW ────────────────────────────────────────── */
+    .stat-row {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 2px; margin-top: 4rem;
+    }
+    .stat {
+      padding: 2.5rem 2rem; background: #111;
+      border-top: 1px solid #222;
+      transition: border-top-color var(--fast);
+    }
+    .stat:hover { border-top-color: var(--accent); }
+    .stat__num {
+      font-family: var(--serif);
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      font-weight: 300; line-height: 1;
+      color: var(--fg); margin-bottom: 0.6rem;
+    }
+    .stat__num em { font-style: italic; color: var(--accent); }
+    .stat__label {
+      font-family: var(--sans); font-size: 0.6rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase; color: var(--fg-dim);
+    }
+
+    /* ─── NEXT PROJECT ────────────────────────────────────── */
+    .next-project {
+      display: block; text-decoration: none; color: inherit;
+      padding: 5rem var(--gutter);
+      border-top: 1px solid #1a1a1a;
+      position: relative; overflow: hidden;
+      transition: background var(--fast);
+    }
+    .next-project:hover { background: #0d0d0d; }
+    .next-project__label {
+      font-family: var(--sans); font-size: 0.58rem; font-weight: 700;
+      letter-spacing: 0.22em; text-transform: uppercase; color: var(--fg-dim);
+      margin-bottom: 1.2rem; display: block;
+    }
+    .next-project__title {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 5vw, 4rem);
+      font-weight: 300; line-height: 1;
+    }
+    .next-project__title em { font-style: italic; color: var(--accent-2); }
+    .next-project__arrow {
+      position: absolute; right: var(--gutter); top: 50%;
+      transform: translateY(-50%);
+      font-size: 2.5rem; color: var(--fg-dim);
+      transition: color var(--fast), transform var(--fast);
+    }
+    .next-project:hover .next-project__arrow {
+      color: var(--fg); transform: translate(6px, -50%);
+    }
+
+    /* ─── FOOTER ──────────────────────────────────────────── */
+    footer {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 2.5rem var(--gutter) 3.5rem;
+      border-top: 1px solid #1a1a1a;
+    }
+    .footer__copy {
+      font-family: var(--sans); font-size: 0.62rem;
+      letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-dim);
+    }
+    .footer__links { display: flex; gap: 2rem; }
+    .footer__links a {
+      font-family: var(--sans); font-size: 0.62rem;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      text-decoration: none; color: var(--fg-dim);
+      transition: color var(--fast);
+    }
+    .footer__links a:hover { color: var(--fg); }
+
+    /* ─── KEYFRAMES ───────────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── MOBILE ──────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      body { cursor: auto; }
+      .cursor { display: none; }
+      .meta-strip { grid-template-columns: 1fr 1fr; }
+      .meta-strip__item { border-right: none; border-bottom: 1px solid #1a1a1a; }
+      .meta-strip__item:nth-child(odd) { border-right: 1px solid #1a1a1a; }
+      .section--split { grid-template-columns: 1fr; gap: 2rem; }
+      .img-grid { grid-template-columns: 1fr; }
+      .img-grid__item--tall { aspect-ratio: 4/3; }
+      .stat-row { grid-template-columns: 1fr; }
+      .process-step { grid-template-columns: 1fr; gap: 0.8rem; }
+      .nav__links { gap: 1.2rem; }
+      .next-project__arrow { display: none; }
+      footer { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+      .hero-img { aspect-ratio: 4/3; }
+    }
+    @media (max-width: 480px) {
+      .nav__links a { font-size: 0.56rem; letter-spacing: 0.12em; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+
+  <!-- ── NAV ──────────────────────────────────────────────── -->
+  <nav>
+    <a href="index.html" class="nav__home">Sherjeel <em>Hussain</em></a>
+    <div class="nav__links">
+      <a href="digital.html">Digital</a>
+      <a href="craft.html" class="active">Craft</a>
+      <a href="work.html">All Work</a>
+      <a href="about.html">About</a>
+    </div>
+  </nav>
+
+  <!-- ── PROJECT HERO ─────────────────────────────────────── -->
+  <header class="project-hero">
+    <p class="project-hero__eyebrow">02 — Product &amp; Craft &nbsp;·&nbsp; Self-Directed Honours</p>
+    <h1 class="project-hero__title">
+      CANTI
+      <em>— 001</em>
+    </h1>
+  </header>
+
+  <!-- ── META STRIP ───────────────────────────────────────── -->
+  <div class="meta-strip">
+    <div class="meta-strip__item">
+      <p class="meta-strip__label">Year</p>
+      <p class="meta-strip__value">2023</p>
+    </div>
+    <div class="meta-strip__item">
+      <p class="meta-strip__label">Type</p>
+      <p class="meta-strip__value">Self-Directed<br><em>Honours Project</em></p>
+    </div>
+    <div class="meta-strip__item">
+      <p class="meta-strip__label">Materials</p>
+      <p class="meta-strip__value">Oak, Mahogany<br>Recycled Plastic</p>
+    </div>
+    <div class="meta-strip__item">
+      <p class="meta-strip__label">Deliverable</p>
+      <p class="meta-strip__value">Full-scale prototype<br>+ business concept</p>
+    </div>
+  </div>
+
+  <!-- ── HERO IMAGE ───────────────────────────────────────── -->
+  <div class="hero-img">
+    <!-- Replace with: <img src="img/canti-hero.jpg" alt="CANTI 001 table at Gray's Degree Show, 2023"> -->
+    <div class="hero-img__placeholder"><img src="./imgs-craft/Canti/CANTI HERO SHOT w Model-4.JPEG" alt="Canti 001 table with model at Gray's Degree Show, 2023. Aberdeen" srcset="">
+    </div>
+  </div>
+
+  <!-- ── 01 BRIEF ─────────────────────────────────────────── -->
+  <section class="section section--split">
+    <div>
+      <p class="section__num">01 — Brief</p>
+      <h2 class="section__heading">The <em>Idea</em></h2>
+    </div>
+    <div>
+      <p class="section__body">
+        CANTI 001 was my final-year Honours project — the first large-scale piece I'd attempted and the first time I had to work through a full design-to-build process entirely on my own terms. The brief was self-directed: design and build a <strong>luxury table prototype suitable for sustainable batch production</strong>, using recycled plastic within a cradle-to-cradle framework.
+      </p>
+      <div class="callout">
+        <p class="callout__text">
+          The question wasn't whether recycled plastic could look good. <em>It was whether it could look expensive.</em>
+        </p>
+      </div>
+      <p class="section__body">
+        The research made one thing clear early on — recycled plastic has a perception problem. It's treated as a material for budget products or novelty objects, never as something worth keeping. Pairing it with hardwood and finishing both to the same standard felt like the honest way to challenge that. The name comes from the cantilevered form the legs were originally sketched around — that idea shifted through prototyping, but the name stuck.
+      </p>
+      <p class="section__body">
+        The end-of-life dimension mattered as much as the aesthetics. The mahogany panels and plastic inserts are <strong>fully removable and replaceable</strong>. When they're past their useful life, they go back — the business takes them and turns them into wall art. The oak frame stays, gets new panels. Nothing ends up in a skip.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── IMAGE GRID 1 ─────────────────────────────────────── -->
+  <div class="img-grid">
+    <div class="img-grid__item">
+      <!-- Replace with: <img src="img/canti-foam-prototypes.jpg" alt="Foam and card low-fidelity prototypes"> -->
+      <div class="img-grid__placeholder">
+        <span>Add image: foam / card low-fi prototypes</span>
+      </div>
+    </div>
+    <div class="img-grid__item">
+      <!-- Replace with: <img src="img/canti-rhino-ideation.jpg" alt="Rhino and Keyshot table ideation"> -->
+      <div class="img-grid__placeholder">
+        <span>Add image: Rhino + Keyshot ideation</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 02 MATERIAL RESEARCH ──────────────────────────────── -->
+  <section class="section section--split">
+    <div>
+      <p class="section__num">02 — Material Research</p>
+      <h2 class="section__heading">Plastic as <em>Luxury</em></h2>
+    </div>
+    <div>
+      <p class="section__body">
+        The plastic came from <strong>SMILE Plastics</strong> — sheets pressed from post-consumer waste, each one slightly different depending on what went into the batch. That variation became part of the point. No two tables would be identical, which is exactly what you'd expect from something sold as a premium, handmade piece.
+      </p>
+      <p class="section__body">
+        Getting the plastic to actually look the part took a lot of testing. The initial plan was to mould my own tiles using a custom mild steel mould I had engineered and built — but there was an incompatibility between the mould and Origin Plastics' injection machine, so that approach was shelved. Sourcing pre-cut sheets from SMILE turned out to be the right call. It meant I could focus on refinement rather than production.
+      </p>
+      <div class="callout">
+        <p class="callout__text">
+          Wet sanded up to 2400 grit, then buffed and polished. <em>The surface quality sells it.</em>
+        </p>
+      </div>
+      <p class="section__body">
+        The mahogany panels were cut from a single plank with a mitre saw, then routed to create the grooves the plastic sits into. The contrast between the light oak frame and the darker mahogany does the framing work — it draws attention to the plastic rather than hiding it.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── IMAGE GRID 2 ─────────────────────────────────────── -->
+  <div class="img-grid">
+    <div class="img-grid__item img-grid__item--tall">
+      <!-- Replace with: <img src="img/canti-smile-plastic.jpg" alt="SMILE recycled plastic sheet samples"> -->
+      <div class="img-grid__placeholder">
+        <span>Add image: SMILE plastic sheets / samples</span>
+      </div>
+    </div>
+    <div class="img-grid__item img-grid__item--tall">
+      <!-- Replace with: <img src="img/canti-mahogany-panels.jpg" alt="Mahogany panels with routed grooves"> -->
+      <div class="img-grid__placeholder">
+        <span>Add image: mahogany panels + routed grooves</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 03 MAKING ─────────────────────────────────────────── -->
+  <section class="section">
+    <p class="section__num">03 — Making</p>
+    <h2 class="section__heading" style="margin-bottom: 3rem;">Process</h2>
+
+    <div class="process-steps">
+      <div class="process-step">
+        <div><p class="process-step__num"></p></div>
+        <div>
+          <h3 class="process-step__heading">Low-fi Prototyping &amp; <em>Form Finding</em></h3>
+          <p class="process-step__body">
+            Foam board and card to iterate quickly through leg shapes and proportions. The cantilevered C-shape leg came from this stage. Cheap to test, quick to rule out — most ideas didn't make it past the first cut.
+          </p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div><p class="process-step__num"></p></div>
+        <div>
+          <h3 class="process-step__heading">Biscuit Joints &amp; <em>What Didn't Work</em></h3>
+          <p class="process-step__body">
+            First structural prototypes used biscuit joinery for the C-shaped legs. The joins had almost no structural strength and reinforcing them would have increased production costs significantly while making disassembly at end-of-life near impossible. Ruled out early.
+          </p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div><p class="process-step__num"></p></div>
+        <div>
+          <h3 class="process-step__heading">Sanding &amp; <em>Surface Refinement</em></h3>
+          <p class="process-step__body">
+            16 hours of sanding across the oak frame — four ascending grades with a palm sander, finished by hand. The plastic panels went through a separate process: wet sanded to 2400 grit, then buffed and polished on a buffing wheel to bring out the surface quality.
+          </p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div><p class="process-step__num"></p></div>
+        <div>
+          <h3 class="process-step__heading">Indian Ink &amp; <em>Beeswax Finish</em></h3>
+          <p class="process-step__body">
+            Eight layers of Indian ink built up and sanded back — applied like lacquer — followed by three coats of natural beeswax. No hazardous fumes, no synthetic sealants. The finish protects the wood and can be fully removed at end of life, keeping the cradle-to-cradle chain intact.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="stat-row">
+      <div class="stat">
+        <p class="stat__num">100<em>+</em></p>
+        <p class="stat__label">Rhino &amp; Keyshot Iterations</p>
+      </div>
+      <div class="stat">
+        <p class="stat__num">16<em>hrs</em></p>
+        <p class="stat__label">Sanding the Oak Frame</p>
+      </div>
+      <div class="stat">
+        <p class="stat__num">8<em>×</em></p>
+        <p class="stat__label">Layers of Indian Ink</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── IMAGE GRID 3 ─────────────────────────────────────── -->
+  <div class="img-grid" style="padding-bottom: 0;">
+    <div class="img-grid__item">
+      <!-- Replace with: <img src="img/canti-ink-wax-finish.jpg" alt="Frame post-inking with beeswax finish"> -->
+      <div class="img-grid__placeholder">
+        <span>Add image: frame post-inking + beeswax finish</span>
+      </div>
+    </div>
+    <div class="img-grid__item">
+      <!-- Replace with: <img src="img/canti-final-table.jpg" alt="Finished CANTI 001 table"> -->
+      <div class="img-grid__placeholder">
+        <span>Add image: finished table</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 04 OUTCOME ────────────────────────────────────────── -->
+  <section class="section section--split">
+    <div>
+      <p class="section__num">04 — Outcome</p>
+      <h2 class="section__heading">Degree Show &amp;<br><em>What's Next</em></h2>
+    </div>
+    <div>
+      <p class="section__body">
+        The finished prototype was shown at <strong>Gray's School of Art Degree Show in 2023</strong> alongside a business concept for how CANTI could work as a product line — the take-back model for end-of-life panels, the batch production approach, the route to market.
+      </p>
+      <p class="section__body">
+        CANTI 001 was always meant to be the proof of concept. The question it was answering was whether recycled plastic and sustainable finishing could sit alongside hardwood without the result reading as a compromise. The degree show was the test. The response confirmed it could.
+      </p>
+      <div class="callout">
+        <p class="callout__text">
+          The panels are designed to leave. <em>The table is designed to stay.</em>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── NEXT PROJECT ──────────────────────────────────────── -->
+  <a href="graduate-in-residence.html" class="next-project">
+    <span class="next-project__label">Next Project</span>
+    <h2 class="next-project__title">Graduate in <em>Residence</em></h2>
+    <span class="next-project__arrow">→</span>
+  </a>
+
+  <!-- ── FOOTER ────────────────────────────────────────────── -->
+  <footer>
+    <span class="footer__copy">© Sherjeel Hussain</span>
+    <div class="footer__links">
+      <a href="craft.html">← Craft</a>
+      <a href="work.html">All Work</a>
+      <a href="about.html">About</a>
+    </div>
+  </footer>
+
+  <!-- ── CURSOR SCRIPT ─────────────────────────────────────── -->
+  <script>
+    const cursor = document.getElementById('cursor');
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top  = e.clientY + 'px';
+    });
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('grow'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('grow'));
+    });
+  </script>
+
+</body>
+</html>

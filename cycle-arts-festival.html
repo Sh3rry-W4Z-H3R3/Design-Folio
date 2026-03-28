@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cycle Arts Festival 2025 — Sherjeel Hussain</title>
+  <meta name="description" content="Cycle Arts Festival 2025 — exhibiting ceramics as part of SCOPE Collective along Renfrewshire's cycle routes. Site-responsive work in landscape, September 2025." />
+  <link rel="canonical" href="https://sherjeelhussain.co.uk/cycle-arts-festival.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Syne:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg:       #0a0a0a;
+      --fg:       #ede9e1;
+      --fg-dim:   #555;
+      --fg-mid:   #999;
+      --accent:   #6dbf9e;
+      --accent-2: #e8547a;
+      --gold:     #c8b882;
+      --serif:    'Cormorant', Georgia, serif;
+      --sans:     'Syne', sans-serif;
+      --body:     'DM Sans', sans-serif;
+      --ease:     cubic-bezier(0.25, 0.1, 0.25, 1);
+      --slow:     0.7s var(--ease);
+      --fast:     0.3s var(--ease);
+      --gutter:   clamp(1.2rem, 4vw, 3rem);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--fg); font-family: var(--body); overflow-x: hidden; cursor: none; }
+
+    .cursor { position: fixed; width: 10px; height: 10px; background: var(--fg); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: width var(--fast), height var(--fast), background var(--fast); }
+    .cursor.grow { width: 44px; height: 44px; background: transparent; border: 1px solid var(--accent); opacity: 0.7; }
+
+    nav { display: flex; align-items: center; justify-content: space-between; padding: 2rem var(--gutter); position: sticky; top: 0; z-index: 100; background: rgba(10,10,10,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid #1a1a1a; }
+    .nav__home { font-family: var(--serif); font-size: 1.1rem; font-weight: 300; letter-spacing: 0.06em; text-decoration: none; color: var(--fg); }
+    .nav__home em { font-style: italic; color: var(--accent-2); }
+    .nav__links { display: flex; gap: 2.5rem; }
+    .nav__links a { font-family: var(--sans); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none; color: var(--fg-dim); transition: color var(--fast); position: relative; }
+    .nav__links a::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 1px; background: var(--accent); transition: width var(--fast); }
+    .nav__links a:hover, .nav__links a.active { color: var(--fg); }
+    .nav__links a:hover::after, .nav__links a.active::after { width: 100%; }
+
+    .project-hero { padding: 5rem var(--gutter) 0; opacity: 0; animation: fadeUp 0.8s var(--ease) 0.1s forwards; }
+    .project-hero__eyebrow { font-family: var(--sans); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.8rem; }
+    .project-hero__eyebrow::before { content: ''; display: block; width: 2rem; height: 1px; background: var(--accent); }
+    .project-hero__title { font-family: var(--serif); font-size: clamp(3rem, 8vw, 7rem); font-weight: 300; line-height: 0.92; letter-spacing: -0.01em; }
+    .project-hero__title em { font-style: italic; display: block; }
+
+    .meta-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; margin: 3rem 0 0; border-top: 1px solid #1a1a1a; opacity: 0; animation: fadeUp 0.8s var(--ease) 0.3s forwards; }
+    .meta-strip__item { padding: 1.8rem var(--gutter); border-right: 1px solid #1a1a1a; }
+    .meta-strip__item:last-child { border-right: none; }
+    .meta-strip__label { font-family: var(--sans); font-size: 0.55rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--fg-dim); margin-bottom: 0.6rem; }
+    .meta-strip__value { font-family: var(--serif); font-size: 1rem; font-weight: 300; color: var(--fg); line-height: 1.5; }
+    .meta-strip__value em { font-style: italic; color: var(--accent); }
+
+    .hero-img { width: 100%; aspect-ratio: 16/7; background: #111; overflow: hidden; position: relative; opacity: 0; animation: fadeUp 0.8s var(--ease) 0.45s forwards; }
+    .hero-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .hero-img__placeholder { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.8rem; background: linear-gradient(135deg, #080e0a 0%, #0d1410 50%, #080e0a 100%); }
+    .hero-img__placeholder em { font-family: var(--serif); font-size: clamp(1.2rem, 2.5vw, 2rem); font-weight: 300; font-style: italic; color: rgba(237,233,225,0.35); }
+    .hero-img__placeholder span { font-family: var(--sans); font-size: 0.55rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--fg-dim); }
+
+    .section { padding: 6rem var(--gutter); border-top: 1px solid #1a1a1a; }
+    .section--split { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+    .section__num { font-family: var(--sans); font-size: 0.58rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.8rem; }
+    .section__num::before { content: ''; display: block; width: 1.5rem; height: 1px; background: var(--accent); }
+    .section__heading { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 300; line-height: 1; margin-bottom: 2rem; }
+    .section__heading em { font-style: italic; }
+    .section__body { font-family: var(--body); font-size: 0.88rem; line-height: 1.9; color: var(--fg-mid); font-weight: 300; max-width: 52ch; }
+    .section__body + .section__body { margin-top: 1.2rem; }
+    .section__body strong { color: var(--fg); font-weight: 400; }
+
+    .callout { margin: 2.5rem 0; padding: 2rem 2.2rem; border-left: 2px solid var(--accent); background: rgba(109,191,158,0.04); }
+    .callout__text { font-family: var(--serif); font-size: clamp(1.1rem, 2vw, 1.5rem); font-weight: 300; line-height: 1.55; color: var(--fg); }
+    .callout__text em { font-style: italic; color: var(--accent); }
+
+    .img-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; padding: 0 var(--gutter); }
+    .img-grid__item { aspect-ratio: 4/3; background: #111; overflow: hidden; position: relative; }
+    .img-grid__item img { width: 100%; height: 100%; object-fit: cover; }
+    .img-grid__item--tall { aspect-ratio: 3/4; }
+    .img-grid__item--wide { grid-column: span 2; aspect-ratio: 16/7; }
+    .img-grid__placeholder { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.6rem; background: #111; }
+    .img-grid__placeholder span { font-family: var(--sans); font-size: 0.55rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--fg-dim); }
+
+    /* works list — pieces shown */
+    .works-list { display: flex; flex-direction: column; gap: 0; margin-top: 3rem; }
+    .works-item { display: grid; grid-template-columns: 2rem 1fr; gap: 1.5rem; padding: 1.8rem 0; border-bottom: 1px solid #1a1a1a; align-items: baseline; }
+    .works-item:first-child { border-top: 1px solid #1a1a1a; }
+    .works-item__num { font-family: var(--sans); font-size: 0.55rem; font-weight: 700; letter-spacing: 0.15em; color: var(--fg-dim); }
+    .works-item__title { font-family: var(--serif); font-size: 1rem; font-weight: 300; color: var(--fg); margin-bottom: 0.3rem; }
+    .works-item__title em { font-style: italic; }
+    .works-item__detail { font-family: var(--body); font-size: 0.75rem; color: var(--fg-dim); font-weight: 300; }
+
+    .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 4rem; }
+    .stat { padding: 2.5rem 2rem; background: #111; border-top: 1px solid #222; transition: border-top-color var(--fast); }
+    .stat:hover { border-top-color: var(--accent); }
+    .stat__num { font-family: var(--serif); font-size: clamp(2.8rem, 5vw, 4.5rem); font-weight: 300; line-height: 1; color: var(--fg); margin-bottom: 0.6rem; }
+    .stat__num em { font-style: italic; color: var(--accent); }
+    .stat__label { font-family: var(--sans); font-size: 0.6rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--fg-dim); }
+
+    .next-project { display: block; text-decoration: none; color: inherit; padding: 5rem var(--gutter); border-top: 1px solid #1a1a1a; position: relative; overflow: hidden; transition: background var(--fast); }
+    .next-project:hover { background: #0d0d0d; }
+    .next-project__label { font-family: var(--sans); font-size: 0.58rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--fg-dim); margin-bottom: 1.2rem; display: block; }
+    .next-project__title { font-family: var(--serif); font-size: clamp(2rem, 5vw, 4rem); font-weight: 300; line-height: 1; }
+    .next-project__title em { font-style: italic; color: var(--accent-2); }
+    .next-project__arrow { position: absolute; right: var(--gutter); top: 50%; transform: translateY(-50%); font-size: 2.5rem; color: var(--fg-dim); transition: color var(--fast), transform var(--fast); }
+    .next-project:hover .next-project__arrow { color: var(--fg); transform: translate(6px, -50%); }
+
+    footer { display: flex; align-items: center; justify-content: space-between; padding: 2.5rem var(--gutter) 3.5rem; border-top: 1px solid #1a1a1a; }
+    .footer__copy { font-family: var(--sans); font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-dim); }
+    .footer__links { display: flex; gap: 2rem; }
+    .footer__links a { font-family: var(--sans); font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; color: var(--fg-dim); transition: color var(--fast); }
+    .footer__links a:hover { color: var(--fg); }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+    @media (max-width: 768px) {
+      body { cursor: auto; } .cursor { display: none; }
+      .meta-strip { grid-template-columns: 1fr 1fr; }
+      .meta-strip__item { border-right: none; border-bottom: 1px solid #1a1a1a; }
+      .meta-strip__item:nth-child(odd) { border-right: 1px solid #1a1a1a; }
+      .section--split { grid-template-columns: 1fr; gap: 2rem; }
+      .img-grid { grid-template-columns: 1fr; }
+      .img-grid__item--tall { aspect-ratio: 4/3; }
+      .img-grid__item--wide { grid-column: span 1; aspect-ratio: 4/3; }
+      .stat-row { grid-template-columns: 1fr; }
+      .nav__links { gap: 1.2rem; }
+      .next-project__arrow { display: none; }
+      footer { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+      .hero-img { aspect-ratio: 4/3; }
+    }
+    @media (max-width: 480px) { .nav__links a { font-size: 0.56rem; letter-spacing: 0.12em; } }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+
+  <nav>
+    <a href="index.html" class="nav__home">Sherjeel <em>Hussain</em></a>
+    <div class="nav__links">
+      <a href="digital.html">Digital</a>
+      <a href="craft.html" class="active">Craft</a>
+      <a href="work.html">All Work</a>
+      <a href="about.html">About</a>
+    </div>
+  </nav>
+
+  <header class="project-hero">
+    <p class="project-hero__eyebrow">02 — Exhibition &nbsp;·&nbsp; SCOPE Collective · Renfrewshire</p>
+    <h1 class="project-hero__title">
+      Cycle Arts
+      <em>Festival 2025</em>
+    </h1>
+  </header>
+
+  <div class="meta-strip">
+    <div class="meta-strip__item">
+      <p class="meta-strip__label">Date</p>
+      <p class="meta-strip__value">September 2025</p>
+    </div>
+    <div class="meta-strip__item">
+      <p class="meta-strip__label">Role</p>
+      <p class="meta-strip__value">Exhibiting Artist<br><em>SCOPE Collective</em></p>
+    </div>
+    <div class="meta-strip__item">
+      <p class="meta-strip__label">Location</p>
+      <p class="meta-strip__value">Renfrewshire<br>Cycle Routes</p>
+    </div>
+    <div class="meta-strip__item">
+      <p class="meta-strip__label">Materials</p>
+      <p class="meta-strip__value">White Stoneware<br>Flecked Stoneware</p>
+    </div>
+  </div>
+
+  <div class="hero-img">
+    <!-- Replace with: <img src="img/cycle-arts-hero.jpg" alt="SCOPE tent along the Renfrewshire cycle route, September 2025"> -->
+    <div class="hero-img__placeholder">
+      <em>Cycle Arts Festival — SCOPE Collective, 2025</em>
+      <span>Replace with: img/cycle-arts-hero.jpg</span>
+    </div>
+  </div>
+
+  <!-- 01 CONTEXT -->
+  <section class="section section--split">
+    <div>
+      <p class="section__num">01 — Context</p>
+      <h2 class="section__heading">Art Along<br><em>the Route</em></h2>
+    </div>
+    <div>
+      <p class="section__body">
+        Cycle Arts Festival is an outdoor, mixed-arts programme running across Renfrewshire's cycle routes — work commissioned and exhibited in the landscape itself, encountered through movement rather than through a gallery door. Artists from across disciplines respond to specific sites along the routes, and the infrastructure of cycling becomes the spine the whole thing hangs off.
+      </p>
+      <p class="section__body">
+        I exhibited as part of <strong>SCOPE Collective</strong>, showing a series of ceramic vessels and smaller forms inside a tented structure positioned directly along the route. The context is completely different from a gallery or even a craft fair — people arrive on bikes, often mid-journey, and the work has to earn their attention without making demands on it.
+      </p>
+      <div class="callout">
+        <p class="callout__text">
+          Work installed in a tent on a cycle path. No white walls, no plinths. <em>Just the work and whoever happens to stop.</em>
+        </p>
+      </div>
+      <p class="section__body">
+        The festival ran 12–14 September 2025, with studio support from Outer Spaces, Abbey House. It was the first time I'd shown work in an entirely outdoor, site-embedded setting — and the first time the ceramics had to function without any of the usual staging a gallery provides.
+      </p>
+    </div>
+  </section>
+
+  <!-- IMAGE GRID 1 -->
+  <div class="img-grid">
+    <div class="img-grid__item">
+      <!-- Replace with: <img src="img/cycle-arts-scope-tent.jpg" alt="SCOPE tent positioned along the cycle route"> -->
+      <div class="img-grid__placeholder"><span>Add image: SCOPE tent on route</span></div>
+    </div>
+    <div class="img-grid__item">
+      <!-- Replace with: <img src="img/cycle-arts-installation.jpg" alt="Ceramic vessels inside the SCOPE tent"> -->
+      <div class="img-grid__placeholder"><span>Add image: installation inside tent</span></div>
+    </div>
+  </div>
+
+  <!-- 02 THE WORK -->
+  <section class="section section--split">
+    <div>
+      <p class="section__num">02 — The Work</p>
+      <h2 class="section__heading">Glaze &amp;<br><em>Surface</em></h2>
+    </div>
+    <div>
+      <p class="section__body">
+        The pieces shown at Cycle Arts drew on two years of glaze development — combinations layered to encourage variation, crystallisation, and spangling rather than a uniform, predictable finish. The forms were deliberately restrained. Quieter shapes put more pressure on the surface to do the work, and the glazes respond better when they're not competing with the silhouette.
+      </p>
+      <p class="section__body">
+        All work was fired at high temperature — primarily <strong>Cone 9 reduction</strong>, with some Cone 6 pieces from flecked stoneware. The difference in atmosphere between electric and gas firing produces different outcomes from the same glaze recipe, which is part of why reduction firing still interests me — you're working with the kiln rather than against it.
+      </p>
+      <div class="callout">
+        <p class="callout__text">
+          Crystal Emerald spangling differently at Cone 9. <em>The copper and the reduction doing something I hadn't planned for.</em>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PIECES SHOWN -->
+  <section class="section">
+    <p class="section__num">03 — Pieces Shown</p>
+    <h2 class="section__heading" style="margin-bottom: 0;">Works <em>Exhibited</em></h2>
+
+    <div class="works-list">
+      <div class="works-item">
+        <span class="works-item__num">01</span>
+        <div>
+          <p class="works-item__title">Small Pot — <em>Andra's Sparkle</em></p>
+          <p class="works-item__detail">Cone 9 Reduction · White Stoneware</p>
+        </div>
+      </div>
+      <div class="works-item">
+        <span class="works-item__num">02</span>
+        <div>
+          <p class="works-item__title">Vessel — <em>White Bird Spangled × Honey Yellow Spangles</em></p>
+          <p class="works-item__detail">Cone 9 Reduction · White Stoneware</p>
+        </div>
+      </div>
+      <div class="works-item">
+        <span class="works-item__num">03</span>
+        <div>
+          <p class="works-item__title">Vessel — <em>Crystal Emerald × Spangles</em></p>
+          <p class="works-item__detail">Cone 9 Reduction · White Stoneware</p>
+        </div>
+      </div>
+      <div class="works-item">
+        <span class="works-item__num">04</span>
+        <div>
+          <p class="works-item__title">Bowl — <em>Dark Crystal Spangles</em></p>
+          <p class="works-item__detail">Cone 6 · Flecked Stoneware</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat">
+        <p class="stat__num">3<em>days</em></p>
+        <p class="stat__label">12–14 September 2025</p>
+      </div>
+      <div class="stat">
+        <p class="stat__num">C<em>9</em></p>
+        <p class="stat__label">Primary Firing Temperature</p>
+      </div>
+      <div class="stat">
+        <p class="stat__num"><em>∞</em></p>
+        <p class="stat__label">Miles of Cycle Route</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- IMAGE GRID 2 -->
+  <div class="img-grid" style="padding-bottom: 0;">
+    <div class="img-grid__item img-grid__item--tall">
+      <!-- Replace with: <img src="img/cycle-arts-vessel-crystal.jpg" alt="Vessel — Crystal Emerald × Spangles, Cone 9 Reduction"> -->
+      <div class="img-grid__placeholder"><span>Add image: Crystal Emerald vessel</span></div>
+    </div>
+    <div class="img-grid__item img-grid__item--tall">
+      <!-- Replace with: <img src="img/cycle-arts-bowl-dark.jpg" alt="Bowl — Dark Crystal Spangles, Cone 6 Flecked Stoneware"> -->
+      <div class="img-grid__placeholder"><span>Add image: Dark Crystal Spangles bowl</span></div>
+    </div>
+  </div>
+
+  <a href="crafted-by-design.html" class="next-project">
+    <span class="next-project__label">Next Project</span>
+    <h2 class="next-project__title">Crafted <em>By Design</em></h2>
+    <span class="next-project__arrow">→</span>
+  </a>
+
+  <footer>
+    <span class="footer__copy">© Sherjeel Hussain</span>
+    <div class="footer__links">
+      <a href="craft.html">← Craft</a>
+      <a href="work.html">All Work</a>
+      <a href="about.html">About</a>
+    </div>
+  </footer>
+
+  <script>
+    const cursor = document.getElementById('cursor');
+    document.addEventListener('mousemove', e => { cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px'; });
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('grow'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('grow'));
+    });
+  </script>
+</body>
+</html>

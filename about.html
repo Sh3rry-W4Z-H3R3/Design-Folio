@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — Sherjeel Hussain</title>
+  <meta name="description" content="Sherjeel Hussain is a Glasgow-based UI designer, product designer and ceramicist. Graduate of Robert Gordon University. Graduate in Residence, Gray's School of Art. Founder of SCM Design Studio." />
+  <meta name="keywords" content="Sherjeel Hussain Glasgow, UI designer Glasgow, ceramicist Scotland, SCM Design Studio, SH27 Design, Gray's School of Art" />
+  <meta name="author" content="Sherjeel Hussain" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://sherjeelhussain.co.uk/about.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="profile" />
+  <meta property="og:title" content="About Sherjeel Hussain — UI Designer & Ceramicist, Glasgow" />
+  <meta property="og:description" content="Sherjeel Hussain is a Glasgow-based UI designer, product designer and ceramicist. Graduate of Robert Gordon University. Graduate in Residence, Gray's School of Art. Founder of SCM Design Studio." />
+  <meta property="og:url" content="https://sherjeelhussain.co.uk/about.html" />
+  <meta property="og:image" content="https://sherjeelhussain.co.uk/img/og-default.jpg" />
+  <meta property="og:site_name" content="Sherjeel Hussain — Designer & Ceramicist" />
+  <meta property="og:locale" content="en_GB" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="About Sherjeel Hussain — UI Designer & Ceramicist, Glasgow" />
+  <meta name="twitter:description" content="Sherjeel Hussain is a Glasgow-based UI designer, product designer and ceramicist. Graduate of Robert Gordon University. Graduate in Residence, Gray's School of Art. Founder of SCM Design Studio." />
+  <meta name="twitter:image" content="https://sherjeelhussain.co.uk/img/og-default.jpg" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Sherjeel Hussain",
+    "url": "https://sherjeelhussain.co.uk",
+    "jobTitle": ["UI Designer", "Product Designer", "Ceramicist"],
+    "worksFor": {"@type": "Organization", "name": "SCM Design Studio"},
+    "alumniOf": [{"@type": "EducationalOrganization", "name": "Robert Gordon University, Aberdeen"}, {"@type": "EducationalOrganization", "name": "Gray's School of Art, Aberdeen"}],
+    "address": {"@type": "PostalAddress", "addressLocality": "Glasgow", "addressCountry": "GB"},
+    "knowsAbout": ["UI Design", "Product Design", "Ceramics", "Brand Identity", "Multanni Mitti", "Raku Firing", "Shopify", "Web Development"],
+    "sameAs": ["https://www.linkedin.com/in/sherjeel-hussain-0652431b9/", "https://www.instagram.com/sherjeel_h27_design_/"]
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Syne:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:       #0a0a0a;
+      --fg:       #ede9e1;
+      --fg-dim:   #555;
+      --fg-mid:   #999;
+      --accent:   #e8547a;
+      --accent-2: #6dbf9e;
+      --serif:    'Cormorant', Georgia, serif;
+      --sans:     'Syne', sans-serif;
+      --body:     'DM Sans', sans-serif;
+      --ease:     cubic-bezier(0.25, 0.1, 0.25, 1);
+      --slow:     0.7s var(--ease);
+      --fast:     0.3s var(--ease);
+      --gutter:   clamp(1.4rem, 5vw, 5rem);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--fg); font-family: var(--body); overflow-x: hidden; cursor: none; }
+
+    /* ── CURSOR ── */
+    .cursor {
+      position: fixed; width: 10px; height: 10px;
+      background: var(--fg); border-radius: 50%;
+      pointer-events: none; z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width var(--fast), height var(--fast), background var(--fast), opacity var(--fast);
+    }
+    .cursor.grow {
+      width: 44px; height: 44px; background: transparent;
+      border: 1px solid var(--accent); opacity: 0.8;
+    }
+    /* Icon label that floats next to cursor */
+    .cursor-icon {
+      position: fixed; pointer-events: none; z-index: 9998;
+      transform: translate(10px, -50%);
+      opacity: 0; transition: opacity 0.2s ease;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .cursor-icon.visible { opacity: 1; }
+    .cursor-icon svg { display: block; }
+    .cursor-icon span {
+      font-family: var(--sans); font-size: 0.5rem; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--accent); margin-top: 4px;
+    }
+
+    /* ── NAV ── */
+    nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 2rem var(--gutter); position: sticky; top: 0; z-index: 100;
+      background: rgba(10,10,10,0.92); backdrop-filter: blur(12px);
+      border-bottom: 1px solid #1a1a1a;
+    }
+    .nav__home { font-family: var(--serif); font-size: 1.1rem; font-weight: 300; letter-spacing: 0.06em; text-decoration: none; color: var(--fg); }
+    .nav__home em { font-style: italic; color: var(--accent); }
+    .nav__links { display: flex; gap: 2.5rem; }
+    .nav__links a {
+      font-family: var(--sans); font-size: 0.65rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      text-decoration: none; color: var(--fg-dim); transition: color var(--fast); position: relative;
+    }
+    .nav__links a::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 1px; background: var(--accent); transition: width var(--fast); }
+    .nav__links a:hover, .nav__links a.active { color: var(--fg); }
+    .nav__links a:hover::after, .nav__links a.active::after { width: 100%; }
+
+    /* ── HERO ── */
+    .hero { display: grid; grid-template-columns: 1fr 1fr; min-height: 88vh; border-bottom: 1px solid #1a1a1a; }
+    .hero__left { padding: 7rem var(--gutter) 5rem; display: flex; flex-direction: column; justify-content: space-between; border-right: 1px solid #1a1a1a; opacity: 0; animation: fadeUp 0.9s var(--ease) 0.1s forwards; }
+    .hero__eyebrow { font-family: var(--sans); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); margin-bottom: 2rem; display: flex; align-items: center; gap: 0.8rem; }
+    .hero__eyebrow::before { content: ''; display: block; width: 1.5rem; height: 1px; background: var(--accent); }
+    .hero__name { font-family: var(--serif); font-size: clamp(4rem, 9vw, 8.5rem); font-weight: 300; line-height: 0.9; letter-spacing: -0.01em; }
+    .hero__name em { font-style: italic; color: var(--accent); display: block; }
+    .hero__title-line { margin-top: 2.5rem; font-family: var(--sans); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--fg-dim); display: flex; align-items: center; gap: 1.2rem; flex-wrap: wrap; }
+    .hero__title-line span { color: var(--fg-mid); }
+    .divider-dot { width: 3px; height: 3px; background: var(--fg-dim); border-radius: 50%; }
+    .hero__right { position: relative; overflow: hidden; opacity: 0; animation: fadeIn 1.2s var(--ease) 0.3s forwards; }
+    .hero__photo { position: absolute; inset: 0; background-image: url('img/sherjeel-portrait.jpg'); background-size: cover; background-position: center top; filter: grayscale(20%); transition: filter var(--slow); }
+    .hero__right:hover .hero__photo { filter: grayscale(0%); }
+    .hero__photo-placeholder { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 1rem; background: #111; }
+    .hero__photo-placeholder p { font-family: var(--sans); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--fg-dim); }
+    .hero__right::after { content: ''; position: absolute; bottom: 0; left: 0; width: 40%; height: 3px; background: var(--accent); }
+
+    /* ── SECTIONS ── */
+    .two-col { display: grid; grid-template-columns: 1fr 2fr; gap: 6rem; align-items: start; }
+    .section-block { padding: 7rem var(--gutter); border-bottom: 1px solid #1a1a1a; }
+    .section-sticky-label { font-family: var(--sans); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); position: sticky; top: 6rem; display: flex; align-items: center; gap: 0.8rem; }
+    .section-sticky-label::before { content: ''; display: block; width: 1.5rem; height: 1px; background: var(--accent); }
+
+    /* ── STATEMENT ── */
+    .statement { padding: 7rem var(--gutter); display: grid; grid-template-columns: 1fr 2fr; gap: 6rem; align-items: start; border-bottom: 1px solid #1a1a1a; }
+    .statement__label { font-family: var(--sans); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); padding-top: 0.5rem; position: sticky; top: 6rem; display: flex; align-items: center; gap: 0.8rem; }
+    .statement__label::before { content: ''; display: block; width: 1.5rem; height: 1px; background: var(--accent); }
+    .statement__text { font-family: var(--serif); font-size: clamp(1.4rem, 2.8vw, 2.2rem); font-weight: 300; line-height: 1.5; color: var(--fg); }
+    .statement__text em { font-style: italic; color: var(--accent); }
+    .statement__text p + p { margin-top: 1.2em; }
+
+    /* ── BACKGROUND ── */
+    .background__body { font-size: 0.92rem; line-height: 1.95; color: var(--fg-mid); font-weight: 300; max-width: 680px; }
+    .background__body p + p { margin-top: 1.3em; }
+    .background__body strong { color: var(--fg); font-weight: 500; }
+    .background__body em { font-style: italic; color: var(--fg); }
+
+    /* ── TIMELINE ── */
+    .timeline__items { display: flex; flex-direction: column; gap: 0; max-width: 680px; }
+    .timeline__item { display: grid; grid-template-columns: 5rem 1fr; gap: 2rem; padding: 2rem 0; border-top: 1px solid #1a1a1a; transition: border-color var(--fast); }
+    .timeline__item:hover { border-top-color: var(--accent); }
+    .timeline__year { font-family: var(--sans); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; color: var(--fg-dim); padding-top: 0.15rem; }
+    .timeline__org { font-family: var(--sans); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.3rem; }
+    .timeline__role { font-family: var(--serif); font-size: 1.15rem; font-weight: 300; color: var(--fg); line-height: 1.2; margin-bottom: 0.6rem; }
+    .timeline__role em { font-style: italic; }
+    .timeline__detail { font-size: 0.78rem; line-height: 1.7; color: var(--fg-mid); font-weight: 300; }
+
+    /* Exhibition tag */
+    .timeline__type {
+      display: inline-block; font-family: var(--sans); font-size: 0.52rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 0.2rem 0.5rem; margin-bottom: 0.4rem;
+      border: 1px solid rgba(109,191,158,0.35); color: var(--accent-2);
+    }
+
+    /* ── SKILLS ── */
+    .skills-grid { display: flex; flex-direction: column; gap: 2rem; max-width: 680px; }
+    .skill-group {}
+    .skill-group__title { font-family: var(--sans); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .skill-tag {
+      font-family: var(--body); font-size: 0.72rem; font-weight: 300;
+      color: var(--fg-mid); border: 1px solid #2a2a2a; padding: 0.35rem 0.7rem;
+      transition: border-color var(--fast), color var(--fast);
+    }
+    .skill-tag:hover { border-color: var(--accent); color: var(--fg); }
+
+    /* ── CONTACT ── */
+    .contact-section { padding: 8rem var(--gutter); display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; border-bottom: 1px solid #1a1a1a; }
+    .availability { display: inline-flex; align-items: center; gap: 0.6rem; font-family: var(--sans); font-size: 0.6rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent-2); border: 1px solid rgba(109,191,158,0.3); padding: 0.5rem 1rem; margin-bottom: 2.5rem; }
+    .availability::before { content: '●'; font-size: 0.45rem; animation: pulse 1.8s ease-in-out infinite; }
+    .contact-eyebrow { font-family: var(--sans); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); margin-bottom: 2rem; display: flex; align-items: center; gap: 0.8rem; }
+    .contact-eyebrow::before { content: ''; display: block; width: 1.5rem; height: 1px; background: var(--accent); }
+    .contact-heading { font-family: var(--serif); font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 300; line-height: 1; color: var(--fg); margin-bottom: 2rem; }
+    .contact-heading em { font-style: italic; color: var(--accent); display: block; }
+    .contact-subtext { font-size: 0.88rem; line-height: 1.85; color: var(--fg-mid); font-weight: 300; max-width: 380px; }
+    .contact-links { display: flex; flex-direction: column; gap: 2px; padding-top: 1rem; }
+    .contact-link { display: flex; align-items: center; justify-content: space-between; padding: 1.8rem 2rem; background: #0e0e0e; text-decoration: none; color: var(--fg); border-left: 2px solid transparent; transition: border-color var(--fast), background var(--fast); cursor: none; }
+    .contact-link:hover { border-left-color: var(--accent); background: #141414; }
+    .contact-link__label { font-family: var(--sans); font-size: 0.58rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.4rem; }
+    .contact-link__value { font-family: var(--serif); font-size: 1.1rem; font-weight: 300; }
+    .contact-link__arrow { font-size: 1.1rem; color: var(--fg-dim); transition: transform var(--fast), color var(--fast); }
+    .contact-link:hover .contact-link__arrow { color: var(--accent); transform: translateX(5px); }
+
+    footer { padding: 2.5rem var(--gutter); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .footer__copy { font-family: var(--sans); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-dim); }
+    .footer__links { display: flex; gap: 2rem; }
+    .footer__links a { font-family: var(--sans); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; color: var(--fg-dim); transition: color var(--fast); }
+    .footer__links a:hover { color: var(--fg); }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn  { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes pulse   { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
+
+    @media (max-width: 1024px) {
+      .two-col { grid-template-columns: 1fr 1.5fr; gap: 4rem; }
+      .caps-grid { grid-template-columns: 1fr 1fr; max-width: 100%; }
+      .contact-section { gap: 4rem; }
+    }
+    @media (max-width: 768px) {
+      body { cursor: auto; } .cursor, .cursor-icon { display: none; }
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero__right { min-height: 60vw; }
+      .statement { padding: 4rem 1.4rem; grid-template-columns: 1fr; gap: 2rem; }
+      .two-col { grid-template-columns: 1fr; gap: 2.5rem; }
+      .section-block { padding: 4rem 1.4rem; }
+      .section-sticky-label, .statement__label { position: static; }
+      .contact-section { grid-template-columns: 1fr; gap: 3rem; padding: 4rem 1.4rem; }
+      .timeline__item { grid-template-columns: 4rem 1fr; gap: 1rem; }
+      .caps-grid { grid-template-columns: 1fr; max-width: 100%; }
+      .nav__links { gap: 1.2rem; }
+      footer { flex-direction: column; align-items: flex-start; padding: 2rem 1.4rem; }
+    }
+    @media (max-width: 480px) {
+      nav { padding: 1.2rem 1rem; }
+      .nav__links a { font-size: 0.56rem; letter-spacing: 0.1em; }
+      .hero__left { padding: 4rem 1.2rem 3rem; }
+      .hero__name { font-size: clamp(3.2rem, 16vw, 6rem); }
+      .contact-heading { font-size: clamp(2rem, 12vw, 3.5rem); }
+      .skill-tags { gap: 4px; }
+      .skill-tag { font-size: 0.68rem; padding: 0.28rem 0.55rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-icon" id="cursorIcon">
+    <!-- swapped by JS -->
+  </div>
+
+  <nav>
+    <a href="index.html" class="nav__home">Sherjeel <em>Hussain</em></a>
+    <div class="nav__links">
+      <a href="digital.html" data-cursor="monitor">Digital</a>
+      <a href="craft.html"   data-cursor="pot">Craft</a>
+      <a href="kala-topi.html">Kala Topi</a>
+      <a href="about.html" class="active">About</a>
+      <a href="about.html#contact">Contact</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero__left">
+      <div>
+        <p class="hero__eyebrow">About</p>
+        <h1 class="hero__name">Sherjeel<em>Hussain</em></h1>
+        <p class="hero__title-line">
+          <span>Product Designer</span><span class="divider-dot"></span>
+          <span>Ceramicist</span><span class="divider-dot"></span>
+          <span>Glasgow</span>
+        </p>
+      </div>
+      <p style="font-size:0.78rem;color:var(--fg-dim);line-height:1.75;font-weight:300;max-width:380px;">
+        Designer and ceramicist. I work across physical and digital — not because I can't choose, but because both are part of how I think.
+      </p>
+    </div>
+    <div class="hero__right">
+      <div class="hero__photo"></div>
+      <div class="hero__photo-placeholder" id="photoPlaceholder">
+        <p>Portrait</p>
+        <p style="color:var(--fg-dim);font-size:0.55rem;">img/sherjeel-portrait.jpg</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATEMENT -->
+  <div class="statement">
+    <p class="statement__label">Practice</p>
+    <div class="statement__text">
+      <p>Designer and ceramicist based in Glasgow. I trained in product design and ceramics at Gray's in Aberdeen and the two have never really separated — the thinking is the same, the materials are just different.</p>
+      <p>I grew up between two cultures and I think that comes through naturally in the work. My ceramics uses multanni mitti — a Pakistani clay from the plains of Multan — alongside British stoneware. The two clays behave completely differently at high temperature. That's the interesting part. It's not a concept, it's just what happens when you fire them together.</p>
+    </div>
+  </div>
+
+  <!-- BACKGROUND -->
+  <div class="section-block">
+    <div class="two-col">
+      <p class="section-sticky-label">Background</p>
+      <div class="background__body">
+        <p>I studied Three Dimensional Design — Product and Ceramics — at RGU in Aberdeen. In my final year I set up a Raku Club at the university. Organised the firings, sourced materials, got people along. It became an official society. It's still going, which is good.</p>
+        <p>After graduating I did a Graduate in Residence at Gray's School of Art. Spent the year mentoring students in Rhino and KeyShot, developing my own ceramics practice, and eventually curated <em>Crafted by Design</em> — a group show at The Courtyard Artspace in Aberdeen with eleven makers from the school. Good way to end that chapter.</p>
+        <p>Taught myself web development, brand design, and digital work by taking on real clients and figuring it out as I went. Set up <strong>SCM Design Studio</strong> in 2024. Websites, identities, signage, UI — mostly Scottish clients, all paid work.</p>
+        <p>My ceramics practice runs alongside everything else under <strong>SH27 Design</strong>. Working in multanni mitti — traditionally used in skincare across Pakistan, I started testing it in ceramics during the residency — alongside British stoneware. The xp gain has been real. Work has been shown at the Scottish Ceramics Gallery and in exhibitions in Aberdeen and Renfrewshire.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIMELINE -->
+  <div class="section-block">
+    <div class="two-col">
+      <p class="section-sticky-label">Experience</p>
+      <div class="timeline__items">
+
+        <div class="timeline__item">
+          <span class="timeline__year">2024–25</span>
+          <div>
+            <p class="timeline__org">SCM Design Studio</p>
+            <p class="timeline__role">Founder &amp; <em>Lead Designer</em></p>
+            <p class="timeline__detail">End-to-end brand and digital projects. Websites, identities, signage, UI systems. Clients across Glasgow. Sole designer across all disciplines.</p>
+          </div>
+        </div>
+
+        <div class="timeline__item">
+          <span class="timeline__year">2025</span>
+          <div>
+            <span class="timeline__type">Exhibition</span>
+            <p class="timeline__org">SCOPE Collective</p>
+            <p class="timeline__role">Cycle Arts Festival — <em>Site-Specific Ceramics</em></p>
+            <p class="timeline__detail">Commissioned site-specific ceramic installations displayed along Renfrewshire cycle routes. Multiple pieces in white stoneware (Cone 9 Reduction) and flecked stoneware (Cone 6). Collaboration with Outer Spaces and local communities to integrate art with the natural landscape.</p>
+          </div>
+        </div>
+
+        <div class="timeline__item">
+          <span class="timeline__year">2022–23</span>
+          <div>
+            <p class="timeline__org">Gray's School of Art</p>
+            <p class="timeline__role">Graduate in <em>Residence</em></p>
+            <p class="timeline__detail">Mentored students in Rhino and KeyShot. Developed personal ceramics practice. Curated <em>Crafted by Design</em> — independent group exhibition at The Courtyard Artspace, Aberdeen. Managed studio operations and kiln firings.</p>
+          </div>
+        </div>
+
+        <div class="timeline__item">
+          <span class="timeline__year">2023</span>
+          <div>
+            <span class="timeline__type">Exhibition</span>
+            <p class="timeline__org">The Courtyard Artspace, Aberdeen</p>
+            <p class="timeline__role">Crafted by Design — <em>Curator &amp; Organiser</em></p>
+            <p class="timeline__detail">Group exhibition showcasing emergent designers and artists from Gray's School of Art. End-to-end delivery: artist coordination, spatial planning, installation, social promotion. One month preparation, two-week run.</p>
+          </div>
+        </div>
+
+        <div class="timeline__item">
+          <span class="timeline__year">2022–23</span>
+          <div>
+            <span class="timeline__type">Exhibition</span>
+            <p class="timeline__org">Gray's School of Art</p>
+            <p class="timeline__role">BLEND — <em>GiR Program Exhibition</em></p>
+            <p class="timeline__detail">Group exhibition as part of the Graduate in Residence programme. Presented ceramics and product work alongside fellow GiR participants.</p>
+          </div>
+        </div>
+
+        <div class="timeline__item">
+          <span class="timeline__year">2022</span>
+          <div>
+            <p class="timeline__org">TWOSIX Design Studio</p>
+            <p class="timeline__role">Product Designer <em>Intern</em></p>
+            <p class="timeline__detail">Additive manufacturing and rapid prototyping. Secured and delivered a ceramic tableware client — 40 units in one month via slip casting.</p>
+          </div>
+        </div>
+
+        <div class="timeline__item">
+          <span class="timeline__year">2021</span>
+          <div>
+            <p class="timeline__org">Origin Plastics</p>
+            <p class="timeline__role">Product Designer <em>Intern</em></p>
+            <p class="timeline__detail">Homeware product design using recycled injection-moulded plastic. CAD, renders, user research with 100+ participants. Sustainable manufacturing focus.</p>
+          </div>
+        </div>
+
+        <div class="timeline__item">
+          <span class="timeline__year">2021</span>
+          <div>
+            <span class="timeline__type">Initiative</span>
+            <p class="timeline__org">Robert Gordon University</p>
+            <p class="timeline__role">Raku Club — <em>Founder</em></p>
+            <p class="timeline__detail">Founded an informal Raku firing club that grew into an officially recognised University Society. Organised outdoor firings, sourced materials, built the community from scratch. The society still runs.</p>
+          </div>
+        </div>
+
+        <div class="timeline__item">
+          <span class="timeline__year">2018–22</span>
+          <div>
+            <p class="timeline__org">The Robert Gordon University</p>
+            <p class="timeline__role">BA(Hons) Three Dimensional Design — <em>Product + Ceramics</em></p>
+            <p class="timeline__detail">2:1. Honoured project exhibited at New Designers, London. Founded Raku Club. Social Media Secretary, Weightlifting Society.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- SKILLS -->
+  <div class="section-block">
+    <div class="two-col">
+      <p class="section-sticky-label">Capabilities</p>
+      <div class="skills-grid">
+
+        <div class="skill-group">
+          <p class="skill-group__title">Design Tools</p>
+          <div class="skill-tags">
+            <span class="skill-tag">Figma</span><span class="skill-tag">Framer</span>
+            <span class="skill-tag">Adobe Illustrator</span><span class="skill-tag">Adobe InDesign</span>
+            <span class="skill-tag">Adobe Photoshop</span><span class="skill-tag">Adobe Lightroom</span>
+            <span class="skill-tag">Rhino 3D</span><span class="skill-tag">KeyShot</span>
+            <span class="skill-tag">Blender</span><span class="skill-tag">SketchUp</span>
+            <span class="skill-tag">RIVE Animation</span><span class="skill-tag">Gravity Sketch</span>
+            <span class="skill-tag">Notion</span><span class="skill-tag">Shopify</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <p class="skill-group__title">Technical</p>
+          <div class="skill-tags">
+            <span class="skill-tag">HTML</span><span class="skill-tag">CSS</span>
+            <span class="skill-tag">JavaScript</span><span class="skill-tag">SASS</span>
+            <span class="skill-tag">Shopify Liquid</span><span class="skill-tag">Three.js</span>
+            <span class="skill-tag">Cloudflare</span><span class="skill-tag">Netlify</span>
+            <span class="skill-tag">cPanel</span><span class="skill-tag">Web Hosting</span>
+            <span class="skill-tag">GitHub</span><span class="skill-tag">VS Code</span>
+            <span class="skill-tag">Command Line</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <p class="skill-group__title">Physical Making</p>
+          <div class="skill-tags">
+            <span class="skill-tag">Wheel Throwing</span><span class="skill-tag">Slip Casting</span>
+            <span class="skill-tag">Raku Firing</span><span class="skill-tag">Glazing &amp; Dipping</span>
+            <span class="skill-tag">Kiln Operation</span><span class="skill-tag">Ceramics</span>
+            <span class="skill-tag">CNC Machining</span><span class="skill-tag">Laser Cutting</span>
+            <span class="skill-tag">3D Printing</span><span class="skill-tag">Injection Moulding</span>
+            <span class="skill-tag">Vacuum Forming</span><span class="skill-tag">Woodwork</span>
+            <span class="skill-tag">Recycled Plastic</span><span class="skill-tag">Metal Tooling</span>
+            <span class="skill-tag">Hi-Fi / Lo-Fi Modelling</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <p class="skill-group__title">Professional</p>
+          <div class="skill-tags">
+            <span class="skill-tag">Client Acquisition</span><span class="skill-tag">Project Management</span>
+            <span class="skill-tag">User Research</span><span class="skill-tag">Exhibition Curation</span>
+            <span class="skill-tag">Mentorship</span><span class="skill-tag">Leadership</span>
+            <span class="skill-tag">Lone Worker</span><span class="skill-tag">Communication</span>
+            <span class="skill-tag">Attention to Detail</span><span class="skill-tag">Problem Solving</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="contact-section" id="contact">
+    <div>
+      <p class="availability">Available for work</p>
+      <p class="contact-eyebrow">Contact</p>
+      <h2 class="contact-heading">Let's make<em>something.</em></h2>
+      <p class="contact-subtext">Open to full-time roles in product design, UI design, or brand — and studio or residency opportunities. Remote-first, willing to relocate for the right position.</p>
+    </div>
+    <div class="contact-links">
+      <a href="/cdn-cgi/l/email-protection#17647f72657d72727b7f626464767e792e2e2520577f78637a767e7b3974787a" class="contact-link">
+        <div><p class="contact-link__label">Email</p><p class="contact-link__value"><span class="__cf_email__" data-cfemail="493a212c3b232c2c25213c3a3a28202770707b7e0921263d24282025672a2624">[email&#160;protected]</span></p></div>
+        <span class="contact-link__arrow">→</span>
+      </a>
+      <a href="https://www.linkedin.com/in/sherjeel-hussain-0652431b9/" target="_blank" rel="noopener" class="contact-link">
+        <div><p class="contact-link__label">LinkedIn</p><p class="contact-link__value">sherjeel-hussain</p></div>
+        <span class="contact-link__arrow">↗</span>
+      </a>
+      <a href="https://www.instagram.com/sherjeel_h27_design_/" target="_blank" rel="noopener" class="contact-link">
+        <div><p class="contact-link__label">Instagram</p><p class="contact-link__value">@sherjeel_h27_design_</p></div>
+        <span class="contact-link__arrow">↗</span>
+      </a>
+      <a href="#" class="contact-link">
+        <div><p class="contact-link__label">CV</p><p class="contact-link__value">Download — Product &amp; UI Design</p></div>
+        <span class="contact-link__arrow">↓</span>
+      </a>
+    </div>
+  </div>
+
+  <footer>
+    <span class="footer__copy">© 2025 Sherjeel Hussain — Glasgow</span>
+    <div class="footer__links">
+      <a href="digital.html">Digital</a>
+      <a href="craft.html">Craft</a>
+    </div>
+  </footer>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    const cursor     = document.getElementById('cursor');
+    const cursorIcon = document.getElementById('cursorIcon');
+
+    const ICONS = {
+      monitor: `<svg width="28" height="22" viewBox="0 0 28 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="1" y="1" width="26" height="17" rx="2" stroke="#e8547a" stroke-width="1.5"/>
+        <rect x="9" y="18" width="10" height="2" fill="#e8547a" opacity="0.5"/>
+        <rect x="6" y="20" width="16" height="1.5" fill="#e8547a" opacity="0.5"/>
+        <circle cx="14" cy="9.5" r="1.5" fill="#e8547a" opacity="0.4"/>
+      </svg><span>Digital</span>`,
+
+      pot: `<svg width="22" height="26" viewBox="0 0 22 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M7 4 C5 4 2 7 2 13 C2 19 5 23 11 23 C17 23 20 19 20 13 C20 7 17 4 15 4 Z" stroke="#6dbf9e" stroke-width="1.5" fill="none"/>
+        <path d="M7 4 C8 2 10 1 11 1 C12 1 14 2 15 4" stroke="#6dbf9e" stroke-width="1.5" fill="none"/>
+        <path d="M5 10 C3 9.5 2.5 8 3 7" stroke="#6dbf9e" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+      </svg><span>Craft</span>`
+    };
+
+    let mx = 0, my = 0;
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      cursor.style.left = mx + 'px';
+      cursor.style.top  = my + 'px';
+      cursorIcon.style.left = (mx + 18) + 'px';
+      cursorIcon.style.top  = my + 'px';
+    });
+
+    document.querySelectorAll('[data-cursor]').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursor.classList.add('grow');
+        cursorIcon.innerHTML = ICONS[el.dataset.cursor] || '';
+        cursorIcon.classList.add('visible');
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.classList.remove('grow');
+        cursorIcon.classList.remove('visible');
+      });
+    });
+
+    document.querySelectorAll('a:not([data-cursor]), button').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('grow'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('grow'));
+    });
+
+    // Hide photo placeholder if real image loads
+    const photo = document.querySelector('.hero__photo');
+    const ph    = document.getElementById('photoPlaceholder');
+    if (p

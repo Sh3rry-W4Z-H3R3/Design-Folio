@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kala Topi — Sherjeel Hussain</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Syne:wght@400;500;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── TOKENS ───────────────────────────────────────────── */
+    :root {
+      /* Kala Topi brand palette */
+      --kt-brown:   #401B0E;
+      --kt-cream:   #F2E0BD;
+      --kt-green:   #0F5944;
+      --kt-crimson: #A61B34;
+      --kt-coral:   #F25764;
+
+      /* Site system */
+      --bg:      #0a0a0a;
+      --fg:      #ede9e1;
+      --fg-dim:  #666;
+      --fg-mid:  #999;
+      --accent:  #e8547a;
+
+      --serif:  'Cormorant', Georgia, serif;
+      --sans:   'Syne', sans-serif;
+      --body:   'DM Sans', sans-serif;
+      --ease:   cubic-bezier(0.25, 0.1, 0.25, 1);
+      --slow:   0.6s var(--ease);
+      --fast:   0.3s var(--ease);
+      --gutter: clamp(1.2rem, 5vw, 5rem);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--body);
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* ── CURSOR ───────────────────────────────────────────── */
+    .cursor {
+      position: fixed;
+      width: 10px; height: 10px;
+      background: var(--kt-cream);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width var(--fast), height var(--fast), background var(--fast);
+    }
+    .cursor.grow {
+      width: 40px; height: 40px;
+      background: transparent;
+      border: 1px solid var(--kt-coral);
+    }
+
+    /* ── NAV ──────────────────────────────────────────────── */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 2rem var(--gutter);
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(10,10,10,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid #1a1a1a;
+    }
+    .nav__home {
+      font-family: var(--serif);
+      font-size: 1.1rem; font-weight: 300;
+      letter-spacing: 0.06em;
+      text-decoration: none; color: var(--fg);
+      transition: color var(--fast);
+    }
+    .nav__home em { font-style: italic; color: var(--accent); }
+    .nav__links { display: flex; gap: 2.5rem; }
+    .nav__links a {
+      font-family: var(--sans);
+      font-size: 0.65rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      text-decoration: none; color: var(--fg-dim);
+      transition: color var(--fast);
+    }
+    .nav__links a:hover { color: var(--fg); }
+
+    /* ── HERO ─────────────────────────────────────────────── */
+    .hero {
+      min-height: 92vh;
+      background: var(--kt-brown);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Grain texture */
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 1;
+    }
+
+    .hero__left {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 5rem var(--gutter) 5rem calc(var(--gutter) * 0.8);
+      position: relative; z-index: 2;
+    }
+
+    .hero__eyebrow {
+      font-family: var(--sans);
+      font-size: 0.62rem; font-weight: 700;
+      letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--kt-coral);
+      display: flex; align-items: center; gap: 0.8rem;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s var(--ease) 0.2s forwards;
+    }
+    .hero__eyebrow::before {
+      content: ''; display: block;
+      width: 2rem; height: 1px;
+      background: var(--kt-coral);
+    }
+
+    .hero__title {
+      font-family: var(--serif);
+      font-size: clamp(3.5rem, 8vw, 7rem);
+      font-weight: 300; line-height: 0.92;
+      color: var(--kt-cream);
+      opacity: 0;
+      animation: fadeUp 0.8s var(--ease) 0.35s forwards;
+    }
+    .hero__title em {
+      font-style: italic;
+      color: var(--kt-coral);
+      display: block;
+    }
+
+    .hero__sub {
+      font-family: var(--body);
+      font-size: clamp(0.8rem, 1.2vw, 1rem);
+      font-weight: 300; line-height: 1.8;
+      color: rgba(242, 224, 189, 0.65);
+      max-width: 420px;
+      margin-top: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.8s var(--ease) 0.5s forwards;
+    }
+
+    .hero__meta {
+      display: flex; gap: 2.5rem;
+      margin-top: 3rem;
+      opacity: 0;
+      animation: fadeUp 0.8s var(--ease) 0.65s forwards;
+    }
+    .hero__meta-item {}
+    .hero__meta-label {
+      font-family: var(--sans);
+      font-size: 0.55rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--kt-coral); margin-bottom: 0.3rem;
+    }
+    .hero__meta-value {
+      font-family: var(--body);
+      font-size: 0.8rem; font-weight: 300;
+      color: var(--kt-cream); opacity: 0.7;
+    }
+
+    /* Hero right — logo display */
+    .hero__right {
+      display: flex;
+      align-items: center; justify-content: center;
+      padding: 4rem;
+      position: relative; z-index: 2;
+      opacity: 0;
+      animation: fadeIn 1.2s var(--ease) 0.4s forwards;
+    }
+    .hero__logo {
+      width: min(380px, 80%);
+      /* REPLACE: <img src="img/kala-topi-logo.png" alt="Kala Topi" /> */
+      /* Placeholder until you drop the image in */
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hero__logo img {
+      width: 100%; height: auto;
+      filter: drop-shadow(0 20px 60px rgba(0,0,0,0.5));
+    }
+    /* Logo placeholder circle — remove when you add the img */
+    .hero__logo-placeholder {
+      width: 320px; height: 320px;
+      border: 1px solid rgba(242,224,189,0.15);
+      border-radius: 24px;
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 0.8rem;
+      color: rgba(242,224,189,0.3);
+      font-family: var(--sans);
+      font-size: 0.62rem; letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+    .hero__logo-placeholder span { font-size: 3rem; opacity: 0.2; }
+
+    /* ── PREMISE ──────────────────────────────────────────── */
+    .premise {
+      background: #0d0d0d;
+      padding: 8rem var(--gutter);
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .premise__label {
+      font-family: var(--sans);
+      font-size: 0.62rem; font-weight: 700;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--kt-coral);
+      padding-top: 0.4rem;
+    }
+    .premise__body {}
+    .premise__statement {
+      font-family: var(--serif);
+      font-size: clamp(1.8rem, 3.5vw, 3rem);
+      font-weight: 300; line-height: 1.25;
+      color: var(--kt-cream);
+      margin-bottom: 2rem;
+    }
+    .premise__statement em { font-style: italic; color: var(--kt-coral); }
+    .premise__text {
+      font-family: var(--body);
+      font-size: 0.9rem; line-height: 1.9;
+      color: var(--fg-mid);
+      max-width: 600px;
+    }
+    .premise__text + .premise__text { margin-top: 1.2rem; }
+
+    /* ── TENSION CARDS ────────────────────────────────────── */
+    .tensions {
+      background: var(--kt-brown);
+      padding: 6rem var(--gutter);
+    }
+    .tensions__header {
+      font-family: var(--sans);
+      font-size: 0.62rem; font-weight: 700;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--kt-coral);
+      margin-bottom: 4rem;
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .tensions__header::after {
+      content: ''; flex: 1; height: 1px;
+      background: rgba(242,224,189,0.1);
+    }
+    .tensions__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(242,224,189,0.08);
+    }
+    .tension-card {
+      background: var(--kt-brown);
+      padding: 2.5rem 2rem;
+      position: relative;
+    }
+    .tension-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0;
+      width: 2px; height: 0;
+      background: var(--kt-coral);
+      transition: height var(--slow);
+    }
+    .tension-card:hover::before { height: 100%; }
+    .tension-card__vs {
+      font-family: var(--sans);
+      font-size: 0.55rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--kt-green);
+      margin-bottom: 1.2rem;
+    }
+    .tension-card__a {
+      font-family: var(--serif);
+      font-size: 1.4rem; font-weight: 300;
+      color: var(--kt-cream);
+      display: block;
+    }
+    .tension-card__divider {
+      font-family: var(--sans);
+      font-size: 0.7rem;
+      color: var(--kt-coral);
+      display: block;
+      margin: 0.4rem 0;
+    }
+    .tension-card__b {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1.4rem; font-weight: 300;
+      color: var(--kt-cream);
+      display: block;
+    }
+    .tension-card__note {
+      font-family: var(--body);
+      font-size: 0.75rem; line-height: 1.7;
+      color: rgba(242,224,189,0.45);
+      margin-top: 1rem;
+    }
+
+    /* ── MENU SHOWCASE ────────────────────────────────────── */
+    .menu-section {
+      background: #0a0a0a;
+      padding: 8rem var(--gutter);
+    }
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 3rem;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .section-header__left {}
+    .section-eyebrow {
+      font-family: var(--sans);
+      font-size: 0.62rem; font-weight: 700;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--kt-coral);
+      margin-bottom: 0.8rem;
+    }
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 300; color: var(--kt-cream);
+    }
+    .section-title em { font-style: italic; }
+    .section-desc {
+      font-family: var(--body);
+      font-size: 0.82rem; line-height: 1.8;
+      color: var(--fg-mid);
+      max-width: 360px; align-self: end;
+    }
+
+    /* Menu image panels */
+    .menu-panels {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+    .menu-panel {
+      aspect-ratio: 2/3;
+      background: var(--kt-brown);
+      position: relative;
+      overflow: hidden;
+    }
+    .menu-panel__img {
+      position: absolute; inset: 0;
+      background-size: cover;
+      background-position: center;
+      transform: scale(1.04);
+      transition: transform var(--slow);
+    }
+    /* Replace these with actual menu images */
+    .menu-panel:nth-child(1) .menu-panel__img {
+      background-image: url('img/kt-menu-story.png'); /* 1773354120027_image.png panel 1 */
+      background-color: var(--kt-brown);
+    }
+    .menu-panel:nth-child(2) .menu-panel__img {
+      background-image: url('img/kt-menu-dishes.png'); /* 1773354120027_image.png panel 2 */
+      background-color: var(--kt-brown);
+    }
+    .menu-panel:nth-child(3) .menu-panel__img {
+      background-image: url('img/kt-menu-quality.png'); /* 1773354120027_image.png panel 3 */
+      background-color: var(--kt-brown);
+    }
+    .menu-panel:hover .menu-panel__img { transform: scale(1); }
+    .menu-panel__label {
+      position: absolute;
+      bottom: 1.2rem; left: 1.4rem;
+      font-family: var(--sans);
+      font-size: 0.55rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(242,224,189,0.4);
+      z-index: 2;
+    }
+
+    /* ── COLOUR SYSTEM ────────────────────────────────────── */
+    .colour-section {
+      background: #0d0d0d;
+      padding: 8rem var(--gutter);
+    }
+    .palette {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 2px;
+      margin-top: 3rem;
+    }
+    .swatch {
+      aspect-ratio: 1;
+      position: relative;
+      overflow: hidden;
+      transition: transform var(--fast);
+    }
+    .swatch:hover { transform: scaleY(1.04); transform-origin: bottom; }
+    .swatch__colour { position: absolute; inset: 0; }
+    .swatch__info {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 1rem;
+      background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%);
+    }
+    .swatch__hex {
+      font-family: var(--sans);
+      font-size: 0.6rem; font-weight: 700;
+      letter-spacing: 0.15em;
+      color: rgba(255,255,255,0.6);
+      display: block;
+    }
+    .swatch__name {
+      font-family: var(--body);
+      font-size: 0.7rem; font-weight: 300;
+      color: rgba(255,255,255,0.85);
+      display: block; margin-top: 0.2rem;
+    }
+    .swatch__meaning {
+      font-family: var(--body);
+      font-size: 0.62rem; font-weight: 300;
+      color: rgba(255,255,255,0.4);
+      display: block; margin-top: 0.2rem;
+      font-style: italic;
+    }
+
+    /* ── BRAND VOICE ──────────────────────────────────────── */
+    .voice-section {
+      background: var(--kt-brown);
+      padding: 8rem var(--gutter);
+    }
+    .voice-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      margin-top: 4rem;
+    }
+    .voice-col__label {
+      font-family: var(--sans);
+      font-size: 0.58rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--kt-green);
+      margin-bottom: 1.5rem;
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .voice-col__label::before {
+      content: ''; display: block;
+      width: 1.2rem; height: 1px;
+      background: var(--kt-green);
+    }
+    .voice-item {
+      padding: 1.2rem 0;
+      border-bottom: 1px solid rgba(242,224,189,0.08);
+    }
+    .voice-item:last-child { border-bottom: none; }
+    .voice-item__do, .voice-item__dont {
+      font-family: var(--body);
+      font-size: 0.82rem; line-height: 1.65;
+    }
+    .voice-item__do { color: rgba(242,224,189,0.8); }
+    .voice-item__dont {
+      color: rgba(242,224,189,0.3);
+      text-decoration: line-through;
+      text-decoration-color: var(--kt-crimson);
+    }
+
+    /* ── CERAMICS SECTION ─────────────────────────────────── */
+    .ceramics-section {
+      background: #0a0a0a;
+      padding: 8rem var(--gutter);
+    }
+    .ceramics-placeholder {
+      margin-top: 3rem;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+    .ceramic-slot {
+      aspect-ratio: 4/5;
+      background: #111;
+      border: 1px dashed rgba(242,224,189,0.1);
+      display: flex;
+      align-items: center; justify-content: center;
+      flex-direction: column; gap: 0.8rem;
+    }
+    .ceramic-slot img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .ceramic-slot__label {
+      font-family: var(--sans);
+      font-size: 0.58rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(242,224,189,0.2);
+      text-align: center; padding: 0 1rem;
+    }
+    .ceramic-slot__sub {
+      font-family: var(--body);
+      font-size: 0.7rem;
+      color: rgba(242,224,189,0.1);
+      text-align: center; padding: 0 1rem;
+    }
+    .in-production {
+      display: inline-flex;
+      align-items: center; gap: 0.5rem;
+      font-family: var(--sans);
+      font-size: 0.58rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--kt-coral);
+      border: 1px solid var(--kt-coral);
+      padding: 0.4rem 0.9rem;
+      margin-top: 2rem;
+    }
+    .in-production::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--kt-coral);
+      animation: pulse 1.8s ease infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    /* ── FOOTER ───────────────────────────────────────────── */
+    .case-footer {
+      background: var(--kt-brown);
+      padding: 5rem var(--gutter);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: end;
+    }
+    .case-footer__next-label {
+      font-family: var(--sans);
+      font-size: 0.58rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(242,224,189,0.35);
+      margin-bottom: 0.8rem;
+    }
+    .case-footer__next-link {
+      font-family: var(--serif);
+      font-size: clamp(1.5rem, 3vw, 2.5rem);
+      font-weight: 300;
+      color: var(--kt-cream);
+      text-decoration: none;
+      display: flex; align-items: baseline; gap: 1rem;
+      transition: color var(--fast);
+    }
+    .case-footer__next-link em { font-style: italic; color: var(--kt-coral); }
+    .case-footer__next-link:hover { color: var(--kt-coral); }
+    .case-footer__back {
+      display: flex; justify-content: flex-end; align-items: flex-end;
+    }
+    .case-footer__back a {
+      font-family: var(--sans);
+      font-size: 0.62rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      text-decoration: none; color: rgba(242,224,189,0.3);
+      transition: color var(--fast);
+    }
+    .case-footer__back a:hover { color: var(--kt-cream); }
+
+    /* ── KEYFRAMES ────────────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    /* ── MOBILE ───────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      body { cursor: auto; }
+      .cursor { display: none; }
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero__right { min-height: 50vw; }
+      .premise { grid-template-columns: 1fr; gap: 2rem; padding: 5rem var(--gutter); }
+      .tensions__grid { grid-template-columns: 1fr; }
+      .menu-panels { grid-template-columns: 1fr; }
+      .palette { grid-template-columns: repeat(5, 1fr); }
+      .voice-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .ceramics-placeholder { grid-template-columns: 1fr; }
+      .case-footer { grid-template-columns: 1fr; }
+      .nav__links { gap: 1.2rem; }
+      .swatch__name, .swatch__meaning { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+
+  <!-- ── NAV ──────────────────────────────────────────────── -->
+  <nav>
+    <a href="index.html" class="nav__home">Sherjeel <em>Hussain</em></a>
+    <div class="nav__links">
+      <a href="digital.html">Digital</a>
+      <a href="craft.html">Craft</a>
+      <a href="work.html">All Work</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </nav>
+
+  <!-- ── HERO ───────────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero__left">
+      <p class="hero__eyebrow">Self-Directed Brand Identity — 2025</p>
+      <h1 class="hero__title">
+        Di Kala
+        <em>Topi</em>
+      </h1>
+      <p class="hero__sub">
+        Chicken tikka masala is Scotland's national dish.
+        Angus beef is Scotland's finest export.
+        Kala Topi is the restaurant that stopped arguing
+        and started cooking.
+      </p>
+      <div class="hero__meta">
+        <div class="hero__meta-item">
+          <p class="hero__meta-label">Type</p>
+          <p class="hero__meta-value">Speculative Brand</p>
+        </div>
+        <div class="hero__meta-item">
+          <p class="hero__meta-label">Services</p>
+          <p class="hero__meta-value">Identity, Menu, Ceramics</p>
+        </div>
+        <div class="hero__meta-item">
+          <p class="hero__meta-label">Status</p>
+          <p class="hero__meta-value">In Progress</p>
+        </div>
+      </div>
+    </div>
+    <div class="hero__right">
+      <div class="hero__logo">
+        <!-- Add logo image once available -->
+        <img src="img/kala-topi-logo.png" alt="Di Kala Topi — Curry + Steak House" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PREMISE ─────────────────────────────────────────── -->
+  <section class="premise">
+    <p class="premise__label">The Premise</p>
+    <div class="premise__body">
+      <h2 class="premise__statement">
+        Scotland has been arguing about chicken tikka masala
+        for twenty years. <em>Kala Topi stops arguing
+        and starts cooking.</em>
+      </h2>
+      <p class="premise__text">
+        For second and third generation Scottish Asians, this tension between
+        heritages isn't a problem to solve — it's the texture of daily life.
+        Kala Topi is designed for the professional who orders a dram and a
+        karahi without having to explain either. For the Barclays Christmas
+        party where everyone, regardless of background, finds something that
+        feels like home.
+      </p>
+      <p class="premise__text">
+        The brief was self-directed. The subject is personal. The design
+        challenge was to make something that honours both heritages without
+        diminishing either — and to do it with enough sophistication that
+        it reads as fine dining, not novelty.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── TENSIONS ────────────────────────────────────────── -->
+  <section class="tensions">
+    <p class="tensions__header">The Productive Tensions</p>
+    <div class="tensions__grid">
+      <div class="tension-card">
+        <p class="tension-card__vs">Material</p>
+        <span class="tension-card__a">Angus Beef</span>
+        <span class="tension-card__divider">×</span>
+        <span class="tension-card__b">Pakistani Spice</span>
+        <p class="tension-card__note">Traceable Scottish farms. Four-generation family spice suppliers. Neither compromises the other.</p>
+      </div>
+      <div class="tension-card">
+        <p class="tension-card__vs">Visual</p>
+        <span class="tension-card__a">Hand-Drawn Warmth</span>
+        <span class="tension-card__divider">×</span>
+        <span class="tension-card__b">Fine Dining Precision</span>
+        <p class="tension-card__note">Sketch illustration and texture against clean type hierarchy. The roughness is intentional — craft over polish.</p>
+      </div>
+      <div class="tension-card">
+        <p class="tension-card__vs">Cultural</p>
+        <span class="tension-card__a">Scottish Heritage</span>
+        <span class="tension-card__divider">×</span>
+        <span class="tension-card__b">Kashmiri Roots</span>
+        <p class="tension-card__note">Not fusion for novelty. The natural culinary evolution of two communities sharing one city for sixty years.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── MENU ────────────────────────────────────────────── -->
+  <section class="menu-section">
+    <div class="section-header">
+      <div class="section-header__left">
+        <p class="section-eyebrow">Brand Collateral</p>
+        <h2 class="section-title">The <em>Menu System</em></h2>
+      </div>
+      <p class="section-desc">
+        A trifold narrative system: origin story, dishes,
+        and supply chain. Each panel builds the brand argument
+        as much as it lists the food.
+      </p>
+    </div>
+    <div class="menu-panels">
+      <div class="menu-panel">
+        <div class="menu-panel__img"></div>
+        <span class="menu-panel__label">Our Story</span>
+      </div>
+      <div class="menu-panel">
+        <div class="menu-panel__img"></div>
+        <span class="menu-panel__label">The Menu</span>
+      </div>
+      <div class="menu-panel">
+        <div class="menu-panel__img"></div>
+        <span class="menu-panel__label">Quality is a Relationship</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── COLOUR SYSTEM ───────────────────────────────────── -->
+  <section class="colour-section">
+    <div class="section-header">
+      <div class="section-header__left">
+        <p class="section-eyebrow">Visual Identity</p>
+        <h2 class="section-title" style="color: var(--kt-cream)">Colour <em>System</em></h2>
+      </div>
+      <p class="section-desc">
+        Every colour is an argument. None are decorative.
+      </p>
+    </div>
+    <div class="palette">
+      <div class="swatch">
+        <div class="swatch__colour" style="background:#401B0E"></div>
+        <div class="swatch__info">
+          <span class="swatch__hex">#401B0E</span>
+          <span class="swatch__name">Roast Brown</span>
+          <span class="swatch__meaning">Dark wood, roasted spice, aged leather</span>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch__colour" style="background:#F2E0BD"></div>
+        <div class="swatch__info" style="background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 100%)">
+          <span class="swatch__hex">#F2E0BD</span>
+          <span class="swatch__name">Parchment</span>
+          <span class="swatch__meaning">Naan, aged paper, warm light</span>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch__colour" style="background:#0F5944"></div>
+        <div class="swatch__info">
+          <span class="swatch__hex">#0F5944</span>
+          <span class="swatch__name">Forest Green</span>
+          <span class="swatch__meaning">Pakistani flag. Scottish highlands. One colour, two flags.</span>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch__colour" style="background:#A61B34"></div>
+        <div class="swatch__info">
+          <span class="swatch__hex">#A61B34</span>
+          <span class="swatch__name">Crimson</span>
+          <span class="swatch__meaning">Rare steak. Pakistani flag red. Warmth and depth.</span>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch__colour" style="background:#F25764"></div>
+        <div class="swatch__info">
+          <span class="swatch__hex">#F25764</span>
+          <span class="swatch__name">Coral</span>
+          <span class="swatch__meaning">Heat. Spice. The accent that cuts through.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── BRAND VOICE ─────────────────────────────────────── -->
+  <section class="voice-section">
+    <div class="section-header">
+      <div class="section-header__left">
+        <p class="section-eyebrow" style="color: var(--kt-coral)">Messaging</p>
+        <h2 class="section-title" style="color: var(--kt-cream)">Brand <em>Voice</em></h2>
+      </div>
+      <p class="section-desc" style="color: rgba(242,224,189,0.45)">
+        Knowing what you won't say is as important
+        as knowing what you will.
+      </p>
+    </div>
+    <div class="voice-grid">
+      <div>
+        <p class="voice-col__label">We say</p>
+        <div class="voice-item">
+          <p class="voice-item__do">"Where Angus meets spice tradition"</p>
+        </div>
+        <div class="voice-item">
+          <p class="voice-item__do">"Halal excellence. Scottish roots."</p>
+        </div>
+        <div class="voice-item">
+          <p class="voice-item__do">"Crafted at the intersection of heritage"</p>
+        </div>
+        <div class="voice-item">
+          <p class="voice-item__do">"Premium cuts, timeless techniques, bold flavors"</p>
+        </div>
+        <div class="voice-item">
+          <p class="voice-item__do">"Quality is a relationship. We know our suppliers by name."</p>
+        </div>
+      </div>
+      <div>
+        <p class="voice-col__label" style="color: var(--kt-crimson)">We never say</p>
+        <div class="voice-item">
+          <p class="voice-item__dont">"Exotic fusion" (othering language)</p>
+        </div>
+        <div class="voice-item">
+          <p class="voice-item__dont">"East meets West" (reductive)</p>
+        </div>
+        <div class="voice-item">
+          <p class="voice-item__dont">"Traditional with a twist" (diminishing)</p>
+        </div>
+        <div class="voice-item">
+          <p class="voice-item__dont">"Authentic Pakistani" alone — we're proudly hybrid</p>
+        </div>
+        <div class="voice-item">
+          <p class="voice-item__dont">"Fast meets West" (reductive framing)</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CERAMICS ─────────────────────────────────────────── -->
+  <section class="ceramics-section">
+    <div class="section-header">
+      <div class="section-header__left">
+        <p class="section-eyebrow">The Table Setting</p>
+        <h2 class="section-title" style="color: var(--kt-cream)">Made <em>Objects</em></h2>
+      </div>
+      <p class="section-desc">
+        A brand that can be held. Three ceramic pieces
+        in multanni mitti and British stoneware — the same
+        material collision as the menu, made physical.
+      </p>
+    </div>
+    <span class="in-production">In Production</span>
+    <div class="ceramics-placeholder">
+      <div class="ceramic-slot">
+        <!-- Replace with: <img src="img/kt-ceramic-plate.jpg" alt="Kala Topi dinner plate" /> -->
+        <span class="ceramic-slot__label">Dinner Plate</span>
+        <span class="ceramic-slot__sub">Pakistani tile glaze pattern. European fine dining form.</span>
+      </div>
+      <div class="ceramic-slot">
+        <!-- Replace with: <img src="img/kt-ceramic-bowl.jpg" alt="Kala Topi dipping bowl" /> -->
+        <span class="ceramic-slot__label">Dipping Bowl</span>
+        <span class="ceramic-slot__sub">Multanni mitti clay body. The material is the argument.</span>
+      </div>
+      <div class="ceramic-slot">
+        <!-- Replace with: <img src="img/kt-ceramic-vessel.jpg" alt="Kala Topi drinking vessel" /> -->
+        <span class="ceramic-slot__label">Drinking Vessel</span>
+        <span class="ceramic-slot__sub">Buffalo mark pressed. Raku fired.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CASE FOOTER ──────────────────────────────────────── -->
+  <footer class="case-footer">
+    <div>
+      <p class="case-footer__next-label">Next Project</p>
+      <a href="canti.html" class="case-footer__next-link">
+        CANTI — <em>001</em> ↗
+      </a>
+    </div>
+    <div class="case-footer__back">
+      <a href="digital.html">← Back to Digital Work</a>
+    </div>
+  </footer>
+
+  <script>
+    const cursor = document.getElementById('cursor');
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top  = e.clientY + 'px';
+    });
+    document.querySelectorAll('a, button, .tension-card, .swatch').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('grow'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('grow'));
+    });
+
+    // Scroll-triggered fade for sections
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.style.opacity = '1';
+          e.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.premise, .tensions, .menu-section, .colour-section, .voice-section, .ceramics-section').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(30px)';
+      el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+      observer.observe(el);
+    });
+  </script>
+
+</body>
+</html>
