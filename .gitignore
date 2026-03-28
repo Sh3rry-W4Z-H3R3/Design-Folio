@@ -1,0 +1,23 @@
+# Block Photoshop & Design Source Files
+*.psd
+*.ai
+*.pdf
+
+# Block Video (Host these elsewhere)
+*.mp4
+*.mov
+*.avi
+
+# Block System Junk
+Thumbs.db
+.DS_Store
+
+# Ignore giant media
+*.mp4
+*.mov
+*.psd
+*.zip
+
+# Ignore specific heavy folders
+**/WGA-CaseStudyImgs/
+**/iCloud Photos/
