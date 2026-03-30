@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sim Glasgow · Sherjeel Hussain</title>
+  <meta name="description" content="Sim Glasgow is a browser-based multiplayer city economy game set on a geographically accurate map of Glasgow. Players buy land, build 3D structures, collect yield every five minutes, and vote on economic policy." />
+  <meta name="keywords" content="Sim Glasgow game, browser game Glasgow, multiplayer city sim, property tycoon game, Glasgow game design, Sherjeel Hussain game dev" />
+  <meta name="author" content="Sherjeel Hussain" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://sherjeelhussain.com/sim-glasgow.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Sim Glasgow — Browser-Based City Economy Game" />
+  <meta property="og:description" content="A persistent multiplayer city economy on a real map of Glasgow. Buy land, build, collect yield, vote on policy. 300 plots. One city. Everyone plays." />
+  <meta property="og:url" content="https://sherjeelhussain.com/sim-glasgow.html" />
+  <meta property="og:image" content="https://sherjeelhussain.com/img/og-default.jpg" />
+  <meta property="og:site_name" content="Sherjeel Hussain — Designer & Ceramicist" />
+  <meta property="og:locale" content="en_GB" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Sim Glasgow — Browser-Based City Economy Game" />
+  <meta name="twitter:description" content="A persistent multiplayer city economy on a real map of Glasgow. Buy land, build, collect yield, vote on policy." />
+  <meta name="twitter:image" content="https://sherjeelhussain.com/img/og-default.jpg" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "name": "Sim Glasgow — Browser-Based City Economy Game",
+    "description": "A persistent multiplayer city economy game set on a geographically accurate map of Glasgow, Scotland. Players buy land, construct buildings, collect yield every five minutes, and vote on economic policy.",
+    "url": "https://sherjeelhussain.com/sim-glasgow.html",
+    "creator": {
+      "@type": "Person",
+      "name": "Sherjeel Hussain",
+      "url": "https://sherjeelhussain.com"
+    },
+    "genre": "Game Design & Development",
+    "dateCreated": "2026"
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Syne:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg:       #0a0a0a;
+      --fg:       #ede9e1;
+      --fg-dim:   #555;
+      --fg-mid:   #999;
+      --accent:   #e8547a;
+      --accent-2: #6dbf9e;
+      --serif:    'Cormorant', Georgia, serif;
+      --sans:     'Syne', sans-serif;
+      --body:     'DM Sans', sans-serif;
+      --ease:     cubic-bezier(0.25, 0.1, 0.25, 1);
+      --slow:     0.7s var(--ease);
+      --fast:     0.3s var(--ease);
+      --gutter:   clamp(1.4rem, 5vw, 5rem);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--body);
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* ── CURSOR ───────────────────────────────────────────── */
+    .cursor {
+      position: fixed;
+      width: 10px; height: 10px;
+      background: var(--fg);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width var(--fast), height var(--fast), background var(--fast);
+    }
+    .cursor.grow {
+      width: 44px; height: 44px;
+      background: transparent;
+      border: 1px solid var(--accent);
+      opacity: 0.7;
+    }
+    .cursor-icon {
+      position: fixed; pointer-events: none; z-index: 9998;
+      transform: translate(10px, -50%);
+      opacity: 0; transition: opacity 0.2s ease;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .cursor-icon.visible { opacity: 1; }
+    .cursor-icon svg { display: block; }
+    .cursor-icon span {
+      font-family: var(--sans);
+      font-size: 0.5rem; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--accent); margin-top: 4px;
+    }
+
+    /* ── NAV ──────────────────────────────────────────────── */
+    nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 2rem var(--gutter);
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(10,10,10,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid #1a1a1a;
+    }
+    .nav__home {
+      font-family: var(--serif);
+      font-size: 1.1rem; font-weight: 300;
+      letter-spacing: 0.06em;
+      text-decoration: none; color: var(--fg);
+    }
+    .nav__home em { font-style: italic; color: var(--accent); }
+    .nav__links { display: flex; gap: 2.5rem; }
+    .nav__links a {
+      font-family: var(--sans);
+      font-size: 0.65rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      text-decoration: none; color: var(--fg-dim);
+      transition: color var(--fast); position: relative;
+    }
+    .nav__links a::after {
+      content: ''; position: absolute;
+      bottom: -3px; left: 0; width: 0; height: 1px;
+      background: var(--accent); transition: width var(--fast);
+    }
+    .nav__links a:hover { color: var(--fg); }
+    .nav__links a:hover::after { width: 100%; }
+    .nav__back {
+      font-family: var(--sans);
+      font-size: 0.62rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      text-decoration: none; color: var(--fg-dim);
+      display: flex; align-items: center; gap: 0.5rem;
+      transition: color var(--fast);
+    }
+    .nav__back:hover { color: var(--fg); }
+    .nav__back::before { content: '←'; }
+
+    /* ── HERO ─────────────────────────────────────────────── */
+    .hero {
+      min-height: 88vh;
+      display: grid;
+      grid-template-rows: 1fr auto;
+      position: relative; overflow: hidden;
+      background: #080a0e;
+    }
+    .hero__img {
+      position: absolute; inset: 0;
+      background-image: url('./imgs-digital/SimGlasgow/hero.png');
+      background-size: cover;
+      background-position: center top;
+      filter: brightness(0.38) saturate(0.8);
+      transition: filter var(--slow);
+    }
+    .hero:hover .hero__img { filter: brightness(0.5) saturate(0.9); }
+    .hero__content {
+      position: relative; z-index: 2;
+      padding: 8rem var(--gutter) 4rem;
+      display: flex; flex-direction: column; justify-content: flex-end;
+    }
+    .hero__breadcrumb {
+      font-family: var(--sans);
+      font-size: 0.62rem; font-weight: 700;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 1.8rem;
+      display: flex; align-items: center; gap: 0.8rem;
+      opacity: 0; animation: fadeUp 0.8s var(--ease) 0.1s forwards;
+    }
+    .hero__breadcrumb::before {
+      content: ''; display: block;
+      width: 1.5rem; height: 1px; background: var(--accent);
+    }
+    .hero__title {
+      font-family: var(--serif);
+      font-size: clamp(3.5rem, 10vw, 9rem);
+      font-weight: 300; line-height: 0.9; color: var(--fg);
+      opacity: 0; animation: fadeUp 0.9s var(--ease) 0.2s forwards;
+    }
+    .hero__title em { font-style: italic; color: var(--accent); }
+    .hero__subtitle {
+      margin-top: 1.5rem;
+      font-family: var(--serif); font-style: italic;
+      font-size: clamp(1rem, 2vw, 1.35rem); font-weight: 300;
+      color: rgba(237,233,225,0.65); max-width: 600px; line-height: 1.5;
+      opacity: 0; animation: fadeUp 0.9s var(--ease) 0.3s forwards;
+    }
+    .hero__meta {
+      position: relative; z-index: 2;
+      display: flex; gap: 3rem; flex-wrap: wrap;
+      padding: 2rem var(--gutter);
+      border-top: 1px solid rgba(237,233,225,0.12);
+      opacity: 0; animation: fadeUp 0.8s var(--ease) 0.45s forwards;
+    }
+    .meta-item__label {
+      font-family: var(--sans);
+      font-size: 0.56rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(237,233,225,0.35); margin-bottom: 0.35rem;
+    }
+    .meta-item__value {
+      font-family: var(--body);
+      font-size: 0.82rem; color: var(--fg); font-weight: 300;
+    }
+
+    /* ── STATUS TAG ───────────────────────────────────────── */
+    .status-tag {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-family: var(--sans);
+      font-size: 0.55rem; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid rgba(232, 84, 122, 0.35);
+      padding: 0.3rem 0.7rem;
+    }
+    .status-tag::before {
+      content: '●'; font-size: 0.4rem;
+      animation: pulse 1.8s ease-in-out infinite;
+    }
+
+    /* ── SECTIONS ─────────────────────────────────────────── */
+    .case-section {
+      padding: 6rem var(--gutter);
+      border-bottom: 1px solid #1a1a1a;
+    }
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 6rem; align-items: start;
+    }
+    .section-label {
+      font-family: var(--sans);
+      font-size: 0.62rem; font-weight: 700;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--accent);
+      position: sticky; top: 6rem;
+      display: flex; align-items: center; gap: 0.8rem;
+    }
+    .section-label::before {
+      content: ''; display: block;
+      width: 1.5rem; height: 1px; background: var(--accent);
+    }
+    .body-text {
+      font-size: 0.92rem; line-height: 1.95;
+      color: var(--fg-mid); font-weight: 300; max-width: 640px;
+    }
+    .body-text p + p { margin-top: 1.3em; }
+    .body-text strong { color: var(--fg); font-weight: 500; }
+    .body-text em { font-style: italic; color: var(--fg); }
+    .body-text a {
+      color: var(--accent); text-decoration: none;
+      border-bottom: 1px solid rgba(232, 84, 122, 0.3);
+      transition: border-color var(--fast);
+    }
+    .body-text a:hover { border-color: var(--accent); }
+
+    /* ── THREE PILLARS ────────────────────────────────────── */
+    .pillars {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+    .pillar {
+      padding: 3rem 2.5rem;
+      background: #0e0e0e;
+      border-top: 2px solid transparent;
+      transition: border-color var(--fast), background var(--fast);
+      position: relative; overflow: hidden;
+    }
+    .pillar:hover {
+      border-top-color: var(--accent);
+      background: #111;
+    }
+    .pillar__number {
+      font-family: var(--serif);
+      font-size: 5rem; font-weight: 300; line-height: 1;
+      color: rgba(232, 84, 122, 0.06);
+      position: absolute; top: 1rem; right: 1.5rem;
+      pointer-events: none;
+    }
+    .pillar__icon {
+      font-family: var(--sans);
+      font-size: 0.58rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 1.2rem;
+    }
+    .pillar__title {
+      font-family: var(--serif);
+      font-size: clamp(1.4rem, 2vw, 1.9rem);
+      font-weight: 300; line-height: 1.1; color: var(--fg);
+      margin-bottom: 0.8rem;
+    }
+    .pillar__title em { font-style: italic; }
+    .pillar__body {
+      font-size: 0.8rem; line-height: 1.8;
+      color: var(--fg-mid); font-weight: 300;
+    }
+
+    /* ── RING TABLE ───────────────────────────────────────── */
+    .ring-table {
+      width: 100%; max-width: 640px;
+      border-collapse: collapse;
+    }
+    .ring-table thead tr {
+      border-bottom: 1px solid #2a2a2a;
+    }
+    .ring-table thead td {
+      font-family: var(--sans);
+      font-size: 0.56rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--fg-dim);
+      padding: 0 0 0.8rem 0;
+    }
+    .ring-table thead td:not(:first-child) { padding-left: 1.5rem; }
+    .ring-table tbody tr {
+      border-bottom: 1px solid #1a1a1a;
+      transition: background var(--fast);
+    }
+    .ring-table tbody tr:hover { background: #0e0e0e; }
+    .ring-table tbody td {
+      padding: 1rem 0;
+      font-size: 0.82rem; font-weight: 300;
+      color: var(--fg-mid); vertical-align: middle;
+    }
+    .ring-table tbody td:not(:first-child) { padding-left: 1.5rem; }
+    .ring-table tbody td:first-child { color: var(--fg); }
+    .ring-dot {
+      display: inline-block;
+      width: 8px; height: 8px; border-radius: 50%;
+      margin-right: 0.6rem; vertical-align: middle;
+      flex-shrink: 0;
+    }
+
+    /* ── MECHANIC STEPS ───────────────────────────────────── */
+    .mechanic-steps {
+      display: flex; flex-direction: column; gap: 0;
+      max-width: 640px;
+    }
+    .mechanic-step {
+      display: grid;
+      grid-template-columns: 4rem 1fr;
+      gap: 2rem;
+      padding: 2rem 0;
+      border-top: 1px solid #1a1a1a;
+      transition: border-color var(--fast);
+    }
+    .mechanic-step:hover { border-top-color: var(--accent); }
+    .mechanic-step__num {
+      font-family: var(--sans);
+      font-size: 0.62rem; font-weight: 700;
+      letter-spacing: 0.15em; color: var(--accent);
+      padding-top: 0.15rem;
+    }
+    .mechanic-step__title {
+      font-family: var(--serif);
+      font-size: 1.05rem; font-weight: 300;
+      color: var(--fg); margin-bottom: 0.45rem; line-height: 1.2;
+    }
+    .mechanic-step__title em { font-style: italic; }
+    .mechanic-step__body {
+      font-size: 0.78rem; line-height: 1.75;
+      color: var(--fg-mid); font-weight: 300;
+    }
+
+    /* ── STAT ROW ─────────────────────────────────────────── */
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+      margin-top: 0;
+    }
+    .stat-item {
+      background: #0e0e0e;
+      padding: 2.5rem 2rem;
+      border-top: 2px solid transparent;
+      transition: border-color var(--fast);
+    }
+    .stat-item:hover { border-top-color: var(--accent); }
+    .stat-item__num {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 300; line-height: 1;
+      color: var(--fg); margin-bottom: 0.5rem;
+    }
+    .stat-item__num em { font-style: italic; color: var(--accent); }
+    .stat-item__label {
+      font-family: var(--sans);
+      font-size: 0.58rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--fg-dim);
+    }
+
+    /* ── FORMULA BLOCK ────────────────────────────────────── */
+    .formula-block {
+      background: #0e0e0e;
+      border-left: 2px solid var(--accent);
+      padding: 2.5rem 3rem;
+      max-width: 640px;
+      margin-top: 2rem;
+    }
+    .formula-block__label {
+      font-family: var(--sans);
+      font-size: 0.56rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 1rem;
+    }
+    .formula-block__equation {
+      font-family: var(--serif);
+      font-size: clamp(1rem, 2vw, 1.4rem);
+      font-weight: 300; color: var(--fg);
+      line-height: 1.6; margin-bottom: 1rem;
+    }
+    .formula-block__equation em { font-style: italic; color: var(--accent); }
+    .formula-block__breakdown {
+      display: flex; flex-direction: column; gap: 0.4rem;
+    }
+    .formula-block__var {
+      font-size: 0.76rem; color: var(--fg-mid);
+      font-weight: 300; line-height: 1.5;
+    }
+    .formula-block__var strong {
+      color: var(--fg); font-weight: 500;
+    }
+
+    /* ── IMAGES ───────────────────────────────────────────── */
+    .img-full {
+      width: 100%;
+      background-size: cover; background-position: center top;
+      background-color: #0e0e0e;
+    }
+    .img-grid { display: grid; gap: 2px; }
+    .img-grid--2 { grid-template-columns: 1fr 1fr; }
+    .img-grid--3 { grid-template-columns: 1fr 1fr 1fr; }
+    .img-slot {
+      background: #0e0e0e;
+      background-size: cover; background-position: center top;
+      aspect-ratio: 4/3; display: block; position: relative;
+      overflow: hidden;
+    }
+    .img-slot img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center top;
+      display: block;
+    }
+    .img-slot__caption {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 0.8rem 1.2rem;
+      background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%);
+      font-family: var(--sans);
+      font-size: 0.55rem; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: rgba(237,233,225,0.5);
+    }
+
+    /* ── SPEC TABLE ───────────────────────────────────────── */
+    .spec-table {
+      width: 100%; max-width: 640px; border-collapse: collapse;
+    }
+    .spec-table tr { border-bottom: 1px solid #1e1e1e; }
+    .spec-table td {
+      padding: 1rem 0;
+      font-size: 0.82rem; font-weight: 300; vertical-align: top;
+    }
+    .spec-table td:first-child {
+      font-family: var(--sans);
+      font-size: 0.6rem; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--accent); width: 9rem;
+      padding-right: 2rem; padding-top: 1.1rem;
+    }
+    .spec-table td:last-child { color: var(--fg-mid); line-height: 1.6; }
+
+    /* ── PULL QUOTE ───────────────────────────────────────── */
+    .pull-quote {
+      padding: 6rem var(--gutter);
+      background: #0d0d0d;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    .pull-quote blockquote {
+      font-family: var(--serif);
+      font-size: clamp(1.6rem, 3.5vw, 3rem);
+      font-weight: 300; font-style: italic;
+      line-height: 1.3; color: var(--fg); max-width: 820px;
+    }
+    .pull-quote blockquote em { color: var(--accent); font-style: normal; }
+    .pull-quote cite {
+      display: block; margin-top: 2rem;
+      font-family: var(--sans);
+      font-size: 0.6rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--fg-dim); font-style: normal;
+    }
+
+    /* ── NEXT PROJECT ─────────────────────────────────────── */
+    .next-project {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap; gap: 2rem;
+      padding: 5rem var(--gutter);
+      border-top: 1px solid #1a1a1a;
+    }
+    .next-project__label {
+      font-family: var(--sans);
+      font-size: 0.62rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--fg-dim); margin-bottom: 0.8rem;
+    }
+    .next-project__title {
+      font-family: var(--serif);
+      font-size: clamp(1.8rem, 3.5vw, 3.2rem);
+      font-weight: 300; color: var(--fg);
+      text-decoration: none; display: block;
+      transition: color var(--fast);
+    }
+    .next-project__title em { font-style: italic; color: var(--accent); }
+    .next-project__title:hover { color: var(--fg-mid); }
+    .next-project__arrow {
+      font-size: 3rem; color: var(--fg-dim);
+      text-decoration: none;
+      transition: color var(--fast), transform var(--fast);
+    }
+    .next-project__arrow:hover { color: var(--accent); transform: translateX(8px); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; } 50% { opacity: 0.2; }
+    }
+
+    /* ── MOBILE ───────────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .pillars { grid-template-columns: 1fr 1fr; }
+      .stat-row { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      body { cursor: auto; }
+      .cursor, .cursor-icon { display: none; }
+      .hero__content { padding: 5rem 1.4rem 3rem; }
+      .two-col { grid-template-columns: 1fr; gap: 2.5rem; }
+      .section-label { position: static; }
+      .case-section { padding: 4rem var(--gutter); }
+      .pillars { grid-template-columns: 1fr; }
+      .stat-row { grid-template-columns: 1fr 1fr; }
+      .img-grid--2, .img-grid--3 { grid-template-columns: 1fr; }
+      .mechanic-step { grid-template-columns: 3rem 1fr; gap: 1rem; }
+      .pull-quote { padding: 4rem var(--gutter); }
+      .nav__links { gap: 1.2rem; }
+      .formula-block { padding: 2rem 1.8rem; }
+    }
+    @media (max-width: 480px) {
+      nav { padding: 1.2rem 1rem; }
+      .nav__links a { font-size: 0.56rem; letter-spacing: 0.1em; }
+      .stat-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-icon" id="cursorIcon"></div>
+
+  <!-- ── NAV ──────────────────────────────────────────────── -->
+  <nav>
+    <a href="index.html" class="nav__home">Sherjeel <em>Hussain</em></a>
+    <div style="display:flex;align-items:center;gap:3rem;">
+      <a href="digital.html" class="nav__back">Digital</a>
+      <div class="nav__links">
+        <a href="digital.html" data-cursor="monitor">Digital</a>
+        <a href="craft.html" data-cursor="pot">Craft</a>
+        <a href="kala-topi.html">Kala Topi</a>
+        <a href="about.html">About</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── HERO ─────────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero__img"></div>
+    <!-- img/sim-glasgow-hero.png — prototype screenshot or map view -->
+    <div class="hero__content">
+      <p class="hero__breadcrumb">Game Design &amp; Development · Browser-Based · 2026</p>
+      <h1 class="hero__title">Sim<br><em>Glasgow</em></h1>
+      <p class="hero__subtitle">A persistent city economy on a real map of Glasgow. Buy land, build, collect yield, and vote on the rules everyone plays by.</p>
+    </div>
+    <div class="hero__meta">
+      <div class="meta-item">
+        <p class="meta-item__label">Type</p>
+        <p class="meta-item__value">Multiplayer Browser Game</p>
+      </div>
+      <div class="meta-item">
+        <p class="meta-item__label">Stack</p>
+        <p class="meta-item__value">HTML · CSS · JS → Node.js · PostgreSQL</p>
+      </div>
+      <div class="meta-item">
+        <p class="meta-item__label">Status</p>
+        <p class="meta-item__value"><span class="status-tag">MVP Prototype — v6</span></p>
+      </div>
+      <div class="meta-item">
+        <p class="meta-item__label">Started</p>
+        <p class="meta-item__value">2026 — Ongoing</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── THE CONCEPT ───────────────────────────────────────── -->
+  <div class="case-section">
+    <div class="two-col">
+      <p class="section-label">The Concept</p>
+      <div class="body-text">
+        <p>I wanted to make a game that used Glasgow's actual geography as the playing field. Not a fictional city — Glasgow, geographically accurate, abstracted into a grid. You buy land on a real map of the city. You build on it. You collect yield every five minutes. And you vote on the economic rules that everyone plays by.</p>
+        <p>That last part is what makes it interesting. It's not just a property game. The tax rate and mortgage rate that govern every player's income aren't set by the system — they're <strong>set by the players, democratically, through a monthly election</strong>. Your neighbour can vote for higher taxes to fund public works. You can vote them down. The economy is live, the politics are live, and both affect the other.</p>
+        <p>The design started from a question: what happens when you put real economic mechanics — land scarcity, yield, interest rates, eminent domain — into a browser game? The answer is still being worked out. That's why it's interesting.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── HERO SCREENSHOT ───────────────────────────────────── -->
+  <div class="img-full" style="aspect-ratio:16/7;">
+    <img
+      src="./imgs-digital/SimGlasgow/prototype.png"
+      alt="Sim Glasgow v6 prototype — full dashboard view showing portfolio, map, and milestones"
+      style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;"
+      loading="lazy"
+    />
+    <!-- Save as: ./imgs-digital/SimGlasgow/prototype.png (from 1774819985188_image.png) -->
+  </div>
+
+  <!-- ── THE THREE PILLARS ──────────────────────────────────── -->
+  <div class="case-section" style="padding-bottom:0;border-bottom:none;">
+    <div class="two-col" style="margin-bottom:3rem;">
+      <p class="section-label">The Framework</p>
+      <div class="body-text">
+        <p>The whole game runs on three interlocking pillars. If you pull on one, the other two have to respond. That's the system design — not three separate features, but one mechanism with three faces.</p>
+      </div>
+    </div>
+  </div>
+  <div class="pillars">
+    <div class="pillar">
+      <span class="pillar__number">01</span>
+      <p class="pillar__icon">Pillar One — Property</p>
+      <h2 class="pillar__title">The <em>Land</em></h2>
+      <p class="pillar__body">300 plots. Fixed supply. Scarcity is the whole point. The map is divided into five concentric rings — Outskirts to Luxury Core — with inner rings locked behind economic milestones. Everyone starts on the edge. Getting to George Square takes time, money, and the right political conditions.</p>
+    </div>
+    <div class="pillar">
+      <span class="pillar__number">02</span>
+      <p class="pillar__icon">Pillar Two — Industry</p>
+      <h2 class="pillar__title">The <em>Yield</em></h2>
+      <p class="pillar__body">Every plot generates income. A global server tick fires every five minutes and calculates earnings for all 300 plots simultaneously — based on building level, zone, tax rate, and active policy. You collect manually, which means the game rewards engagement without punishing absence too hard. Upgrade buildings from Level 1 to Level 5 and the 3D model on the map changes to match.</p>
+    </div>
+    <div class="pillar">
+      <span class="pillar__number">03</span>
+      <p class="pillar__icon">Pillar Three — Politics</p>
+      <h2 class="pillar__title">The <em>Democracy</em></h2>
+      <p class="pillar__body">One player, one vote. An election runs every real-world month. Whoever wins controls the Commercial Tax Rate and the Base Interest Rate — the two levers that shape every other player's income and expansion costs. High tax, full city treasury, stunted private growth. Low tax, everyone expands faster, nothing gets funded. It's a political argument with economic stakes.</p>
+    </div>
+  </div>
+
+  <!-- ── STAT ROW ───────────────────────────────────────────── -->
+  <div class="stat-row">
+    <div class="stat-item">
+      <p class="stat-item__num">300</p>
+      <p class="stat-item__label">Total MVP plots — fixed supply</p>
+    </div>
+    <div class="stat-item">
+      <p class="stat-item__num"><em>5</em>min</p>
+      <p class="stat-item__label">Global server tick — yield calculation</p>
+    </div>
+    <div class="stat-item">
+      <p class="stat-item__num"><em>5</em></p>
+      <p class="stat-item__label">Concentric rings — outskirts to core</p>
+    </div>
+    <div class="stat-item">
+      <p class="stat-item__num">1<em>v</em>1</p>
+      <p class="stat-item__label">One player, one vote — real democracy</p>
+    </div>
+  </div>
+
+  <!-- ── SCREENSHOTS ────────────────────────────────────────── -->
+  <div class="img-grid img-grid--3">
+    <div class="img-slot">
+      <img
+        src="./imgs-digital/SimGlasgow/dashboard.png"
+        alt="Sim Glasgow dashboard — property plots showing George Square, Merchant City, Blythswood Hill with hourly yields"
+        loading="lazy"
+      />
+      <span class="img-slot__caption">Properties View</span>
+      <!-- Save as: ./imgs-digital/SimGlasgow/dashboard.png (from dashboard_v1_-_v0.png) -->
+    </div>
+    <div class="img-slot">
+      <img
+        src="./imgs-digital/SimGlasgow/map.png"
+        alt="Sim Glasgow map view — satellite image of Glasgow city centre with player-owned plots marked"
+        loading="lazy"
+      />
+      <span class="img-slot__caption">Live Map — Glasgow City Centre</span>
+      <!-- Save as: ./imgs-digital/SimGlasgow/map.png (from v0_-_map_v1.png) -->
+    </div>
+    <div class="img-slot">
+      <img
+        src="./imgs-digital/SimGlasgow/politics.png"
+        alt="Sim Glasgow politics view — live voting on mortgage interest rate and Gorbals regeneration zone"
+        loading="lazy"
+      />
+      <span class="img-slot__caption">Politics — Live Votes</span>
+      <!-- Save as: ./imgs-digital/SimGlasgow/politics.png (from v0_-_politics_v1.png) -->
+    </div>
+  </div>
+
+  <!-- ── THE INNER RUSH ─────────────────────────────────────── -->
+  <div class="case-section">
+    <div class="two-col">
+      <p class="section-label">The Inner Rush</p>
+      <div>
+        <div class="body-text" style="margin-bottom:2.5rem;">
+          <p>The concentric ring model is the core tension of the game. Outer rings are cheap — anyone can afford a plot in the Outskirts on day one. But the inner rings are locked. They don't unlock by time — they unlock by collective economic milestones. The whole city has to grow before the Core opens up.</p>
+          <p>This prevents the first players in from buying George Square on launch day and sitting on it. Everyone races inward as the economy develops. That's the Inner Rush — and it means the political decisions made in the first few weeks actually matter, because they shape when and how fast the city opens up.</p>
+        </div>
+        <table class="ring-table">
+          <thead>
+            <tr>
+              <td>Ring</td>
+              <td>Plots</td>
+              <td>Entry Price</td>
+              <td>Yield / hr</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="ring-dot" style="background:#888;"></span>Ring 1 — Outskirts</td>
+              <td>100</td>
+              <td>£5,000</td>
+              <td>£25</td>
+            </tr>
+            <tr>
+              <td><span class="ring-dot" style="background:#c8a84b;"></span>Ring 2 — Suburban</td>
+              <td>75</td>
+              <td>£25,000</td>
+              <td>£110</td>
+            </tr>
+            <tr>
+              <td><span class="ring-dot" style="background:#4b8bc8;"></span>Ring 3 — Fringe</td>
+              <td>75</td>
+              <td>£120,000</td>
+              <td>£500</td>
+            </tr>
+            <tr>
+              <td><span class="ring-dot" style="background:#e8547a;"></span>Ring 4 — Core</td>
+              <td>40</td>
+              <td>£2,000,000</td>
+              <td>£7,200</td>
+            </tr>
+            <tr>
+              <td><span class="ring-dot" style="background:#6dbf9e;"></span>Ring 5 — Luxury</td>
+              <td>10</td>
+              <td>£10,000,000</td>
+              <td>£32,000</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── THE ECONOMY ────────────────────────────────────────── -->
+  <div class="case-section">
+    <div class="two-col">
+      <p class="section-label">The Economy</p>
+      <div>
+        <div class="body-text">
+          <p>Every number in the game has to be balanced against every other number. The yield formula is where that balance lives — it connects the individual player's choices (renovation level, plot zone) to the collective political outcome (tax rate, active policy). You can't fully optimise your income alone. You need the right government.</p>
+          <p>The 7-day inactivity rule is the anti-squatting mechanic — <strong>Eminent Domain</strong>. If you don't log in for a week, the system buys your land back at 60% of market value and auctions it to active players. In a city with 300 plots, stagnant ownership kills the whole economy. This keeps land moving.</p>
+        </div>
+        <div class="formula-block">
+          <p class="formula-block__label">Yield Formula — per 5-minute tick</p>
+          <p class="formula-block__equation">
+            Yield = (<em>Base</em> + Renovation) × (1 − Tax) × PolicyMultiplier
+          </p>
+          <div class="formula-block__breakdown">
+            <p class="formula-block__var"><strong>Base</strong> — static value per ring. Ring 5 yields exponentially more than Ring 1.</p>
+            <p class="formula-block__var"><strong>Renovation</strong> — capital invested by the player. Scales with diminishing returns.</p>
+            <p class="formula-block__var"><strong>Tax</strong> — set by elected council. Range: 1%–29%.</p>
+            <p class="formula-block__var"><strong>PolicyMultiplier</strong> — modified by active political resolutions, e.g. Gorbals Regeneration Bonus.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PULL QUOTE ─────────────────────────────────────────── -->
+  <div class="pull-quote">
+    <blockquote>
+      You can't fully optimise your income alone.
+      You need the <em>right government.</em>
+      <cite>— Sim Glasgow Game Design Document, v2.1</cite>
+    </blockquote>
+  </div>
+
+  <!-- ── HOW IT WAS BUILT ───────────────────────────────────── -->
+  <div class="case-section">
+    <div class="two-col">
+      <p class="section-label">How It's Built</p>
+      <div>
+        <div class="body-text" style="margin-bottom:2.5rem;">
+          <p>The prototype started in vanilla HTML, CSS and JS — the fastest way to test mechanics without committing to a full stack. v6 is playable in a single HTML file. It simulates the tick, the balance, the milestones, and the map. It's a logic test before a real build.</p>
+          <p>The production architecture I've designed uses <strong>Node.js</strong> for the backend (the event-driven model suits a game with thousands of concurrent low-latency actions), <strong>PostgreSQL</strong> as the source of truth with full ACID compliance for transactions, and <strong>BullMQ + Redis</strong> to manage the 5-minute tick reliably — because a native <code>setInterval</code> drifts under load and you can't have the economy skip a beat.</p>
+          <p>The 3D map is planned in <strong>Three.js via React Three Fiber</strong>, rendered with instanced meshes — 100 Ring 1 buildings as a single GPU draw call rather than 100 separate ones. That's the only way to keep it performant in a browser at scale.</p>
+        </div>
+        <div class="mechanic-steps">
+          <div class="mechanic-step">
+            <span class="mechanic-step__num">01</span>
+            <div>
+              <p class="mechanic-step__title">Prototype — <em>Vanilla HTML/JS</em></p>
+              <p class="mechanic-step__body">v6 is a fully self-contained single-file prototype. Simulated tick, live balance, map placeholder, milestone tracking. All logic, no backend yet. Currently at this stage.</p>
+            </div>
+          </div>
+          <div class="mechanic-step">
+            <span class="mechanic-step__num">02</span>
+            <div>
+              <p class="mechanic-step__title">Backend — <em>Node.js + PostgreSQL</em></p>
+              <p class="mechanic-step__body">Next step is the real server. Authoritative world state, atomic transactions for land purchases, BullMQ scheduling for the tick. Supabase auth for player identity.</p>
+            </div>
+          </div>
+          <div class="mechanic-step">
+            <span class="mechanic-step__num">03</span>
+            <div>
+              <p class="mechanic-step__title">3D Map — <em>Three.js / React Three Fiber</em></p>
+              <p class="mechanic-step__body">Glasgow city centre abstracted to a 2×2 unit grid. Low-poly building assets per zone and level, rendered with instancing. The map is the interface — ownership visible at a glance.</p>
+            </div>
+          </div>
+          <div class="mechanic-step">
+            <span class="mechanic-step__num">04</span>
+            <div>
+              <p class="mechanic-step__title">Scale — <em>300 → 10,000+ plots</em></p>
+              <p class="mechanic-step__body">MVP is deliberately capped at 300 plots to test economic balance. The architecture is designed to shard by ring_id when the time comes. The modular monolith becomes microservices when it needs to.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SPEC ───────────────────────────────────────────────── -->
+  <div class="case-section">
+    <div class="two-col">
+      <p class="section-label">Specification</p>
+      <table class="spec-table">
+        <tr>
+          <td>Type</td>
+          <td>Persistent multiplayer browser game. City economy simulation.</td>
+        </tr>
+        <tr>
+          <td>Prototype</td>
+          <td>v6 — single-file HTML/CSS/JS. Fully playable logic simulation.</td>
+        </tr>
+        <tr>
+          <td>Prod Stack</td>
+          <td>React + Three.js (frontend), Node.js (backend), PostgreSQL (database), BullMQ + Redis (tick scheduler), Azure Web PubSub (real-time).</td>
+        </tr>
+        <tr>
+          <td>Map</td>
+          <td>Geographically accurate Glasgow city centre. 2×2 unit grid abstraction. Five concentric rings — 300 total plots at MVP.</td>
+        </tr>
+        <tr>
+          <td>Economy</td>
+          <td>5-minute global tick. Yield = (Base + Renovation) × (1 − Tax) × PolicyMultiplier. Exponential cost scaling per building level.</td>
+        </tr>
+        <tr>
+          <td>Politics</td>
+          <td>Monthly election. 1 Player = 1 Vote. Elected council sets Commercial Tax Rate (1%–29%) and Base Interest Rate.</td>
+        </tr>
+        <tr>
+          <td>Anti-stagnation</td>
+          <td>Eminent Domain — 7-day inactivity triggers forced sell-back at 60% market value. Plots re-enter open auction immediately.</td>
+        </tr>
+        <tr>
+          <td>Status</td>
+          <td>MVP prototype in development. Backend build is next.</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── NEXT ───────────────────────────────────────────────── -->
+  <div class="next-project">
+    <div>
+      <p class="next-project__label">Next Project</p>
+      <a href="kala-topi.html" class="next-project__title">Di Kala <em>Topi</em></a>
+    </div>
+    <a href="kala-topi.html" class="next-project__arrow">→</a>
+  </div>
+
+  <!-- ── SCRIPTS ───────────────────────────────────────────── -->
+  <script>
+    const cursor     = document.getElementById('cursor');
+    const cursorIcon = document.getElementById('cursorIcon');
+    const ICONS = {
+      monitor: `<svg width="28" height="22" viewBox="0 0 28 22" fill="none"><rect x="1" y="1" width="26" height="17" rx="2" stroke="#e8547a" stroke-width="1.5"/><rect x="9" y="18" width="10" height="2" fill="#e8547a" opacity=".5"/><rect x="6" y="20" width="16" height="1.5" fill="#e8547a" opacity=".5"/><circle cx="14" cy="9.5" r="1.5" fill="#e8547a" opacity=".4"/></svg><span>Digital</span>`,
+      pot:     `<svg width="22" height="26" viewBox="0 0 22 26" fill="none"><path d="M7 4C5 4 2 7 2 13C2 19 5 23 11 23C17 23 20 19 20 13C20 7 17 4 15 4Z" stroke="#6dbf9e" stroke-width="1.5" fill="none"/><path d="M7 4C8 2 10 1 11 1C12 1 14 2 15 4" stroke="#6dbf9e" stroke-width="1.5" fill="none"/></svg><span>Craft</span>`
+    };
+
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top  = e.clientY + 'px';
+      cursorIcon.style.left = (e.clientX + 18) + 'px';
+      cursorIcon.style.top  = e.clientY + 'px';
+    });
+
+    document.querySelectorAll('[data-cursor]').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursor.classList.add('grow');
+        cursorIcon.innerHTML = ICONS[el.dataset.cursor] || '';
+        cursorIcon.classList.add('visible');
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.classList.remove('grow');
+        cursorIcon.classList.remove('visible');
+      });
+    });
+
+    document.querySelectorAll('a:not([data-cursor])').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('grow'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('grow'));
+    });
+  </script>
+
+</body>
+</html>
