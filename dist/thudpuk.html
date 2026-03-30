@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project 261 — THUDPUK · Sherjeel Hussain</title>
+  <meta name="description" content="THUDPUK is a low-cost injection-moulded flying toy designed for mass manufacture using recycled plastic. Developed at TwoSix Design, Aberdeen — CAD, DFM, 30+ rapid prototypes, production-ready before the studio closed." />
+  <meta name="keywords" content="THUDPUK flying toy, injection moulded toy design, recycled plastic product design, TwoSix Design Aberdeen, product design internship, DFM product design Scotland" />
+  <meta name="author" content="Sherjeel Hussain" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://sherjeelhussain.com/thudpuk.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Project 261 — THUDPUK · TwoSix Design Internship" />
+  <meta property="og:description" content="Low-cost injection-moulded flying toy designed for mass manufacture using recycled plastic. CAD, aerodynamics, DFM, 30+ prototypes in 3 days." />
+  <meta property="og:url" content="https://sherjeelhussain.com/thudpuk.html" />
+  <meta property="og:image" content="https://sherjeelhussain.com/img/og-default.jpg" />
+  <meta property="og:site_name" content="Sherjeel Hussain — Designer & Ceramicist" />
+  <meta property="og:locale" content="en_GB" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Project 261 — THUDPUK · TwoSix Design Internship" />
+  <meta name="twitter:description" content="Low-cost injection-moulded flying toy designed for mass manufacture using recycled plastic." />
+  <meta name="twitter:image" content="https://sherjeelhussain.com/img/og-default.jpg" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "name": "Project 261 — THUDPUK",
+    "description": "A low-cost injection-moulded flying toy designed for mass manufacture using recycled plastic. Developed at TwoSix Design internship, Aberdeen, 2022.",
+    "url": "https://sherjeelhussain.com/thudpuk.html",
+    "creator": {
+      "@type": "Person",
+      "name": "Sherjeel Hussain",
+      "url": "https://sherjeelhussain.com"
+    },
+    "dateCreated": "2022",
+    "artMedium": "Industrial Design"
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Syne:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg:       #0a0a0a;
+      --fg:       #ede9e1;
+      --fg-dim:   #555;
+      --fg-mid:   #999;
+      --accent:   #6dbf9e;   /* mint — craft track */
+      --accent-2: #e8547a;
+      --serif:    'Cormorant', Georgia, serif;
+      --sans:     'Syne', sans-serif;
+      --body:     'DM Sans', sans-serif;
+      --ease:     cubic-bezier(0.25, 0.1, 0.25, 1);
+      --slow:     0.7s var(--ease);
+      --fast:     0.3s var(--ease);
+      --gutter:   clamp(1.4rem, 5vw, 5rem);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--body);
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* ── CURSOR ───────────────────────────────────────────── */
+    .cursor {
+      position: fixed;
+      width: 10px; height: 10px;
+      background: var(--fg);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width var(--fast), height var(--fast), background var(--fast);
+    }
+    .cursor.grow {
+      width: 44px; height: 44px;
+      background: transparent;
+      border: 1px solid var(--accent);
+      opacity: 0.7;
+    }
+    .cursor-icon {
+      position: fixed; pointer-events: none; z-index: 9998;
+      transform: translate(10px, -50%);
+      opacity: 0; transition: opacity 0.2s ease;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .cursor-icon.visible { opacity: 1; }
+    .cursor-icon svg { display: block; }
+    .cursor-icon span {
+      font-family: var(--sans);
+      font-size: 0.5rem; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--accent); margin-top: 4px;
+    }
+
+    /* ── NAV ──────────────────────────────────────────────── */
+    nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 2rem var(--gutter);
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(10,10,10,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid #1a1a1a;
+    }
+    .nav__home {
+      font-family: var(--serif);
+      font-size: 1.1rem; font-weight: 300;
+      letter-spacing: 0.06em;
+      text-decoration: none; color: var(--fg);
+    }
+    .nav__home em { font-style: italic; color: var(--accent-2); }
+    .nav__links { display: flex; gap: 2.5rem; }
+    .nav__links a {
+      font-family: var(--sans);
+      font-size: 0.65rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      text-decoration: none; color: var(--fg-dim);
+      transition: color var(--fast); position: relative;
+    }
+    .nav__links a::after {
+      content: ''; position: absolute;
+      bottom: -3px; left: 0; width: 0; height: 1px;
+      background: var(--accent); transition: width var(--fast);
+    }
+    .nav__links a:hover { color: var(--fg); }
+    .nav__links a:hover::after { width: 100%; }
+    .nav__back {
+      font-family: var(--sans);
+      font-size: 0.62rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      text-decoration: none; color: var(--fg-dim);
+      display: flex; align-items: center; gap: 0.5rem;
+      transition: color var(--fast);
+    }
+    .nav__back:hover { color: var(--fg); }
+    .nav__back::before { content: '←'; }
+
+    /* ── HERO ─────────────────────────────────────────────── */
+    .hero {
+      min-height: 88vh;
+      display: grid; grid-template-rows: 1fr auto;
+      position: relative; overflow: hidden;
+      background: #0a0e0a;
+    }
+    .hero__img {
+      position: absolute; inset: 0;
+      background-image: url('./imgs-craft/Thudpuk/FINAL RENDER.jpeg');
+      background-size: cover; background-position: center;
+      filter: brightness(0.35) saturate(0.8);
+      transition: filter var(--slow);
+    }
+    .hero:hover .hero__img { filter: brightness(0.48) saturate(0.95); }
+    .hero__content {
+      position: relative; z-index: 2;
+      padding: 8rem var(--gutter) 4rem;
+      display: flex; flex-direction: column; justify-content: flex-end;
+    }
+    .hero__eyebrow {
+      font-family: var(--sans);
+      font-size: 0.62rem; font-weight: 700;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 1.8rem;
+      display: flex; align-items: center; gap: 0.8rem;
+      opacity: 0; animation: fadeUp 0.8s var(--ease) 0.1s forwards;
+    }
+    .hero__eyebrow::before {
+      content: ''; display: block;
+      width: 1.5rem; height: 1px; background: var(--accent);
+    }
+    .hero__title {
+      font-family: var(--serif);
+      font-size: clamp(3.5rem, 10vw, 9rem);
+      font-weight: 300; line-height: 0.9; color: var(--fg);
+      opacity: 0; animation: fadeUp 0.9s var(--ease) 0.2s forwards;
+    }
+    .hero__title em { font-style: italic; color: var(--accent); }
+    .hero__subtitle {
+      margin-top: 1.5rem;
+      font-family: var(--serif); font-style: italic;
+      font-size: clamp(1rem, 2vw, 1.35rem); font-weight: 300;
+      color: rgba(237,233,225,0.65); max-width: 560px; line-height: 1.5;
+      opacity: 0; animation: fadeUp 0.9s var(--ease) 0.3s forwards;
+    }
+    .hero__meta {
+      position: relative; z-index: 2;
+      display: flex; gap: 3rem; flex-wrap: wrap;
+      padding: 2rem var(--gutter);
+      border-top: 1px solid rgba(237,233,225,0.12);
+      opacity: 0; animation: fadeUp 0.8s var(--ease) 0.45s forwards;
+    }
+    .meta-item__label {
+      font-family: var(--sans);
+      font-size: 0.56rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(237,233,225,0.35); margin-bottom: 0.35rem;
+    }
+    .meta-item__value {
+      font-family: var(--body);
+      font-size: 0.82rem; color: var(--fg); font-weight: 300;
+    }
+
+    /* ── SECTIONS ─────────────────────────────────────────── */
+    .case-section {
+      padding: 6rem var(--gutter);
+      border-bottom: 1px solid #1a1a1a;
+    }
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 6rem; align-items: start;
+    }
+    .section-label {
+      font-family: var(--sans);
+      font-size: 0.62rem; font-weight: 700;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--accent);
+      position: sticky; top: 6rem;
+      display: flex; align-items: center; gap: 0.8rem;
+    }
+    .section-label::before {
+      content: ''; display: block;
+      width: 1.5rem; height: 1px; background: var(--accent);
+    }
+    .body-text {
+      font-size: 0.92rem; line-height: 1.95;
+      color: var(--fg-mid); font-weight: 300; max-width: 640px;
+    }
+    .body-text p + p { margin-top: 1.3em; }
+    .body-text strong { color: var(--fg); font-weight: 500; }
+    .body-text em { font-style: italic; color: var(--fg); }
+
+    /* ── NARRATIVE FOUR-BLOCK ─────────────────────────────── */
+    /* Mirrors the screenshot structure: Problem / Insight / Design Intent / Outcome */
+    .narrative-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+    }
+    .narrative-card {
+      padding: 3rem 2.5rem;
+      background: #0e0e0e;
+      border-top: 2px solid transparent;
+      transition: border-color var(--fast), background var(--fast);
+    }
+    .narrative-card:hover {
+      border-top-color: var(--accent);
+      background: #111;
+    }
+    .narrative-card__label {
+      font-family: var(--sans);
+      font-size: 0.58rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 1rem;
+    }
+    .narrative-card__heading {
+      font-family: var(--serif);
+      font-size: clamp(1.5rem, 2.2vw, 2rem);
+      font-weight: 300; line-height: 1.1; color: var(--fg);
+      margin-bottom: 1rem;
+    }
+    .narrative-card__heading em { font-style: italic; }
+    .narrative-card__body {
+      font-size: 0.82rem; line-height: 1.82;
+      color: var(--fg-mid); font-weight: 300;
+    }
+    .narrative-card__body li {
+      list-style: none; padding-left: 1rem; position: relative;
+      margin-top: 0.4em;
+    }
+    .narrative-card__body li::before {
+      content: '—'; position: absolute; left: 0;
+      color: var(--accent);
+    }
+
+    /* ── PROCESS STEPS ────────────────────────────────────── */
+    .process-steps {
+      display: flex; flex-direction: column; gap: 0;
+      max-width: 640px;
+    }
+    .step {
+      display: grid;
+      grid-template-columns: 4rem 1fr;
+      gap: 2rem;
+      padding: 2rem 0;
+      border-top: 1px solid #1a1a1a;
+      transition: border-color var(--fast);
+    }
+    .step:hover { border-top-color: var(--accent); }
+    .step__num {
+      font-family: var(--sans);
+      font-size: 0.62rem; font-weight: 700;
+      letter-spacing: 0.15em; color: var(--accent);
+      padding-top: 0.15rem;
+    }
+    .step__title {
+      font-family: var(--serif);
+      font-size: 1.05rem; font-weight: 300;
+      color: var(--fg); margin-bottom: 0.45rem; line-height: 1.2;
+    }
+    .step__title em { font-style: italic; }
+    .step__body {
+      font-size: 0.78rem; line-height: 1.75;
+      color: var(--fg-mid); font-weight: 300;
+    }
+
+    /* ── STAT ROW ─────────────────────────────────────────── */
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+    }
+    .stat-item {
+      background: #0e0e0e;
+      padding: 2.5rem 2rem;
+      border-top: 2px solid transparent;
+      transition: border-color var(--fast);
+    }
+    .stat-item:hover { border-top-color: var(--accent); }
+    .stat-item__num {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 300; line-height: 1; color: var(--fg);
+      margin-bottom: 0.5rem;
+    }
+    .stat-item__num em { font-style: italic; color: var(--accent); }
+    .stat-item__label {
+      font-family: var(--sans);
+      font-size: 0.58rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--fg-dim);
+    }
+
+    /* ── CONSTRAINTS STRIP ────────────────────────────────── */
+    .constraints {
+      background: #0e0e0e;
+      border-left: 2px solid var(--accent);
+      padding: 2.5rem 3rem;
+      max-width: 640px;
+    }
+    .constraints__label {
+      font-family: var(--sans);
+      font-size: 0.56rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 1.2rem;
+    }
+    .constraints__list {
+      display: flex; flex-direction: column; gap: 0.6rem;
+    }
+    .constraints__item {
+      display: flex; align-items: baseline; gap: 0.8rem;
+      font-size: 0.82rem; color: var(--fg-mid); font-weight: 300;
+      line-height: 1.5;
+    }
+    .constraints__item::before {
+      content: '↳';
+      color: var(--accent);
+      flex-shrink: 0;
+      font-size: 0.7rem;
+    }
+
+    /* ── IMAGES ───────────────────────────────────────────── */
+    .img-full {
+      width: 100%;
+      background-size: cover; background-position: center;
+      background-color: #0e0e0e;
+    }
+    .img-grid { display: grid; gap: 2px; }
+    .img-grid--2 { grid-template-columns: 1fr 1fr; }
+    .img-grid--3 { grid-template-columns: 1fr 1fr 1fr; }
+    .img-slot {
+      background: #0e0e0e;
+      background-size: cover; background-position: center;
+      aspect-ratio: 4/3; display: block; position: relative;
+      overflow: hidden;
+    }
+    .img-slot img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+    }
+    .img-slot--tall { aspect-ratio: 3/4; }
+    .img-slot--wide { aspect-ratio: 16/9; }
+    .img-slot__caption {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 0.8rem 1.2rem;
+      background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 100%);
+      font-family: var(--sans);
+      font-size: 0.55rem; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: rgba(237,233,225,0.5);
+    }
+
+    /* ── SPEC TABLE ───────────────────────────────────────── */
+    .spec-table {
+      width: 100%; max-width: 640px; border-collapse: collapse;
+    }
+    .spec-table tr { border-bottom: 1px solid #1e1e1e; }
+    .spec-table td {
+      padding: 1rem 0;
+      font-size: 0.82rem; font-weight: 300; vertical-align: top;
+    }
+    .spec-table td:first-child {
+      font-family: var(--sans);
+      font-size: 0.6rem; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--accent); width: 9rem;
+      padding-right: 2rem; padding-top: 1.1rem;
+    }
+    .spec-table td:last-child { color: var(--fg-mid); line-height: 1.6; }
+
+    /* ── PULL QUOTE ───────────────────────────────────────── */
+    .pull-quote {
+      padding: 6rem var(--gutter);
+      background: #0a0e0a;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    .pull-quote blockquote {
+      font-family: var(--serif);
+      font-size: clamp(1.6rem, 3.5vw, 3rem);
+      font-weight: 300; font-style: italic;
+      line-height: 1.3; color: var(--fg); max-width: 820px;
+    }
+    .pull-quote blockquote em { color: var(--accent); font-style: normal; }
+    .pull-quote cite {
+      display: block; margin-top: 2rem;
+      font-family: var(--sans);
+      font-size: 0.6rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--fg-dim); font-style: normal;
+    }
+
+    /* ── NOTICE ───────────────────────────────────────────── */
+    .notice {
+      margin: 0 var(--gutter);
+      padding: 1.5rem 2rem;
+      background: #0e0e0e;
+      border-left: 2px solid #2a2a2a;
+      display: flex; align-items: flex-start; gap: 1.2rem;
+    }
+    .notice__icon { font-size: 1rem; color: var(--fg-dim); flex-shrink: 0; padding-top: 0.1rem; }
+    .notice__text {
+      font-size: 0.78rem; line-height: 1.7;
+      color: var(--fg-mid); font-weight: 300;
+    }
+    .notice__text strong { color: var(--fg); font-weight: 500; }
+
+    /* ── NEXT PROJECT ─────────────────────────────────────── */
+    .next-project {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap; gap: 2rem;
+      padding: 5rem var(--gutter);
+      border-top: 1px solid #1a1a1a;
+    }
+    .next-project__label {
+      font-family: var(--sans);
+      font-size: 0.62rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--fg-dim); margin-bottom: 0.8rem;
+    }
+    .next-project__title {
+      font-family: var(--serif);
+      font-size: clamp(1.8rem, 3.5vw, 3.2rem);
+      font-weight: 300; color: var(--fg);
+      text-decoration: none; display: block;
+      transition: color var(--fast);
+    }
+    .next-project__title em { font-style: italic; color: var(--accent); }
+    .next-project__title:hover { color: var(--fg-mid); }
+    .next-project__arrow {
+      font-size: 3rem; color: var(--fg-dim);
+      text-decoration: none;
+      transition: color var(--fast), transform var(--fast);
+    }
+    .next-project__arrow:hover { color: var(--accent); transform: translateX(8px); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── MOBILE ───────────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .stat-row { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      body { cursor: auto; }
+      .cursor, .cursor-icon { display: none; }
+      .hero__content { padding: 5rem 1.4rem 3rem; }
+      .two-col { grid-template-columns: 1fr; gap: 2.5rem; }
+      .section-label { position: static; }
+      .case-section { padding: 4rem var(--gutter); }
+      .narrative-grid { grid-template-columns: 1fr; }
+      .stat-row { grid-template-columns: 1fr 1fr; }
+      .img-grid--2, .img-grid--3 { grid-template-columns: 1fr; }
+      .step { grid-template-columns: 3rem 1fr; gap: 1rem; }
+      .pull-quote { padding: 4rem var(--gutter); }
+      .constraints { padding: 2rem 1.8rem; }
+      .notice { margin: 0 var(--gutter); }
+      .nav__links { gap: 1.2rem; }
+    }
+    @media (max-width: 480px) {
+      nav { padding: 1.2rem 1rem; }
+      .nav__links a { font-size: 0.56rem; letter-spacing: 0.1em; }
+      .stat-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-icon" id="cursorIcon"></div>
+
+  <!-- ── NAV ──────────────────────────────────────────────── -->
+  <nav>
+    <a href="index.html" class="nav__home">Sherjeel <em>Hussain</em></a>
+    <div style="display:flex;align-items:center;gap:3rem;">
+      <a href="craft.html" class="nav__back">Craft</a>
+      <div class="nav__links">
+        <a href="digital.html" data-cursor="monitor">Digital</a>
+        <a href="craft.html" data-cursor="pot">Craft</a>
+        <a href="kala-topi.html">Kala Topi</a>
+        <a href="about.html">About</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── HERO ─────────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero__img"></div>
+    <!-- ./imgs-craft/Thudpuk/FINAL RENDER.jpeg already in repo -->
+    <div class="hero__content">
+      <p class="hero__eyebrow">Industrial Design · Product · DFM — 2022</p>
+      <h1 class="hero__title">Project 261 —<br><em>THUDPUK</em></h1>
+      <p class="hero__subtitle">A low-cost flying toy engineered for injection moulding. Thirty prototypes in three days. Production-ready before the studio closed.</p>
+    </div>
+    <div class="hero__meta">
+      <div class="meta-item">
+        <p class="meta-item__label">Studio</p>
+        <p class="meta-item__value">TwoSix Design, Aberdeen</p>
+      </div>
+      <div class="meta-item">
+        <p class="meta-item__label">Role</p>
+        <p class="meta-item__value">Product Designer — Intern</p>
+      </div>
+      <div class="meta-item">
+        <p class="meta-item__label">Discipline</p>
+        <p class="meta-item__value">Industrial Design · CAD · DFM · Rapid Prototyping</p>
+      </div>
+      <div class="meta-item">
+        <p class="meta-item__label">Year</p>
+        <p class="meta-item__value">2022</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── NARRATIVE BLOCK — Brief ───────────────────────────── -->
+  <div class="case-section">
+    <div class="two-col">
+      <p class="section-label">The Brief</p>
+      <div class="body-text">
+        <p>TwoSix Design needed a product they could manufacture and sell directly — a small throwing and flying toy that could retail at <strong>£10 while keeping unit costs low enough to be viable</strong>. Recycled plastic. Simple geometry. One or two-part tooling. Safe flight behaviour that a non-expert could reproduce with a casual throw.</p>
+        <p>That's the whole brief. Clean in theory, genuinely difficult in practice. Aerodynamics are unforgiving and injection moulding geometry has very specific demands. The two constraints don't naturally want to cooperate.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── STAT ROW ───────────────────────────────────────────── -->
+  <div class="stat-row">
+    <div class="stat-item">
+      <p class="stat-item__num">£<em>10</em></p>
+      <p class="stat-item__label">Target retail price</p>
+    </div>
+    <div class="stat-item">
+      <p class="stat-item__num"><em>30</em>+</p>
+      <p class="stat-item__label">PLA prototypes — 3 days</p>
+    </div>
+    <div class="stat-item">
+      <p class="stat-item__num"><em>2</em></p>
+      <p class="stat-item__label">Max mould parts</p>
+    </div>
+    <div class="stat-item">
+      <p class="stat-item__num"><em>1</em></p>
+      <p class="stat-item__label">Final production-ready form</p>
+    </div>
+  </div>
+
+  <!-- ── NARRATIVE FOUR-BLOCK ──────────────────────────────── -->
+  <div class="narrative-grid">
+    <div class="narrative-card">
+      <p class="narrative-card__label">Problem</p>
+      <h2 class="narrative-card__heading">Aerodynamics and<br><em>DFM don't get on</em></h2>
+      <p class="narrative-card__body">Flying toys work through specific relationships between edge geometry, thickness, weight distribution, and spin. The shapes that fly well tend to have thin asymmetric profiles, complex curvature, and variable cross-sections — exactly the properties that make injection moulding expensive or impossible. The brief required both things working simultaneously within a £10 retail price ceiling. That's a real design problem, not just a styling exercise.</p>
+    </div>
+    <div class="narrative-card">
+      <p class="narrative-card__label">Insight</p>
+      <h2 class="narrative-card__heading">Symmetry is the<br><em>manufacturing shortcut</em></h2>
+      <p class="narrative-card__body">The key insight from early testing was that radially symmetric forms — discs, rings, boomerang profiles — could achieve consistent flight through symmetry alone, without needing the complex asymmetric wing profiles of a traditional frisbee. Symmetry reduces the number of variables, simplifies the tooling geometry, and makes flight behaviour more predictable for a casual user. The design language of the toy came directly from that manufacturing logic, not from aesthetic preference.</p>
+    </div>
+    <div class="narrative-card">
+      <p class="narrative-card__label">Design Intent</p>
+      <h2 class="narrative-card__heading">Let the <em>constraints</em><br>write the form</h2>
+      <div class="narrative-card__body">
+        <p style="margin-bottom:0.8rem;">Every formal decision had to justify itself against one of two criteria: does it improve flight, or does it make the mould cheaper? The intent was to never resolve that tension arbitrarily — if a shape change helped aerodynamics but complicated tooling, it had to earn its place through testing, not assumption. The constraints were:</p>
+        <ul>
+          <li>Recycled PLA / injected plastic only</li>
+          <li>1–2 part mould geometry — no side actions</li>
+          <li>Consistent, safe, catchable flight path</li>
+          <li>Brand integration without adding tooling complexity</li>
+        </ul>
+      </div>
+    </div>
+    <div class="narrative-card">
+      <p class="narrative-card__label">Outcome</p>
+      <h2 class="narrative-card__heading">Production-ready,<br><em>studio wasn't</em></h2>
+      <p class="narrative-card__body">The final form hit the brief. Manufactureable geometry, predictable flight, TwoSix branding resolved into the surface without additional tooling complexity. High-resolution CAD outputs and KeyShot renders were prepared to support tooling conversations. The design was ready for production. TwoSix Design folded due to financial difficulties before that conversation happened. The project stands as a complete design process — right up to the point where production would have started.</p>
+    </div>
+  </div>
+
+  <!-- ── RENDER IMAGE ───────────────────────────────────────── -->
+  <div class="img-full" style="aspect-ratio:16/7;">
+    <img
+      src="./imgs-craft/Thudpuk/FINAL RENDER.jpeg"
+      alt="THUDPUK final Keyshot render — recycled plastic boomerang-form flying toy with TwoSix branding"
+      style="width:100%;height:100%;object-fit:cover;display:block;"
+      loading="lazy"
+    />
+    <!-- ./imgs-craft/Thudpuk/FINAL RENDER.jpeg — already in repo -->
+  </div>
+
+  <!-- ── PROCESS ────────────────────────────────────────────── -->
+  <div class="case-section">
+    <div class="two-col">
+      <p class="section-label">The Process</p>
+      <div class="process-steps">
+        <div class="step">
+          <span class="step__num">01</span>
+          <div>
+            <p class="step__title">Research &amp; <em>Ideation</em></p>
+            <p class="step__body">Early exploration mapped how changes in geometry affected flight — edge thickness, chord width, weight distribution, spin axis. Collaborative sketching with the team ran alongside solo CAD modelling to test assumptions before committing to physical material. The goal was to fail fast and cheaply — in software, not plastic.</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step__num">02</span>
+          <div>
+            <p class="step__title">Rapid Prototyping — <em>30+ forms in 3 days</em></p>
+            <p class="step__body">3D printing in PLA was the test bed. Over 30 prototypes across three days — each one a small variation in profile, edge taper, or diameter. Testing with university students and staff assessed flight consistency, catchability, and safety. Not a lab test — just repeated throws across a corridor, which is exactly the use case. Insights from each throw fed back directly into the next CAD iteration.</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step__num">03</span>
+          <div>
+            <p class="step__title">CAD Refinement &amp; <em>DFM</em></p>
+            <p class="step__body">As the form converged, CAD geometry was reworked for injection moulding. Undercuts removed. Part geometry simplified. Wall thicknesses rationalised to maintain structural integrity while minimising material use. The brand mark was resolved into a surface feature that didn't require a separate tool insert. Each change was checked against both flight test data and mould cost logic.</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step__num">04</span>
+          <div>
+            <p class="step__title">Final Render &amp; <em>Handover</em></p>
+            <p class="step__body">High-resolution KeyShot renders and fully resolved CAD files were prepared to communicate design intent to a toolmaker. These were the production-ready deliverables — everything a manufacturer needed to start cutting tool steel. The studio closed before that conversation took place.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CONSTRAINTS BLOCK ──────────────────────────────────── -->
+  <div class="case-section" style="padding-top:0;border-top:none;">
+    <div class="two-col">
+      <p class="section-label" style="position:static;"></p>
+      <div class="constraints">
+        <p class="constraints__label">Manufacturing Constraints — every decision filtered through these</p>
+        <div class="constraints__list">
+          <p class="constraints__item">Recycled plastic only — material cost ceiling tied to £10 retail</p>
+          <p class="constraints__item">1–2 part injection mould — no side actions, no undercuts</p>
+          <p class="constraints__item">Simple, symmetric geometry — manufacturable without specialist tooling</p>
+          <p class="constraints__item">Safe flight path — no sharp edges, consistent behaviour for casual users</p>
+          <p class="constraints__item">Brand integration — resolved into surface geometry, no added tooling cost</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PROTOTYPE IMAGES ───────────────────────────────────── -->
+  <div class="img-grid img-grid--3">
+    <div class="img-slot">
+      <img
+        src="./imgs-craft/Thudpuk/prototypes.jpg"
+        alt="THUDPUK PLA prototypes — discus-form variations testing aerodynamic profiles"
+        loading="lazy"
+      />
+      <span class="img-slot__caption">PLA Prototypes — form testing</span>
+      <!-- Save as: ./imgs-craft/Thudpuk/prototypes.jpg -->
+    </div>
+    <div class="img-slot">
+      <img
+        src="./imgs-craft/Thudpuk/sketches.jpg"
+        alt="THUDPUK early ideation sketches — flying toy concept exploration"
+        loading="lazy"
+      />
+      <span class="img-slot__caption">Early Ideation</span>
+      <!-- Save as: ./imgs-craft/Thudpuk/sketches.jpg -->
+    </div>
+    <div class="img-slot">
+      <img
+        src="./imgs-craft/Thudpuk/FINAL RENDER.jpeg"
+        alt="THUDPUK final KeyShot render — production-ready boomerang form"
+        loading="lazy"
+      />
+      <span class="img-slot__caption">Final Render — KeyShot 2022</span>
+    </div>
+  </div>
+
+  <!-- ── PULL QUOTE ─────────────────────────────────────────── -->
+  <div class="pull-quote">
+    <blockquote>
+      The shapes that fly well are exactly the shapes
+      that make injection moulding <em>expensive</em>.
+      The project was about resolving that.
+      <cite>— Project 261, TwoSix Design, 2022</cite>
+    </blockquote>
+  </div>
+
+  <!-- ── NOTICE ─────────────────────────────────────────────── -->
+  <div class="notice" style="margin-bottom:0;">
+    <span class="notice__icon">○</span>
+    <p class="notice__text"><strong>Studio context:</strong> TwoSix Design closed due to financial difficulties before THUDPUK entered production. The design reached production-ready stage — resolved CAD, KeyShot renders, DFM-compliant geometry, brand integration complete. The same internship also delivered <a href="greene-king.html" style="color:var(--accent);text-decoration:none;">Project 262 — Greene King Ceramics</a>, a 40-unit slip-cast tableware commission completed within the same period.</p>
+  </div>
+
+  <!-- ── SPEC ───────────────────────────────────────────────── -->
+  <div class="case-section">
+    <div class="two-col">
+      <p class="section-label">Specification</p>
+      <table class="spec-table">
+        <tr>
+          <td>Brief</td>
+          <td>Low-cost flying toy. £10 retail. Recycled plastic. Injection mould, 1–2 parts. Safe, consistent flight.</td>
+        </tr>
+        <tr>
+          <td>Role</td>
+          <td>Research, ideation, CAD development, rapid prototyping, DFM engineering, render delivery.</td>
+        </tr>
+        <tr>
+          <td>Prototyping</td>
+          <td>30+ PLA 3D-printed forms over 3 days. Informal user testing with staff and students.</td>
+        </tr>
+        <tr>
+          <td>CAD</td>
+          <td>Full 3D model refined for injection moulding. Undercuts removed, geometry simplified, brand mark integrated.</td>
+        </tr>
+        <tr>
+          <td>Renders</td>
+          <td>High-resolution KeyShot outputs prepared for tooling conversation and client presentation.</td>
+        </tr>
+        <tr>
+          <td>Outcome</td>
+          <td>Production-ready design. Studio closed before manufacture commenced due to financial difficulties.</td>
+        </tr>
+        <tr>
+          <td>Studio</td>
+          <td>TwoSix Design, Aberdeen — Product Design Internship, 2022.</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── NEXT PROJECT ───────────────────────────────────────── -->
+  <div class="next-project">
+    <div>
+      <p class="next-project__label">Related Project</p>
+      <a href="greene-king.html" class="next-project__title">Project 262 — <em>Greene King</em></a>
+    </div>
+    <a href="greene-king.html" class="next-project__arrow">→</a>
+  </div>
+
+  <!-- ── SCRIPTS ───────────────────────────────────────────── -->
+  <script>
+    const cursor     = document.getElementById('cursor');
+    const cursorIcon = document.getElementById('cursorIcon');
+    const ICONS = {
+      monitor: `<svg width="28" height="22" viewBox="0 0 28 22" fill="none"><rect x="1" y="1" width="26" height="17" rx="2" stroke="#e8547a" stroke-width="1.5"/><rect x="9" y="18" width="10" height="2" fill="#e8547a" opacity=".5"/><rect x="6" y="20" width="16" height="1.5" fill="#e8547a" opacity=".5"/><circle cx="14" cy="9.5" r="1.5" fill="#e8547a" opacity=".4"/></svg><span>Digital</span>`,
+      pot:     `<svg width="22" height="26" viewBox="0 0 22 26" fill="none"><path d="M7 4C5 4 2 7 2 13C2 19 5 23 11 23C17 23 20 19 20 13C20 7 17 4 15 4Z" stroke="#6dbf9e" stroke-width="1.5" fill="none"/><path d="M7 4C8 2 10 1 11 1C12 1 14 2 15 4" stroke="#6dbf9e" stroke-width="1.5" fill="none"/></svg><span>Craft</span>`
+    };
+
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top  = e.clientY + 'px';
+      cursorIcon.style.left = (e.clientX + 18) + 'px';
+      cursorIcon.style.top  = e.clientY + 'px';
+    });
+
+    document.querySelectorAll('[data-cursor]').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursor.classList.add('grow');
+        cursorIcon.innerHTML = ICONS[el.dataset.cursor] || '';
+        cursorIcon.classList.add('visible');
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.classList.remove('grow');
+        cursorIcon.classList.remove('visible');
+      });
+    });
+
+    document.querySelectorAll('a:not([data-cursor])').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('grow'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('grow'));
+    });
+  </script>
+
+</body>
+</html>
