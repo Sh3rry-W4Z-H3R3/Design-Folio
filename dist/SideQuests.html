@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Digital & Brand — Sherjeel Hussain</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Syne:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css">
+<style>/* ── VARIABLES & RESETS ─────────────────────────────── */
+:root {
+  --bg:       #000000;
+  --fg:       #ede9e1;
+  --fg-dim:   #555;
+  --fg-mid:   #999;
+  --accent:   #e8547a; /* Neon pink from your file */
+  --serif:    'Cormorant', Georgia, serif;
+  --sans:     'Syne', sans-serif;
+  --ease:     cubic-bezier(0.25, 0.1, 0.25, 1);
+  --fast:     0.3s var(--ease);
+  --gutter:   clamp(1.2rem, 4vw, 3rem);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--sans);
+  min-height: 100vh;
+  overflow-x: hidden;
+  cursor: none; /* Hides system cursor */
+}
+
+/* ── CURSOR (From digital.html) ─────────────────────── */
+.cursor {
+  position: fixed;
+  width: 10px; 
+  height: 10px;
+  background: var(--fg);
+  border-radius: 50%;
+  pointer-events: none; /* Prevents cursor from blocking clicks underneath */
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width var(--fast), height var(--fast), background var(--fast), opacity var(--fast);
+}
+
+.cursor.grow {
+  width: 50px; /* Slightly larger to account for big gallery items */
+  height: 50px;
+  background: transparent;
+  border: 1px solid var(--accent);
+  opacity: 0.7;
+}
+
+/* ── NAV ──────────────────────────────────────────────── */
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem var(--gutter);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(0,0,0,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid #111;
+}
+.nav__home {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  font-weight: 300;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  color: var(--fg);
+  transition: color var(--fast);
+}
+.nav__home em { font-style: italic; color: var(--accent); }
+.nav__home:hover { color: var(--fg-mid); }
+.nav__links { display: flex; gap: 2.5rem; align-items: center; }
+.nav__links a {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--fg-dim);
+  transition: color var(--fast);
+  position: relative;
+  cursor: none; /* Ensures system cursor stays hidden */
+}
+.nav__links a::after {
+  content: '';
+  position: absolute;
+  bottom: -3px; left: 0;
+  width: 0; height: 1px;
+  background: var(--accent);
+  transition: width var(--fast);
+}
+.nav__links a:hover,
+.nav__links a.active { color: var(--fg); }
+.nav__links a:hover::after,
+.nav__links a.active::after { width: 100%; }
+
+/* ── PAGE HEADER ──────────────────────────────────────── */
+.page-header {
+  padding: 5rem var(--gutter) 4rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: end;
+  opacity: 0;
+  animation: fadeUp 0.8s var(--ease) 0.1s forwards;
+}
+.page-header__eyebrow {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+.page-header__eyebrow::before {
+  content: '';
+  display: block;
+  width: 2rem; height: 1px;
+  background: var(--accent);
+}
+.page-header__title {
+  font-family: var(--serif);
+  font-size: clamp(3rem, 7vw, 6.5rem);
+  font-weight: 300;
+  line-height: 0.95;
+}
+.page-header__title em { font-style: italic; display: block; }
+.page-header__desc {
+  font-size: 0.82rem;
+  line-height: 1.85;
+  color: var(--fg-mid);
+  max-width: 400px;
+  align-self: end;
+}
+
+/* ── MASONRY GALLERY ────────────────────────────────── */
+.gallery-container {
+  column-count: 3;
+  column-gap: 20px;
+  padding: 0 var(--gutter) 6rem;
+  opacity: 0;
+  animation: fadeUp 0.8s var(--ease) 0.4s forwards;
+}
+
+@media (max-width: 900px) { .gallery-container { column-count: 2; } }
+@media (max-width: 768px) { 
+  body { cursor: auto; } /* Reverts to normal cursor on mobile */
+  .cursor { display: none; } 
+}
+@media (max-width: 600px) { .gallery-container { column-count: 1; } }
+
+.gallery-item {
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 20px;
+  border: 1px solid #111;
+  background-color: #050505;
+  transition: border-color var(--fast), box-shadow var(--fast);
+  overflow: hidden;
+}
+
+.gallery-item img {
+  width: 100%;
+  display: block;
+  height: auto;
+  filter: grayscale(15%) brightness(0.8);
+  transition: filter var(--fast);
+}
+
+.gallery-item:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 15px rgba(232, 84, 122, 0.15);
+}
+
+.gallery-item:hover img {
+  filter: grayscale(0%) brightness(1);
+}
+
+/* ── FOOTER ───────────────────────────────────────────── */
+footer {
+  border-top: 1px solid #111;
+  padding: 2.5rem var(--gutter);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.footer__copy {
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+.footer__links { display: flex; gap: 2rem; }
+.footer__links a {
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--fg-dim);
+  transition: color var(--fast);
+}
+.footer__links a:hover { color: var(--fg); }
+
+/* ── BACK TO TOP BUTTON ────────────────────────────── */
+.back-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 45px;
+  height: 45px;
+  background-color: #050505;
+  border: 1px solid #111;
+  color: var(--fg);
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  border-radius: 4px;
+  transition: all var(--fast);
+  z-index: 100;
+}
+.back-to-top:hover {
+  background-color: var(--accent);
+  border-color: var(--accent);
+  color: #000;
+  box-shadow: 0 0 15px rgba(232, 84, 122, 0.4);
+  transform: translateY(-3px);
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}</style></head>
+
+<body>
+
+  <div class="cursor" id="cursor"></div>
+
+  <div id="top"></div>
+
+  <nav>
+    <a href="index.html" class="nav__home">Sherjeel <em>Hussain</em></a>
+    <div class="nav__links">
+      <a href="digital.html" class="active">Digital</a>
+      <a href="craft.html">Craft</a>
+      <a href="work.html">All Work</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </nav>
+
+  <header class="page-header">
+    <div>
+      <p class="page-header__eyebrow">04 — Side Quests &amp; Archives</p>
+      <h1 class="page-header__title">
+        A collection of experiments, technical deep-dives, and creative detours that inform my professional practice.
+      </h1>
+    </div>
+    <p class="page-header__desc">Some small projects, one-off experiments, and works-in-progress that don't fit into the main case studies but are still worth sharing.
+    </p>
+  </header>
+
+  <main class="gallery-container">
+    <div class="gallery-item">
+      <img src="./imgs-craft/Pottery/GlazeCloseUp.JPEG" alt="Westgarth Auto">
+    </div>
+    <div class="gallery-item">
+      <img src="./imgs-archival/787b poster.png" alt="Poster for the Mazda 787B, the first Japanese car to win Le Mans in 1991. Made for a motorsport-themed exhibition at the Design Museum in London, 2024.">
+    </div>
+
+    <div class="gallery-item">
+      <img src="./imgs-archival/NoA Purple Pattern Logo.jpg" alt="Andra's Garden Heaven">
+    </div>
+
+    <div class="gallery-item">
+      <img src="./imgs-lab/CherryVisionSlider2.png" alt="Andra's Mobile">
+    </div>
+
+    <div class="gallery-item">
+      <img src="./imgs-lab/CVGarment1WorkingV2.png" alt="Clydeside Logistics">
+    </div>
+
+    <div class="gallery-item">
+      <img src="./imgs-lab/GTR Poster.jpg" alt="Just Rite Barbershop">
+    </div>
+
+    <div class="gallery-item">
+      <img src="./imgs-lab/KQ Packaging mood board_Page_1.jpg" alt="Westgarth Auto">
+    </div>
+    
+    <div class="gallery-item">
+      <img src="./imgs-lab/KQPackagingmoodboard_Page_2.jpg" alt="Westgarth Auto">
+    </div>
+    
+    
+    <div class="gallery-item">
+      <img src="./imgs-archival/Bifold Brochure.png" alt="Westgarth Auto">
+    </div>
+    
+    <div class="gallery-item">
+      <img src="./imgs-archival/Men Hoodie Mockup, Back View (3).png" alt="Westgarth Auto">
+    </div>
+    <div class="gallery-item">
+      <img src="./imgs-lab/For Those Who Consider - Working2.png" alt="Westgarth Auto">
+    </div>
+    <div class="gallery-item">
+      <img src="./imgs-craft/Pottery/RollingTrayConcept01.JPEG" alt="Westgarth Auto">
+    </div>
+    <div class="gallery-item">
+      <img src="./imgs-lab/PS2 SUpra no glo.png" alt="Westgarth Auto">
+    </div>
+    <div class="gallery-item">
+      <img src="./imgs-archival/NoARedLogoConcept.jpg" alt="Westgarth Auto">
+    </div>
+  </main>
+
+  <footer>
+    <span class="footer__copy">Sherjeel Hussain — Digital &amp; Brand</span>
+    <div class="footer__links">
+      <a href="craft.html">→ Craft &amp; Product</a>
+      <a href="contact.html">Get in touch</a>
+    </div>
+  </footer>
+
+  <a href="#top" class="back-to-top" aria-label="Back to top">↑</a>
+
+  <script>
+    const cursor = document.getElementById('cursor');
+    
+    // Follow mouse
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top  = e.clientY + 'px';
+    });
+
+    // Grow on interactives AND the gallery grid items
+    document.querySelectorAll('a, button, .gallery-item').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('grow'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('grow'));
+    });
+  </script>
+
+</body>
+</html>
