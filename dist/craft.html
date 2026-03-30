@@ -44,6 +44,7 @@ body {
   z-index: 9999;
   transform: translate(-50%, -50%);
   transition: width var(--fast), height var(--fast), background var(--fast);
+  left: 50vw; top: 50vh;
 }
 .cursor.grow {
   width: 44px; height: 44px;
@@ -705,6 +706,11 @@ const ICONS = {
   </svg><span>Craft</span>`
 };
 
+ // Initialize cursor position to center of screen
+cursor.style.left = window.innerWidth / 2 + 'px';
+cursor.style.top = window.innerHeight / 2 + 'px';
+cursorIcon.style.left = (window.innerWidth / 2 + 18) + 'px';
+cursorIcon.style.top = window.innerHeight / 2 + 'px';
 document.addEventListener('mousemove', e => {
   cursor.style.left = e.clientX + 'px';
   cursor.style.top = e.clientY + 'px';
