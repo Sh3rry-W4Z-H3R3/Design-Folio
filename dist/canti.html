@@ -215,7 +215,19 @@
       font-family: var(--sans); font-size: 0.55rem; font-weight: 700;
       letter-spacing: 0.18em; text-transform: uppercase; color: var(--fg-dim);
     }
+/* flex images */
+.img-flex-container {
+  display: flex;
+  gap: 20px; /* Space between images */
+  width: 100%;
+}
 
+.img-flex-container img {
+  flex: 1; /* Forces both images to take up equal space */
+  max-width: 100%; 
+  height: auto; /* Maintains aspect ratio */
+  object-fit: cover; /* Prevents stretching */
+}
     /* ─── PROCESS STEPS ───────────────────────────────────── */
     .process-steps {
       counter-reset: step;
@@ -422,18 +434,10 @@
   </section>
 
   <!-- ── IMAGE GRID 1 ─────────────────────────────────────── -->
-  <div class="img-grid">
-    <div class="img-grid__item">
-      <!-- Replace with: <img src="img/canti-foam-prototypes.jpg" alt="Foam and card low-fidelity prototypes"> -->
-      <div class="img-grid__placeholder">
-        <span>Add image: foam / card low-fi prototypes</span>
-      </div>
-    </div>
-    <div class="img-grid__item">
-      <!-- Replace with: <img src="img/canti-rhino-ideation.jpg" alt="Rhino and Keyshot table ideation"> -->
-      <div class="img-grid__placeholder">
-        <span>Add image: Rhino + Keyshot ideation</span>
-      </div>
+  <div class="img-flex-container">
+    <div >
+      <img src="./imgs-craft/Canti/CardModels.webp" alt="Initial card models of CANTI 001 exploring form and proportions" srcset="">
+      <img src="./imgs-craft/Canti/CAD+keyshotGroup.webp" alt="CAD and Keyshot renderings of CANTI 001 exploring layouts of plastic as well as joinery techniques" srcset="">
     </div>
   </div>
 
@@ -464,16 +468,10 @@
   <!-- ── IMAGE GRID 2 ─────────────────────────────────────── -->
   <div class="img-grid">
     <div class="img-grid__item img-grid__item--tall">
-      <!-- Replace with: <img src="img/canti-smile-plastic.jpg" alt="SMILE recycled plastic sheet samples"> -->
-      <div class="img-grid__placeholder">
-        <span>Add image: SMILE plastic sheets / samples</span>
-      </div>
+      <img src="./imgs-craft/Canti/PlasticSheet.JPEG" alt="">
     </div>
     <div class="img-grid__item img-grid__item--tall">
-      <!-- Replace with: <img src="img/canti-mahogany-panels.jpg" alt="Mahogany panels with routed grooves"> -->
-      <div class="img-grid__placeholder">
-        <span>Add image: mahogany panels + routed grooves</span>
-      </div>
+      <img src="./imgs-craft/Canti/RoutingSample.jpg" alt="" srcset="">
     </div>
   </div>
 
