@@ -1,32 +1,63 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CANTI — 001 — Sherjeel Hussain</title>
-  <meta name="description" content="CANTI 001 — Self-directed honours project. A luxury table prototype built from solid oak, mahogany, and SMILE recycled plastic, designed for cradle-to-cradle production." />
-  <link rel="canonical" href="https://sherjeelhussain.co.uk/canti.html" />
+  <title>CANTI — 001 · Sherjeel Hussain</title>
+  <meta name="description" content="CANTI-001 is a luxury furniture prototype built from solid oak, mahogany, and SMILE recycled plastic. Sherjeel Hussain's final-year Honours project — cradle-to-cradle design, hand-finished, shown at New Designers London 2022." />
+  <meta name="keywords" content="CANTI furniture design, recycled plastic luxury furniture, cradle-to-cradle product design, New Designers 2022, sustainable furniture Scotland, RGU honours project" />
+  <meta name="author" content="Sherjeel Hussain" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://sherjeelhussain.com/canti.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="CANTI — 001 · Luxury Furniture, Recycled Plastic & Solid Oak" />
+  <meta property="og:description" content="Final-year Honours project. A luxury table prototype in solid oak, mahogany, and SMILE recycled plastic — designed for sustainable batch production within a cradle-to-cradle framework. Shown at New Designers London 2022." />
+  <meta property="og:url" content="https://sherjeelhussain.com/canti.html" />
+  <meta property="og:image" content="https://sherjeelhussain.com/img/og-default.jpg" />
+  <meta property="og:site_name" content="Sherjeel Hussain — Designer & Ceramicist" />
+  <meta property="og:locale" content="en_GB" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="CANTI — 001 · Luxury Furniture, Recycled Plastic & Solid Oak" />
+  <meta name="twitter:description" content="Luxury table prototype in solid oak, mahogany, and SMILE recycled plastic. Cradle-to-cradle design. New Designers London 2022." />
+  <meta name="twitter:image" content="https://sherjeelhussain.com/img/og-default.jpg" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VisualArtwork",
+    "name": "CANTI — 001",
+    "description": "A luxury furniture prototype built from solid oak, mahogany, and SMILE recycled plastic. Designed within a cradle-to-cradle framework for sustainable batch production. Sherjeel Hussain's final-year Honours project, exhibited at New Designers London 2022.",
+    "url": "https://sherjeelhussain.com/canti.html",
+    "creator": { "@type": "Person", "name": "Sherjeel Hussain", "url": "https://sherjeelhussain.com" },
+    "artMedium": "Solid Oak, Mahogany, Recycled Plastic",
+    "dateCreated": "2022"
+  }
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Syne:wght@400;500;700&display=swap" rel="stylesheet" />
 
   <style>
-    /* ─── TOKENS ─────────────────────────────────────────── */
     :root {
       --bg:       #0a0a0a;
       --fg:       #ede9e1;
       --fg-dim:   #555;
       --fg-mid:   #999;
-      --accent:   #6dbf9e;   /* craft mint */
+      --accent:   #6dbf9e;   /* mint — craft track */
       --accent-2: #e8547a;
-      --gold:     #c8b882;
+      --gold:     #c8b882;   /* material warmth */
       --serif:    'Cormorant', Georgia, serif;
       --sans:     'Syne', sans-serif;
       --body:     'DM Sans', sans-serif;
       --ease:     cubic-bezier(0.25, 0.1, 0.25, 1);
       --slow:     0.7s var(--ease);
       --fast:     0.3s var(--ease);
-      --gutter:   clamp(1.2rem, 4vw, 3rem);
+      --gutter:   clamp(1.4rem, 5vw, 5rem);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -39,565 +70,945 @@
       cursor: none;
     }
 
-    /* ─── CURSOR ──────────────────────────────────────────── */
+    /* ── CURSOR ───────────────────────────────────────────── */
     .cursor {
       position: fixed;
       width: 10px; height: 10px;
-      background: var(--fg); border-radius: 50%;
-      pointer-events: none; z-index: 9999;
+      background: var(--fg);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
       transform: translate(-50%, -50%);
       transition: width var(--fast), height var(--fast), background var(--fast);
     }
     .cursor.grow {
       width: 44px; height: 44px;
       background: transparent;
-      border: 1px solid var(--accent); opacity: 0.7;
+      border: 1px solid var(--accent);
+      opacity: 0.7;
+    }
+    .cursor-icon {
+      position: fixed; pointer-events: none; z-index: 9998;
+      transform: translate(10px, -50%);
+      opacity: 0; transition: opacity 0.2s ease;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .cursor-icon.visible { opacity: 1; }
+    .cursor-icon svg { display: block; }
+    .cursor-icon span {
+      font-family: var(--sans);
+      font-size: 0.5rem; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--accent); margin-top: 4px;
     }
 
-    /* ─── NAV ─────────────────────────────────────────────── */
+    /* ── NAV ──────────────────────────────────────────────── */
     nav {
       display: flex; align-items: center; justify-content: space-between;
       padding: 2rem var(--gutter);
       position: sticky; top: 0; z-index: 100;
-      background: rgba(10,10,10,0.92); backdrop-filter: blur(12px);
+      background: rgba(10,10,10,0.92);
+      backdrop-filter: blur(12px);
       border-bottom: 1px solid #1a1a1a;
     }
     .nav__home {
-      font-family: var(--serif); font-size: 1.1rem; font-weight: 300;
-      letter-spacing: 0.06em; text-decoration: none; color: var(--fg);
+      font-family: var(--serif);
+      font-size: 1.1rem; font-weight: 300;
+      letter-spacing: 0.06em;
+      text-decoration: none; color: var(--fg);
     }
     .nav__home em { font-style: italic; color: var(--accent-2); }
     .nav__links { display: flex; gap: 2.5rem; }
     .nav__links a {
-      font-family: var(--sans); font-size: 0.65rem; font-weight: 700;
+      font-family: var(--sans);
+      font-size: 0.65rem; font-weight: 700;
       letter-spacing: 0.2em; text-transform: uppercase;
       text-decoration: none; color: var(--fg-dim);
       transition: color var(--fast); position: relative;
     }
     .nav__links a::after {
-      content: ''; position: absolute; bottom: -3px; left: 0;
-      width: 0; height: 1px; background: var(--accent); transition: width var(--fast);
+      content: ''; position: absolute;
+      bottom: -3px; left: 0; width: 0; height: 1px;
+      background: var(--accent); transition: width var(--fast);
     }
-    .nav__links a:hover, .nav__links a.active { color: var(--fg); }
-    .nav__links a:hover::after, .nav__links a.active::after { width: 100%; }
+    .nav__links a:hover { color: var(--fg); }
+    .nav__links a:hover::after { width: 100%; }
+    .nav__back {
+      font-family: var(--sans);
+      font-size: 0.62rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      text-decoration: none; color: var(--fg-dim);
+      display: flex; align-items: center; gap: 0.5rem;
+      transition: color var(--fast);
+    }
+    .nav__back:hover { color: var(--fg); }
+    .nav__back::before { content: '←'; }
 
-    /* ─── PROJECT HERO ────────────────────────────────────── */
-    .project-hero {
-      padding: 5rem var(--gutter) 0;
+    /* ── HERO ─────────────────────────────────────────────── */
+    .hero {
+      min-height: 92vh;
+      display: grid; grid-template-rows: 1fr auto;
+      position: relative; overflow: hidden;
+      background: #100e08;
+    }
+    .hero__img {
+      position: absolute; inset: 0;
+      background-image: url('./imgs-craft/Canti/LandscapeHero.png');
+      background-size: cover; background-position: center;
+      filter: brightness(0.32) saturate(0.85);
+      transition: filter var(--slow);
+    }
+    .hero:hover .hero__img { filter: brightness(0.46) saturate(1); }
+    .hero__content {
+      position: relative; z-index: 2;
+      padding: 8rem var(--gutter) 4rem;
+      display: flex; flex-direction: column; justify-content: flex-end;
+    }
+    .hero__eyebrow {
+      font-family: var(--sans);
+      font-size: 0.62rem; font-weight: 700;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 1.8rem;
+      display: flex; align-items: center; gap: 0.8rem;
       opacity: 0; animation: fadeUp 0.8s var(--ease) 0.1s forwards;
     }
-    .project-hero__eyebrow {
-      font-family: var(--sans); font-size: 0.62rem; font-weight: 700;
-      letter-spacing: 0.22em; text-transform: uppercase;
-      color: var(--accent); margin-bottom: 1.5rem;
-      display: flex; align-items: center; gap: 0.8rem;
+    .hero__eyebrow::before {
+      content: ''; display: block;
+      width: 1.5rem; height: 1px; background: var(--accent);
     }
-    .project-hero__eyebrow::before {
-      content: ''; display: block; width: 2rem; height: 1px; background: var(--accent);
-    }
-    .project-hero__title {
+    .hero__title {
       font-family: var(--serif);
-      font-size: clamp(3.5rem, 9vw, 8rem);
-      font-weight: 300; line-height: 0.92;
-      letter-spacing: -0.01em;
+      font-size: clamp(4rem, 12vw, 11rem);
+      font-weight: 300; line-height: 0.88; color: var(--fg);
+      opacity: 0; animation: fadeUp 0.9s var(--ease) 0.2s forwards;
     }
-    .project-hero__title em { font-style: italic; display: block; }
-
-    /* ─── META STRIP ──────────────────────────────────────── */
-    .meta-strip {
-      display: grid; grid-template-columns: repeat(4, 1fr);
-      gap: 2px; margin: 3rem 0 0;
-      border-top: 1px solid #1a1a1a;
-      opacity: 0; animation: fadeUp 0.8s var(--ease) 0.3s forwards;
+    .hero__title em { font-style: italic; color: var(--accent); }
+    .hero__subtitle {
+      margin-top: 1.8rem;
+      font-family: var(--serif); font-style: italic;
+      font-size: clamp(1rem, 2vw, 1.35rem); font-weight: 300;
+      color: rgba(237,233,225,0.65); max-width: 600px; line-height: 1.55;
+      opacity: 0; animation: fadeUp 0.9s var(--ease) 0.3s forwards;
     }
-    .meta-strip__item {
-      padding: 1.8rem var(--gutter);
-      border-right: 1px solid #1a1a1a;
-    }
-    .meta-strip__item:last-child { border-right: none; }
-    .meta-strip__label {
-      font-family: var(--sans); font-size: 0.55rem; font-weight: 700;
-      letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--fg-dim); margin-bottom: 0.6rem;
-    }
-    .meta-strip__value {
-      font-family: var(--serif); font-size: 1rem; font-weight: 300;
-      color: var(--fg); line-height: 1.5;
-    }
-    .meta-strip__value em { font-style: italic; color: var(--accent); }
-
-    /* ─── HERO IMAGE ──────────────────────────────────────── */
-    .hero-img {
-      width: 100%; aspect-ratio: 16/7;
-      background: #111; overflow: hidden; position: relative;
+    .hero__meta {
+      position: relative; z-index: 2;
+      display: flex; gap: 3rem; flex-wrap: wrap;
+      padding: 2rem var(--gutter);
+      border-top: 1px solid rgba(237,233,225,0.12);
       opacity: 0; animation: fadeUp 0.8s var(--ease) 0.45s forwards;
     }
-    .hero-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .hero-img__placeholder {
-      position: absolute; inset: 0;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center; gap: 0.8rem;
-      background: linear-gradient(135deg, #0e100e 0%, #121610 50%, #0e100e 100%);
+    .meta-item__label {
+      font-family: var(--sans);
+      font-size: 0.56rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(237,233,225,0.35); margin-bottom: 0.35rem;
     }
-    .hero-img__placeholder em {
-      font-family: var(--serif); font-size: clamp(1.2rem, 2.5vw, 2rem);
-      font-weight: 300; font-style: italic; color: rgba(237,233,225,0.35);
-    }
-    .hero-img__placeholder span {
-      font-family: var(--sans); font-size: 0.55rem; font-weight: 700;
-      letter-spacing: 0.2em; text-transform: uppercase; color: var(--fg-dim);
+    .meta-item__value {
+      font-family: var(--body);
+      font-size: 0.82rem; color: var(--fg); font-weight: 300;
     }
 
-    /* ─── SECTIONS ────────────────────────────────────────── */
-    .section {
+    /* ── SECTIONS ─────────────────────────────────────────── */
+    .case-section {
       padding: 6rem var(--gutter);
-      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
     }
-    .section--split {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 4rem; align-items: start;
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 6rem; align-items: start;
     }
-    .section__num {
-      font-family: var(--sans); font-size: 0.58rem; font-weight: 700;
+    .section-label {
+      font-family: var(--sans);
+      font-size: 0.62rem; font-weight: 700;
       letter-spacing: 0.22em; text-transform: uppercase;
-      color: var(--accent); margin-bottom: 1.5rem;
+      color: var(--accent);
+      position: sticky; top: 6rem;
       display: flex; align-items: center; gap: 0.8rem;
     }
-    .section__num::before {
-      content: ''; display: block; width: 1.5rem; height: 1px; background: var(--accent);
+    .section-label::before {
+      content: ''; display: block;
+      width: 1.5rem; height: 1px; background: var(--accent);
     }
-    .section__heading {
-      font-family: var(--serif);
-      font-size: clamp(2rem, 4vw, 3.5rem);
-      font-weight: 300; line-height: 1; margin-bottom: 2rem;
+    .body-text {
+      font-size: 0.92rem; line-height: 1.95;
+      color: var(--fg-mid); font-weight: 300; max-width: 640px;
     }
-    .section__heading em { font-style: italic; }
-    .section__body {
-      font-family: var(--body); font-size: 0.88rem; line-height: 1.9;
-      color: var(--fg-mid); font-weight: 300; max-width: 52ch;
-    }
-    .section__body + .section__body { margin-top: 1.2rem; }
-    .section__body strong { color: var(--fg); font-weight: 400; }
+    .body-text p + p { margin-top: 1.3em; }
+    .body-text strong { color: var(--fg); font-weight: 500; }
+    .body-text em { font-style: italic; color: var(--fg); }
 
-    /* ─── CALLOUT ─────────────────────────────────────────── */
-    .callout {
-      margin: 2.5rem 0;
-      padding: 2rem 2.2rem;
-      border-left: 2px solid var(--accent);
-      background: rgba(109,191,158,0.04);
+    /* ── NARRATIVE FOUR-BLOCK ─────────────────────────────── */
+    .narrative-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
     }
-    .callout__text {
-      font-family: var(--serif); font-size: clamp(1.1rem, 2vw, 1.5rem);
-      font-weight: 300; line-height: 1.55; color: var(--fg);
+    .narrative-card {
+      padding: 3.5rem 2.8rem;
+      background: #0e0e0e;
+      border-top: 2px solid transparent;
+      transition: border-color var(--fast), background var(--fast);
     }
-    .callout__text em { font-style: italic; color: var(--accent); }
-
-    /* ─── IMAGE GRID ──────────────────────────────────────── */
-    .img-grid {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 2px; padding: 0 var(--gutter);
-    }
-    .img-grid__item {
-      aspect-ratio: 4/3; background: #111;
-      overflow: hidden; position: relative;
-    }
-    .img-grid__item img {
-      width: 100%; height: 100%; object-fit: cover;
-    }
-    .img-grid__item--tall { aspect-ratio: 3/4; }
-    .img-grid__placeholder {
-      position: absolute; inset: 0;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center; gap: 0.6rem;
+    .narrative-card:hover {
+      border-top-color: var(--accent);
       background: #111;
     }
-    .img-grid__placeholder span {
-      font-family: var(--sans); font-size: 0.55rem; font-weight: 700;
-      letter-spacing: 0.18em; text-transform: uppercase; color: var(--fg-dim);
+    .narrative-card__label {
+      font-family: var(--sans);
+      font-size: 0.58rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 1.1rem;
     }
-/* flex images */
-.img-flex-container {
-  display: flex;
-  gap: 20px; /* Space between images */
-  width: 100%;
-}
-
-.img-flex-container img {
-  flex: 1; /* Forces both images to take up equal space */
-  max-width: 100%; 
-  height: auto; /* Maintains aspect ratio */
-  object-fit: cover; /* Prevents stretching */
-}
-    /* ─── PROCESS STEPS ───────────────────────────────────── */
-    .process-steps {
-      counter-reset: step;
-      display: flex; flex-direction: column; gap: 0;
-      margin-bottom: 0;
-    }
-    .process-step {
-      display: grid; grid-template-columns: 1fr 2fr; gap: 3rem;
-      padding: 2.5rem 0;
-      border-bottom: 1px solid #1a1a1a;
-      counter-increment: step;
-      align-items: start;
-    }
-    .process-step:first-child { border-top: 1px solid #1a1a1a; }
-    .process-step__num {
-      font-family: var(--sans); font-size: 0.58rem; font-weight: 700;
-      letter-spacing: 0.2em; text-transform: uppercase; color: var(--fg-dim);
-      padding-top: 0.25rem;
-    }
-    .process-step__num::before { content: "0" counter(step); }
-    .process-step__heading {
-      font-family: var(--serif); font-size: 1.25rem; font-weight: 300;
-      margin-bottom: 0.8rem; line-height: 1.2;
-    }
-    .process-step__heading em { font-style: italic; }
-    .process-step__body {
-      font-family: var(--body); font-size: 0.82rem; line-height: 1.85;
-      color: var(--fg-mid); font-weight: 300; max-width: 48ch;
-    }
-
-    /* ─── STAT ROW ────────────────────────────────────────── */
-    .stat-row {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 2px; margin-top: 4rem;
-    }
-    .stat {
-      padding: 2.5rem 2rem; background: #111;
-      border-top: 1px solid #222;
-      transition: border-top-color var(--fast);
-    }
-    .stat:hover { border-top-color: var(--accent); }
-    .stat__num {
+    .narrative-card__heading {
       font-family: var(--serif);
-      font-size: clamp(2.8rem, 5vw, 4.5rem);
-      font-weight: 300; line-height: 1;
-      color: var(--fg); margin-bottom: 0.6rem;
+      font-size: clamp(1.5rem, 2.2vw, 2.1rem);
+      font-weight: 300; line-height: 1.1; color: var(--fg);
+      margin-bottom: 1.1rem;
     }
-    .stat__num em { font-style: italic; color: var(--accent); }
-    .stat__label {
-      font-family: var(--sans); font-size: 0.6rem; font-weight: 700;
-      letter-spacing: 0.18em; text-transform: uppercase; color: var(--fg-dim);
+    .narrative-card__heading em { font-style: italic; }
+    .narrative-card__body {
+      font-size: 0.82rem; line-height: 1.85;
+      color: var(--fg-mid); font-weight: 300;
+    }
+    .narrative-card__body p + p { margin-top: 0.8em; }
+
+    /* ── STAT ROW ─────────────────────────────────────────── */
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+    }
+    .stat-item {
+      background: #0e0e0e;
+      padding: 2.8rem 2rem;
+      border-top: 2px solid transparent;
+      transition: border-color var(--fast);
+    }
+    .stat-item:hover { border-top-color: var(--accent); }
+    .stat-item__num {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 300; line-height: 1; color: var(--fg);
+      margin-bottom: 0.6rem;
+    }
+    .stat-item__num em { font-style: italic; color: var(--accent); }
+    .stat-item__label {
+      font-family: var(--sans);
+      font-size: 0.58rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--fg-dim);
     }
 
-    /* ─── NEXT PROJECT ────────────────────────────────────── */
+    /* ── MATERIAL CALLOUT ─────────────────────────────────── */
+    .material-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 2px;
+    }
+    .material-card {
+      padding: 3rem 2.5rem;
+      background: #0e0e0e;
+      border-top: 2px solid transparent;
+      transition: border-color var(--fast), background var(--fast);
+    }
+    .material-card:hover {
+      border-top-color: var(--gold);
+      background: #111;
+    }
+    .material-card__icon {
+      font-family: var(--sans);
+      font-size: 0.56rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1.2rem;
+    }
+    .material-card__name {
+      font-family: var(--serif);
+      font-size: clamp(1.3rem, 2vw, 1.7rem);
+      font-weight: 300; line-height: 1.1; color: var(--fg);
+      margin-bottom: 0.8rem;
+    }
+    .material-card__name em { font-style: italic; }
+    .material-card__desc {
+      font-size: 0.78rem; line-height: 1.8;
+      color: var(--fg-mid); font-weight: 300;
+    }
+    .material-card__lifecycle {
+      margin-top: 1.2rem;
+      font-family: var(--sans);
+      font-size: 0.56rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    /* ── PROCESS STEPS ────────────────────────────────────── */
+    .process-steps {
+      display: flex; flex-direction: column; gap: 0;
+      max-width: 640px;
+    }
+    .step {
+      display: grid;
+      grid-template-columns: 4rem 1fr;
+      gap: 2rem;
+      padding: 2.2rem 0;
+      border-top: 1px solid #1a1a1a;
+      transition: border-color var(--fast);
+    }
+    .step:hover { border-top-color: var(--accent); }
+    .step__num {
+      font-family: var(--sans);
+      font-size: 0.62rem; font-weight: 700;
+      letter-spacing: 0.15em; color: var(--accent);
+      padding-top: 0.15rem;
+    }
+    .step__title {
+      font-family: var(--serif);
+      font-size: 1.1rem; font-weight: 300;
+      color: var(--fg); margin-bottom: 0.5rem; line-height: 1.2;
+    }
+    .step__title em { font-style: italic; }
+    .step__body {
+      font-size: 0.8rem; line-height: 1.78;
+      color: var(--fg-mid); font-weight: 300;
+    }
+    .step__ruled-out {
+      display: inline-block;
+      font-family: var(--sans);
+      font-size: 0.52rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--accent-2);
+      border: 1px solid rgba(232,84,122,0.3);
+      padding: 0.2rem 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    /* ── C2C CALLOUT ──────────────────────────────────────── */
+    .c2c-panel {
+      background: #0e100e;
+      border-left: 2px solid var(--accent);
+      padding: 3rem 3.5rem;
+      max-width: 640px;
+    }
+    .c2c-panel__label {
+      font-family: var(--sans);
+      font-size: 0.56rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 1.4rem;
+    }
+    .c2c-panel__quote {
+      font-family: var(--serif);
+      font-size: clamp(1.2rem, 2vw, 1.65rem);
+      font-weight: 300; font-style: italic;
+      line-height: 1.5; color: var(--fg);
+      margin-bottom: 1.4rem;
+    }
+    .c2c-panel__quote em { font-style: normal; color: var(--accent); }
+    .c2c-panel__body {
+      font-size: 0.8rem; line-height: 1.82;
+      color: var(--fg-mid); font-weight: 300;
+    }
+
+    /* ── IMAGE SYSTEM ─────────────────────────────────────── */
+    .img-full {
+      width: 100%;
+      background-color: #0d0d0d;
+      background-size: cover; background-position: center;
+    }
+    .img-grid { display: grid; gap: 2px; }
+    .img-grid--2 { grid-template-columns: 1fr 1fr; }
+    .img-grid--3 { grid-template-columns: 1fr 1fr 1fr; }
+    .img-grid--4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+    .img-grid--asymm-r { grid-template-columns: 2fr 1fr; }
+    .img-grid--asymm-l { grid-template-columns: 1fr 2fr; }
+
+    .img-slot {
+      background: #111;
+      background-size: cover; background-position: center;
+      aspect-ratio: 4/3;
+      display: block; position: relative; overflow: hidden;
+    }
+    .img-slot img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+    }
+    .img-slot--tall   { aspect-ratio: 3/4; }
+    .img-slot--wide   { aspect-ratio: 16/9; }
+    .img-slot--square { aspect-ratio: 1/1; }
+    .img-slot--cinema { aspect-ratio: 21/9; }
+
+    /* placeholder tint so empty slots aren't invisible */
+    .img-slot:not(:has(img)) { background: #0e0e0e; }
+
+    .img-slot__caption {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 0.8rem 1.2rem;
+      background: linear-gradient(to top, rgba(0,0,0,0.78) 0%, transparent 100%);
+      font-family: var(--sans);
+      font-size: 0.55rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: rgba(237,233,225,0.45);
+    }
+
+    /* ── SPEC TABLE ───────────────────────────────────────── */
+    .spec-table {
+      width: 100%; max-width: 640px; border-collapse: collapse;
+    }
+    .spec-table tr { border-bottom: 1px solid #1e1e1e; }
+    .spec-table td {
+      padding: 1rem 0;
+      font-size: 0.82rem; font-weight: 300; vertical-align: top;
+    }
+    .spec-table td:first-child {
+      font-family: var(--sans);
+      font-size: 0.6rem; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--accent); width: 9rem;
+      padding-right: 2rem; padding-top: 1.1rem;
+    }
+    .spec-table td:last-child { color: var(--fg-mid); line-height: 1.65; }
+
+    /* ── PULL QUOTE ───────────────────────────────────────── */
+    .pull-quote {
+      padding: 7rem var(--gutter);
+      background: #0c100c;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    .pull-quote blockquote {
+      font-family: var(--serif);
+      font-size: clamp(1.8rem, 4vw, 3.5rem);
+      font-weight: 300; font-style: italic;
+      line-height: 1.25; color: var(--fg); max-width: 860px;
+    }
+    .pull-quote blockquote em { color: var(--accent); font-style: normal; }
+    .pull-quote cite {
+      display: block; margin-top: 2.5rem;
+      font-family: var(--sans);
+      font-size: 0.6rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--fg-dim); font-style: normal;
+    }
+
+    /* ── NEXT PROJECT ─────────────────────────────────────── */
     .next-project {
-      display: block; text-decoration: none; color: inherit;
+      display: flex; align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap; gap: 2rem;
       padding: 5rem var(--gutter);
       border-top: 1px solid #1a1a1a;
-      position: relative; overflow: hidden;
-      transition: background var(--fast);
     }
-    .next-project:hover { background: #0d0d0d; }
     .next-project__label {
-      font-family: var(--sans); font-size: 0.58rem; font-weight: 700;
-      letter-spacing: 0.22em; text-transform: uppercase; color: var(--fg-dim);
-      margin-bottom: 1.2rem; display: block;
+      font-family: var(--sans);
+      font-size: 0.62rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--fg-dim); margin-bottom: 0.8rem;
     }
     .next-project__title {
       font-family: var(--serif);
-      font-size: clamp(2rem, 5vw, 4rem);
-      font-weight: 300; line-height: 1;
-    }
-    .next-project__title em { font-style: italic; color: var(--accent-2); }
-    .next-project__arrow {
-      position: absolute; right: var(--gutter); top: 50%;
-      transform: translateY(-50%);
-      font-size: 2.5rem; color: var(--fg-dim);
-      transition: color var(--fast), transform var(--fast);
-    }
-    .next-project:hover .next-project__arrow {
-      color: var(--fg); transform: translate(6px, -50%);
-    }
-
-    /* ─── FOOTER ──────────────────────────────────────────── */
-    footer {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 2.5rem var(--gutter) 3.5rem;
-      border-top: 1px solid #1a1a1a;
-    }
-    .footer__copy {
-      font-family: var(--sans); font-size: 0.62rem;
-      letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-dim);
-    }
-    .footer__links { display: flex; gap: 2rem; }
-    .footer__links a {
-      font-family: var(--sans); font-size: 0.62rem;
-      letter-spacing: 0.12em; text-transform: uppercase;
-      text-decoration: none; color: var(--fg-dim);
+      font-size: clamp(1.8rem, 3.5vw, 3.2rem);
+      font-weight: 300; color: var(--fg);
+      text-decoration: none; display: block;
       transition: color var(--fast);
     }
-    .footer__links a:hover { color: var(--fg); }
+    .next-project__title em { font-style: italic; color: var(--accent); }
+    .next-project__title:hover { color: var(--fg-mid); }
+    .next-project__arrow {
+      font-size: 3rem; color: var(--fg-dim);
+      text-decoration: none;
+      transition: color var(--fast), transform var(--fast);
+    }
+    .next-project__arrow:hover { color: var(--accent); transform: translateX(8px); }
 
-    /* ─── KEYFRAMES ───────────────────────────────────────── */
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(16px); }
+      from { opacity: 0; transform: translateY(20px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* ─── MOBILE ──────────────────────────────────────────── */
+    /* ── MOBILE ───────────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .stat-row { grid-template-columns: 1fr 1fr; }
+      .material-split { grid-template-columns: 1fr 1fr; }
+    }
     @media (max-width: 768px) {
       body { cursor: auto; }
-      .cursor { display: none; }
-      .meta-strip { grid-template-columns: 1fr 1fr; }
-      .meta-strip__item { border-right: none; border-bottom: 1px solid #1a1a1a; }
-      .meta-strip__item:nth-child(odd) { border-right: 1px solid #1a1a1a; }
-      .section--split { grid-template-columns: 1fr; gap: 2rem; }
-      .img-grid { grid-template-columns: 1fr; }
-      .img-grid__item--tall { aspect-ratio: 4/3; }
-      .stat-row { grid-template-columns: 1fr; }
-      .process-step { grid-template-columns: 1fr; gap: 0.8rem; }
+      .cursor, .cursor-icon { display: none; }
+      .hero__content { padding: 5rem 1.4rem 3rem; }
+      .two-col { grid-template-columns: 1fr; gap: 2.5rem; }
+      .section-label { position: static; }
+      .case-section { padding: 4rem var(--gutter); }
+      .narrative-grid { grid-template-columns: 1fr; }
+      .material-split { grid-template-columns: 1fr; }
+      .stat-row { grid-template-columns: 1fr 1fr; }
+      .img-grid--2, .img-grid--3, .img-grid--4,
+      .img-grid--asymm-r, .img-grid--asymm-l { grid-template-columns: 1fr; }
+      .step { grid-template-columns: 3rem 1fr; gap: 1rem; }
+      .pull-quote { padding: 5rem var(--gutter); }
+      .c2c-panel { padding: 2.2rem 1.8rem; }
       .nav__links { gap: 1.2rem; }
-      .next-project__arrow { display: none; }
-      footer { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
-      .hero-img { aspect-ratio: 4/3; }
     }
     @media (max-width: 480px) {
-      .nav__links a { font-size: 0.56rem; letter-spacing: 0.12em; }
+      nav { padding: 1.2rem 1rem; }
+      .nav__links a { font-size: 0.56rem; letter-spacing: 0.1em; }
+      .stat-row { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
   <div class="cursor" id="cursor"></div>
+  <div class="cursor-icon" id="cursorIcon"></div>
 
   <!-- ── NAV ──────────────────────────────────────────────── -->
   <nav>
     <a href="index.html" class="nav__home">Sherjeel <em>Hussain</em></a>
-    <div class="nav__links">
-      <a href="digital.html">Digital</a>
-      <a href="craft.html" class="active">Craft</a>
-      <a href="work.html">All Work</a>
-      <a href="about.html">About</a>
+    <div style="display:flex;align-items:center;gap:3rem;">
+      <a href="craft.html" class="nav__back">Craft</a>
+      <div class="nav__links">
+        <a href="digital.html" data-cursor="monitor">Digital</a>
+        <a href="craft.html" data-cursor="pot">Craft</a>
+        <a href="kala-topi.html">Kala Topi</a>
+        <a href="about.html">About</a>
+      </div>
     </div>
   </nav>
 
-  <!-- ── PROJECT HERO ─────────────────────────────────────── -->
-  <header class="project-hero">
-    <p class="project-hero__eyebrow">02 — Product &amp; Craft &nbsp;·&nbsp; Self-Directed Honours</p>
-    <h1 class="project-hero__title">
-      CANTI
-      <em>— 001</em>
-    </h1>
-  </header>
+  <!-- ── HERO ─────────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero__img"></div>
+    <!-- ./imgs-craft/Canti/LandscapeHero.png -->
+    <div class="hero__content">
+      <p class="hero__eyebrow">Sustainable Furniture · Honours Project · 2022</p>
+      <h1 class="hero__title">CANTI<br><em>001</em></h1>
+      <p class="hero__subtitle">Solid oak, mahogany, and SMILE recycled plastic — built to last, designed to be unmade. A luxury table with a lifecycle that doesn't end at landfill.</p>
+    </div>
+    <div class="hero__meta">
+      <div class="meta-item">
+        <p class="meta-item__label">Type</p>
+        <p class="meta-item__value">Self-Directed Honours Project</p>
+      </div>
+      <div class="meta-item">
+        <p class="meta-item__label">Materials</p>
+        <p class="meta-item__value">Solid Oak · Mahogany · SMILE Recycled Plastic</p>
+      </div>
+      <div class="meta-item">
+        <p class="meta-item__label">Finish</p>
+        <p class="meta-item__value">Indian Ink (8 layers) · Natural Beeswax (3 layers)</p>
+      </div>
+      <div class="meta-item">
+        <p class="meta-item__label">Exhibited</p>
+        <p class="meta-item__value">Gray's Degree Show · New Designers London 2022</p>
+      </div>
+    </div>
+  </section>
 
-  <!-- ── META STRIP ───────────────────────────────────────── -->
-  <div class="meta-strip">
-    <div class="meta-strip__item">
-      <p class="meta-strip__label">Year</p>
-      <p class="meta-strip__value">2023</p>
-    </div>
-    <div class="meta-strip__item">
-      <p class="meta-strip__label">Type</p>
-      <p class="meta-strip__value">Self-Directed<br><em>Honours Project</em></p>
-    </div>
-    <div class="meta-strip__item">
-      <p class="meta-strip__label">Materials</p>
-      <p class="meta-strip__value">Oak, Mahogany<br>Recycled Plastic</p>
-    </div>
-    <div class="meta-strip__item">
-      <p class="meta-strip__label">Deliverable</p>
-      <p class="meta-strip__value">Full-scale prototype<br>+ business concept</p>
+  <!-- ── HERO WIDE ──────────────────────────────────────────── -->
+  <div class="img-full" style="aspect-ratio:21/8;">
+    <img
+      src="./imgs-craft/Canti/LandscapeHero.png"
+      alt="CANTI-001 luxury table — solid oak frame with SMILE recycled plastic panels, Gray's Degree Show 2022"
+      style="width:100%;height:100%;object-fit:cover;display:block;"
+      loading="eager"
+    />
+  </div>
+
+  <!-- ── THE BRIEF ──────────────────────────────────────────── -->
+  <div class="case-section">
+    <div class="two-col">
+      <p class="section-label">The Brief</p>
+      <div class="body-text">
+        <p>The self-directed brief was to design and build a luxury furniture prototype suitable for sustainable batch production. The constraint that shaped everything: <strong>recycled plastic had to be central to the material language</strong>, not a footnote. And it had to sit inside a cradle-to-cradle framework — meaning the end of the product's life was part of the design from the start.</p>
+        <p>The working assumption most furniture designers operate under is that recycled plastic is a compromise material — something you use when you can't use something better. The brief set out to disprove that. If the design was right, the plastic wouldn't read as a concession. It would read as a deliberate, considered material choice, elevated by the company it was kept in.</p>
+        <p>One table. One prototype. As a proof of concept for a business model that could work at scale.</p>
+      </div>
     </div>
   </div>
 
-  <!-- ── HERO IMAGE ───────────────────────────────────────── -->
-  <div class="hero-img">
-    <!-- Replace with: <img src="img/canti-hero.jpg" alt="CANTI 001 table at Gray's Degree Show, 2023"> -->
-    <div class="hero-img__placeholder"><img src="./imgs-craft/Canti/CANTI HERO SHOT w Model-4.JPEG" alt="Canti 001 table with model at Gray's Degree Show, 2023. Aberdeen" srcset="">
+  <!-- ── NARRATIVE FOUR BLOCK ───────────────────────────────── -->
+  <div class="narrative-grid">
+    <div class="narrative-card">
+      <p class="narrative-card__label">Problem</p>
+      <h2 class="narrative-card__heading">Recycled plastic has a<br><em>perception problem</em></h2>
+      <p class="narrative-card__body">Plastic recycling across the furniture industry is underutilised not because of a technical problem, but a perception one. Consumers associate recycled plastic with low quality, impermanence, and compromise. Getting them to pay premium prices for a product that contains it requires the design to do significant persuasive work — material pairing, surface quality, and finish all have to argue for the plastic's presence rather than apologise for it.</p>
+    </div>
+    <div class="narrative-card">
+      <p class="narrative-card__label">Insight</p>
+      <h2 class="narrative-card__heading">Pairing uplifts<br><em>both materials</em></h2>
+      <p class="narrative-card__body">The insight from research was that pairing recycled plastic with established luxury materials — solid oak, mahogany — changes how the plastic is read. The wood provides the quality reference point. The plastic becomes a deliberate counterpoint rather than a default. The contrast does the work: light against dark, synthetic against natural, the familiar warmth of hardwood against the graphic quality of compressed, multi-coloured recycled material. Each one makes the other more interesting.</p>
+    </div>
+    <div class="narrative-card">
+      <p class="narrative-card__label">Design Intent</p>
+      <h2 class="narrative-card__heading">Built to last.<br><em>Designed to be unmade.</em></h2>
+      <p class="narrative-card__body">The table isn't just sustainable in its materials — it's sustainable in its logic. The mahogany panel frames and plastic inserts are removable. At the end of the product's lifecycle, those components are returned to the maker, reworked into wall art, and the panels replaced. The oak frame continues. Nothing goes to landfill. That return loop isn't a sustainability footnote — it's the business model. The table is the first transaction. The lifecycle is the ongoing relationship.</p>
+    </div>
+    <div class="narrative-card">
+      <p class="narrative-card__label">Outcome</p>
+      <h2 class="narrative-card__heading">Degree show floor.<br><em>New Designers, London.</em></h2>
+      <p class="narrative-card__body">One full-scale prototype, shown at Gray's School of Art Degree Show in 2022. Selected as one of two RGU projects for New Designers Week Two, London — the largest graduate design event in the UK. The piece held up in both environments: the intimacy of a school show and the noise of an industry event. The plastic didn't need defending. People picked it up, turned it over, asked where to buy it. That was the answer to the brief.</p>
     </div>
   </div>
 
-  <!-- ── 01 BRIEF ─────────────────────────────────────────── -->
-  <section class="section section--split">
-    <div>
-      <p class="section__num">01 — Brief</p>
-      <h2 class="section__heading">The <em>Idea</em></h2>
+  <!-- ── DEGREE SHOW IMAGES ─────────────────────────────────── -->
+  <div class="img-grid img-grid--3">
+    <div class="img-slot img-slot--tall">
+      <img src="./imgs-craft/Canti/degree-show-1.jpg" alt="CANTI-001 at Gray's School of Art Degree Show 2022" loading="lazy" />
+      <span class="img-slot__caption">Gray's Degree Show — 2022</span>
+      <!-- Save as: ./imgs-craft/Canti/degree-show-1.jpg -->
     </div>
-    <div>
-      <p class="section__body">
-        CANTI 001 was my final-year Honours project — the first large-scale piece I'd attempted and the first time I had to work through a full design-to-build process entirely on my own terms. The brief was self-directed: design and build a <strong>luxury table prototype suitable for sustainable batch production</strong>, using recycled plastic within a cradle-to-cradle framework.
-      </p>
-      <div class="callout">
-        <p class="callout__text">
-          The question wasn't whether recycled plastic could look good. <em>It was whether it could look expensive.</em>
+    <div class="img-slot img-slot--tall">
+      <img src="./imgs-craft/Canti/degree-show-2.jpg" alt="CANTI-001 table detail — recycled plastic panels in mahogany frame" loading="lazy" />
+      <span class="img-slot__caption">Panel detail — SMILE Plastic in mahogany</span>
+      <!-- Save as: ./imgs-craft/Canti/degree-show-2.jpg -->
+    </div>
+    <div class="img-slot img-slot--tall">
+      <img src="./imgs-craft/Canti/new-designers.jpg" alt="CANTI-001 at New Designers London 2022" loading="lazy" />
+      <span class="img-slot__caption">New Designers — London 2022</span>
+      <!-- Save as: ./imgs-craft/Canti/new-designers.jpg -->
+    </div>
+  </div>
+
+  <!-- ── STAT ROW ───────────────────────────────────────────── -->
+  <div class="stat-row">
+    <div class="stat-item">
+      <p class="stat-item__num"><em>8</em></p>
+      <p class="stat-item__label">Layers of Indian ink — hand applied and sanded</p>
+    </div>
+    <div class="stat-item">
+      <p class="stat-item__num"><em>16</em>hr</p>
+      <p class="stat-item__label">Sanding — across the full build</p>
+    </div>
+    <div class="stat-item">
+      <p class="stat-item__num">2400</p>
+      <p class="stat-item__label">Grit — max wet sanding grade on plastic panels</p>
+    </div>
+    <div class="stat-item">
+      <p class="stat-item__num"><em>100</em>+</p>
+      <p class="stat-item__label">Panel pattern ideas in Rhino / KeyShot</p>
+    </div>
+  </div>
+
+  <!-- ── MATERIAL SYSTEM ────────────────────────────────────── -->
+  <div class="case-section">
+    <div class="two-col">
+      <p class="section-label">Materials</p>
+      <div>
+        <div class="body-text" style="margin-bottom:2.5rem;">
+          <p>Three materials. Each one chosen because it earns its place — functionally, aesthetically, and within the cradle-to-cradle logic of the piece. None of them incidental.</p>
+        </div>
+        <div class="material-split">
+          <div class="material-card">
+            <p class="material-card__icon">Primary Structure</p>
+            <h3 class="material-card__name">Solid <em>Oak</em></h3>
+            <p class="material-card__desc">The frame. Upcycled from an existing table — the starting point rather than new stock. Durable, long-lasting, and familiar enough to consumers as a luxury material that it establishes the quality register of the piece immediately. Finished with Indian ink and natural beeswax — no synthetic sealants, fully C2C compatible.</p>
+            <p class="material-card__lifecycle">Lifecycle: Frame continues indefinitely through panel replacement cycles</p>
+          </div>
+          <div class="material-card">
+            <p class="material-card__icon">Panel Frame</p>
+            <h3 class="material-card__name"><em>Mahogany</em></h3>
+            <p class="material-card__desc">Cut from a single plank — mitre saw for lengths, router for the grooves that house the plastic inserts. The dark wood frames the panels and creates the visual contrast that makes the plastic legible as a considered choice rather than an accident. Hardwood. Durable. Returned at end of lifecycle and reworked into wall art.</p>
+            <p class="material-card__lifecycle">Lifecycle: Returned and remade into wall art on replacement</p>
+          </div>
+          <div class="material-card">
+            <p class="material-card__icon">Panel Surface</p>
+            <h3 class="material-card__name">SMILE <em>Recycled Plastic</em></h3>
+            <p class="material-card__desc">A4 sheets sourced from SMILE Plastics after the custom injection mould proved incompatible with Origin's machine. Wet-sanded to 2400 grit, buffed and polished on a buffing wheel. The surface quality achieved through that process is the argument: it reads as premium because it is, once you've put the work in. Multi-colour compressed plastic, graphic and warm in the right light.</p>
+            <p class="material-card__lifecycle">Lifecycle: Returned and remade into wall art on replacement</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MATERIAL IMAGES ────────────────────────────────────── -->
+  <div class="img-grid img-grid--2">
+    <div class="img-slot img-slot--wide">
+      <img src="./imgs-craft/Canti/plastic-detail.jpg" alt="SMILE recycled plastic panel — polished and buffed surface detail" loading="lazy" />
+      <span class="img-slot__caption">SMILE Plastic — buffed and polished to 2400 grit</span>
+      <!-- Save as: ./imgs-craft/Canti/plastic-detail.jpg -->
+    </div>
+    <div class="img-slot img-slot--wide">
+      <img src="./imgs-craft/Canti/mahogany-detail.jpg" alt="Mahogany panel frame with plastic insert — joinery detail" loading="lazy" />
+      <span class="img-slot__caption">Mahogany frame — router-cut grooves housing the plastic</span>
+      <!-- Save as: ./imgs-craft/Canti/mahogany-detail.jpg -->
+    </div>
+  </div>
+
+  <!-- ── PULL QUOTE ─────────────────────────────────────────── -->
+  <div class="pull-quote">
+    <blockquote>
+      The plastic didn't need defending.
+      People picked it up, turned it over,
+      and asked <em>where to buy it.</em>
+      <cite>— CANTI-001, New Designers London, 2022</cite>
+    </blockquote>
+  </div>
+
+  <!-- ── PROCESS ────────────────────────────────────────────── -->
+  <div class="case-section">
+    <div class="two-col">
+      <p class="section-label">The Process</p>
+      <div class="process-steps">
+
+        <div class="step">
+          <span class="step__num">01</span>
+          <div>
+            <p class="step__title">Research &amp; <em>Market Mapping</em></p>
+            <p class="step__body">Extensive early research covered target markets, material perception, competitor products, and manufacturing processes. The key finding was consistent: recycled plastic has never been positioned as a luxury material in furniture. That gap was the brief. Secondary finding: post-pandemic, people were investing more in their home environments and willing to pay for pieces that meant something. That's the market CANTI sits in.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <span class="step__num">02</span>
+          <div>
+            <p class="step__title">Lo-Fi Prototypes — <em>Foam &amp; Card</em></p>
+            <p class="step__body">Before touching wood, the form was worked through in foamboard and card — iterating proportions, leg geometry, and overall stance quickly and cheaply. The C-form leg emerged from this stage: a cantilevered profile that created the sense of visual lightness the brief needed. Forms that didn't work were ruled out here rather than in oak.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <span class="step__num">03</span>
+          <div>
+            <span class="step__ruled-out">Ruled out</span>
+            <p class="step__title">Biscuit Joinery — <em>Tested &amp; Abandoned</em></p>
+            <p class="step__body">The first approach to the leg structure used biscuit joins on the C-form profile. It failed on structural strength — the join had too little shear resistance for a cantilevered load. Reinforcing it would have spiralled production costs and, crucially, made disassembly at end of lifecycle much harder. Both problems pointed the same direction: ruled out early, which is why you test.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <span class="step__num">04</span>
+          <div>
+            <p class="step__title">Rhino + KeyShot — <em>100+ Panel Ideations</em></p>
+            <p class="step__body">Panel layout — the arrangement of plastic within the mahogany frames — required extensive visual exploration. Over 100 variations were generated in Rhino and rendered in KeyShot: different cut patterns, grid arrangements, material proportions, and colour combinations from the SMILE plastic range. Most were discarded. The final configuration was the one that let the plastic's natural graphic quality read clearly without competing with the wood.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <span class="step__num">05</span>
+          <div>
+            <p class="step__title">Colour Testing — <em>Indian Ink + Beeswax</em></p>
+            <p class="step__body">Seven different finish approaches were tested across the extendable panels of the oak base — oils, varnishes, water-based sealants, and natural alternatives tested across 1 to 7 coats each. Indian ink won: it produced a depth of colour equivalent to oil-based finishes while being simpler to apply and, critically, compatible with cradle-to-cradle principles. Beeswax as a top coat added protection without sealing the wood permanently. Both materials can be removed at end of life without chemical stripping.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <span class="step__num">06</span>
+          <div>
+            <p class="step__title">Mould Engineering &amp; <em>Origin Collaboration</em></p>
+            <p class="step__body">The original plan was to produce recycled plastic tiles in-house using a custom mild steel injection mould — fabricated from plasma-cut sheet steel and welded box sections, with bolt fixings to attach to Origin Plastics' machine. The mould geometry proved incompatible with their specific equipment. Rather than redesign the mould, the decision was made to source A4 SMILE Plastic sheets directly and cut panels from those. A faster path to the same outcome, with better surface consistency.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <span class="step__num">07</span>
+          <div>
+            <p class="step__title">Panel Refinement — <em>2400 Grit</em></p>
+            <p class="step__body">The plastic panels were wet-sanded through ascending grades from rough to 2400 grit, then taken to a buffing wheel and polished. That sequence is what makes the surface premium. Most people who've worked with recycled plastic have only seen it un-refined — it looks cheap because it hasn't been finished. The buffed and polished result reads completely differently. 16 hours of sanding across the full build. The table earns its price in labour as much as material.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <span class="step__num">08</span>
+          <div>
+            <p class="step__title">Oak Frame Build &amp; <em>Final Assembly</em></p>
+            <p class="step__body">The surface panels were routed out of the oak frame to expose the structure. Oak corner supports were added to carry the weight of the removable panel assemblies. The mahogany strips — cut with a mitre saw and routed to accept the plywood backing — were inked and waxed to match the frame. Assembly confirmed the logic: the panels are genuinely removable. The lifecycle works as designed.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PROCESS IMAGE GRID 1 — Lo-fi + CAD ────────────────── -->
+  <div class="img-grid img-grid--4">
+    <div class="img-slot">
+      <img src="./imgs-craft/Canti/lofi-1.jpg" alt="CANTI lo-fi foamboard prototype — C-form leg exploration" loading="lazy" />
+      <span class="img-slot__caption">Lo-fi — foamboard form testing</span>
+    </div>
+    <div class="img-slot">
+      <img src="./imgs-craft/Canti/lofi-2.jpg" alt="CANTI card model proportions" loading="lazy" />
+      <span class="img-slot__caption">Card model — proportion testing</span>
+    </div>
+    <div class="img-slot">
+      <img src="./imgs-craft/Canti/cad-1.jpg" alt="CANTI Rhino CAD — carpentry joinery visualisation" loading="lazy" />
+      <span class="img-slot__caption">Rhino — carpentry joinery CAD</span>
+    </div>
+    <div class="img-slot">
+      <img src="./imgs-craft/Canti/cad-2.jpg" alt="CANTI KeyShot render — panel layout ideation" loading="lazy" />
+      <span class="img-slot__caption">KeyShot — panel ideation</span>
+    </div>
+    <!--
+      Save as:
+      ./imgs-craft/Canti/lofi-1.jpg       — foamboard C-form
+      ./imgs-craft/Canti/lofi-2.jpg       — card proportions
+      ./imgs-craft/Canti/cad-1.jpg        — Rhino carpentry CAD
+      ./imgs-craft/Canti/cad-2.jpg        — KeyShot panel render
+    -->
+  </div>
+
+  <!-- ── PROCESS IMAGE GRID 2 — Biscuit + Mould ───────────── -->
+  <div class="img-grid img-grid--asymm-r">
+    <div class="img-slot img-slot--wide">
+      <img src="./imgs-craft/Canti/biscuit-joint.jpg" alt="CANTI C-form leg — biscuit join prototype testing" loading="lazy" />
+      <span class="img-slot__caption">Biscuit joinery prototypes — tested and ruled out</span>
+      <!-- ./imgs-craft/Canti/biscuit-joint.jpg -->
+    </div>
+    <div class="img-slot img-slot--wide">
+      <img src="./imgs-craft/Canti/mould.jpg" alt="Custom mild steel injection mould — fabricated for CANTI plastic tiles" loading="lazy" />
+      <span class="img-slot__caption">Custom mild steel injection mould</span>
+      <!-- ./imgs-craft/Canti/mould.jpg -->
+    </div>
+  </div>
+
+  <!-- ── PROCESS IMAGE GRID 3 — Colour + Frame ─────────────── -->
+  <div class="img-grid img-grid--3">
+    <div class="img-slot">
+      <img src="./imgs-craft/Canti/colour-test.jpg" alt="CANTI colour testing — Indian ink swatches on oak, 1 to 7 layers" loading="lazy" />
+      <span class="img-slot__caption">Colour testing — 7 finishes, 1–7 coats</span>
+      <!-- ./imgs-craft/Canti/colour-test.jpg -->
+    </div>
+    <div class="img-slot">
+      <img src="./imgs-craft/Canti/frame-post-ink.jpg" alt="CANTI oak frame and mahogany panels post Indian ink application" loading="lazy" />
+      <span class="img-slot__caption">Frame + panels post-inking</span>
+      <!-- ./imgs-craft/Canti/frame-post-ink.jpg -->
+    </div>
+    <div class="img-slot">
+      <img src="./imgs-craft/Canti/beeswax.jpg" alt="CANTI oak frame — first beeswax layers applied" loading="lazy" />
+      <span class="img-slot__caption">Beeswax — first 2 of 3 coats</span>
+      <!-- ./imgs-craft/Canti/beeswax.jpg -->
+    </div>
+  </div>
+
+  <!-- ── PROCESS IMAGE GRID 4 — Plastic + Panels ───────────── -->
+  <div class="img-grid img-grid--2">
+    <div class="img-slot img-slot--wide">
+      <img src="./imgs-craft/Canti/plastic-polishing.jpg" alt="SMILE recycled plastic samples being wet sanded and buffed" loading="lazy" />
+      <span class="img-slot__caption">Plastic polishing — wet sand to 2400 grit, buffing wheel</span>
+      <!-- ./imgs-craft/Canti/plastic-polishing.jpg -->
+    </div>
+    <div class="img-slot img-slot--wide">
+      <img src="./imgs-craft/Canti/smile-samples.jpg" alt="SMILE recycled plastic A4 sheets — sourced for final panel tiles" loading="lazy" />
+      <span class="img-slot__caption">SMILE Plastic A4 sheets — final panel material</span>
+      <!-- ./imgs-craft/Canti/smile-samples.jpg -->
+    </div>
+  </div>
+
+  <!-- ── FULL — TABLE BEFORE PANELS ───────────────────────── -->
+  <div class="img-full" style="aspect-ratio:16/7;">
+    <img
+      src="./imgs-craft/Canti/table-pre-panels.jpg"
+      alt="CANTI original oak table before upcycling — with plywood panel sheet"
+      style="width:100%;height:100%;object-fit:cover;display:block;"
+      loading="lazy"
+    />
+    <!-- ./imgs-craft/Canti/table-pre-panels.jpg — "Original oak table before upcycling" caption in old folio -->
+  </div>
+
+  <!-- ── C2C MODEL ──────────────────────────────────────────── -->
+  <div class="case-section">
+    <div class="two-col">
+      <p class="section-label">The Lifecycle</p>
+      <div class="c2c-panel">
+        <p class="c2c-panel__label">Cradle-to-Cradle Framework</p>
+        <p class="c2c-panel__quote">
+          "The table is the first transaction.
+          The <em>lifecycle is the ongoing relationship.</em>"
         </p>
-      </div>
-      <p class="section__body">
-        The research made one thing clear early on — recycled plastic has a perception problem. It's treated as a material for budget products or novelty objects, never as something worth keeping. Pairing it with hardwood and finishing both to the same standard felt like the honest way to challenge that. The name comes from the cantilevered form the legs were originally sketched around — that idea shifted through prototyping, but the name stuck.
-      </p>
-      <p class="section__body">
-        The end-of-life dimension mattered as much as the aesthetics. The mahogany panels and plastic inserts are <strong>fully removable and replaceable</strong>. When they're past their useful life, they go back — the business takes them and turns them into wall art. The oak frame stays, gets new panels. Nothing ends up in a skip.
-      </p>
-    </div>
-  </section>
-
-  <!-- ── IMAGE GRID 1 ─────────────────────────────────────── -->
-  <div class="img-flex-container">
-    <div >
-      <img src="./imgs-craft/Canti/CardModels.webp" alt="Initial card models of CANTI 001 exploring form and proportions" srcset="">
-      <img src="./imgs-craft/Canti/CAD+keyshotGroup.webp" alt="CAD and Keyshot renderings of CANTI 001 exploring layouts of plastic as well as joinery techniques" srcset="">
-    </div>
-  </div>
-
-  <!-- ── 02 MATERIAL RESEARCH ──────────────────────────────── -->
-  <section class="section section--split">
-    <div>
-      <p class="section__num">02 — Material Research</p>
-      <h2 class="section__heading">Plastic as <em>Luxury</em></h2>
-    </div>
-    <div>
-      <p class="section__body">
-        The plastic came from <strong>SMILE Plastics</strong> — sheets pressed from post-consumer waste, each one slightly different depending on what went into the batch. That variation became part of the point. No two tables would be identical, which is exactly what you'd expect from something sold as a premium, handmade piece.
-      </p>
-      <p class="section__body">
-        Getting the plastic to actually look the part took a lot of testing. The initial plan was to mould my own tiles using a custom mild steel mould I had engineered and built — but there was an incompatibility between the mould and Origin Plastics' injection machine, so that approach was shelved. Sourcing pre-cut sheets from SMILE turned out to be the right call. It meant I could focus on refinement rather than production.
-      </p>
-      <div class="callout">
-        <p class="callout__text">
-          Wet sanded up to 2400 grit, then buffed and polished. <em>The surface quality sells it.</em>
-        </p>
-      </div>
-      <p class="section__body">
-        The mahogany panels were cut from a single plank with a mitre saw, then routed to create the grooves the plastic sits into. The contrast between the light oak frame and the darker mahogany does the framing work — it draws attention to the plastic rather than hiding it.
-      </p>
-    </div>
-  </section>
-
-  <!-- ── IMAGE GRID 2 ─────────────────────────────────────── -->
-  <div class="img-grid">
-    <div class="img-grid__item img-grid__item--tall">
-      <img src="./imgs-craft/Canti/PlasticSheet.JPEG" alt="">
-    </div>
-    <div class="img-grid__item img-grid__item--tall">
-      <img src="./imgs-craft/Canti/RoutingSample.jpg" alt="" srcset="">
-    </div>
-  </div>
-
-  <!-- ── 03 MAKING ─────────────────────────────────────────── -->
-  <section class="section">
-    <p class="section__num">03 — Making</p>
-    <h2 class="section__heading" style="margin-bottom: 3rem;">Process</h2>
-
-    <div class="process-steps">
-      <div class="process-step">
-        <div><p class="process-step__num"></p></div>
-        <div>
-          <h3 class="process-step__heading">Low-fi Prototyping &amp; <em>Form Finding</em></h3>
-          <p class="process-step__body">
-            Foam board and card to iterate quickly through leg shapes and proportions. The cantilevered C-shape leg came from this stage. Cheap to test, quick to rule out — most ideas didn't make it past the first cut.
-          </p>
-        </div>
-      </div>
-      <div class="process-step">
-        <div><p class="process-step__num"></p></div>
-        <div>
-          <h3 class="process-step__heading">Biscuit Joints &amp; <em>What Didn't Work</em></h3>
-          <p class="process-step__body">
-            First structural prototypes used biscuit joinery for the C-shaped legs. The joins had almost no structural strength and reinforcing them would have increased production costs significantly while making disassembly at end-of-life near impossible. Ruled out early.
-          </p>
-        </div>
-      </div>
-      <div class="process-step">
-        <div><p class="process-step__num"></p></div>
-        <div>
-          <h3 class="process-step__heading">Sanding &amp; <em>Surface Refinement</em></h3>
-          <p class="process-step__body">
-            16 hours of sanding across the oak frame — four ascending grades with a palm sander, finished by hand. The plastic panels went through a separate process: wet sanded to 2400 grit, then buffed and polished on a buffing wheel to bring out the surface quality.
-          </p>
-        </div>
-      </div>
-      <div class="process-step">
-        <div><p class="process-step__num"></p></div>
-        <div>
-          <h3 class="process-step__heading">Indian Ink &amp; <em>Beeswax Finish</em></h3>
-          <p class="process-step__body">
-            Eight layers of Indian ink built up and sanded back — applied like lacquer — followed by three coats of natural beeswax. No hazardous fumes, no synthetic sealants. The finish protects the wood and can be fully removed at end of life, keeping the cradle-to-cradle chain intact.
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <!-- STATS -->
-    <div class="stat-row">
-      <div class="stat">
-        <p class="stat__num">100<em>+</em></p>
-        <p class="stat__label">Rhino &amp; Keyshot Iterations</p>
-      </div>
-      <div class="stat">
-        <p class="stat__num">16<em>hrs</em></p>
-        <p class="stat__label">Sanding the Oak Frame</p>
-      </div>
-      <div class="stat">
-        <p class="stat__num">8<em>×</em></p>
-        <p class="stat__label">Layers of Indian Ink</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── IMAGE GRID 3 ─────────────────────────────────────── -->
-  <div class="img-grid" style="padding-bottom: 0;">
-    <div class="img-grid__item">
-      <!-- Replace with: <img src="img/canti-ink-wax-finish.jpg" alt="Frame post-inking with beeswax finish"> -->
-      <div class="img-grid__placeholder">
-        <span>Add image: frame post-inking + beeswax finish</span>
-      </div>
-    </div>
-    <div class="img-grid__item">
-      <!-- Replace with: <img src="img/canti-final-table.jpg" alt="Finished CANTI 001 table"> -->
-      <div class="img-grid__placeholder">
-        <span>Add image: finished table</span>
+        <p class="c2c-panel__body">The mahogany panel frames and SMILE plastic inserts are designed to be removed — not when the table breaks, but as a planned stage of its life. When a customer is ready to refresh the piece, those components are returned to the maker. The plastic and mahogany are reworked into wall art. The customer receives new panels. The oak frame continues. Nothing reaches landfill.<br><br>This is the business model, not just an environmental stance. The return creates an ongoing relationship with the customer, a secondary revenue stream for the maker, and a genuine closed loop on the materials. The table becomes a service as much as an object.</p>
       </div>
     </div>
   </div>
 
-  <!-- ── 04 OUTCOME ────────────────────────────────────────── -->
-  <section class="section section--split">
+  <!-- ── FINAL IMAGES ───────────────────────────────────────── -->
+  <div class="img-grid img-grid--asymm-l">
+    <div class="img-slot img-slot--tall">
+      <img src="./imgs-craft/Canti/final-side.jpg" alt="CANTI-001 side elevation — solid oak frame with cantilevered profile" loading="lazy" />
+      <span class="img-slot__caption">Side elevation — C-form oak leg</span>
+      <!-- ./imgs-craft/Canti/final-side.jpg -->
+    </div>
+    <div class="img-slot img-slot--tall">
+      <img src="./imgs-craft/Canti/LandscapeHero.png" alt="CANTI-001 full table — oak, mahogany and SMILE recycled plastic" loading="lazy" />
+      <span class="img-slot__caption">CANTI-001 — degree show installation</span>
+    </div>
+  </div>
+
+  <!-- ── SPEC ───────────────────────────────────────────────── -->
+  <div class="case-section">
+    <div class="two-col">
+      <p class="section-label">Specification</p>
+      <table class="spec-table">
+        <tr>
+          <td>Brief</td>
+          <td>Self-directed Honours project. Luxury furniture prototype for sustainable batch production using recycled plastic within a cradle-to-cradle framework.</td>
+        </tr>
+        <tr>
+          <td>Materials</td>
+          <td>Solid oak (upcycled frame), mahogany (panel frames, cut from one plank), SMILE recycled plastic sheets (A4, cut to tile dimensions).</td>
+        </tr>
+        <tr>
+          <td>Finish</td>
+          <td>Indian ink — 8 layers, hand-applied and sanded between coats. Natural beeswax — 3 coats. Both materials fully removable at end of lifecycle. No synthetic sealants.</td>
+        </tr>
+        <tr>
+          <td>Plastic</td>
+          <td>Wet-sanded to 2400 grit. Buffed and polished on buffing wheel. Grouted and/or screwed into mahogany panel frames. Tested for adhesion and durability.</td>
+        </tr>
+        <tr>
+          <td>Joinery</td>
+          <td>Biscuit joining tested and ruled out — insufficient shear strength, lifecycle incompatibility. Final: router-cut grooves in mahogany, oak corner supports, removable assembly.</td>
+        </tr>
+        <tr>
+          <td>Tools</td>
+          <td>Rhino, KeyShot, workshop machinery (mitre saw, router, palm sander, buffing wheel), injection moulding (Origin Plastics collaboration).</td>
+        </tr>
+        <tr>
+          <td>Lifecycle</td>
+          <td>Panel frames and plastic tiles returned at end of lifecycle, reworked into wall art. Oak frame continues through replacement cycles.</td>
+        </tr>
+        <tr>
+          <td>Exhibited</td>
+          <td>Gray's School of Art Degree Show, Aberdeen, 2022. New Designers Week Two, London, 2022 — one of two RGU projects selected.</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── NEXT PROJECT ───────────────────────────────────────── -->
+  <div class="next-project">
     <div>
-      <p class="section__num">04 — Outcome</p>
-      <h2 class="section__heading">Degree Show &amp;<br><em>What's Next</em></h2>
+      <p class="next-project__label">Next</p>
+      <a href="residency.html" class="next-project__title">Graduate in <em>Residence</em></a>
     </div>
-    <div>
-      <p class="section__body">
-        The finished prototype was shown at <strong>Gray's School of Art Degree Show in 2023</strong> alongside a business concept for how CANTI could work as a product line — the take-back model for end-of-life panels, the batch production approach, the route to market.
-      </p>
-      <p class="section__body">
-        CANTI 001 was always meant to be the proof of concept. The question it was answering was whether recycled plastic and sustainable finishing could sit alongside hardwood without the result reading as a compromise. The degree show was the test. The response confirmed it could.
-      </p>
-      <div class="callout">
-        <p class="callout__text">
-          The panels are designed to leave. <em>The table is designed to stay.</em>
-        </p>
-      </div>
-    </div>
-  </section>
+    <a href="residency.html" class="next-project__arrow">→</a>
+  </div>
 
-  <!-- ── NEXT PROJECT ──────────────────────────────────────── -->
-  <a href="graduate-in-residence.html" class="next-project">
-    <span class="next-project__label">Next Project</span>
-    <h2 class="next-project__title">Graduate in <em>Residence</em></h2>
-    <span class="next-project__arrow">→</span>
-  </a>
-
-  <!-- ── FOOTER ────────────────────────────────────────────── -->
-  <footer>
-    <span class="footer__copy">© Sherjeel Hussain</span>
-    <div class="footer__links">
-      <a href="craft.html">← Craft</a>
-      <a href="work.html">All Work</a>
-      <a href="about.html">About</a>
-    </div>
-  </footer>
-
-  <!-- ── CURSOR SCRIPT ─────────────────────────────────────── -->
+  <!-- ── SCRIPTS ───────────────────────────────────────────── -->
   <script>
-    const cursor = document.getElementById('cursor');
+    const cursor     = document.getElementById('cursor');
+    const cursorIcon = document.getElementById('cursorIcon');
+    const ICONS = {
+      monitor: `<svg width="28" height="22" viewBox="0 0 28 22" fill="none"><rect x="1" y="1" width="26" height="17" rx="2" stroke="#e8547a" stroke-width="1.5"/><rect x="9" y="18" width="10" height="2" fill="#e8547a" opacity=".5"/><rect x="6" y="20" width="16" height="1.5" fill="#e8547a" opacity=".5"/><circle cx="14" cy="9.5" r="1.5" fill="#e8547a" opacity=".4"/></svg><span>Digital</span>`,
+      pot:     `<svg width="22" height="26" viewBox="0 0 22 26" fill="none"><path d="M7 4C5 4 2 7 2 13C2 19 5 23 11 23C17 23 20 19 20 13C20 7 17 4 15 4Z" stroke="#6dbf9e" stroke-width="1.5" fill="none"/><path d="M7 4C8 2 10 1 11 1C12 1 14 2 15 4" stroke="#6dbf9e" stroke-width="1.5" fill="none"/></svg><span>Craft</span>`
+    };
+
     document.addEventListener('mousemove', e => {
       cursor.style.left = e.clientX + 'px';
       cursor.style.top  = e.clientY + 'px';
+      cursorIcon.style.left = (e.clientX + 18) + 'px';
+      cursorIcon.style.top  = e.clientY + 'px';
     });
-    document.querySelectorAll('a, button').forEach(el => {
+
+    document.querySelectorAll('[data-cursor]').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursor.classList.add('grow');
+        cursorIcon.innerHTML = ICONS[el.dataset.cursor] || '';
+        cursorIcon.classList.add('visible');
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.classList.remove('grow');
+        cursorIcon.classList.remove('visible');
+      });
+    });
+
+    document.querySelectorAll('a:not([data-cursor])').forEach(el => {
       el.addEventListener('mouseenter', () => cursor.classList.add('grow'));
       el.addEventListener('mouseleave', () => cursor.classList.remove('grow'));
     });
