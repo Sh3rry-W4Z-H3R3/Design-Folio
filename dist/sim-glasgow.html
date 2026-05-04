@@ -580,7 +580,6 @@
       <div class="nav__links">
         <a href="digital.html" data-cursor="monitor">Digital</a>
         <a href="craft.html" data-cursor="pot">Craft</a>
-        <a href="kala-topi.html">Kala Topi</a>
         <a href="about.html">About</a>
       </div>
     </div>
@@ -643,7 +642,7 @@
     <div class="two-col" style="margin-bottom:3rem;">
       <p class="section-label">The Framework</p>
       <div class="body-text">
-        <p>The whole game runs on three interlocking pillars. If you pull on one, the other two have to respond. That's the system design — not three separate features, but one mechanism with three faces.</p>
+        <p>The whole game runs on three interlocking pillars. If you pull on one, the other two have to respond. That's the system design, a combination of economic, social, and political mechanics. Bringing together the best bits of city building games but making them work with politics and a multiplayer environment.</p>
       </div>
     </div>
   </div>
@@ -658,20 +657,20 @@
       <span class="pillar__number">02</span>
       <p class="pillar__icon">Pillar Two — Industry</p>
       <h2 class="pillar__title">The <em>Yield</em></h2>
-      <p class="pillar__body">Every plot generates income. A global server tick fires every five minutes and calculates earnings for all 300 plots simultaneously — based on building level, zone, tax rate, and active policy. You collect manually, which means the game rewards engagement without punishing absence too hard. Upgrade buildings from Level 1 to Level 5 and the 3D model on the map changes to match.</p>
+      <p class="pillar__body">Every plot generates income.  Players decide how. A global server tick fires every five minutes and calculates earnings for all 300 plots simultaneously — based on building level, zone, tax rate, and active policy. You collect manually, which means the game rewards engagement without punishing absence too hard. Upgrade buildings from Level 1 to Level 5 and the 3D model on the map changes to match.</p>
     </div>
     <div class="pillar">
       <span class="pillar__number">03</span>
       <p class="pillar__icon">Pillar Three — Politics</p>
       <h2 class="pillar__title">The <em>Democracy</em></h2>
-      <p class="pillar__body">One player, one vote. An election runs every real-world month. Whoever wins controls the Commercial Tax Rate and the Base Interest Rate — the two levers that shape every other player's income and expansion costs. High tax, full city treasury, stunted private growth. Low tax, everyone expands faster, nothing gets funded. It's a political argument with economic stakes.</p>
+      <p class="pillar__body">One player, one vote. An election runs every game month. Whoever wins controls the Commercial Tax Rate and the Base Interest Rate — the two levers that shape every other player's income and expansion costs. High tax, full city treasury, stunted private growth. Low tax, everyone expands faster, nothing gets funded. It's a political argument with economic stakes.</p>
     </div>
   </div>
 
   <!-- ── STAT ROW ───────────────────────────────────────────── -->
   <div class="stat-row">
     <div class="stat-item">
-      <p class="stat-item__num">300</p>
+      <p class="stat-item__num">500</p>
       <p class="stat-item__label">Total MVP plots — fixed supply</p>
     </div>
     <div class="stat-item">
@@ -692,12 +691,12 @@
   <div class="img-grid img-grid--3">
     <div class="img-slot">
       <img
-        src="./imgs-digital/SimGlasgow/dashboard.png"
+        src="./imgs-digital/SimGlasgow/v7-UI.png"
         alt="Sim Glasgow dashboard — property plots showing George Square, Merchant City, Blythswood Hill with hourly yields"
         loading="lazy"
       />
       <span class="img-slot__caption">Properties View</span>
-      <!-- Save as: ./imgs-digital/SimGlasgow/dashboard.png (from dashboard_v1_-_v0.png) -->
+      <!-- Save as: ./imgs-digital/SimGlasgow/v7-UI.png (from dashboard_v1_-_v0.png) -->
     </div>
     <div class="img-slot">
       <img
@@ -710,7 +709,7 @@
     </div>
     <div class="img-slot">
       <img
-        src="./imgs-digital/SimGlasgow/politics.png"
+        src="./imgs-digital/SimGlasgow/v9-politics screen.png"
         alt="Sim Glasgow politics view — live voting on mortgage interest rate and Gorbals regeneration zone"
         loading="lazy"
       />
@@ -829,22 +828,22 @@
           <div class="mechanic-step">
             <span class="mechanic-step__num">02</span>
             <div>
-              <p class="mechanic-step__title">Backend — <em>Node.js + PostgreSQL</em></p>
+              <p class="mechanic-step__title">Backend — <em>Supabase + PostgreSQL</em></p>
               <p class="mechanic-step__body">Next step is the real server. Authoritative world state, atomic transactions for land purchases, BullMQ scheduling for the tick. Supabase auth for player identity.</p>
             </div>
           </div>
           <div class="mechanic-step">
             <span class="mechanic-step__num">03</span>
             <div>
-              <p class="mechanic-step__title">3D Map — <em>Three.js / React Three Fiber</em></p>
+              <p class="mechanic-step__title">2D Isometric Map — <em>Isometric Pixel Art</em></p>
               <p class="mechanic-step__body">Glasgow city centre abstracted to a 2×2 unit grid. Low-poly building assets per zone and level, rendered with instancing. The map is the interface — ownership visible at a glance.</p>
             </div>
           </div>
           <div class="mechanic-step">
             <span class="mechanic-step__num">04</span>
             <div>
-              <p class="mechanic-step__title">Scale — <em>300 → 10,000+ plots</em></p>
-              <p class="mechanic-step__body">MVP is deliberately capped at 300 plots to test economic balance. The architecture is designed to shard by ring_id when the time comes. The modular monolith becomes microservices when it needs to.</p>
+              <p class="mechanic-step__title">Scale — <em>500 → 10,000+ plots</em></p>
+              <p class="mechanic-step__body">MVP is deliberately capped at 500 plots to test economic balance. The architecture is designed to shard by ring_id when the time comes. The modular monolith becomes microservices when it needs to.</p>
             </div>
           </div>
         </div>
@@ -871,7 +870,7 @@
         </tr>
         <tr>
           <td>Map</td>
-          <td>Geographically accurate Glasgow city centre. 2×2 unit grid abstraction. Five concentric rings — 300 total plots at MVP.</td>
+          <td>Geographically accurate Glasgow city centre. 2×2 unit grid abstraction. Five concentric rings — 500 total plots at MVP.</td>
         </tr>
         <tr>
           <td>Economy</td>
