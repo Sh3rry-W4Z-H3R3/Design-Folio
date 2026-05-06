@@ -94,6 +94,73 @@
     .next-project__title:hover{color:var(--fg-mid);}
     .next-project__arrow{font-size:3rem;color:var(--fg-dim);text-decoration:none;transition:color var(--fast),transform var(--fast);}
     .next-project__arrow:hover{color:var(--accent);transform:translateX(8px);}
+/* ─── FOOTER LINKS ───────────────────────────────────── */
+    .footer-nav {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      padding: 2.8rem 2rem 3.5rem;
+      gap: 1rem;
+      opacity: 0;
+      animation: fadeUp 0.9s var(--ease) 0.7s forwards;
+    }
+
+    .footer-nav__left {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+    }
+
+    .footer-nav a {
+      font-family: var(--sans);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--fg-dim);
+      position: relative;
+      transition: color var(--fast);
+    }
+
+    .footer-nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 0;
+      width: 0; height: 1px;
+      background: var(--accent);
+      transition: width var(--fast);
+    }
+
+    .footer-nav a:hover {
+      color: var(--fg);
+    }
+    .footer-nav a:hover::after {
+      width: 100%;
+    }
+
+    .footer-nav__all {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1rem;
+      color: var(--fg-dim) !important;
+      letter-spacing: 0.02em !important;
+    }
+
+    .footer-nav__all:hover {
+      color: var(--fg) !important;
+    }
+
+    .divider {
+      width: 1px;
+      height: 14px;
+      background: #333;
+      flex-shrink: 0;
+    }
 
     @keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
     @media(max-width:768px){
@@ -122,7 +189,6 @@
       <div class="nav__links">
         <a href="digital.html" data-cursor="monitor">Digital</a>
         <a href="craft.html" data-cursor="pot">Craft</a>
-        <a href="kala-topi.html">Kala Topi</a>
         <a href="about.html">About</a>
       </div>
     </div>

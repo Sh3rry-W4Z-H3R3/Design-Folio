@@ -673,39 +673,74 @@
         font-weight: 300;
       }
 
-      /* ── FOOTER ───────────────────────────────────────────── */
-      footer {
-        border-top: 1px solid #1a1a1a;
-        padding: 2.5rem var(--gutter);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 1rem;
-      }
-      .footer__copy {
-        font-family: var(--sans);
-        font-size: 0.62rem;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        color: var(--fg-dim);
-      }
-      .footer__links {
-        display: flex;
-        gap: 2rem;
-      }
-      .footer__links a {
-        font-family: var(--sans);
-        font-size: 0.62rem;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        text-decoration: none;
-        color: var(--fg-dim);
-        transition: color var(--fast);
-      }
-      .footer__links a:hover {
-        color: var(--fg);
-      }
+      /* ─── FOOTER LINKS ───────────────────────────────────── */
+    .footer-nav {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      padding: 2.8rem 2rem 3.5rem;
+      gap: 1rem;
+      opacity: 0;
+      animation: fadeUp 0.9s var(--ease) 0.7s forwards;
+    }
+
+    .footer-nav__left {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+    }
+
+    .footer-nav a {
+      font-family: var(--sans);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--fg-dim);
+      position: relative;
+      transition: color var(--fast);
+    }
+
+    .footer-nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 0;
+      width: 0; height: 1px;
+      background: var(--accent);
+      transition: width var(--fast);
+    }
+
+    .footer-nav a:hover {
+      color: var(--fg);
+    }
+    .footer-nav a:hover::after {
+      width: 100%;
+    }
+
+    .footer-nav__all {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1rem;
+      color: var(--fg-dim) !important;
+      letter-spacing: 0.02em !important;
+    }
+
+    .footer-nav__all:hover {
+      color: var(--fg) !important;
+    }
+
+    .divider {
+      width: 1px;
+      height: 14px;
+      background: #333;
+      flex-shrink: 0;
+    }
+
 
       /* ── KEYFRAMES ────────────────────────────────────────── */
       @keyframes fadeUp {
@@ -1071,15 +1106,22 @@
     </div>
 
     <!-- ── FOOTER ────────────────────────────────────────────── -->
-    <footer>
-      <span class="footer__copy">Sherjeel Hussain — Glasgow</span>
-      <div class="footer__links">
-        <a href="digital.html">Digital</a>
-        <a href="craft.html">Craft</a>
-        <a href="about.html">About</a>
-      </div>
-    </footer>
-
+    
+<footer>
+  <div class="footer-nav__left">
+      <a href="work.html" class="footer-nav__all">View all work &nbsp;↗</a>
+      <div class="divider"></div>
+      <a href="craft.html">Craft</a>
+      <a href="digital.html">Digital</a>
+      <a href="./SideQuests.html">Side Quests</a>
+      <a href="about.html">About</a>
+      <a href="about.html#contact">Contact</a>
+    </div>
+    <div class="footer-nav__right">
+      <a href="https://www.linkedin.com/in/sherjeel-hussain-0652431b9/" target="_blank" rel="noopener">LinkedIn</a>
+      &nbsp;&nbsp;
+      <a href="https://www.instagram.com/sherjeel_h27_design_/" target="_blank" rel="noopener">Instagram</a>
+    </div></footer>
     <!-- ── SCRIPTS ───────────────────────────────────────────── -->
     <script>
       // Cursor
