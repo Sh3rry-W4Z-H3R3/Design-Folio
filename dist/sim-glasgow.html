@@ -157,7 +157,7 @@
     }
     .hero__img {
       position: absolute; inset: 0;
-      background-image: url('./imgs-digital/SimGlasgow/hero.png');
+      background-image: url('./imgs-digital/SimGlasgow/dashboard%20ui%20v8.png');
       background-size: cover;
       background-position: center top;
       filter: brightness(0.38) saturate(0.8);
@@ -648,6 +648,7 @@
         <a href="digital.html" data-cursor="monitor">Digital</a>
         <a href="craft.html" data-cursor="pot">Craft</a>
         <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
       </div>
     </div>
   </nav>
@@ -696,8 +697,8 @@
   <!-- ── HERO SCREENSHOT ───────────────────────────────────── -->
   <div class="img-full" style="aspect-ratio:16/7;">
     <img
-      src="./imgs-digital/SimGlasgow/prototype.png"
-      alt="Sim Glasgow v6 prototype — full dashboard view showing portfolio, map, and milestones"
+      src="./imgs-digital/SimGlasgow/dashboard ui v8.png"
+      alt="Sim Glasgow v8 dashboard — full UI showing portfolio, map view, and player milestones"
       style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;"
       loading="lazy"
     />
@@ -767,7 +768,7 @@
     </div>
     <div class="img-slot">
       <img
-        src="./imgs-digital/SimGlasgow/map.png"
+        src="./imgs-digital/SimGlasgow/v0 - map v1.png"
         alt="Sim Glasgow map view — satellite image of Glasgow city centre with player-owned plots marked"
         loading="lazy"
       />
@@ -781,7 +782,54 @@
         loading="lazy"
       />
       <span class="img-slot__caption">Politics — Live Votes</span>
-      <!-- Save as: ./imgs-digital/SimGlasgow/politics.png (from v0_-_politics_v1.png) -->
+    </div>
+  </div>
+
+  <!-- ── UI EVOLUTION — v0 to v9 ─────────────────────────────── -->
+  <div class="case-section">
+    <div class="two-col">
+      <p class="section-label">UI Evolution</p>
+      <div class="body-text">
+        <p>The dashboard went through nine major iterations. Early versions were heavy on chrome and panels — too many at-a-glance numbers competing for attention. By v7 the property and politics screens were split into their own routes, freeing the dashboard to do one thing well. v9 introduced the relation diagram that maps how the three pillars affect each other in real time.</p>
+      </div>
+    </div>
+  </div>
+  <div class="img-grid img-grid--3">
+    <div class="img-slot">
+      <img src="./imgs-digital/SimGlasgow/dashboard v1 - v0.png" alt="Sim Glasgow v0 dashboard — earliest UI iteration before the three-pillar split" loading="lazy" />
+      <span class="img-slot__caption">v0 — first dashboard</span>
+    </div>
+    <div class="img-slot">
+      <img src="./imgs-digital/SimGlasgow/dasboard v2 -claude.png" alt="Sim Glasgow v2 dashboard — iteration exploring information density and hierarchy" loading="lazy" />
+      <span class="img-slot__caption">v2 — density iteration</span>
+    </div>
+    <div class="img-slot">
+      <img src="./imgs-digital/SimGlasgow/v0 - politics v1.png" alt="Sim Glasgow v0 politics screen — first pass at the voting interface" loading="lazy" />
+      <span class="img-slot__caption">v0 — politics first pass</span>
+    </div>
+  </div>
+  <div class="img-grid img-grid--3" style="margin-top:2px;">
+    <div class="img-slot">
+      <img src="./imgs-digital/SimGlasgow/v7-PropertyDataUX.png" alt="Sim Glasgow v7 — property data UX, plot stats laid out as a structured table" loading="lazy" />
+      <span class="img-slot__caption">v7 — property data UX</span>
+    </div>
+    <div class="img-slot">
+      <img src="./imgs-digital/SimGlasgow/v7-PropertyPurchaseUX2.png" alt="Sim Glasgow v7 — property purchase flow, second iteration with clearer confirmation step" loading="lazy" />
+      <span class="img-slot__caption">v7 — purchase flow</span>
+    </div>
+    <div class="img-slot">
+      <img src="./imgs-digital/SimGlasgow/BankV9.png" alt="Sim Glasgow v9 — bank screen showing player finances and interest rate exposure" loading="lazy" />
+      <span class="img-slot__caption">v9 — bank screen</span>
+    </div>
+  </div>
+  <div class="img-grid img-grid--2" style="margin-top:2px;">
+    <div class="img-slot">
+      <img src="./imgs-digital/SimGlasgow/relation diagram.png" alt="Sim Glasgow — relation diagram mapping how property, yield, and politics affect each other" loading="lazy" />
+      <span class="img-slot__caption">System map — pillar interactions</span>
+    </div>
+    <div class="img-slot">
+      <img src="./imgs-digital/SimGlasgow/PropertyFolioV9.png" alt="Sim Glasgow v9 — property portfolio view, owned plots and yield breakdown" loading="lazy" />
+      <span class="img-slot__caption">v9 — property folio</span>
     </div>
   </div>
 
@@ -975,7 +1023,7 @@
       <a href="digital.html">Digital</a>
       <a href="./SideQuests.html">Side Quests</a>
       <a href="about.html">About</a>
-      <a href="about.html#contact">Contact</a>
+      <a href="contact.html">Contact</a>
     </div>
     <div class="footer-nav__right">
       <a href="https://www.linkedin.com/in/sherjeel-hussain-0652431b9/" target="_blank" rel="noopener">LinkedIn</a>
@@ -1017,5 +1065,6 @@
     });
   </script>
 
+<script src="mobile-nav.js" defer></script>
 </body>
 </html>

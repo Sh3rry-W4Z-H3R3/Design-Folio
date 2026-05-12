@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Crafted By Design — Sherjeel Hussain</title>
   <meta name="description" content="Crafted By Design — group exhibition curated and organised by Sherjeel Hussain at The Courtyard Artspace, Aberdeen, 2023. Showcasing emerging designers and makers from Gray's School of Art." />
-  <link rel="canonical" href="https://sherjeelhussain.co.uk/crafted-by-design.html" />
+  <link rel="canonical" href="https://sherjeelhussain.com/crafted-by-design.html" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Syne:wght@400;500;700&display=swap" rel="stylesheet" />
@@ -202,11 +202,14 @@
 
   <nav>
     <a href="index.html" class="nav__home">Sherjeel <em>Hussain</em></a>
-    <div class="nav__links">
-      <a href="digital.html">Digital</a>
-      <a href="craft.html" class="active">Craft</a>
-      <a href="work.html">All Work</a>
-      <a href="about.html">About</a>
+    <div style="display:flex;align-items:center;gap:3rem;">
+      <a href="craft.html" class="nav__back">Craft</a>
+      <div class="nav__links">
+        <a href="digital.html" data-cursor="monitor">Digital</a>
+        <a href="craft.html" data-cursor="pot">Craft</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </div>
     </div>
   </nav>
 
@@ -238,11 +241,7 @@
   </div>
 
   <div class="hero-img">
-    <!-- Replace with: <img src="img/cbd-hero.jpg" alt="Crafted By Design exhibition at The Courtyard Artspace, Aberdeen, 2023"> -->
-    <div class="hero-img__placeholder">
-      <em>Crafted By Design — The Courtyard Artspace, Aberdeen, 2023</em>
-      <span>Replace with: img/cbd-hero.jpg</span>
-    </div>
+    <img src="./imgs-expo/CBD 2023/opening night 2.png" alt="Crafted By Design opening night at The Courtyard Artspace, Aberdeen, 2023" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" />
   </div>
 
   <!-- 01 THE EXHIBITION -->
@@ -272,12 +271,10 @@
   <!-- IMAGE GRID 1 -->
   <div class="img-grid">
     <div class="img-grid__item">
-      <!-- Replace with: <img src="img/cbd-install-view.jpg" alt="Exhibition install view, The Courtyard Artspace"> -->
-      <div class="img-grid__placeholder"><span>Add image: install view</span></div>
+      <img src="./imgs-expo/CBD 2023/opening nigh 1.png" alt="Crafted By Design install view — opening night at The Courtyard Artspace, Aberdeen" loading="lazy" />
     </div>
     <div class="img-grid__item">
-      <!-- Replace with: <img src="img/cbd-poster.jpg" alt="Exhibition poster by Louise Calder"> -->
-      <div class="img-grid__placeholder"><span>Add image: exhibition poster by Louise Calder</span></div>
+      <img src="./imgs-expo/CBD 2023/KirstyIGpost.png" alt="Crafted By Design social promotion — Instagram post for the exhibition" loading="lazy" />
     </div>
   </div>
 
@@ -344,12 +341,10 @@
   <!-- IMAGE GRID 2 -->
   <div class="img-grid" style="padding-bottom: 0;">
     <div class="img-grid__item img-grid__item--tall">
-      <!-- Replace with: <img src="img/cbd-ceramics.jpg" alt="Ceramics by Sherjeel Hussain at Crafted By Design"> -->
-      <div class="img-grid__placeholder"><span>Add image: ceramics on display</span></div>
+      <img src="./imgs-expo/CBD 2023/pots 1.png" alt="Ceramics by Sherjeel Hussain on display at Crafted By Design — multanni mitti pieces" loading="lazy" />
     </div>
     <div class="img-grid__item img-grid__item--tall">
-      <!-- Replace with: <img src="img/cbd-lampshades.jpg" alt="Lampshades by Mhairi McBeath at Crafted By Design"> -->
-      <div class="img-grid__placeholder"><span>Add image: lampshades by Mhairi McBeath</span></div>
+      <img src="./imgs-expo/CBD 2023/gcs pics-3.jpg" alt="Crafted By Design — wider exhibition view showing work by other Gray's School of Art makers" loading="lazy" />
     </div>
   </div>
 
@@ -359,7 +354,7 @@
     <span class="next-project__arrow">→</span>
   </a>
 
-  <footer>
+  <footer class="footer-nav">
   <div class="footer-nav__left">
       <a href="work.html" class="footer-nav__all">View all work &nbsp;↗</a>
       <div class="divider"></div>
@@ -367,7 +362,7 @@
       <a href="digital.html">Digital</a>
       <a href="./SideQuests.html">Side Quests</a>
       <a href="about.html">About</a>
-      <a href="about.html#contact">Contact</a>
+      <a href="contact.html">Contact</a>
     </div>
     <div class="footer-nav__right">
       <a href="https://www.linkedin.com/in/sherjeel-hussain-0652431b9/" target="_blank" rel="noopener">LinkedIn</a>
@@ -383,5 +378,6 @@
       el.addEventListener('mouseleave', () => cursor.classList.remove('grow'));
     });
   </script>
+<script src="mobile-nav.js" defer></script>
 </body>
 </html>

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Graduate in Residence — Sherjeel Hussain</title>
   <meta name="description" content="Graduate in Residence at Gray's School of Art, RGU Aberdeen, 2022–23. Ceramics practice, glaze development, Raku Club, and the BLEND exhibition — first public sale of original work." />
-  <link rel="canonical" href="https://sherjeelhussain.co.uk/graduate-in-residence.html" />
+  <link rel="canonical" href="https://sherjeelhussain.com/graduate-in-residence.html" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Syne:wght@400;500;700&display=swap" rel="stylesheet" />
@@ -402,11 +402,14 @@
   <!-- ── NAV ──────────────────────────────────────────────── -->
   <nav>
     <a href="index.html" class="nav__home">Sherjeel <em>Hussain</em></a>
-    <div class="nav__links">
-      <a href="digital.html">Digital</a>
-      <a href="craft.html" class="active">Craft</a>
-      <a href="work.html">All Work</a>
-      <a href="about.html">About</a>
+    <div style="display:flex;align-items:center;gap:3rem;">
+      <a href="craft.html" class="nav__back">Craft</a>
+      <div class="nav__links">
+        <a href="digital.html" data-cursor="monitor">Digital</a>
+        <a href="craft.html" data-cursor="pot">Craft</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </div>
     </div>
   </nav>
 
@@ -467,11 +470,9 @@
 
   <!-- ── IMAGE GRID 1 ─────────────────────────────────────── -->
   <div class="img-grid">
-    <div class="img-grid__item"><img src="./imgs-expo/BLEND/shelfDetail01.JPEG" alt="" srcset="">
-      </div>
+    <div class="img-grid__item"><img src="./imgs-expo/BLEND/shelfDetail01.JPEG" alt="Display shelf detail from BLEND exhibition — individual ceramic piece during the Graduate in Residence" loading="lazy" />
     </div>
-    <div class="img-grid__item"><img src="./imgs-expo/BLEND/entrance01.jpg" alt="" srcset="">
-      </div>
+    <div class="img-grid__item"><img src="./imgs-expo/BLEND/entrance01.jpg" alt="Entrance to the BLEND exhibition at Gray's School of Art, Aberdeen" loading="lazy" />
     </div>
   </div>
 
@@ -501,10 +502,9 @@
 
   <!-- ── IMAGE GRID 2 ─────────────────────────────────────── -->
   <div class="img-grid">
-    <div class="img-grid__item img-grid__item--tall"><img src="./imgs-expo/BLEND/slipcasts -1.jpg" alt="" srcset="">
+    <div class="img-grid__item img-grid__item--tall"><img src="./imgs-expo/BLEND/slipcasts -1.jpg" alt="Slipcast multanni mitti and stoneware pieces — collection from the residency on display at BLEND" loading="lazy" />
     </div>
-    <div class="img-grid__item img-grid__item--tall">
-<img src="./imgs-expo/BLEND/shelf2.JPEG" alt="" srcset="">
+    <div class="img-grid__item img-grid__item--tall"><img src="./imgs-expo/BLEND/shelf2.JPEG" alt="BLEND exhibition shelf — wider view of the GiR display layout" loading="lazy" />
     </div>
   </div>
 
@@ -572,16 +572,10 @@
   <!-- ── IMAGE GRID 3 ─────────────────────────────────────── -->
   <div class="img-grid">
     <div class="img-grid__item">
-      <!-- Replace with: <img src="img/gir-raku-kiln.jpg" alt="Raku kiln in use — reduction chamber and kiln at 1002°C"> -->
-      <div class="img-grid__placeholder">
-        <span>Add image: raku kiln + reduction chamber</span>
-      </div>
+      <img src="./imgs-craft/Pottery/RakuKiln.JPEG" alt="Raku kiln in use during reduction firing — Graduate in Residence workshop" loading="lazy" />
     </div>
     <div class="img-grid__item">
-      <!-- Replace with: <img src="img/gir-workshop-glazes.jpg" alt="Restocking workshop glazes from proprietary recipes"> -->
-      <div class="img-grid__placeholder">
-        <span>Add image: workshop glaze preparation</span>
-      </div>
+      <img src="./imgs-craft/Pottery/glazeTesting01.JPEG" alt="Workshop glaze testing — test tiles laid out for cone 6 and cone 9 firing schedules" loading="lazy" />
     </div>
   </div>
 
@@ -612,16 +606,10 @@
   <!-- ── IMAGE GRID 4 ─────────────────────────────────────── -->
   <div class="img-grid" style="padding-bottom: 0;">
     <div class="img-grid__item">
-      <!-- Replace with: <img src="img/gir-blend-work.jpg" alt="Work on display at BLEND exhibition"> -->
-      <div class="img-grid__placeholder">
-        <span>Add image: work at BLEND</span>
-      </div>
+      <img src="./imgs-expo/BLEND/FarehaBowl1.JPEG" alt="Multanni mitti bowl on display at BLEND — first piece sold publicly" loading="lazy" />
     </div>
     <div class="img-grid__item">
-      <!-- Replace with: <img src="img/gir-blend-opening.jpg" alt="BLEND opening night, Gray's School of Art"> -->
-      <div class="img-grid__placeholder">
-        <span>Add image: BLEND opening night</span>
-      </div>
+      <img src="./imgs-expo/BLEND/IMG_8030.JPEG" alt="BLEND opening night at Gray's School of Art, September 2023" loading="lazy" />
     </div>
   </div>
 
@@ -632,7 +620,7 @@
     <span class="next-project__arrow">→</span>
   </a>
 
-<footer>
+<footer class="footer-nav">
   <div class="footer-nav__left">
       <a href="work.html" class="footer-nav__all">View all work &nbsp;↗</a>
       <div class="divider"></div>
@@ -640,7 +628,7 @@
       <a href="digital.html">Digital</a>
       <a href="./SideQuests.html">Side Quests</a>
       <a href="about.html">About</a>
-      <a href="about.html#contact">Contact</a>
+      <a href="contact.html">Contact</a>
     </div>
     <div class="footer-nav__right">
       <a href="https://www.linkedin.com/in/sherjeel-hussain-0652431b9/" target="_blank" rel="noopener">LinkedIn</a>
@@ -661,5 +649,6 @@
     });
   </script>
 
+<script src="mobile-nav.js" defer></script>
 </body>
 </html>

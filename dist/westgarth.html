@@ -8,14 +8,14 @@
   <meta name="keywords" content="garage website design Scotland, MOT garage website Fife, small business website designer Scotland" />
   <meta name="author" content="Sherjeel Hussain" />
   <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://sherjeelhussain.co.uk/westgarth.html" />
+  <link rel="canonical" href="https://sherjeelhussain.com/westgarth.html" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="article" />
   <meta property="og:title" content="Westgarth Auto — Website Design & Build, Dalgety Bay" />
   <meta property="og:description" content="Website design and build for Westgarth Auto, an MOT and repairs garage in Dalgety Bay, Fife. Mobile-responsive coded site with contact, booking prompt and print stationery." />
-  <meta property="og:url" content="https://sherjeelhussain.co.uk/westgarth.html" />
-  <meta property="og:image" content="https://sherjeelhussain.co.uk/img/og-default.jpg" />
+  <meta property="og:url" content="https://sherjeelhussain.com/westgarth.html" />
+  <meta property="og:image" content="https://sherjeelhussain.com/img/og-default.jpg" />
   <meta property="og:site_name" content="Sherjeel Hussain — Designer & Ceramicist" />
   <meta property="og:locale" content="en_GB" />
 
@@ -23,7 +23,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Westgarth Auto — Website Design & Build, Dalgety Bay" />
   <meta name="twitter:description" content="Website design and build for Westgarth Auto, an MOT and repairs garage in Dalgety Bay, Fife. Mobile-responsive coded site with contact, booking prompt and print stationery." />
-  <meta name="twitter:image" content="https://sherjeelhussain.co.uk/img/og-default.jpg" />
+  <meta name="twitter:image" content="https://sherjeelhussain.com/img/og-default.jpg" />
 
   <script type="application/ld+json">
   {
@@ -31,8 +31,8 @@
     "@type": "CreativeWork",
     "name": "Westgarth Auto — Website Design & Build, Dalgety Bay",
     "description": "Website design and build for Westgarth Auto, an MOT and repairs garage in Dalgety Bay, Fife. Mobile-responsive coded site with contact, booking prompt and print stationery.",
-    "url": "https://sherjeelhussain.co.uk/westgarth.html",
-    "creator": {"@type": "Person", "name": "Sherjeel Hussain", "url": "https://sherjeelhussain.co.uk"}
+    "url": "https://sherjeelhussain.com/westgarth.html",
+    "creator": {"@type": "Person", "name": "Sherjeel Hussain", "url": "https://sherjeelhussain.com"}
   }
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -68,7 +68,7 @@
     .nav__back::before{content:'←';}
 
     .hero{min-height:72vh;display:grid;grid-template-rows:1fr auto;position:relative;overflow:hidden;background:#0a0a0e;}
-    .hero__img{position:absolute;inset:0;background-image:url('img/westgarth-hero.jpg');background-size:cover;background-position:center;filter:brightness(.35) saturate(.6);transition:filter var(--slow);}
+    .hero__img{position:absolute;inset:0;background-image:url('./imgs-digital/Westgarth/Westgarth/Hero%20Section%20mob.jpg');background-size:cover;background-position:center;filter:brightness(.4) saturate(.7);transition:filter var(--slow);}
     .hero:hover .hero__img{filter:brightness(.45) saturate(.75);}
     .hero__content{position:relative;z-index:2;padding:7rem var(--gutter) 3.5rem;display:flex;flex-direction:column;justify-content:flex-end;}
     .hero__breadcrumb{font-family:var(--sans);font-size:.62rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:1.8rem;display:flex;align-items:center;gap:.8rem;opacity:0;animation:fadeUp .8s var(--ease) .1s forwards;}
@@ -118,6 +118,16 @@
       .nav__links{gap:1.2rem;}
     }
     @media(max-width:480px){nav{padding:1.2rem 1rem;}.nav__links a{font-size:.56rem;letter-spacing:.1em;}}
+
+    .footer-nav { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; padding: 2.8rem var(--gutter) 3.5rem; gap: 1rem; border-top: 1px solid #1a1a1a; }
+    .footer-nav__left { display: flex; align-items: center; gap: 2.5rem; flex-wrap: wrap; }
+    .footer-nav a { font-family: var(--sans); font-size: .7rem; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; text-decoration: none; color: var(--fg-dim); position: relative; transition: color var(--fast); }
+    .footer-nav a::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 1px; background: var(--accent); transition: width var(--fast); }
+    .footer-nav a:hover { color: var(--fg); }
+    .footer-nav a:hover::after { width: 100%; }
+    .footer-nav__all { font-family: var(--serif); font-style: italic; font-size: 1rem; color: var(--fg-dim) !important; letter-spacing: .02em !important; }
+    .footer-nav__all:hover { color: var(--fg) !important; }
+    .divider { width: 1px; height: 14px; background: #333; flex-shrink: 0; }
   </style>
 </head>
 <body>
@@ -132,8 +142,8 @@
       <div class="nav__links">
         <a href="digital.html" data-cursor="monitor">Digital</a>
         <a href="craft.html" data-cursor="pot">Craft</a>
-        <a href="kala-topi.html">Kala Topi</a>
         <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
       </div>
     </div>
   </nav>
@@ -165,11 +175,10 @@
 
   <!-- IMAGES -->
   <div class="img-grid img-grid--2">
-    <div class="img-slot img-slot--wide" style="background-image:url('img/westgarth-desktop.jpg');"></div>
-    <!-- img/westgarth-desktop.jpg — desktop site screenshot -->
-    <div class="img-slot img-slot--wide" style="background-image:url('img/westgarth-mobile.jpg');"></div>
-    <!-- img/westgarth-mobile.jpg — iPhone_Mockup__Perspective.png -->
+    <div class="img-slot img-slot--wide" role="img" aria-label="Westgarth Auto homepage hero section as designed for mobile" style="background-image:url('./imgs-digital/Westgarth/Westgarth/Hero%20Section%20mob.jpg');background-size:cover;background-position:center;"></div>
+    <div class="img-slot img-slot--wide" role="img" aria-label="Westgarth Auto website on iPhone — perspective product shot" style="background-image:url('./imgs-digital/Westgarth/Westgarth/iPhone%20Mockup%2C%20Perspective.png');background-size:cover;background-position:center;background-color:#0a0a0e;"></div>
   </div>
+  <div class="img-full" role="img" aria-label="Westgarth Auto customer reviews slider section" style="aspect-ratio:21/9;background-image:url('./imgs-digital/Westgarth/Westgarth/Reviews%20Sliders.jpg');background-size:cover;background-position:center;"></div>
 
   <!-- SPEC -->
   <div class="case-section">
@@ -192,6 +201,23 @@
     <a href="digital.html" class="next-project__arrow">→</a>
   </div>
 
+  <footer class="footer-nav">
+    <div class="footer-nav__left">
+      <a href="work.html" class="footer-nav__all">View all work &nbsp;↗</a>
+      <div class="divider"></div>
+      <a href="craft.html">Craft</a>
+      <a href="digital.html">Digital</a>
+      <a href="./SideQuests.html">Side Quests</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="footer-nav__right">
+      <a href="https://www.linkedin.com/in/sherjeel-hussain-0652431b9/" target="_blank" rel="noopener">LinkedIn</a>
+      &nbsp;&nbsp;
+      <a href="https://www.instagram.com/sherjeel_h27_design_/" target="_blank" rel="noopener">Instagram</a>
+    </div>
+  </footer>
+
   <script>
     const cursor=document.getElementById("cursor"),cursorIcon=document.getElementById("cursorIcon");
     const ICONS={
@@ -211,5 +237,6 @@
       el.addEventListener("mouseleave",()=>cursor.classList.remove("grow"));
     });
   </script>
+<script src="mobile-nav.js" defer></script>
 </body>
 </html>
