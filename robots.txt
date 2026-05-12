@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://sherjeelhussain.co.uk/sitemap.xml
+Sitemap: https://sherjeelhussain.com/sitemap.xml
 
 # Allow AI crawlers explicitly
 User-agent: GPTBot

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cycle Arts Festival 2025 — Sherjeel Hussain</title>
   <meta name="description" content="Cycle Arts Festival 2025 — exhibiting ceramics as part of SCOPE Collective along Renfrewshire's cycle routes. Site-responsive work in landscape, September 2025." />
-  <link rel="canonical" href="https://sherjeelhussain.co.uk/cycle-arts-festival.html" />
+  <link rel="canonical" href="https://sherjeelhussain.com/cycle-arts-festival.html" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Syne:wght@400;500;700&display=swap" rel="stylesheet" />
@@ -204,11 +204,14 @@
 
   <nav>
     <a href="index.html" class="nav__home">Sherjeel <em>Hussain</em></a>
-    <div class="nav__links">
-      <a href="digital.html">Digital</a>
-      <a href="craft.html" class="active">Craft</a>
-      <a href="work.html">All Work</a>
-      <a href="about.html">About</a>
+    <div style="display:flex;align-items:center;gap:3rem;">
+      <a href="craft.html" class="nav__back">Craft</a>
+      <div class="nav__links">
+        <a href="digital.html" data-cursor="monitor">Digital</a>
+        <a href="craft.html" data-cursor="pot">Craft</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </div>
     </div>
   </nav>
 
@@ -374,12 +377,20 @@
     <span class="next-project__arrow">→</span>
   </a>
 
-  <footer>
-    <span class="footer__copy">© Sherjeel Hussain</span>
-    <div class="footer__links">
-      <a href="craft.html">← Craft</a>
-      <a href="work.html">All Work</a>
-      <a href="about.html">About</a>
+  <footer class="footer-nav" style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;padding:2.8rem var(--gutter) 3.5rem;gap:1rem;border-top:1px solid #1a1a1a;">
+    <div class="footer-nav__left" style="display:flex;align-items:center;gap:2.5rem;flex-wrap:wrap;">
+      <a href="work.html" style="font-family:var(--serif);font-style:italic;font-size:1rem;color:var(--fg-dim);text-decoration:none;letter-spacing:.02em;">View all work &nbsp;↗</a>
+      <div style="width:1px;height:14px;background:#333;flex-shrink:0;"></div>
+      <a href="craft.html" style="font-family:var(--sans);font-size:.7rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;color:var(--fg-dim);">Craft</a>
+      <a href="digital.html" style="font-family:var(--sans);font-size:.7rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;color:var(--fg-dim);">Digital</a>
+      <a href="./SideQuests.html" style="font-family:var(--sans);font-size:.7rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;color:var(--fg-dim);">Side Quests</a>
+      <a href="about.html" style="font-family:var(--sans);font-size:.7rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;color:var(--fg-dim);">About</a>
+      <a href="contact.html" style="font-family:var(--sans);font-size:.7rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;color:var(--fg-dim);">Contact</a>
+    </div>
+    <div class="footer-nav__right">
+      <a href="https://www.linkedin.com/in/sherjeel-hussain-0652431b9/" target="_blank" rel="noopener" style="font-family:var(--sans);font-size:.7rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;color:var(--fg-dim);">LinkedIn</a>
+      &nbsp;&nbsp;
+      <a href="https://www.instagram.com/sherjeel_h27_design_/" target="_blank" rel="noopener" style="font-family:var(--sans);font-size:.7rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;color:var(--fg-dim);">Instagram</a>
     </div>
   </footer>
 
@@ -391,5 +402,6 @@
       el.addEventListener('mouseleave', () => cursor.classList.remove('grow'));
     });
   </script>
+<script src="mobile-nav.js" defer></script>
 </body>
 </html>
