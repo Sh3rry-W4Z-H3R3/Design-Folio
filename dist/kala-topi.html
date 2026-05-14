@@ -14,14 +14,14 @@
   <meta property="og:title" content="Di Kala Topi — Curry &amp; Steak House Brand Identity" />
   <meta property="og:description" content="Speculative fine-dining brand uniting Scottish Angus beef and Pakistani spice cuisine. Self-directed work by Sherjeel Hussain." />
   <meta property="og:url" content="https://sherjeelhussain.com/kala-topi.html" />
-  <meta property="og:image" content="https://sherjeelhussain.com/img/og-default.jpg" />
+  <meta property="og:image" content="https://sherjeelhussain.com/imgs-digital/KalaTopi/KalaTopiLogoAsset 2.png" />
   <meta property="og:site_name" content="Sherjeel Hussain — Designer &amp; Ceramicist" />
   <meta property="og:locale" content="en_GB" />
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Di Kala Topi — Curry &amp; Steak House Brand Identity" />
   <meta name="twitter:description" content="Speculative fine-dining brand uniting Scottish Angus beef and Pakistani spice cuisine." />
-  <meta name="twitter:image" content="https://sherjeelhussain.com/img/og-default.jpg" />
+  <meta name="twitter:image" content="https://sherjeelhussain.com/imgs-digital/KalaTopi/KalaTopiLogoAsset 2.png" />
 
   <script type="application/ld+json">
   {
@@ -434,42 +434,53 @@
     .palette {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
-      gap: 2px;
+      gap: 1.6rem;
       margin-top: 3rem;
     }
     .swatch {
-      aspect-ratio: 1;
-      position: relative;
-      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
       transition: transform var(--fast);
     }
-    .swatch:hover { transform: scaleY(1.04); transform-origin: bottom; }
-    .swatch__colour { position: absolute; inset: 0; }
+    .swatch:hover { transform: translateY(-4px); }
+    .swatch__colour {
+      width: 100%;
+      aspect-ratio: 4/5;
+      border-radius: 2px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+    }
     .swatch__info {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      padding: 1rem;
-      background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%);
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
     }
     .swatch__hex {
       font-family: var(--sans);
-      font-size: 0.6rem; font-weight: 700;
-      letter-spacing: 0.15em;
-      color: rgba(255,255,255,0.6);
+      font-size: 0.62rem; font-weight: 700;
+      letter-spacing: 0.18em;
+      color: rgba(242,224,189,0.55);
       display: block;
     }
     .swatch__name {
       font-family: var(--body);
-      font-size: 0.7rem; font-weight: 300;
-      color: rgba(255,255,255,0.85);
-      display: block; margin-top: 0.2rem;
+      font-size: 0.85rem; font-weight: 500;
+      color: rgba(242,224,189,0.95);
+      display: block;
     }
     .swatch__meaning {
       font-family: var(--body);
-      font-size: 0.62rem; font-weight: 300;
-      color: rgba(255,255,255,0.4);
-      display: block; margin-top: 0.2rem;
+      font-size: 0.68rem; font-weight: 300;
+      color: rgba(242,224,189,0.45);
+      display: block;
       font-style: italic;
+      line-height: 1.45;
+    }
+    @media (max-width: 768px) {
+      .palette { grid-template-columns: repeat(2, 1fr); gap: 1.4rem; }
+    }
+    @media (max-width: 480px) {
+      .palette { grid-template-columns: 1fr 1fr; }
     }
 
     /* ── BRAND VOICE ──────────────────────────────────────── */
@@ -521,33 +532,46 @@
       margin-top: 3rem;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 2px;
+      gap: 2rem;
     }
-    .ceramic-slot {
-      aspect-ratio: 4/5;
-      background: #111;
-      border: 1px dashed rgba(242,224,189,0.1);
+    .ceramic-slot { display: flex; flex-direction: column; gap: 1rem; }
+    .ceramic-slot__media {
+      aspect-ratio: 4/3;
+      background: rgba(255,255,255,0.015);
+      border: 1px dashed rgba(242,224,189,0.22);
+      border-radius: 2px;
       display: flex;
-      align-items: center; justify-content: center;
-      flex-direction: column; gap: 0.8rem;
+      align-items: center;
+      justify-content: center;
+      padding: 1.4rem;
     }
-    .ceramic-slot img {
+    .ceramic-slot__media img,
+    .ceramic-slot__media > img {
       width: 100%; height: 100%;
       object-fit: cover;
       display: block;
+      border-radius: 2px;
+    }
+    .ceramic-slot__placeholder {
+      font-family: var(--sans);
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(242,224,189,0.4);
+      text-align: center;
     }
     .ceramic-slot__label {
-      font-family: var(--sans);
-      font-size: 0.58rem; font-weight: 700;
-      letter-spacing: 0.18em; text-transform: uppercase;
-      color: rgba(242,224,189,0.2);
-      text-align: center; padding: 0 1rem;
+      font-family: var(--body);
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: rgba(242,224,189,0.92);
     }
     .ceramic-slot__sub {
       font-family: var(--body);
-      font-size: 0.7rem;
-      color: rgba(242,224,189,0.1);
-      text-align: center; padding: 0 1rem;
+      font-size: 0.72rem;
+      color: rgba(242,224,189,0.5);
+      line-height: 1.5;
     }
     .in-production {
       display: inline-flex;
@@ -674,7 +698,7 @@
       <div class="hero__meta">
         <div class="hero__meta-item">
           <p class="hero__meta-label">Type</p>
-          <p class="hero__meta-value">Speculative Brand</p>
+          <p class="hero__meta-value">Self-Directed &middot; Speculative Project</p>
         </div>
         <div class="hero__meta-item">
           <p class="hero__meta-label">Services</p>
@@ -683,6 +707,10 @@
         <div class="hero__meta-item">
           <p class="hero__meta-label">Status</p>
           <p class="hero__meta-value">In Progress</p>
+        </div>
+        <div class="hero__meta-item">
+          <p class="hero__meta-label">Year</p>
+          <p class="hero__meta-value">2025</p>
         </div>
       </div>
     </div>
@@ -799,7 +827,7 @@
       </div>
       <div class="swatch">
         <div class="swatch__colour" style="background:#F2E0BD"></div>
-        <div class="swatch__info" style="background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 100%)">
+        <div class="swatch__info">
           <span class="swatch__hex">#F2E0BD</span>
           <span class="swatch__name">Parchment</span>
           <span class="swatch__meaning">Naan, aged paper, warm light</span>
@@ -900,25 +928,31 @@
     <span class="in-production">In Production</span>
     <div class="ceramics-placeholder">
       <div class="ceramic-slot">
-        <!-- Replace with: <img src="img/kt-ceramic-plate.jpg" alt="Kala Topi dinner plate" /> -->
+        <div class="ceramic-slot__media">
+          <span class="ceramic-slot__placeholder">Photography coming soon</span>
+        </div>
         <span class="ceramic-slot__label">Dinner Plate</span>
         <span class="ceramic-slot__sub">Pakistani tile glaze pattern. European fine dining form.</span>
       </div>
       <div class="ceramic-slot">
-        <!-- Replace with: <img src="img/kt-ceramic-bowl.jpg" alt="Kala Topi dipping bowl" /> -->
+        <div class="ceramic-slot__media">
+          <span class="ceramic-slot__placeholder">Photography coming soon</span>
+        </div>
         <span class="ceramic-slot__label">Dipping Bowl</span>
         <span class="ceramic-slot__sub">Multanni mitti clay body. The material is the argument.</span>
       </div>
       <div class="ceramic-slot">
-        <!-- Replace with: <img src="img/kt-ceramic-vessel.jpg" alt="Kala Topi drinking vessel" /> -->
+        <div class="ceramic-slot__media">
+          <span class="ceramic-slot__placeholder">Photography coming soon</span>
+        </div>
         <span class="ceramic-slot__label">Drinking Vessel</span>
         <span class="ceramic-slot__sub">Buffalo mark pressed. Raku fired.</span>
       </div>
     </div>
   </section>
 
-  <!-- ── CASE FOOTER ──────────────────────────────────────── -->
-  <footer class="case-footer">
+  <!-- ── CASE NEXT — section, not a second footer landmark ──── -->
+  <section class="case-footer" aria-label="Next project">
     <div>
       <p class="case-footer__next-label">Next Project</p>
       <a href="canti.html" class="case-footer__next-link">
@@ -928,7 +962,7 @@
     <div class="case-footer__back">
       <a href="digital.html">← Back to Digital Work</a>
     </div>
-  </footer>
+  </section>
 <footer class="footer-nav">
   <div class="footer-nav__left">
       <a href="work.html" class="footer-nav__all">View all work &nbsp;↗</a>

@@ -21,10 +21,3 @@ Thumbs.db
 # Ignore specific heavy folders
 **/WGA-CaseStudyImgs/
 **/iCloud Photos/
-
-# wrangler files
-.wrangler
-.dev.vars*
-!.dev.vars.example
-.env*
-!.env.example

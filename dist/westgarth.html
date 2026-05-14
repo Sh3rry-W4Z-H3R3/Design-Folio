@@ -40,7 +40,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Syne:wght@400;500;700&display=swap" rel="stylesheet" />
   <style>
     :root{
-      --bg:#0a0a0a;--fg:#ede9e1;--fg-dim:#555;--fg-mid:#999;
+      --bg:#0a0a0a;--fg:#ede9e1;--fg-dim:#7a7a7a;--fg-mid:#999;
       --accent:#e8547a;--accent-2:#6dbf9e;
       --serif:'Cormorant',Georgia,serif;--sans:'Syne',sans-serif;--body:'DM Sans',sans-serif;
       --ease:cubic-bezier(0.25,0.1,0.25,1);--slow:0.7s var(--ease);--fast:0.3s var(--ease);
@@ -128,6 +128,29 @@
     .footer-nav__all { font-family: var(--serif); font-style: italic; font-size: 1rem; color: var(--fg-dim) !important; letter-spacing: .02em !important; }
     .footer-nav__all:hover { color: var(--fg) !important; }
     .divider { width: 1px; height: 14px; background: #333; flex-shrink: 0; }
+
+    /* COMPACT QUICK-PROJECT FORMAT */
+    .quick { padding: 6rem var(--gutter) 4rem; max-width: 1200px; margin: 0 auto; }
+    .quick__eyebrow { font-family: var(--sans); font-size: .62rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.6rem; display: flex; align-items: center; gap: .8rem; }
+    .quick__eyebrow::before { content: ''; display: block; width: 1.5rem; height: 1px; background: var(--accent); }
+    .quick__title { font-family: var(--serif); font-size: clamp(2.6rem, 7vw, 5.2rem); font-weight: 300; line-height: .95; letter-spacing: -.005em; }
+    .quick__title em { font-style: italic; color: var(--accent); }
+    .quick__sub { margin-top: 1.4rem; font-family: var(--serif); font-style: italic; font-size: clamp(1rem, 1.6vw, 1.2rem); color: rgba(237,233,225,.7); max-width: 560px; line-height: 1.5; }
+    .quick__placeholder { margin: 3rem 0; width: 100%; aspect-ratio: 16/9; border: 1px dashed rgba(237,233,225,.18); display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,.015); border-radius: 2px; }
+    .quick__placeholder-label { font-family: var(--sans); font-size: .58rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--fg-dim); }
+    .quick__meta { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5rem; padding: 2rem 0; border-top: 1px solid #1a1a1a; border-bottom: 1px solid #1a1a1a; margin-bottom: 2.5rem; }
+    .quick__meta-item__label { font-family: var(--sans); font-size: .56rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--fg-dim); margin-bottom: .4rem; }
+    .quick__meta-item__value { font-family: var(--body); font-size: .85rem; color: var(--fg); font-weight: 300; }
+    .quick__deliverables { list-style: none; padding: 0; margin: 0 0 2.4rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; }
+    .quick__deliverables li { font-family: var(--body); font-size: .9rem; color: var(--fg-mid); font-weight: 300; padding-left: 1rem; position: relative; }
+    .quick__deliverables li::before { content: ''; position: absolute; left: 0; top: .65em; width: 4px; height: 4px; background: var(--accent); border-radius: 50%; }
+    .quick__deliverables li strong { display: block; color: var(--fg); font-weight: 500; margin-bottom: .15rem; }
+    .quick__outcome { font-family: var(--serif); font-style: italic; font-size: clamp(1.05rem, 1.8vw, 1.35rem); color: var(--fg); line-height: 1.5; margin-bottom: 1.2rem; }
+    .quick__cta { font-family: var(--sans); font-size: .68rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--fg-dim); }
+    @media (max-width: 768px) {
+      .quick__meta { grid-template-columns: 1fr; gap: 1.4rem; }
+      .quick__deliverables { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -148,50 +171,30 @@
     </div>
   </nav>
 
-  <section class="hero">
-    <div class="hero__img"></div>
-    <!-- img/westgarth-hero.jpg — best screenshot or mockup -->
-    <div class="hero__content">
-      <p class="hero__breadcrumb">Web Design &amp; Build · Print — 2024</p>
-      <h1 class="hero__title">Westgarth<br><em>Auto</em></h1>
-    </div>
-    <div class="hero__meta">
-      <div class="meta-item"><p class="meta-item__label">Client</p><p class="meta-item__value">Westgarth Auto</p></div>
-      <div class="meta-item"><p class="meta-item__label">Sector</p><p class="meta-item__value">MOT &amp; Repairs — Dalgety Bay, Fife</p></div>
-      <div class="meta-item"><p class="meta-item__label">Scope</p><p class="meta-item__value">Website Design · Website Build · Print / Stationery</p></div>
-    </div>
-  </section>
+  <main class="quick">
+    <p class="quick__eyebrow">Quick Project · 2024</p>
+    <h1 class="quick__title">Westgarth <em>Auto</em></h1>
+    <p class="quick__sub">Website and print for an MOT and repairs garage in Dalgety Bay, Fife. Brief was small. Delivery had to be tight.</p>
 
-  <!-- THE BRIEF -->
-  <div class="case-section">
-    <div class="two-col">
-      <p class="section-label">The Brief</p>
-      <div class="body-text">
-        <p>Westgarth Auto is an MOT and repairs garage in Dalgety Bay, Fife. The brief was simple — a website local customers can find, trust, and use to get in touch. Book an MOT, request a quote, check the hours. Nothing complicated. The site just needed to do that job without getting in the way.</p>
-        <p>Delivered alongside the site: business cards and letterhead. All files handed over print-ready.</p>
-      </div>
+    <div class="quick__placeholder" role="img" aria-label="Hero image placeholder — Westgarth Auto site or print collateral, to be supplied">
+      <span class="quick__placeholder-label">Hero image &mdash; coming soon</span>
     </div>
-  </div>
 
-  <!-- IMAGES -->
-  <div class="img-grid img-grid--2">
-    <div class="img-slot img-slot--wide" role="img" aria-label="Westgarth Auto homepage hero section as designed for mobile" style="background-image:url('./imgs-digital/Westgarth/Westgarth/Hero%20Section%20mob.jpg');background-size:cover;background-position:center;"></div>
-    <div class="img-slot img-slot--wide" role="img" aria-label="Westgarth Auto website on iPhone — perspective product shot" style="background-image:url('./imgs-digital/Westgarth/Westgarth/iPhone%20Mockup%2C%20Perspective.png');background-size:cover;background-position:center;background-color:#0a0a0e;"></div>
-  </div>
-  <div class="img-full" role="img" aria-label="Westgarth Auto customer reviews slider section" style="aspect-ratio:21/9;background-image:url('./imgs-digital/Westgarth/Westgarth/Reviews%20Sliders.jpg');background-size:cover;background-position:center;"></div>
-
-  <!-- SPEC -->
-  <div class="case-section">
-    <div class="two-col">
-      <p class="section-label">Specification</p>
-      <table class="spec-table">
-        <tr><td>Site</td><td>Fully coded. Services, contact, booking prompt. Mobile-responsive.</td></tr>
-        <tr><td>Stack</td><td>HTML, CSS, JavaScript.</td></tr>
-        <tr><td>Print</td><td>Business cards and letterhead. Print-ready files supplied to client.</td></tr>
-        <tr><td>Outcome</td><td>Live and trading. Local search presence established.</td></tr>
-      </table>
+    <div class="quick__meta">
+      <div><p class="quick__meta-item__label">Client</p><p class="quick__meta-item__value">Westgarth Auto</p></div>
+      <div><p class="quick__meta-item__label">Sector</p><p class="quick__meta-item__value">MOT &amp; Repairs &mdash; Dalgety Bay, Fife</p></div>
+      <div><p class="quick__meta-item__label">Year</p><p class="quick__meta-item__value">2024</p></div>
     </div>
-  </div>
+
+    <ul class="quick__deliverables">
+      <li><strong>Website Design</strong>Services, booking prompt, contact.</li>
+      <li><strong>Website Build</strong>Fully coded, mobile-responsive.</li>
+      <li><strong>Print / Stationery</strong>Business cards and letterhead, print-ready.</li>
+    </ul>
+
+    <p class="quick__outcome">Live and trading. Local search presence established.</p>
+    <p class="quick__cta">Live site available on request</p>
+  </main>
 
   <div class="next-project">
     <div>

@@ -67,6 +67,10 @@
     /* ─── RESET ──────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { font-size: 16px; scroll-behavior: smooth; }
+    /* Neutralise browser default link styling site-wide (blue / purple visited / underline) */
+    :where(nav, footer, .footer-nav) a,
+    :where(nav, footer, .footer-nav) a:link,
+    :where(nav, footer, .footer-nav) a:visited { color: inherit; text-decoration: none; }
 
     body {
       background: var(--bg);
@@ -150,10 +154,26 @@
       color: var(--fg-dim);
     }
 
+    /* ─── CONNECTIVE COPY ────────────────────────────────── */
+    .site-connect {
+      max-width: 620px;
+      margin: 0 auto 2.4rem;
+      padding: 0 2rem;
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(0.95rem, 1.4vw, 1.15rem);
+      line-height: 1.55;
+      color: var(--fg-dim);
+      text-align: center;
+      opacity: 0;
+      animation: fadeUp 0.9s var(--ease) 0.25s forwards;
+    }
+
     /* ─── SPLIT SCREEN ───────────────────────────────────── */
     .gateway {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr;
       height: clamp(360px, 60vh, 680px);
       margin: 0 2rem;
       gap: 2px;
@@ -179,12 +199,13 @@
     }
 
     .panel--digital .panel__bg {
-      /* REPLACE: background-image: url('your-digital-image.jpg'); */
       background: linear-gradient(135deg, #1a1020 0%, #0e0a18 40%, #160d1e 100%);
     }
     .panel--craft .panel__bg {
-      /* REPLACE: background-image: url('your-craft-image.jpg'); */
       background: linear-gradient(135deg, #0a1610 0%, #081208 40%, #0d1a10 100%);
+    }
+    .panel--all .panel__bg {
+      background: linear-gradient(135deg, #1c1810 0%, #0e0c08 40%, #181410 100%);
     }
 
     .panel__overlay {
@@ -296,13 +317,16 @@
     }
     .panel--digital::before { background: var(--accent); }
     .panel--craft::before   { background: var(--accent-2); }
+    .panel--all::before     { background: var(--gold); }
     .panel:hover::before {
       width: 100%;
     }
     .panel--digital:hover .panel__label { color: var(--accent); }
     .panel--craft:hover .panel__label   { color: var(--accent-2); }
+    .panel--all:hover .panel__label     { color: var(--gold); }
     .panel--digital:hover .panel__btn { border-color: var(--accent); background: var(--accent); color: #fff; }
     .panel--craft:hover .panel__btn   { border-color: var(--accent-2); background: var(--accent-2); color: #0a0a0a; }
+    .panel--all:hover .panel__btn     { border-color: var(--gold); background: var(--gold); color: #0a0a0a; }
 
     /* ─── FOOTER LINKS ───────────────────────────────────── */
     .footer-nav {
@@ -384,10 +408,13 @@
 
       .gateway {
         grid-template-columns: 1fr;
-        grid-template-rows: 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
         margin: 0 1rem;
-        height: clamp(500px, 80vh, 720px);
+        height: auto;
+        min-height: clamp(600px, 90vh, 920px);
       }
+      .gateway .panel { min-height: 200px; }
+      .site-connect { margin-bottom: 1.6rem; }
       .panel__title { font-size: 1.6rem; }
 
       .footer-nav {
@@ -421,11 +448,14 @@
     </p>
   </header>
 
+  <!-- ── CONNECTIVE COPY (placeholder for designer) ────── -->
+  <p class="site-connect">[Designer to write: one sentence connecting ceramics practice to digital work — same thinking, different materials.]</p>
+
   <!-- ── SPLIT GATEWAY ─────────────────────────────────── -->
   <main>
     <div class="gateway">
 
-      <!-- Left: Digital & Brand -->
+      <!-- Path 01: Digital & Brand -->
       <div class="panel panel--digital" data-cursor="monitor">
         <div class="panel__bg"></div>
         <div class="panel__overlay"></div>
@@ -439,7 +469,7 @@
         </a>
       </div>
 
-      <!-- Right: Product & Craft -->
+      <!-- Path 02: Product & Craft -->
       <div class="panel panel--craft" data-cursor="pot">
         <div class="panel__bg"></div>
         <div class="panel__overlay"></div>
@@ -453,14 +483,26 @@
         </a>
       </div>
 
+      <!-- Path 03: All Work -->
+      <div class="panel panel--all">
+        <div class="panel__bg"></div>
+        <div class="panel__overlay"></div>
+        <span class="panel__label">03 — Everything</span>
+        <h2 class="panel__title">
+          All Work
+          <em>Together</em>
+        </h2>
+        <a href="work.html" class="panel__btn">
+          Enter <span class="arrow">→</span>
+        </a>
+      </div>
+
     </div>
   </main>
 
   <!-- ── FOOTER NAV ─────────────────────────────────────── -->
   <nav class="footer-nav">
     <div class="footer-nav__left">
-      <a href="work.html" class="footer-nav__all">View all work &nbsp;↗</a>
-      <div class="divider"></div>
       <a href="craft.html">Craft</a>
       <a href="digital.html">Digital</a>
       <a href="./SideQuests.html">Side Quests</a>
