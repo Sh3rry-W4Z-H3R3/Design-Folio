@@ -1,7 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(ls \"C:\\\\Users\\\\Sherj\\\\.claude\\\\projects\\\\D--Webpage-Directory-Portfolio-Website-REPO-version-3-0\\\\memory\\\\\" 2>&1)"
-    ]
-  }
-}
