@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Side Quests &amp; Archives — Sherjeel Hussain</title>
+  <title>Side Quests — Sherjeel Hussain</title>
   <meta name="description" content="A collection of experiments, technical deep-dives, archival concept work, and creative detours that inform Sherjeel Hussain's professional practice — outside of the main case studies." />
   <meta name="keywords" content="Sherjeel Hussain side projects, design experiments, archival concept work, poster design, packaging concepts" />
   <meta name="author" content="Sherjeel Hussain" />
@@ -31,7 +31,7 @@
 :root {
   --bg:       #000000;
   --fg:       #ede9e1;
-  --fg-dim:   #555;
+  --fg-dim:   #7a7a7a;
   --fg-mid:   #999;
   --accent:   #e8547a; /* Neon pink from your file */
   --serif:    'Cormorant', Georgia, serif;
@@ -182,13 +182,16 @@ nav {
 @media (max-width: 600px) { .gallery-container { column-count: 1; } }
 
 .gallery-item {
+  position: relative;
   display: inline-block;
   width: 100%;
   margin-bottom: 20px;
   border: 1px solid #111;
   background-color: #050505;
-  transition: border-color var(--fast), box-shadow var(--fast);
   overflow: hidden;
+  transform-origin: center center;
+  transition: transform 250ms ease-in-out, border-color 250ms ease, box-shadow 250ms ease;
+  cursor: pointer;
 }
 
 .gallery-item img {
@@ -199,13 +202,75 @@ nav {
   transition: filter var(--fast);
 }
 
-.gallery-item:hover {
+.gallery-item:hover,
+.gallery-item.is-open {
+  transform: scale(1.03);
+  z-index: 5;
   border-color: var(--accent);
-  box-shadow: 0 0 15px rgba(232, 84, 122, 0.15);
+  box-shadow: 0 8px 24px rgba(232, 84, 122, 0.18);
 }
 
-.gallery-item:hover img {
+.gallery-item:hover img,
+.gallery-item.is-open img {
   filter: grayscale(0%) brightness(1);
+}
+
+/* Overlay revealed on hover (desktop) or tap (mobile via .is-open) */
+.gallery-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 10, 10, 0.78);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.4rem 1.3rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 250ms ease-in-out;
+}
+.gallery-item:hover .gallery-overlay,
+.gallery-item.is-open .gallery-overlay {
+  opacity: 1;
+}
+/* Suppress overlay reveal while overlay has no copy yet (designer to fill) */
+.gallery-overlay:empty { display: none; }
+.gallery-overlay__name {
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--fg);
+  line-height: 1.15;
+  margin-bottom: 0.35rem;
+}
+.gallery-overlay__year {
+  font-family: var(--sans);
+  font-size: 0.58rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg-mid);
+  margin-bottom: 0.7rem;
+}
+.gallery-overlay__desc {
+  font-family: var(--sans);
+  font-size: 0.74rem;
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--fg);
+}
+
+/* Page intro placeholder above grid */
+.page-intro {
+  padding: 0 var(--gutter) 3rem;
+  max-width: 720px;
+}
+.page-intro p {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(1rem, 1.6vw, 1.2rem);
+  font-weight: 300;
+  line-height: 1.55;
+  color: var(--fg-mid);
 }
 
 /* ── FOOTER ───────────────────────────────────────────── */
@@ -361,63 +426,103 @@ footer {
     </p>
   </header>
 
+  <!-- PLACEHOLDER: Side Quests intro paragraph — to be written in designer's own voice. Hidden until copy is supplied. -->
+  <section class="page-intro" aria-hidden="true"></section>
+
   <main class="gallery-container">
-    <div class="gallery-item">
+    <div class="gallery-item" tabindex="0">
       <img src="./imgs-craft/Pottery/GlazeCloseUp.JPEG" alt="Glazed stoneware bowl close up with spangles" loading="lazy">
+      <!-- PLACEHOLDER: card overlay copy — fill in Name / Year / Description per card. Hidden until written. -->
+      <div class="gallery-overlay" aria-hidden="true"></div>
     </div>
-    <div class="gallery-item">
+    <div class="gallery-item" tabindex="0">
       <img src="./imgs-archival/787b poster.png" alt="Poster for the Mazda 787B, the first Japanese car to win Le Mans in 1991. Made for a motorsport-themed exhibition at the Design Museum in London, 2024." loading="lazy">
+      <!-- PLACEHOLDER: card overlay copy — fill in Name / Year / Description per card. Hidden until written. -->
+      <div class="gallery-overlay" aria-hidden="true"></div>
     </div>
 
-    <div class="gallery-item">
+    <div class="gallery-item" tabindex="0">
       <img src="./imgs-archival/NoA Purple Pattern Logo.jpg" alt="Nation of Artisans Concept work - pattern design " loading="lazy">
+      <!-- PLACEHOLDER: card overlay copy — fill in Name / Year / Description per card. Hidden until written. -->
+      <div class="gallery-overlay" aria-hidden="true"></div>
     </div>
 
-    <div class="gallery-item">
+    <div class="gallery-item" tabindex="0">
       <img src="./imgs-lab/CherryVisionSlider2.png" alt="Cherry Vision graphic for socials" loading="lazy">
+      <!-- PLACEHOLDER: card overlay copy — fill in Name / Year / Description per card. Hidden until written. -->
+      <div class="gallery-overlay" aria-hidden="true"></div>
     </div>
 
-    <div class="gallery-item">
-      <img src="./imgs-lab/CVGarment1WorkingV2.png" alt="Clydeside Logistics" loading="lazy">
+    <div class="gallery-item" tabindex="0">
+      <img src="./imgs-lab/CVGarment1WorkingV2.png" alt="Cherry Vision garment concept — early working version" loading="lazy">
+      <!-- PLACEHOLDER: card overlay copy — fill in Name / Year / Description per card. Hidden until written. -->
+      <div class="gallery-overlay" aria-hidden="true"></div>
     </div>
 
-    <div class="gallery-item">
+    <div class="gallery-item" tabindex="0">
       <img src="./imgs-lab/GTR Poster.jpg" alt="Poster for Nissan GTR R32 by Sherjeel Hussain" loading="lazy">
+      <!-- PLACEHOLDER: card overlay copy — fill in Name / Year / Description per card. Hidden until written. -->
+      <div class="gallery-overlay" aria-hidden="true"></div>
     </div>
 
-    <div class="gallery-item">
+    <div class="gallery-item" tabindex="0">
       <img src="./imgs-lab/KQ Packaging mood board_Page_1.jpg" alt="Packaging concept made for Kuntrqultura by SCM Design Studio" loading="lazy">
+      <!-- PLACEHOLDER: card overlay copy — fill in Name / Year / Description per card. Hidden until written. -->
+      <div class="gallery-overlay" aria-hidden="true"></div>
     </div>
-    
-    <div class="gallery-item">
+
+    <div class="gallery-item" tabindex="0">
       <img src="./imgs-lab/KQPackagingmoodboard_Page_2.jpg" alt="Packaging concept made for Kuntrqultura by SCM Design Studio" loading="lazy">
+      <!-- PLACEHOLDER: card overlay copy — fill in Name / Year / Description per card. Hidden until written. -->
+      <div class="gallery-overlay" aria-hidden="true"></div>
     </div>
-    
-    
-    <div class="gallery-item">
+
+    <div class="gallery-item" tabindex="0">
       <img src="./imgs-archival/Bifold Brochure.png" alt="Nation of Artisans Concept work - brochure design" loading="lazy">
+      <!-- PLACEHOLDER: card overlay copy — fill in Name / Year / Description per card. Hidden until written. -->
+      <div class="gallery-overlay" aria-hidden="true"></div>
     </div>
-    
-    <div class="gallery-item">
+
+    <div class="gallery-item" tabindex="0">
       <img src="./imgs-archival/Men Hoodie Mockup, Back View (3).png" alt="Nation of Artisans Concept work - hoodie mockup" loading="lazy">
+      <!-- PLACEHOLDER: card overlay copy — fill in Name / Year / Description per card. Hidden until written. -->
+      <div class="gallery-overlay" aria-hidden="true"></div>
     </div>
-    <div class="gallery-item">
+
+    <div class="gallery-item" tabindex="0">
       <img src="./imgs-lab/For Those Who Consider - Working2.png" alt="Sherjeel Hussain - Concept work - For Those Who Consider" loading="lazy">
+      <!-- PLACEHOLDER: card overlay copy — fill in Name / Year / Description per card. Hidden until written. -->
+      <div class="gallery-overlay" aria-hidden="true"></div>
     </div>
-    <div class="gallery-item">
+
+    <div class="gallery-item" tabindex="0">
       <img src="./imgs-craft/Pottery/RollingTrayConcept01.JPEG" alt="Stoneware ceramic Rolling Tray Samples 2022-2023" loading="lazy">
+      <!-- PLACEHOLDER: card overlay copy — fill in Name / Year / Description per card. Hidden until written. -->
+      <div class="gallery-overlay" aria-hidden="true"></div>
     </div>
-    <div class="gallery-item">
+
+    <div class="gallery-item" tabindex="0">
       <img src="./imgs-lab/PS2 SUpra no glo.png" alt="Sherjeel Hussain - Album Concept work for Undead Prexy " loading="lazy">
+      <!-- PLACEHOLDER: card overlay copy — fill in Name / Year / Description per card. Hidden until written. -->
+      <div class="gallery-overlay" aria-hidden="true"></div>
     </div>
-    <div class="gallery-item">
+
+    <div class="gallery-item" tabindex="0">
       <img src="./imgs-archival/NoARedLogoConcept.jpg" alt="Nation of Artisans Concept work - logo design" loading="lazy">
+      <!-- PLACEHOLDER: card overlay copy — fill in Name / Year / Description per card. Hidden until written. -->
+      <div class="gallery-overlay" aria-hidden="true"></div>
     </div>
-     <div class="gallery-item">
+
+    <div class="gallery-item" tabindex="0">
       <img src="./imgs-archival/DevineDelights2.JPEG" alt="Devine Delights Signage at night in Paisley, Scotland" loading="lazy">
+      <!-- PLACEHOLDER: card overlay copy — fill in Name / Year / Description per card. Hidden until written. -->
+      <div class="gallery-overlay" aria-hidden="true"></div>
     </div>
-    <div class="gallery-item">
+
+    <div class="gallery-item" tabindex="0">
       <img src="./imgs-archival/DevineDelightsSignage.jpeg" alt="Devine Delights Signage at night in Paisley, Scotland" loading="lazy">
+      <!-- PLACEHOLDER: card overlay copy — fill in Name / Year / Description per card. Hidden until written. -->
+      <div class="gallery-overlay" aria-hidden="true"></div>
     </div>
   </main>
 
@@ -448,6 +553,27 @@ footer {
       el.addEventListener('mouseenter', () => cursor.classList.add('grow'));
       el.addEventListener('mouseleave', () => cursor.classList.remove('grow'));
     });
+
+    // Mobile tap-to-reveal overlay (touch / no-hover devices)
+    (function () {
+      var isTouch = window.matchMedia('(hover: none)').matches;
+      if (!isTouch) return;
+      var cards = document.querySelectorAll('.gallery-item');
+      cards.forEach(function (card) {
+        card.addEventListener('click', function (e) {
+          // close any other open card
+          cards.forEach(function (other) {
+            if (other !== card) other.classList.remove('is-open');
+          });
+          card.classList.toggle('is-open');
+          e.stopPropagation();
+        });
+      });
+      // tap elsewhere to dismiss
+      document.addEventListener('click', function () {
+        cards.forEach(function (c) { c.classList.remove('is-open'); });
+      });
+    })();
   </script>
 
 <script src="mobile-nav.js" defer></script>
