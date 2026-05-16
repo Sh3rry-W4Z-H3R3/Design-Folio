@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -408,6 +408,7 @@
       body { cursor: auto; }
       .cursor, .cursor-icon { display: none; }
 
+      /* ─── SPLIT SCREEN ───────────────────────────────────── */
       .gateway {
         grid-template-columns: 1fr;
         grid-template-rows: 1fr 1fr 1fr;
@@ -419,6 +420,103 @@
       .site-connect { margin-bottom: 1.6rem; }
       .panel__title { font-size: 1.6rem; }
 
+      /* Enter button */
+      .panel__btn {
+        position: absolute;
+        bottom: 1.8rem;
+        left: 1.8rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        font-family: var(--sans);
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        text-decoration: none;
+        color: var(--fg);
+        border: 1px solid rgba(237, 233, 225, 0.25);
+        padding: 0.75rem 1.4rem;
+        transition:
+          border-color var(--fast),
+          color var(--fast),
+          background var(--fast),
+          gap var(--fast);
+        z-index: 2;
+      }
+
+      .panel__btn .arrow {
+        display: inline-block;
+        transition: transform var(--fast);
+      }
+
+      /* ─── HOVER STATES ───────────────────────────────────── */
+      .panel:hover .panel__bg {
+        transform: scale(1);
+        filter: grayscale(0%);
+      }
+      .panel:hover .panel__overlay {
+        background: var(--overlay-h);
+      }
+      .panel:hover .panel__title {
+        opacity: 1;
+      }
+      .panel:hover .panel__btn {
+        gap: 0.9rem;
+      }
+      .panel:hover .panel__btn .arrow {
+        transform: translateX(4px);
+      }
+
+      /* Accent line that grows on hover */
+      .panel::before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        transition: width var(--slow);
+        z-index: 3;
+      }
+      .panel--digital::before {
+        background: var(--accent);
+      }
+      .panel--craft::before {
+        background: var(--accent-2);
+      }
+      .panel--all::before {
+        background: var(--gold);
+      }
+      .panel:hover::before {
+        width: 100%;
+      }
+      .panel--digital:hover .panel__label {
+        color: var(--accent);
+      }
+      .panel--craft:hover .panel__label {
+        color: var(--accent-2);
+      }
+      .panel--all:hover .panel__label {
+        color: var(--gold);
+      }
+      .panel--digital:hover .panel__btn {
+        border-color: var(--accent);
+        background: var(--accent);
+        color: #fff;
+      }
+      .panel--craft:hover .panel__btn {
+        border-color: var(--accent-2);
+        background: var(--accent-2);
+        color: #0a0a0a;
+      }
+      .panel--all:hover .panel__btn {
+        border-color: var(--gold);
+        background: var(--gold);
+        color: #0a0a0a;
+      }
+
+      /* ─── FOOTER LINKS ───────────────────────────────────── */
       .footer-nav {
         flex-direction: column;
         align-items: flex-start;
@@ -544,13 +642,25 @@
         cursor.classList.remove('grow');
         cursorIcon.classList.remove('visible');
       });
-    });
 
-    document.querySelectorAll('a:not([data-cursor])').forEach(el => {
-      el.addEventListener('mouseenter', () => cursor.classList.add('grow'));
-      el.addEventListener('mouseleave', () => cursor.classList.remove('grow'));
-    });
-  </script>
+      document.querySelectorAll("[data-cursor]").forEach((el) => {
+        el.addEventListener("mouseenter", () => {
+          cursor.classList.add("grow");
+          cursorIcon.innerHTML = ICONS[el.dataset.cursor] || "";
+          cursorIcon.classList.add("visible");
+        });
+        el.addEventListener("mouseleave", () => {
+          cursor.classList.remove("grow");
+          cursorIcon.classList.remove("visible");
+        });
+      });
 
-</body>
+      document.querySelectorAll("a:not([data-cursor])").forEach((el) => {
+        el.addEventListener("mouseenter", () => cursor.classList.add("grow"));
+        el.addEventListener("mouseleave", () =>
+          cursor.classList.remove("grow"),
+        );
+      });
+    </script>
+  </body>
 </html>
