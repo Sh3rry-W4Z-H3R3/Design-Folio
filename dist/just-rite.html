@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -206,7 +206,12 @@
       .img-grid--2{grid-template-columns:1fr;}
       .step{grid-template-columns:3rem 1fr;gap:1rem;}
       .pull-quote{padding:4rem 1.4rem;}
-      .nav__links{gap:1.2rem;}
+      .nav__links{gap:1.2rem;}        .footer-nav {
+          flex-direction: column;
+        }
+        .footer-nav__left {
+          flex-direction: column;
+        }
     }
     @media(max-width:480px){nav{padding:1.2rem 1rem;}.nav__links a{font-size:.56rem;letter-spacing:.1em;}}
   </style>
@@ -449,6 +454,7 @@
         <a href="about.html">About</a>
         <a href="contact.html">Contact</a>
       </div>
+    
       <div class="footer-nav__right">
         <a
           href="https://www.linkedin.com/in/sherjeel-hussain-0652431b9/"
