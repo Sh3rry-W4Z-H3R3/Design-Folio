@@ -642,25 +642,12 @@
         cursor.classList.remove('grow');
         cursorIcon.classList.remove('visible');
       });
+    });
 
-      document.querySelectorAll("[data-cursor]").forEach((el) => {
-        el.addEventListener("mouseenter", () => {
-          cursor.classList.add("grow");
-          cursorIcon.innerHTML = ICONS[el.dataset.cursor] || "";
-          cursorIcon.classList.add("visible");
-        });
-        el.addEventListener("mouseleave", () => {
-          cursor.classList.remove("grow");
-          cursorIcon.classList.remove("visible");
-        });
-      });
-
-      document.querySelectorAll("a:not([data-cursor])").forEach((el) => {
-        el.addEventListener("mouseenter", () => cursor.classList.add("grow"));
-        el.addEventListener("mouseleave", () =>
-          cursor.classList.remove("grow"),
-        );
-      });
-    </script>
+    document.querySelectorAll('a:not([data-cursor])').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('grow'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('grow'));
+    });
+  </script>
   </body>
 </html>
