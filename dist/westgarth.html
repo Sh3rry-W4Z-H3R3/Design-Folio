@@ -1,832 +1,233 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Westgarth Auto · Sherjeel Hussain</title>
-    <meta
-      name="description"
-      content="Website design and build for Westgarth Auto, an MOT and repairs garage in Dalgety Bay, Fife. Mobile-responsive coded site with contact, booking prompt and print stationery."
-    />
-    <meta
-      name="keywords"
-      content="garage website design Scotland, MOT garage website Fife, small business website designer Scotland"
-    />
-    <meta name="author" content="Sherjeel Hussain" />
-    <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://sherjeelhussain.com/westgarth.html" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Westgarth Auto — Sherjeel Hussain</title>
+  <meta name="description" content="Website design and build for Westgarth Auto, an MOT and repairs garage in Dalgety Bay, Fife. Mobile-responsive coded site with contact, booking prompt and print stationery." />
+  <meta name="keywords" content="garage website design Scotland, MOT garage website Fife, small business website designer Scotland, Shopify designer Scotland, small business website Scotland" />
+  <meta name="author" content="Sherjeel Hussain" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://sherjeelhussain.com/westgarth.html" />
 
-    <!-- Open Graph -->
-    <meta property="og:type" content="article" />
-    <meta
-      property="og:title"
-      content="Westgarth Auto — Website Design & Build, Dalgety Bay"
-    />
-    <meta
-      property="og:description"
-      content="Website design and build for Westgarth Auto, an MOT and repairs garage in Dalgety Bay, Fife. Mobile-responsive coded site with contact, booking prompt and print stationery."
-    />
-    <meta
-      property="og:url"
-      content="https://sherjeelhussain.com/westgarth.html"
-    />
-    <meta
-      property="og:image"
-      content="https://sherjeelhussain.com/img/og-default.jpg"
-    />
-    <meta
-      property="og:site_name"
-      content="Sherjeel Hussain — Designer & Ceramicist"
-    />
-    <meta property="og:locale" content="en_GB" />
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Westgarth Auto — Website Design & Build, Dalgety Bay" />
+  <meta property="og:description" content="Website design and build for Westgarth Auto, an MOT and repairs garage in Dalgety Bay, Fife. Mobile-responsive coded site with contact, booking prompt and print stationery." />
+  <meta property="og:url" content="https://sherjeelhussain.com/westgarth.html" />
+  <meta property="og:image" content="https://sherjeelhussain.com/img/og-default.jpg" />
+  <meta property="og:site_name" content="Sherjeel Hussain — Designer & Ceramicist" />
+  <meta property="og:locale" content="en_GB" />
 
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta
-      name="twitter:title"
-      content="Westgarth Auto — Website Design & Build, Dalgety Bay"
-    />
-    <meta
-      name="twitter:description"
-      content="Website design and build for Westgarth Auto, an MOT and repairs garage in Dalgety Bay, Fife. Mobile-responsive coded site with contact, booking prompt and print stationery."
-    />
-    <meta
-      name="twitter:image"
-      content="https://sherjeelhussain.com/img/og-default.jpg"
-    />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Westgarth Auto — Website Design & Build, Dalgety Bay" />
+  <meta name="twitter:description" content="Website design and build for Westgarth Auto, an MOT and repairs garage in Dalgety Bay, Fife. Mobile-responsive coded site with contact, booking prompt and print stationery." />
+  <meta name="twitter:image" content="https://sherjeelhussain.com/img/og-default.jpg" />
 
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "CreativeWork",
-        "name": "Westgarth Auto — Website Design & Build, Dalgety Bay",
-        "description": "Website design and build for Westgarth Auto, an MOT and repairs garage in Dalgety Bay, Fife. Mobile-responsive coded site with contact, booking prompt and print stationery.",
-        "url": "https://sherjeelhussain.com/westgarth.html",
-        "creator": {
-          "@type": "Person",
-          "name": "Sherjeel Hussain",
-          "url": "https://sherjeelhussain.com"
-        }
-      }
-    </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Syne:wght@400;500;700&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      :root {
-        --bg: #0a0a0a;
-        --fg: #ede9e1;
-        --fg-dim: #7a7a7a;
-        --fg-mid: #999;
-        --accent: #e8547a;
-        --accent-2: #6dbf9e;
-        --serif: "Cormorant", Georgia, serif;
-        --sans: "Syne", sans-serif;
-        --body: "DM Sans", sans-serif;
-        --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
-        --slow: 0.7s var(--ease);
-        --fast: 0.3s var(--ease);
-        --gutter: clamp(1.4rem, 5vw, 5rem);
-      }
-      *,
-      *::before,
-      *::after {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-      html {
-        font-size: 16px;
-        scroll-behavior: smooth;
-      }
-      body {
-        background: var(--bg);
-        color: var(--fg);
-        font-family: var(--body);
-        overflow-x: hidden;
-        cursor: none;
-      }
-      .cursor {
-        position: fixed;
-        width: 10px;
-        height: 10px;
-        background: var(--fg);
-        border-radius: 50%;
-        pointer-events: none;
-        z-index: 9999;
-        transform: translate(-50%, -50%);
-        transition:
-          width var(--fast),
-          height var(--fast),
-          background var(--fast);
-      }
-      .cursor.grow {
-        width: 44px;
-        height: 44px;
-        background: transparent;
-        border: 1px solid var(--accent);
-        opacity: 0.7;
-      }
-      .cursor-icon {
-        position: fixed;
-        pointer-events: none;
-        z-index: 9998;
-        transform: translate(10px, -50%);
-        opacity: 0;
-        transition: opacity 0.2s ease;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
-      .cursor-icon.visible {
-        opacity: 1;
-      }
-      .cursor-icon svg {
-        display: block;
-      }
-      .cursor-icon span {
-        font-family: var(--sans);
-        font-size: 0.5rem;
-        font-weight: 700;
-        letter-spacing: 0.15em;
-        text-transform: uppercase;
-        color: var(--accent);
-        margin-top: 4px;
-      }
-      nav {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 2rem var(--gutter);
-        position: sticky;
-        top: 0;
-        z-index: 100;
-        background: rgba(10, 10, 10, 0.92);
-        backdrop-filter: blur(12px);
-        border-bottom: 1px solid #1a1a1a;
-      }
-      .nav__home {
-        font-family: var(--serif);
-        font-size: 1.1rem;
-        font-weight: 300;
-        letter-spacing: 0.06em;
-        text-decoration: none;
-        color: var(--fg);
-      }
-      .nav__home em {
-        font-style: italic;
-        color: var(--accent);
-      }
-      .nav__links {
-        display: flex;
-        gap: 2.5rem;
-      }
-      .nav__links a {
-        font-family: var(--sans);
-        font-size: 0.65rem;
-        font-weight: 700;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
-        text-decoration: none;
-        color: var(--fg-dim);
-        transition: color var(--fast);
-        position: relative;
-      }
-      .nav__links a::after {
-        content: "";
-        position: absolute;
-        bottom: -3px;
-        left: 0;
-        width: 0;
-        height: 1px;
-        background: var(--accent);
-        transition: width var(--fast);
-      }
-      .nav__links a:hover {
-        color: var(--fg);
-      }
-      .nav__links a:hover::after {
-        width: 100%;
-      }
-      .nav__back {
-        font-family: var(--sans);
-        font-size: 0.62rem;
-        font-weight: 700;
-        letter-spacing: 0.18em;
-        text-transform: uppercase;
-        text-decoration: none;
-        color: var(--fg-dim);
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        transition: color var(--fast);
-      }
-      .nav__back:hover {
-        color: var(--fg);
-      }
-      .nav__back::before {
-        content: "←";
-      }
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "name": "Westgarth Auto — Website Design & Build, Dalgety Bay",
+    "description": "Website design and build for Westgarth Auto, an MOT and repairs garage in Dalgety Bay, Fife. Mobile-responsive coded site with contact, booking prompt and print stationery.",
+    "url": "https://sherjeelhussain.com/westgarth.html",
+    "creator": {"@type": "Person", "name": "Sherjeel Hussain", "url": "https://sherjeelhussain.com"}
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Syne:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root{
+      --bg:#0a0a0a;--fg:#ede9e1;--fg-dim:#7a7a7a;--fg-mid:#999;
+      --accent:#e8547a;--accent-2:#6dbf9e;
+      --serif:'Cormorant',Georgia,serif;--sans:'Syne',sans-serif;--body:'DM Sans',sans-serif;
+      --ease:cubic-bezier(0.25,0.1,0.25,1);--slow:0.7s var(--ease);--fast:0.3s var(--ease);
+      --gutter:clamp(1.4rem,5vw,5rem);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{font-size:16px;scroll-behavior:smooth;}
+    body{background:var(--bg);color:var(--fg);font-family:var(--body);overflow-x:hidden;cursor:none;}
+    .cursor{position:fixed;width:10px;height:10px;background:var(--fg);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width var(--fast),height var(--fast),background var(--fast);}
+    .cursor.grow{width:44px;height:44px;background:transparent;border:1px solid var(--accent);opacity:.7;}
+    .cursor-icon{position:fixed;pointer-events:none;z-index:9998;transform:translate(10px,-50%);opacity:0;transition:opacity .2s ease;display:flex;flex-direction:column;align-items:center;}
+    .cursor-icon.visible{opacity:1;}
+    .cursor-icon svg{display:block;}
+    .cursor-icon span{font-family:var(--sans);font-size:.5rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-top:4px;}
+    nav{display:flex;align-items:center;justify-content:space-between;padding:2rem var(--gutter);position:sticky;top:0;z-index:100;background:rgba(10,10,10,.92);backdrop-filter:blur(12px);border-bottom:1px solid #1a1a1a;}
+    .nav__home{font-family:var(--serif);font-size:1.1rem;font-weight:300;letter-spacing:.06em;text-decoration:none;color:var(--fg);}
+    .nav__home em{font-style:italic;color:var(--accent);}
+    .nav__links{display:flex;gap:2.5rem;}
+    .nav__links a{font-family:var(--sans);font-size:.65rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;color:var(--fg-dim);transition:color var(--fast);position:relative;}
+    .nav__links a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;background:var(--accent);transition:width var(--fast);}
+    .nav__links a:hover{color:var(--fg);}
+    .nav__links a:hover::after{width:100%;}
+    .nav__back{font-family:var(--sans);font-size:.62rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;text-decoration:none;color:var(--fg-dim);display:flex;align-items:center;gap:.5rem;transition:color var(--fast);}
+    .nav__back:hover{color:var(--fg);}
+    .nav__back::before{content:'←';}
 
-      .hero {
-        min-height: 72vh;
-        display: grid;
-        grid-template-rows: 1fr auto;
-        position: relative;
-        overflow: hidden;
-        background: #0a0a0e;
-      }
-      .hero__img {
-        position: absolute;
-        inset: 0;
-        background-image: url("./imgs-digital/Westgarth/Westgarth/Hero%20Section%20mob.jpg");
-        background-size: cover;
-        background-position: center;
-        filter: brightness(0.4) saturate(0.7);
-        transition: filter var(--slow);
-      }
-      .hero:hover .hero__img {
-        filter: brightness(0.45) saturate(0.75);
-      }
-      .hero__content {
-        position: relative;
-        z-index: 2;
-        padding: 7rem var(--gutter) 3.5rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
-      }
-      .hero__breadcrumb {
-        font-family: var(--sans);
-        font-size: 0.62rem;
-        font-weight: 700;
-        letter-spacing: 0.22em;
-        text-transform: uppercase;
-        color: var(--accent);
-        margin-bottom: 1.8rem;
-        display: flex;
-        align-items: center;
-        gap: 0.8rem;
-        opacity: 0;
-        animation: fadeUp 0.8s var(--ease) 0.1s forwards;
-      }
-      .hero__breadcrumb::before {
-        content: "";
-        display: block;
-        width: 1.5rem;
-        height: 1px;
-        background: var(--accent);
-      }
-      .hero__title {
-        font-family: var(--serif);
-        font-size: clamp(3rem, 8vw, 7rem);
-        font-weight: 300;
-        line-height: 0.9;
-        color: var(--fg);
-        opacity: 0;
-        animation: fadeUp 0.9s var(--ease) 0.2s forwards;
-      }
-      .hero__title em {
-        font-style: italic;
-        color: var(--accent);
-      }
-      .hero__meta {
-        position: relative;
-        z-index: 2;
-        display: flex;
-        gap: 3rem;
-        flex-wrap: wrap;
-        padding: 2rem var(--gutter);
-        border-top: 1px solid rgba(237, 233, 225, 0.12);
-        opacity: 0;
-        animation: fadeUp 0.8s var(--ease) 0.35s forwards;
-      }
-      .meta-item__label {
-        font-family: var(--sans);
-        font-size: 0.56rem;
-        font-weight: 700;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
-        color: rgba(237, 233, 225, 0.35);
-        margin-bottom: 0.35rem;
-      }
-      .meta-item__value {
-        font-family: var(--body);
-        font-size: 0.82rem;
-        color: var(--fg);
-        font-weight: 300;
-      }
+    .hero{min-height:72vh;display:grid;grid-template-rows:1fr auto;position:relative;overflow:hidden;background:#0a0a0e;}
+    .hero__img{position:absolute;inset:0;background-image:url('./imgs-digital/Westgarth/Hero%20Section%20mob.webp');background-size:cover;background-position:center;filter:brightness(.4) saturate(.7);transition:filter var(--slow);}
+    .hero:hover .hero__img{filter:brightness(.45) saturate(.75);}
+    .hero__content{position:relative;z-index:2;padding:7rem var(--gutter) 3.5rem;display:flex;flex-direction:column;justify-content:flex-end;}
+    .hero__breadcrumb{font-family:var(--sans);font-size:.62rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:1.8rem;display:flex;align-items:center;gap:.8rem;opacity:0;animation:fadeUp .8s var(--ease) .1s forwards;}
+    .hero__breadcrumb::before{content:'';display:block;width:1.5rem;height:1px;background:var(--accent);}
+    .hero__title{font-family:var(--serif);font-size:clamp(3rem,8vw,7rem);font-weight:300;line-height:.9;color:var(--fg);opacity:0;animation:fadeUp .9s var(--ease) .2s forwards;}
+    .hero__title em{font-style:italic;color:var(--accent);}
+    .hero__meta{position:relative;z-index:2;display:flex;gap:3rem;flex-wrap:wrap;padding:2rem var(--gutter);border-top:1px solid rgba(237,233,225,.12);opacity:0;animation:fadeUp .8s var(--ease) .35s forwards;}
+    .meta-item__label{font-family:var(--sans);font-size:.56rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(237,233,225,.35);margin-bottom:.35rem;}
+    .meta-item__value{font-family:var(--body);font-size:.82rem;color:var(--fg);font-weight:300;}
 
-      .case-section {
-        padding: 5rem var(--gutter);
-        border-bottom: 1px solid #1a1a1a;
-      }
-      .two-col {
-        display: grid;
-        grid-template-columns: 1fr 2fr;
-        gap: 6rem;
-        align-items: start;
-      }
-      .section-label {
-        font-family: var(--sans);
-        font-size: 0.62rem;
-        font-weight: 700;
-        letter-spacing: 0.22em;
-        text-transform: uppercase;
-        color: var(--accent);
-        position: sticky;
-        top: 6rem;
-        display: flex;
-        align-items: center;
-        gap: 0.8rem;
-      }
-      .section-label::before {
-        content: "";
-        display: block;
-        width: 1.5rem;
-        height: 1px;
-        background: var(--accent);
-      }
-      .body-text {
-        font-size: 0.92rem;
-        line-height: 1.95;
-        color: var(--fg-mid);
-        font-weight: 300;
-        max-width: 640px;
-      }
-      .body-text p + p {
-        margin-top: 1.3em;
-      }
-      .body-text strong {
-        color: var(--fg);
-        font-weight: 500;
-      }
+    .case-section{padding:5rem var(--gutter);border-bottom:1px solid #1a1a1a;}
+    .two-col{display:grid;grid-template-columns:1fr 2fr;gap:6rem;align-items:start;}
+    .section-label{font-family:var(--sans);font-size:.62rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);position:sticky;top:6rem;display:flex;align-items:center;gap:.8rem;}
+    .section-label::before{content:'';display:block;width:1.5rem;height:1px;background:var(--accent);}
+    .body-text{font-size:.92rem;line-height:1.95;color:var(--fg-mid);font-weight:300;max-width:640px;}
+    .body-text p+p{margin-top:1.3em;}
+    .body-text strong{color:var(--fg);font-weight:500;}
 
-      .img-full {
-        width: 100%;
-        background-size: cover;
-        background-position: center;
-        background-color: #111;
-      }
-      .img-grid {
-        display: grid;
-        gap: 2px;
-      }
-      .img-grid--2 {
-        grid-template-columns: 1fr 1fr;
-      }
-      .img-slot {
-        background: #111;
-        background-size: cover;
-        background-position: center;
-        aspect-ratio: 4/3;
-        display: block;
-      }
-      .img-slot--wide {
-        aspect-ratio: 16/9;
-      }
+    .img-full{width:100%;background-size:cover;background-position:center;background-color:#111;}
+    .img-grid{display:grid;gap:2px;}
+    .img-grid--2{grid-template-columns:1fr 1fr;}
+    .img-slot{background:#111;background-size:cover;background-position:center;aspect-ratio:4/3;display:block;}
+    .img-slot--wide{aspect-ratio:16/9;}
 
-      .spec-table {
-        width: 100%;
-        max-width: 640px;
-        border-collapse: collapse;
-      }
-      .spec-table tr {
-        border-bottom: 1px solid #1e1e1e;
-      }
-      .spec-table td {
-        padding: 1rem 0;
-        font-size: 0.82rem;
-        font-weight: 300;
-        vertical-align: top;
-      }
-      .spec-table td:first-child {
-        font-family: var(--sans);
-        font-size: 0.6rem;
-        font-weight: 700;
-        letter-spacing: 0.15em;
-        text-transform: uppercase;
-        color: var(--accent);
-        width: 9rem;
-        padding-right: 2rem;
-        padding-top: 1.1rem;
-      }
-      .spec-table td:last-child {
-        color: var(--fg-mid);
-        line-height: 1.6;
-      }
+    .spec-table{width:100%;max-width:640px;border-collapse:collapse;}
+    .spec-table tr{border-bottom:1px solid #1e1e1e;}
+    .spec-table td{padding:1rem 0;font-size:.82rem;font-weight:300;vertical-align:top;}
+    .spec-table td:first-child{font-family:var(--sans);font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);width:9rem;padding-right:2rem;padding-top:1.1rem;}
+    .spec-table td:last-child{color:var(--fg-mid);line-height:1.6;}
 
-      .next-project {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        gap: 2rem;
-        padding: 5rem var(--gutter);
-        border-top: 1px solid #1a1a1a;
-      }
-      .next-project__label {
-        font-family: var(--sans);
-        font-size: 0.62rem;
-        font-weight: 700;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
-        color: var(--fg-dim);
-        margin-bottom: 0.8rem;
-      }
-      .next-project__title {
-        font-family: var(--serif);
-        font-size: clamp(1.8rem, 3.5vw, 3.2rem);
-        font-weight: 300;
-        color: var(--fg);
-        text-decoration: none;
-        display: block;
-        transition: color var(--fast);
-      }
-      .next-project__title em {
-        font-style: italic;
-        color: var(--accent);
-      }
-      .next-project__title:hover {
-        color: var(--fg-mid);
-      }
-      .next-project__arrow {
-        font-size: 3rem;
-        color: var(--fg-dim);
-        text-decoration: none;
-        transition:
-          color var(--fast),
-          transform var(--fast);
-      }
-      .next-project__arrow:hover {
-        color: var(--accent);
-        transform: translateX(8px);
-      }
+    .next-project{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:2rem;padding:5rem var(--gutter);border-top:1px solid #1a1a1a;}
+    .next-project__label{font-family:var(--sans);font-size:.62rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--fg-dim);margin-bottom:.8rem;}
+    .next-project__title{font-family:var(--serif);font-size:clamp(1.8rem,3.5vw,3.2rem);font-weight:300;color:var(--fg);text-decoration:none;display:block;transition:color var(--fast);}
+    .next-project__title em{font-style:italic;color:var(--accent);}
+    .next-project__title:hover{color:var(--fg-mid);}
+    .next-project__arrow{font-size:3rem;color:var(--fg-dim);text-decoration:none;transition:color var(--fast),transform var(--fast);}
+    .next-project__arrow:hover{color:var(--accent);transform:translateX(8px);}
 
-      @keyframes fadeUp {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-      @media (max-width: 768px) {
-        body {
-          cursor: auto;
-        }
-        .cursor,
-        .cursor-icon {
-          display: none;
-        }
-        .hero__content {
-          padding: 4rem 1.4rem 3rem;
-        }
-        .two-col {
-          grid-template-columns: 1fr;
-          gap: 2.5rem;
-        }
-        .section-label {
-          position: static;
-        }
-        .case-section {
-          padding: 4rem 1.4rem;
-        }
-        .img-grid--2 {
-          grid-template-columns: 1fr;
-        }
-        .nav__links {
-          gap: 1.2rem;
-        }
-      }
-      @media (max-width: 480px) {
-        nav {
-          padding: 1.2rem 1rem;
-        }
-        .nav__links a {
-          font-size: 0.56rem;
-          letter-spacing: 0.1em;
-        }
-      }
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+    @media(max-width:768px){
+      body{cursor:auto;}.cursor,.cursor-icon{display:none;}
+      .hero__content{padding:4rem 1.4rem 3rem;}
+      .two-col{grid-template-columns:1fr;gap:2.5rem;}
+      .section-label{position:static;}
+      .case-section{padding:4rem 1.4rem;}
+      .img-grid--2{grid-template-columns:1fr;}
+      .nav__links{gap:1.2rem;}
+    }
+    @media(max-width:480px){nav{padding:1.2rem 1rem;}.nav__links a{font-size:.56rem;letter-spacing:.1em;}}
 
-      .footer-nav {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: space-between;
-        padding: 2.8rem var(--gutter) 3.5rem;
-        gap: 1rem;
-        border-top: 1px solid #1a1a1a;
-      }
-      .footer-nav__left {
-        display: flex;
-        align-items: center;
-        gap: 2.5rem;
-        flex-wrap: wrap;
-      }
-      .footer-nav a {
-        font-family: var(--sans);
-        font-size: 0.7rem;
-        font-weight: 500;
-        letter-spacing: 0.16em;
-        text-transform: uppercase;
-        text-decoration: none;
-        color: var(--fg-dim);
-        position: relative;
-        transition: color var(--fast);
-      }
-      .footer-nav a::after {
-        content: "";
-        position: absolute;
-        bottom: -3px;
-        left: 0;
-        width: 0;
-        height: 1px;
-        background: var(--accent);
-        transition: width var(--fast);
-      }
-      .footer-nav a:hover {
-        color: var(--fg);
-      }
-      .footer-nav a:hover::after {
-        width: 100%;
-      }
-      .footer-nav__all {
-        font-family: var(--serif);
-        font-style: italic;
-        font-size: 1rem;
-        color: var(--fg-dim) !important;
-        letter-spacing: 0.02em !important;
-      }
-      .footer-nav__all:hover {
-        color: var(--fg) !important;
-      }
-      .divider {
-        width: 1px;
-        height: 14px;
-        background: #333;
-        flex-shrink: 0;
-      }
+    .footer-nav { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; padding: 2.8rem var(--gutter) 3.5rem; gap: 1rem; border-top: 1px solid #1a1a1a; }
+    .footer-nav__left { display: flex; align-items: center; gap: 2.5rem; flex-wrap: wrap; }
+    .footer-nav a { font-family: var(--sans); font-size: .7rem; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; text-decoration: none; color: var(--fg-dim); position: relative; transition: color var(--fast); }
+    .footer-nav a::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 1px; background: var(--accent); transition: width var(--fast); }
+    .footer-nav a:hover { color: var(--fg); }
+    .footer-nav a:hover::after { width: 100%; }
+    .footer-nav__all { font-family: var(--serif); font-style: italic; font-size: 1rem; color: var(--fg-dim) !important; letter-spacing: .02em !important; }
+    .footer-nav__all:hover { color: var(--fg) !important; }
+    .divider { width: 1px; height: 14px; background: #333; flex-shrink: 0; }
 
-      /* COMPACT QUICK-PROJECT FORMAT */
-      .quick {
-        padding: 6rem var(--gutter) 4rem;
-        max-width: 1200px;
-        margin: 0 auto;
-      }
-      .quick__eyebrow {
-        font-family: var(--sans);
-        font-size: 0.62rem;
-        font-weight: 700;
-        letter-spacing: 0.22em;
-        text-transform: uppercase;
-        color: var(--accent);
-        margin-bottom: 1.6rem;
-        display: flex;
-        align-items: center;
-        gap: 0.8rem;
-      }
-      .quick__eyebrow::before {
-        content: "";
-        display: block;
-        width: 1.5rem;
-        height: 1px;
-        background: var(--accent);
-      }
-      .quick__title {
-        font-family: var(--serif);
-        font-size: clamp(2.6rem, 7vw, 5.2rem);
-        font-weight: 300;
-        line-height: 0.95;
-        letter-spacing: -0.005em;
-      }
-      .quick__title em {
-        font-style: italic;
-        color: var(--accent);
-      }
-      .quick__sub {
-        margin-top: 1.4rem;
-        font-family: var(--serif);
-        font-style: italic;
-        font-size: clamp(1rem, 1.6vw, 1.2rem);
-        color: rgba(237, 233, 225, 0.7);
-        max-width: 560px;
-        line-height: 1.5;
-      }
-      .quick__placeholder {
-        margin: 3rem 0;
-        width: 100%;
-        aspect-ratio: 16/9;
-        border: 1px dashed rgba(237, 233, 225, 0.18);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: rgba(255, 255, 255, 0.015);
-        border-radius: 2px;
-      }
-      .quick__placeholder-label {
-        font-family: var(--sans);
-        font-size: 0.58rem;
-        font-weight: 700;
-        letter-spacing: 0.22em;
-        text-transform: uppercase;
-        color: var(--fg-dim);
-      }
-      .quick__meta {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 2.5rem;
-        padding: 2rem 0;
-        border-top: 1px solid #1a1a1a;
-        border-bottom: 1px solid #1a1a1a;
-        margin-bottom: 2.5rem;
-      }
-      .quick__meta-item__label {
-        font-family: var(--sans);
-        font-size: 0.56rem;
-        font-weight: 700;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
-        color: var(--fg-dim);
-        margin-bottom: 0.4rem;
-      }
-      .quick__meta-item__value {
-        font-family: var(--body);
-        font-size: 0.85rem;
-        color: var(--fg);
-        font-weight: 300;
-      }
-      .quick__deliverables {
-        list-style: none;
-        padding: 0;
-        margin: 0 0 2.4rem;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 1.4rem;
-      }
-      .quick__deliverables li {
-        font-family: var(--body);
-        font-size: 0.9rem;
-        color: var(--fg-mid);
-        font-weight: 300;
-        padding-left: 1rem;
-        position: relative;
-      }
-      .quick__deliverables li::before {
-        content: "";
-        position: absolute;
-        left: 0;
-        top: 0.65em;
-        width: 4px;
-        height: 4px;
-        background: var(--accent);
-        border-radius: 50%;
-      }
-      .quick__deliverables li strong {
-        display: block;
-        color: var(--fg);
-        font-weight: 500;
-        margin-bottom: 0.15rem;
-      }
-      .quick__outcome {
-        font-family: var(--serif);
-        font-style: italic;
-        font-size: clamp(1.05rem, 1.8vw, 1.35rem);
-        color: var(--fg);
-        line-height: 1.5;
-        margin-bottom: 1.2rem;
-      }
-      .quick__cta {
-        font-family: var(--sans);
-        font-size: 0.68rem;
-        font-weight: 700;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
-        color: var(--fg-dim);
-      }
-      @media (max-width: 768px) {
-        .quick__meta {
-          grid-template-columns: 1fr;
-          gap: 1.4rem;
-        }
-        .quick__deliverables {
-          grid-template-columns: 1fr;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <div class="cursor" id="cursor"></div>
-    <div class="cursor-icon" id="cursorIcon"></div>
+    /* COMPACT QUICK-PROJECT FORMAT */
+    .quick { padding: 6rem var(--gutter) 4rem; max-width: 1200px; margin: 0 auto; }
+    .quick__eyebrow { font-family: var(--sans); font-size: .62rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.6rem; display: flex; align-items: center; gap: .8rem; }
+    .quick__eyebrow::before { content: ''; display: block; width: 1.5rem; height: 1px; background: var(--accent); }
+    .quick__title { font-family: var(--serif); font-size: clamp(2.6rem, 7vw, 5.2rem); font-weight: 300; line-height: .95; letter-spacing: -.005em; }
+    .quick__title em { font-style: italic; color: var(--accent); }
+    .quick__sub { margin-top: 1.4rem; font-family: var(--serif); font-style: italic; font-size: clamp(1rem, 1.6vw, 1.2rem); color: rgba(237,233,225,.7); max-width: 560px; line-height: 1.5; }
+    .quick__placeholder { margin: 3rem 0; width: 100%; aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; background-color: rgba(255,255,255,.015); background-size: cover; background-position: center; background-repeat: no-repeat; border-radius: 2px; }
+    /* Dashed border only when no background-image set */
+    .quick__placeholder:not([style*="background-image"]) { border: 1px dashed rgba(237,233,225,.18); }
+    .quick__placeholder-label { font-family: var(--sans); font-size: .58rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--fg-dim); }
+    .quick__meta { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5rem; padding: 2rem 0; border-top: 1px solid #1a1a1a; border-bottom: 1px solid #1a1a1a; margin-bottom: 2.5rem; }
+    .quick__meta-item__label { font-family: var(--sans); font-size: .56rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--fg-dim); margin-bottom: .4rem; }
+    .quick__meta-item__value { font-family: var(--body); font-size: .85rem; color: var(--fg); font-weight: 300; }
+    .quick__deliverables { list-style: none; padding: 0; margin: 0 0 2.4rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; }
+    .quick__deliverables li { font-family: var(--body); font-size: .9rem; color: var(--fg-mid); font-weight: 300; padding-left: 1rem; position: relative; }
+    .quick__deliverables li::before { content: ''; position: absolute; left: 0; top: .65em; width: 4px; height: 4px; background: var(--accent); border-radius: 50%; }
+    .quick__deliverables li strong { display: block; color: var(--fg); font-weight: 500; margin-bottom: .15rem; }
+    .quick__outcome { font-family: var(--serif); font-style: italic; font-size: clamp(1.05rem, 1.8vw, 1.35rem); color: var(--fg); line-height: 1.5; margin-bottom: 1.2rem; }
+    .quick__cta { font-family: var(--sans); font-size: .68rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--fg-dim); }
+    @media (max-width: 768px) {
+      .quick__meta { grid-template-columns: 1fr; gap: 1.4rem; }
+      .quick__deliverables { grid-template-columns: 1fr; }
+    }
 
-    <nav>
-      <a href="index.html" class="nav__home">Sherjeel <em>Hussain</em></a>
-      <div style="display: flex; align-items: center; gap: 3rem">
-        <a href="digital.html" class="nav__back">Digital</a>
-        <div class="nav__links">
-          <a href="digital.html" data-cursor="monitor">Digital</a>
-          <a href="craft.html" data-cursor="pot">Craft</a>
-          <a href="about.html">About</a>
-          <a href="contact.html">Contact</a>
-        </div>
-      </div>
-    </nav>
+    /* SIGNAGE SECTION */
+    .signage { padding: 4rem var(--gutter) 6rem; max-width: 1200px; margin: 0 auto; border-top: 1px solid #1a1a1a; }
+    .signage__label { font-family: var(--sans); font-size: .62rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.4rem; display: flex; align-items: center; gap: .8rem; }
+    .signage__label::before { content: ''; display: block; width: 1.5rem; height: 1px; background: var(--accent); }
+    .signage__title { font-family: var(--serif); font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 300; line-height: 1.1; letter-spacing: -.005em; margin-bottom: 1.6rem; }
+    .signage__title em { font-style: italic; color: var(--accent); }
+    .signage__intro { font-family: var(--body); font-size: .92rem; font-weight: 300; color: var(--fg-mid); line-height: 1.75; max-width: 640px; margin-bottom: 3rem; }
+    .signage__intro strong { color: var(--fg); font-weight: 500; }
+    .signage__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.6rem; margin-bottom: 1.6rem; }
+    .signage__slot { aspect-ratio: 4/3; border-radius: 2px; background-color: rgba(255,255,255,.015); background-size: cover; background-position: center; background-repeat: no-repeat; }
+    /* Dashed border only on truly empty slots — i.e. no background-image set inline */
+    .signage__slot:not([style*="background-image"]) { border: 1px dashed rgba(237,233,225,.18); }
+    .signage__slot--wide { grid-column: 1 / -1; aspect-ratio: 21/9; }
+    @media (max-width: 768px) {
+      .signage__grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
 
-    <main class="quick">
-      <p class="quick__eyebrow">Quick Project · 2024</p>
-      <h1 class="quick__title">Westgarth <em>Auto</em></h1>
-      <p class="quick__sub">
-        Website and print for an MOT and repairs garage in Dalgety Bay, Fife.
-        Brief was small. Delivery had to be tight.
-      </p>
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-icon" id="cursorIcon"></div>
 
-      <div
-        class="quick__placeholder"
-        role="img"
-        aria-label="Hero image placeholder — Westgarth Auto site or print collateral, to be supplied"
-      >
-        <img
-          src="./imgs-digital/Westgarth/Westgarth/iPhone Mockup, Perspective.png"
-          alt=""
-          srcset=""
-        />
-      </div>
-
-      <div class="quick__meta">
-        <div>
-          <p class="quick__meta-item__label">Client</p>
-          <p class="quick__meta-item__value">Westgarth Auto</p>
-        </div>
-        <div>
-          <p class="quick__meta-item__label">Sector</p>
-          <p class="quick__meta-item__value">
-            MOT &amp; Repairs &mdash; Dalgety Bay, Fife
-          </p>
-        </div>
-        <div>
-          <p class="quick__meta-item__label">Year</p>
-          <p class="quick__meta-item__value">2024</p>
-        </div>
-      </div>
-
-      <ul class="quick__deliverables">
-        <li>
-          <strong>Website Design</strong>Services, booking prompt, contact.
-        </li>
-        <li><strong>Website Build</strong>Fully coded, mobile-responsive.</li>
-        <li>
-          <strong>Print / Stationery</strong>Business cards and letterhead,
-          print-ready.
-        </li>
-      </ul>
-
-      <p class="quick__outcome">
-        Live and trading. Local search presence established.
-      </p>
-      <p class="quick__cta">Live site available on request</p>
-    </main>
-
-    <div class="next-project">
-      <div>
-        <p class="next-project__label">Back to</p>
-        <a href="digital.html" class="next-project__title"
-          >Digital &amp; <em>Brand</em></a
-        >
-      </div>
-      <a href="digital.html" class="next-project__arrow">→</a>
-    </div>
-
-    <footer class="footer-nav">
-      <div class="footer-nav__left">
-        <a href="work.html" class="footer-nav__all">View all work &nbsp;↗</a>
-        <div class="divider"></div>
-        <a href="craft.html">Craft</a>
-        <a href="digital.html">Digital</a>
-        <a href="./SideQuests.html">Side Quests</a>
+  <nav>
+    <a href="index.html" class="nav__home">Sherjeel <em>Hussain</em></a>
+    <div style="display:flex;align-items:center;gap:3rem;">
+      <a href="digital.html" class="nav__back">Digital</a>
+      <div class="nav__links">
+        <a href="digital.html" data-cursor="monitor">Digital</a>
+        <a href="craft.html" data-cursor="pot">Craft</a>
         <a href="about.html">About</a>
         <a href="contact.html">Contact</a>
       </div>
-      <div class="footer-nav__right">
-        <a
-          href="https://www.linkedin.com/in/sherjeel-hussain-0652431b9/"
-          target="_blank"
-          rel="noopener"
-          >LinkedIn</a
-        >
-        &nbsp;&nbsp;
-        <a
-          href="https://www.instagram.com/sherjeel_h27_design_/"
-          target="_blank"
-          rel="noopener"
-          >Instagram</a
-        >
-      </div>
-    </footer>
+    </div>
+  </nav>
+
+  <main class="quick">
+    <p class="quick__eyebrow">Quick Project · 2024</p>
+    <h1 class="quick__title">Westgarth <em>Auto</em></h1>
+    <p class="quick__sub">Website and print for an MOT and repairs garage in Dalgety Bay, Fife. Brief was small. Delivery had to be tight.</p>
+
+    <!-- PLACEHOLDER: Westgarth hero image (16:9, dashed border, no visible text) -->
+    <div class="quick__placeholder" role="img" aria-label="Westgarth Auto hero image — placeholder pending supply"></div>
+
+    <div class="quick__meta">
+      <div><p class="quick__meta-item__label">Client</p><p class="quick__meta-item__value">Westgarth Auto</p></div>
+      <div><p class="quick__meta-item__label">Sector</p><p class="quick__meta-item__value">MOT &amp; Repairs &mdash; Dalgety Bay, Fife</p></div>
+      <div><p class="quick__meta-item__label">Year</p><p class="quick__meta-item__value">2024</p></div>
+    </div>
+
+    <ul class="quick__deliverables">
+      <li><strong>Website Design</strong>Services, booking prompt, contact.</li>
+      <li><strong>Website Build</strong>Fully coded, mobile-responsive.</li>
+      <li><strong>Print / Stationery</strong>Business cards and letterhead, print-ready.</li>
+    </ul>
+
+    <p class="quick__outcome">Live and trading. Local search presence established.</p>
+    <p class="quick__cta">Live site available on request</p>
+  </main>
+
+  <!-- ─── SIGNAGE DESIGN & INSTALLATION ─────────────────────── -->
+  <section class="signage">
+    <p class="signage__label">Beyond the Site</p>
+    <h2 class="signage__title">Signage Design <em>&amp; Installation</em></h2>
+    <p class="signage__intro">
+      Brand carried off-screen and onto the building. <strong>Designed the shopfront treatment, prepared production files, and oversaw the install on-site.</strong> The site is one touchpoint; the sign is the one that brings customers in.
+    </p>
+
+    <div class="signage__grid">
+      <div class="signage__slot signage__slot--wide" role="img" aria-label="Westgarth Auto shopfront signage installed and trading on the building" style="background-image:url('./imgs-digital/Westgarth/Signage.webp');"></div>
+
+      <div class="signage__slot signage__slot--wide" role="img" aria-label="Westgarth Auto signage detail — design proof or installation close-up" style="background-image:url('./imgs-digital/Westgarth/SIGNAGE%201.webp');"></div>
+    </div>
+  </section>
 
     <script>
       const cursor = document.getElementById("cursor"),
