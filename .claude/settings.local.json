@@ -1,7 +1,18 @@
 {
   "permissions": {
     "allow": [
-      "Bash(ls \"C:\\\\Users\\\\Sherj\\\\.claude\\\\projects\\\\D--Webpage-Directory-Portfolio-Website-REPO-version-3-0\\\\memory\\\\\" 2>&1)"
+      "Bash(ls \"C:\\\\Users\\\\Sherj\\\\.claude\\\\projects\\\\D--Webpage-Directory-Portfolio-Website-REPO-version-3-0\\\\memory\\\\\" 2>&1)",
+      "Bash(git merge *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(gh pr *)",
+      "Bash(gh api *)",
+      "Bash(git fetch *)",
+      "Bash(find \"/d/Webpage Directory/Portfolio Website REPO/version 3.0/dist/imgs-expo/BLEND\" \"/d/Webpage Directory/Portfolio Website REPO/version 3.0/dist/imgs-digital/Westgarth\" -iname \"*.webp\" 2>&1 | head -30)",
+      "Bash(find \"/d/Webpage Directory/Portfolio Website REPO/version 3.0/dist/imgs-digital/Westgarth\" -iname \"*.webp\" 2>&1)",
+      "Bash(cp \"/d/Webpage Directory/Portfolio Website REPO/version 3.0/dist/imgs-digital/Westgarth/\"*.webp dist/imgs-digital/Westgarth/)",
+      "Bash(cp \"/d/Webpage Directory/Portfolio Website REPO/version 3.0/dist/imgs-digital/Westgarth/Westgarth/\"*.webp dist/imgs-digital/Westgarth/Westgarth/)",
+      "Bash(git add *)"
     ]
   }
 }
