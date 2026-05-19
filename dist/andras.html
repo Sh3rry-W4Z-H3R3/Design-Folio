@@ -468,6 +468,41 @@
       .origin-panel__body p + p {
         margin-top: 1em;
       }
+      /* STAT ROW */
+      .stat-row {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2px;
+      }
+      .stat-item {
+        background: #0e0e0e;
+        padding: 2.5rem 2rem;
+        border-top: 2px solid transparent;
+        transition: border-color var(--fast);
+      }
+      .stat-item:hover {
+        border-top-color: var(--accent);
+      }
+      .stat-item__num {
+        font-family: var(--serif);
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        font-weight: 300;
+        line-height: 1;
+        color: var(--fg);
+        margin-bottom: 0.5rem;
+      }
+      .stat-item__num em {
+        font-style: italic;
+        color: var(--accent);
+      }
+      .stat-item__label {
+        font-family: var(--sans);
+        font-size: 0.58rem;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--fg-dim);
+      }
 
       /* MARK SPLIT */
       .mark-split {
@@ -777,6 +812,11 @@
         color: var(--accent);
         transform: translateX(8px);
       }
+
+      .live-page-link {
+        text-decoration: none;
+        color: var(--accent);
+      }
       /* ─── FOOTER LINKS ───────────────────────────────────── */
       .footer-nav {
         display: flex;
@@ -953,12 +993,12 @@
       <div class="hero__img"></div>
       <div class="hero__content">
         <p class="hero__eyebrow">
-          Brand Identity · Shopify · Print &amp; Signage — 2024
+          Brand Identity · Web Design &amp; Development · Shopify · Print 2025
         </p>
         <h1 class="hero__title">Andra's Garden<br /><em>Heaven</em></h1>
         <p class="hero__subtitle">
           A garden furniture retailer named in honour of a friend who helped
-          build something before he was gone. The brand had to carry that
+          build something before he was gone. The brand had to carry that homage
           without ever being heavy.
         </p>
       </div>
@@ -1004,12 +1044,11 @@
         </h2>
         <p class="narrative-card__body">
           Andra's Garden Heaven is named in memory of a friend — a man who
-          helped the founders build their early ventures before he passed. The
-          name wasn't a marketing decision. It was a memorial and an intention.
+          helped the founders build their early ventures (and garden) before he
+          passed. The name was not a marketing decision. It was a memorial from
+          the client's family to a dear friend the considered part of theirs.
           That origin story meant every design decision carried unusual weight:
-          the brand needed warmth and optimism without sentimentality. Growth
-          without grief. The brief wasn't just about visual identity — it was
-          about holding a story without suffocating it.
+          the brand needed warmth and optimism without sentimentality.
         </p>
       </div>
       <div class="narrative-card">
@@ -1019,11 +1058,11 @@
         </h2>
         <p class="narrative-card__body">
           The logo is structural. A and G, overlaid and resolved, naturally form
-          a tree trunk — the vertical stroke of the A becoming the trunk, the
-          curve of the G forming the canopy line. Roots at the base. It reads as
-          a tree before it reads as letterforms. Rooted. Alive. Reaching upward.
-          Those three qualities were the brief in everything but name, and the
-          mark delivers all three without explaining itself.
+          a tree trunk. The vertical strokes of the letter forms and canopy at
+          the top with roots at the base. It reads as a tree before it reads as
+          letterforms. Rooted. Alive. Reaching upward. Those three qualities
+          were the brief in everything but name, and the mark delivers all three
+          without explaining itself.
         </p>
       </div>
       <div class="narrative-card">
@@ -1032,10 +1071,10 @@
           Make it not look<br /><em>like Shopify.</em>
         </h2>
         <p class="narrative-card__body">
-          The platform choice was Shopify — driven by the client's need to
-          manage inventory without a developer on call. The design challenge was
-          to make it not look like Shopify. Garden furniture retail online has a
-          specific problem: scale and context. A chair against a white
+          The platform choice was Shopify, driven by the client's need to manage
+          e-commerce inventory without a developer on call. The design challenge
+          was to make it not look like Shopify. Garden furniture retail online
+          has a specific problem: scale and context. A chair against a white
           background tells you nothing about whether it'll look right in a
           garden. The layout was built around lifestyle imagery — pieces in
           situ, in light, in use. The mobile experience was prioritised
@@ -1048,12 +1087,19 @@
           Live, trading,<br /><em>client-managed.</em>
         </h2>
         <p class="narrative-card__body">
-          Full brand identity, Shopify store build, print materials, and signage
-          — all delivered and live. Full client training on Shopify admin
-          completed on launch day. The store is client-managed from day one.
-          Brand collateral consistent across digital and physical. The mark the
-          founders recognised immediately is now on every touchpoint. Live at
-          andrasgardenheaven.uk.
+          Full brand identity, Shopify store build, print materials, and trade
+          show signage — all delivered and live. Full client training on Shopify
+          admin completed on launch day. The store is client-managed from day
+          one. Brand collateral consistent across digital and physical. The mark
+          the founders recognised immediately is now on every touchpoint. Live
+          at
+          <a
+            href="https://andrasgardenheaven.uk"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="live-page-link"
+            >andrasgardenheaven.uk</a
+          >.
         </p>
       </div>
     </div>
@@ -1070,18 +1116,44 @@
         <div class="origin-panel__body">
           <p>
             Before this business existed, there was Andra — a dear friend of the
-            founders who helped them establish their own garden and early
-            ventures before he passed. The name Andra's Garden Heaven wasn't a
-            marketing decision. It was a memorial, and an intention: to sell
-            products that allow buyers to feel at peace in their own outdoor
-            space.
+            founders who helped them establish their own beautifulgarden and
+            early business ventures before he passed. The name Andra's Garden
+            Heaven was an homage to his legacy. It was a memorial of his kind
+            spirit and love for outdoors relaxing to sell products that allow
+            buyers to feel at peace in their own outdoor space.
           </p>
           <p>
-            That origin story shaped every design decision. The brand needed
-            warmth and optimism without sentimentality. Growth without grief. A
-            name with weight, worn lightly.
+            That origin story would go onto drive every design decision. The
+            brand needed warmth and optimism without being overly sentimental.
+            It needed to feel light and relaxing, but not twee.
           </p>
         </div>
+      </div>
+    </div>
+    <!-- STAT ROW -->
+
+    <div class="stat-row">
+      <div class="stat-item">
+        <p class="stat-item__num"><em>£7,500</em></p>
+        <p class="stat-item__label">Trade show sales across 2 events</p>
+        <p></p>
+      </div>
+      <div class="stat-item">
+        <p class="stat-item__num"><em>5</em></p>
+        <p class="stat-item__label">Retail Stockists secured in Scotland</p>
+      </div>
+      <div class="stat-item">
+        <p class="stat-item__num"><em>2 weeks</em></p>
+        <p class="stat-item__label">
+          End-to-End Brand Development from Discovery to Delivery
+        </p>
+      </div>
+
+      <div class="stat-item">
+        <p class="stat-item__num"><em>120+</em></p>
+        <p class="stat-item__label">
+          Digital & Print Brand Assets elivered for launch
+        </p>
       </div>
     </div>
 
@@ -1098,7 +1170,7 @@
               can the path from interest to checkout be?</em
             >
             Garden furniture is a considered purchase, but it's increasingly
-            browsed on a phone while someone is physically standing in their
+            browsed on a phone while someone is physically standing in their own
             garden.
           </p>
           <p>
@@ -1162,17 +1234,15 @@
         </h2>
         <div class="mark-info__body">
           <p>
-            The logo is structural. The letterforms A and G, overlaid and
-            resolved, naturally form a tree trunk — the vertical stroke of the A
-            becoming the trunk, the curve of the G forming the canopy line.
-            Roots are drawn at the base. It reads as a tree before it reads as
-            letters.
+            The logo is structural. With a variable colour system, the mark is a
+            tree formed by the letters A and G overlaid and resolved. The
+            vertical strokes of the letterforms create a trunk, with canopy at
+            the top and roots at the base.
           </p>
           <p>
             Rooted. Alive. Reaching upward. Those three qualities were the brief
-            in everything but name — and the mark delivers all three without
-            explaining itself. The founders recognised it immediately, which is
-            usually the sign that a mark is working.
+            in everything but name. The founders recognised it immediately,
+            which is usually the sign that a mark is working.
           </p>
         </div>
       </div>
@@ -1219,10 +1289,11 @@
               </p>
               <p class="step__body">
                 Product catalogue, collections, checkout flow, and
-                brand-consistent theme customisation. The platform choice was
+                brand-consistent custom theme build. The platform choice was
                 driven by the client's need to manage inventory without a
                 developer on call. Shopify provides that capability; the job was
-                to make it not look like Shopify.
+                to make it not look like Shopify and feel more like a bespoke
+                brand experience.
               </p>
             </div>
           </div>
@@ -1234,9 +1305,8 @@
               <p class="step__body">
                 A chair photographed against a white background tells you very
                 little about whether it'll look right in a garden. The layout
-                was structured to prioritise lifestyle imagery — pieces shown in
-                situ, in light, in use — over clinical product shots. Scale and
-                context were the design problems; the grid was the solution.
+                was structured to prioritise lifestyle imagery, pieces shown in
+                situ, in light, and in use over clinical product shots.
               </p>
             </div>
           </div>
@@ -1248,11 +1318,13 @@
                 Mobile-first — <em>short purchase path</em>
               </p>
               <p class="step__body">
-                Most garden furniture browsing happens on a phone, often while
+                With the rise in mobile e-commerce browsing happening while
                 someone is physically in their outdoor space deciding what they
-                want. The mobile layout is clean, fast, and makes the purchase
-                path as short as possible. Every extra tap is a dropped
-                conversion.
+                want, it was key to optimise the mobile purchasing experience.
+                The mobile layout is clean, fast, and makes the purchase path as
+                short as possible. Every extra tap is a dropped conversion.
+                Within three taps, a buyer can go from product discovery to
+                checkout on mobile.
               </p>
             </div>
           </div>
@@ -1399,13 +1471,13 @@
             <td>
               Logo, wordmark, brandmark variants. Colour palette grounded in
               garden and natural materials. Delivered as SVG, PNG, and
-              print-ready PDF.
+              print-ready PDFs and AI files.
             </td>
           </tr>
           <tr>
             <td>Platform</td>
             <td>
-              Shopify — full store build. Theme customisation, product upload,
+              Shopify — full store build. Custom Theme build, product upload,
               collection architecture, checkout configuration.
             </td>
           </tr>
@@ -1419,7 +1491,8 @@
           <tr>
             <td>Print</td>
             <td>
-              Signage system and print materials. Consistent with digital
+              Signage system and print materials. Trade Show assets, business
+              stationery and social media templates. Consistent with digital
               identity across all touchpoints.
             </td>
           </tr>
