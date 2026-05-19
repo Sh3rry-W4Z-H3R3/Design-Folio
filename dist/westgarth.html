@@ -419,10 +419,6 @@
         color: var(--fg-mid);
         line-height: 1.6;
       }
-      .signage__slot--detail {
-        aspect-ratio: auto !important; /* Let the image dictate the height */
-        background: none !important;
-      }
       .next-project {
         display: flex;
         align-items: center;
@@ -791,23 +787,26 @@
         grid-template-columns: repeat(2, 1fr);
         gap: 1.6rem;
         margin-bottom: 1.6rem;
+        align-items: start;
       }
+      /* Slot is just a wrapper — image inside dictates the height */
       .signage__slot {
-        aspect-ratio: 4/3;
         border-radius: 2px;
-        background-color: rgba(255, 255, 255, 0.015);
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.015);
       }
-      /* Dashed border only on truly empty slots — i.e. no background-image set inline */
-      .signage__slot:not([style*="background-image"]) {
-        border: 1px dashed rgba(237, 233, 225, 0.18);
+      .signage__slot img {
+        width: 100%;
+        height: auto;
+        display: block;
       }
       .signage__slot--wide {
         grid-column: 1 / -1;
-        /* aspect-ratio: 21/9; */
-        object-fit: cover;
+      }
+      /* Dashed placeholder treatment kicks in only when slot is genuinely empty */
+      .signage__slot:empty {
+        aspect-ratio: 4/3;
+        border: 1px dashed rgba(237, 233, 225, 0.18);
       }
       .btn-live {
         display: inline-flex;
@@ -932,29 +931,17 @@
       </p>
 
       <div class="signage__grid">
-        <div class="signage__slot signage__slot--wide signage__slot--detail">
+        <div class="signage__slot signage__slot--wide">
           <img
             src="./imgs-digital/Westgarth/GarageFull.webp"
             alt="Westgarth Auto shopfront signage installed and trading on the building"
-            style="
-              width: 100%;
-              height: auto;
-              display: block;
-              border-radius: 2px;
-            "
           />
         </div>
 
-        <div class="signage__slot signage__slot--detail">
+        <div class="signage__slot">
           <img
             src="./imgs-digital/Westgarth/Signage.webp"
             alt="Westgarth Auto signage design detail proof"
-            style="
-              width: 100%;
-              height: auto;
-              display: block;
-              border-radius: 2px;
-            "
           />
         </div>
       </div>
