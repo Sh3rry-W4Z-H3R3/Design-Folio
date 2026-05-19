@@ -82,6 +82,7 @@
         --fg-dim: #7a7a7a;
         --fg-mid: #999;
         --accent: #e8547a;
+        --accent-pink-hover: #d43b62;
         --accent-2: #6dbf9e;
         --serif: "Cormorant", Georgia, serif;
         --sans: "Syne", sans-serif;
@@ -418,7 +419,10 @@
         color: var(--fg-mid);
         line-height: 1.6;
       }
-
+      .signage__slot--detail {
+        aspect-ratio: auto !important; /* Let the image dictate the height */
+        background: none !important;
+      }
       .next-project {
         display: flex;
         align-items: center;
@@ -802,7 +806,31 @@
       }
       .signage__slot--wide {
         grid-column: 1 / -1;
-        aspect-ratio: 21/9;
+        /* aspect-ratio: 21/9; */
+        object-fit: cover;
+      }
+      .btn-live {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        font-family: var(--sans);
+        font-size: 0.65rem;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        text-decoration: none;
+        color: var(--accent-2);
+        background: var(--accent);
+        padding: 1rem 2rem;
+        transition:
+          background var(--fast),
+          gap var(--fast);
+        cursor: none;
+        border-radius: 1em;
+      }
+      .btn-live:hover {
+        background: var(--accent-pink-hover);
+        box-shadow: var(--fg) 0 0 0 2px;
       }
       @media (max-width: 768px) {
         .signage__grid {
@@ -830,19 +858,20 @@
     </nav>
 
     <main class="quick">
-      <p class="quick__eyebrow">Quick Project · 2024</p>
-      <h1 class="quick__title">Westgarth <em>Auto</em></h1>
+      <p class="quick__eyebrow">Web Design + Development · Signage · 2024</p>
+      <h1 class="quick__title">Westgarth <em>Auto Services</em></h1>
       <p class="quick__sub">
         Website and print for an MOT and repairs garage in Dalgety Bay, Fife.
-        Brief was small. Delivery had to be tight.
+        Brief was short and simple. Modern website refresh and signage design to
+        match.
       </p>
 
-      <!-- PLACEHOLDER: Westgarth hero image (16:9, dashed border, no visible text) -->
-      <div
-        class="quick__placeholder"
-        role="img"
-        aria-label="Westgarth Auto hero image — placeholder pending supply"
-      ></div>
+      <img
+        src="./imgs-digital/Westgarth/Westgarth/IphoneScreens.webp"
+        alt="Westgarth Auto mobile screenshots — landing page with service and trust signals"
+        loading="eager"
+        style="width: 100%; height: auto; display: block"
+      />
 
       <div class="quick__meta">
         <div>
@@ -863,19 +892,29 @@
 
       <ul class="quick__deliverables">
         <li>
-          <strong>Website Design</strong>Services, booking prompt, contact.
+          <strong>Website Design</strong>Opening Times, services, booking
+          prompt, contact.
         </li>
-        <li><strong>Website Build</strong>Fully coded, mobile-responsive.</li>
         <li>
-          <strong>Print / Stationery</strong>Business cards and letterhead,
-          print-ready.
+          <strong>Website Build</strong>Fully coded, mobile-responsive.
+          SEO-optimized.
+        </li>
+        <li>
+          <strong>Print</strong>Signage and Wayfinding design to match the new
+          site.
         </li>
       </ul>
 
       <p class="quick__outcome">
         Live and trading. Local search presence established.
       </p>
-      <p class="quick__cta">Live site available on request</p>
+      <a
+        class="btn-live"
+        href="https://westgarthautoservices.co.uk/"
+        target="_blank"
+        rel="noopener noreferrer"
+        >View Live Site ↗</a
+      >
     </main>
 
     <!-- ─── SIGNAGE DESIGN & INSTALLATION ─────────────────────── -->
@@ -898,18 +937,23 @@
           role="img"
           aria-label="Westgarth Auto shopfront signage installed and trading on the building"
           style="
-            background-image: url(&quot;./imgs-digital/Westgarth/Signage.webp&quot;);
+            background-image: url(./imgs-digital/Westgarth/GarageFull.webp);
           "
         ></div>
 
-        <div
-          class="signage__slot signage__slot--wide"
-          role="img"
-          aria-label="Westgarth Auto signage detail — design proof or installation close-up"
-          style="
-            background-image: url(&quot;./imgs-digital/Westgarth/SIGNAGE%201.webp&quot;);
-          "
-        ></div>
+        <!-- Replace the second div with this -->
+        <div class="signage__slot signage__slot--detail">
+          <img
+            src="./imgs-digital/Westgarth/Signage.webp"
+            alt="Westgarth Auto signage design detail proof"
+            style="
+              width: 100%;
+              height: auto;
+              display: block;
+              border-radius: 2px;
+            "
+          />
+        </div>
       </div>
     </section>
 
@@ -925,9 +969,19 @@
         <a href="contact.html">Contact</a>
       </div>
       <div class="footer-nav__right">
-        <a href="https://www.linkedin.com/in/sherjeel-hussain-0652431b9/" target="_blank" rel="noopener">LinkedIn</a>
+        <a
+          href="https://www.linkedin.com/in/sherjeel-hussain-0652431b9/"
+          target="_blank"
+          rel="noopener"
+          >LinkedIn</a
+        >
         &nbsp;&nbsp;
-        <a href="https://www.instagram.com/sherjeel_h27_design_/" target="_blank" rel="noopener">Instagram</a>
+        <a
+          href="https://www.instagram.com/sherjeel_h27_design_/"
+          target="_blank"
+          rel="noopener"
+          >Instagram</a
+        >
       </div>
     </footer>
 
