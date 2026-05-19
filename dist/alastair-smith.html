@@ -696,7 +696,10 @@
         color: var(--fg-mid);
         line-height: 1.65;
       }
-
+      .live-page-link {
+        text-decoration: none;
+        color: var(--accent);
+      }
       /* PULL QUOTE */
       .pull-quote {
         padding: 6rem var(--gutter);
@@ -1034,11 +1037,10 @@
         <p class="narrative-card__body">
           The brief was clear on tone: the site had to feel like the ceramics.
           Warm without being folksy, considered without being clinical. The mark
-          — a pottery wheel rotated 45° to read as a Saltire — set that register
-          before a word of copy appeared. Everything else in the identity
-          followed from it: a dark chocolate primary colour pulled directly from
-          Alastair's fired clay surfaces, and typography that could carry both
-          maker's voice and commercial function.
+          set the tone. Everything else in the identity followed from it: a dark
+          chocolate primary colour pulled directly from Alastair's fired clay
+          surfaces, and typography that could carry both maker's voice and
+          commercial function.
         </p>
       </div>
       <div class="narrative-card">
@@ -1049,23 +1051,25 @@
         <p class="narrative-card__body">
           Five-page coded site, live. Identity delivered: logo, wordmark,
           brandmark variants, business cards. The Shopify store was built on the
-          development side but not activated due to a client payment dispute. A
-          working ceramicist now has a web presence that shows what the work is
+          development side but not activated at client's request. A working
+          ceramicist now has a web presence that reflects what the craft is
           worth.
         </p>
       </div>
     </div>
 
     <!-- STAT ROW -->
+
     <div class="stat-row">
-      <div class="stat-item">
-        <p class="stat-item__num"><em>5</em></p>
-        <p class="stat-item__label">Pages — fully coded</p>
-      </div>
       <div class="stat-item">
         <p class="stat-item__num"><em>250</em>+</p>
         <p class="stat-item__label">Product images — curated and edited</p>
       </div>
+      <div class="stat-item">
+        <p class="stat-item__num"><em>5</em></p>
+        <p class="stat-item__label">Pages — hand coded like pottery is</p>
+      </div>
+
       <div class="stat-item">
         <p class="stat-item__num"><em>4</em></p>
         <p class="stat-item__label">
@@ -1074,8 +1078,8 @@
         </p>
       </div>
       <div class="stat-item">
-        <p class="stat-item__num">&mdash;</p>
-        <p class="stat-item__label">Live site available on request</p>
+        <p class="stat-item__num">1</p>
+        <p class="stat-item__label">Live site</p>
       </div>
     </div>
 
@@ -1085,10 +1089,11 @@
         <p class="section-label">Design Process</p>
         <div class="body-text">
           <p>
-            Sketches first. The brief was specific — Scottish, ceramic, both at
-            once, neither announced — so the early exploration was a search for
-            a single structural device that could carry both readings without
-            explaining itself. Pages of marks before anything stuck.
+            Sketches first. The brief was specific — Scottish, ceramic,
+            engineered precison and handmade craft all at once. But don't be
+            literal. So the early exploration was a search for a single
+            structural device that could all these meanings without explaining
+            itself. Several pages of marks before anything stuck.
           </p>
           <p>
             From the mood board, the visual register was set: dark, considered,
@@ -1097,10 +1102,10 @@
             fed directly into the surface treatments used across the site.
           </p>
           <p>
-            Once the mark resolved, the system followed quickly — colour tokens,
-            type ramps, button states, info-card behaviours, navbar iterations.
-            Every component was iterated to a specification before being
-            implemented.
+            Once the logo mark was resolved, the system followed quickly —
+            colour tokens, type ramps, button states, info-card behaviours,
+            navbar iterations. Every component was iterated to a specification
+            before being implemented.
           </p>
         </div>
       </div>
@@ -1131,7 +1136,9 @@
           alt="Alastair Smith Ceramics colour collection — palette derived from fired clay surfaces"
           loading="lazy"
         />
-        <span class="img-slot__caption">Colour — pulled from the work</span>
+        <span class="img-slot__caption"
+          >Colour Variables — pulled from the work</span
+        >
       </div>
       <div class="img-slot">
         <img
@@ -1139,7 +1146,7 @@
           alt="Alastair Smith Ceramics colour shades — accessibility-tested ramps for each base colour"
           loading="lazy"
         />
-        <span class="img-slot__caption">Colour shades — accessible ramps</span>
+        <span class="img-slot__caption">Colour Shades — accessible ramps</span>
       </div>
     </div>
     <div class="img-grid img-grid--2" style="margin-bottom: 2px">
@@ -1167,7 +1174,7 @@
           alt="Info card components — hover and active state changes documented in the design system"
           loading="lazy"
         />
-        <span class="img-slot__caption">Info cards — state changes</span>
+        <span class="img-slot__caption">Info cards — hover state changes</span>
       </div>
       <div class="img-slot">
         <img
@@ -1176,7 +1183,7 @@
           loading="lazy"
         />
         <span class="img-slot__caption"
-          >Page sections — system composition</span
+          >Page sections — iterations of composition</span
         >
       </div>
     </div>
@@ -1281,7 +1288,7 @@
                 The homepage establishes the register: a ceramicist who takes
                 the work seriously. Hero photography, a single statement, and a
                 clear path to either the process or the shop. Nothing distracts
-                from the object.
+                from the object or the craft.
               </p>
             </div>
           </div>
@@ -1291,9 +1298,11 @@
             <div>
               <p class="step__title">The maker's <em>story</em></p>
               <p class="step__body">
-                Studio location, background, practice. Written to be read by
-                someone who hasn't decided yet. The about page is part of the
-                sales path even if it doesn't look like one.
+                Our world is increasingly visual, but the story still matters.
+                It can be the thing that turns a browser into a buyer.Studio
+                location, background, practice. Written to be read by someone
+                who hasn't decided yet. The about page is part of the sales path
+                even if it doesn't look like one.
               </p>
             </div>
           </div>
@@ -1306,7 +1315,7 @@
               </p>
               <p class="step__body">
                 Wood-firing and Raku are slow, skilled, physically demanding.
-                Showing the process isn't storytelling — it's price
+                Showing the process isn't just storytelling, it's price
                 justification. A piece through a 12-hour wood firing isn't
                 priced the same as factory ceramics. This page makes sure the
                 visitor understands why before they reach the shop. It's the
@@ -1322,10 +1331,11 @@
                 Filterable by type — <em>50+ images curated</em>
               </p>
               <p class="step__body">
-                Alastair's photography was excellent raw material. Over 50
-                product images curated and organised for web delivery. The grid
-                layout lets pieces breathe without becoming a catalogue.
-                Filterable by form — mugs, bowls, plates, specials.
+                Alastair's work was excellent raw material. Through SCM Design
+                Studio, I arranged a photoshoot by Aberdeen Beach for his works.
+                Over 250 product images taken, curated and organised for web
+                delivery. The grid layout lets pieces breathe without becoming a
+                catalogue. That would be for Shopify.
               </p>
             </div>
           </div>
@@ -1336,8 +1346,8 @@
               <p class="step__title">Shopify — linked, not <em>embedded</em></p>
               <p class="step__body">
                 The store sits as a linked destination rather than being
-                embedded in the site. That decision keeps the experience clean —
-                the site does the convincing, the store does the transaction.
+                embedded in the site. That decision keeps the experience clean.
+                The site does the convincing, the store handles the transaction.
               </p>
             </div>
           </div>
@@ -1361,7 +1371,7 @@
           alt="Alastair Smith — process photography, firing or throwing"
           loading="lazy"
         />
-        <span class="img-slot__caption">Process — wood &amp; gas firing</span>
+        <span class="img-slot__caption">Macro — glazes &amp; gas firing</span>
       </div>
     </div>
 
@@ -1452,14 +1462,20 @@
     <div class="notice">
       <span class="notice__icon">↗</span>
       <p class="notice__text">
-        <strong>Site is live.</strong> Live site available on request.
+        <strong>Site is live.</strong>
+        <a
+          class="live-page-link"
+          href="https://alastairsmithceramics.netlify.app/"
+          >Alastair-Smith.com</a
+        >
+        .
       </p>
     </div>
 
     <!-- PULL QUOTE -->
     <div class="pull-quote" style="margin-top: 2px">
       <blockquote>
-        The mark had to be Scottish and ceramic at the same time — without
+        The mark had to feel precise and soft at the same time — without
         <em>announcing</em> either one.
         <cite>— Design Rationale, Alastair Smith Ceramics, 2024</cite>
       </blockquote>
@@ -1495,8 +1511,8 @@
           <tr>
             <td>Gallery</td>
             <td>
-              Filterable by form type. 50+ product images curated and optimised
-              from client's photoshoot.
+              50+ product images curated and optimised from 250 piece
+              photoshoot.
             </td>
           </tr>
           <tr>
