@@ -385,6 +385,41 @@
         font-style: italic;
         color: var(--fg);
       }
+      /* STAT ROW */
+      .stat-row {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2px;
+      }
+      .stat-item {
+        background: #0e0e0e;
+        padding: 2.5rem 2rem;
+        border-top: 2px solid transparent;
+        transition: border-color var(--fast);
+      }
+      .stat-item:hover {
+        border-top-color: var(--accent);
+      }
+      .stat-item__num {
+        font-family: var(--serif);
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        font-weight: 300;
+        line-height: 1;
+        color: var(--fg);
+        margin-bottom: 0.5rem;
+      }
+      .stat-item__num em {
+        font-style: italic;
+        color: var(--accent);
+      }
+      .stat-item__label {
+        font-family: var(--sans);
+        font-size: 0.58rem;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--fg-dim);
+      }
 
       .img-full {
         width: 100%;
@@ -761,42 +796,71 @@
         <div class="body-text">
           <p>
             Clydeside Logistics is a Glasgow-based courier and logistics company
-            operating across Scotland. They came to SCM Design Studio with no
-            brand identity — just a name and a fleet. Everything needed to be
-            built from nothing: the mark, the system, the site, the stationery,
-            and the vehicle livery.
+            operating across Scotland and the United Kingdom. They came to SCM
+            Design Studio with no brand identity — just a name and a fleet of
+            vans. Everything needed to be built from nothing: the logomark, the
+            system, the site, the stationery, and the vehicle livery.
           </p>
           <p>
-            Logistics branding almost always lands in one of two failure modes.
-            <em>Corporate and forgettable</em> — the kind of navy and silver
+            Logistics branding almost always lands in one of two camps.
+            <em>Corporate and forgettable</em> - the kind of navy and silver
             identity that disappears into every other white-van operator. Or
             <em>aggressive and cheap</em> — sticker-pack fonts and clip-art
             lightning bolts. Clydeside needed a third option:
-            <strong>bold, confident, and specifically Scottish</strong>, without
-            being either pantomime or bland.
+            <strong>bold, and confident</strong>, without being either pantomime
+            or bland.
           </p>
           <p>
             The brief was also practical. A brand that lived on a van had to
             work at distance, at speed, in all weather. The mark needed to be
-            identifiable at 60mph before it was legible at 6 inches. That
-            constraint drove every decision.
+            identifiable at 60mph on the M8 before it was legible at 6 inches.
+            That constraint drove every decision.
           </p>
         </div>
+      </div>
+    </div>
+    <!-- STAT ROW -->
+
+    <div class="stat-row">
+      <div class="stat-item">
+        <p class="stat-item__num"><em>250</em>+</p>
+        <p class="stat-item__label">Product images — curated and edited</p>
+      </div>
+      <div class="stat-item">
+        <p class="stat-item__num"><em>5</em></p>
+        <p class="stat-item__label">Pages — hand coded like pottery is</p>
+      </div>
+
+      <div class="stat-item">
+        <p class="stat-item__num"><em>4</em></p>
+        <p class="stat-item__label">
+          Logo Mark Variants - Dark and Light Mode ready and flexible across
+          platforms
+        </p>
+      </div>
+      <div class="stat-item">
+        <p class="stat-item__num">1</p>
+        <p class="stat-item__label">Live site</p>
       </div>
     </div>
 
     <!-- FULL IMAGE -->
     <div
       class="img-full"
-      role="img"
-      aria-label="Clydeside Logistics website desktop layout — homepage"
       style="
-        aspect-ratio: 21/9;
-        background-image: url(&quot;./imgs-digital/Clydeside/Desktop.webp&quot;);
-        background-size: cover;
-        background-position: center;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       "
-    ></div>
+    >
+      <img
+        src="./imgs-digital/Clydeside/VanMockup.webp"
+        alt=""
+        style="width: 100vw; height: auto"
+      />
+    </div>
 
     <!-- THE MARK -->
     <div class="case-section">
@@ -804,24 +868,23 @@
         <p class="section-label">The Mark</p>
         <div class="body-text">
           <p>
-            The logo is built on diagonal momentum. The primary mark uses a bold
-            chevron-based geometry that reads
+            The logo is built on momentum. The primary logomark uses a bold
+            chevron-based geometry that reads as
             <strong>forward motion</strong> without relying on tired arrow or
             road iconography. It's the visual equivalent of a vehicle that
             hasn't started braking yet.
           </p>
           <p>
-            The energy is deliberate. Motorsport brands — F1 teams, rally
-            liveries, performance marques — use this vocabulary because it
-            works: <em>compressed shapes, high contrast, no softening</em>.
+            The energy is deliberate. Motorsport brands, F1 teams, rally
+            liveries, performance marques all use this vocabulary because it
+            works: <em>compressed shapes, high contrast, no softeness</em>.
             Applied to a Scottish courier company it communicates that this is
             an operation that takes its work seriously. Not aggressive.
-            Confident.
+            Confident. Quick, reliable, and professional. The mark is a promise
+            that the van will get your package there on time, every time.
           </p>
           <p>
-            The wordmark was set in a custom-weighted sans, tracked tight.
-            "CLYDESIDE" in all-caps, with "LOGISTICS" subordinate beneath. The
-            brand doesn't whisper its name.
+            The wordmark was set in a custom Futura STD font, tracked tight.
           </p>
         </div>
       </div>
@@ -889,7 +952,8 @@
           </h3>
           <p class="deliverable__body">
             Fully coded site. Services overview, contact, quote request.
-            Mobile-first, fast-loading, built for local search visibility.
+            Mobile-first, fast-loading, SEO-optimized for local search
+            visibility.
           </p>
         </div>
         <div class="deliverable">
@@ -934,7 +998,7 @@
         role="img"
         aria-label="Clydeside Logistics mobile site mocked up on iPhone 15 — homepage and menu"
         style="
-          background-image: url(&quot;./imgs-digital/Clydeside/iPhone%2015%20Mockup%2C%20Perspective%20-%20Homescreen%2BMobMenu.webp&quot;);
+          background-image: url(./imgs-digital/Clydeside/iPhoneHomescreen+MobMenu.webp);
         "
       ></div>
       <div
