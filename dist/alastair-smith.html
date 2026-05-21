@@ -155,9 +155,9 @@
       }
       .cursor-icon span {
         font-family: var(--sans);
-        font-size: 0.5rem;
+        font-size: var(--text-1);
         font-weight: 700;
-        letter-spacing: 0.15em;
+        letter-spacing: var(--ls-label);
         text-transform: uppercase;
         color: var(--accent);
         margin-top: 4px;
@@ -177,9 +177,9 @@
       }
       .nav__home {
         font-family: var(--serif);
-        font-size: 1.1rem;
+        font-size: var(--text-7);
         font-weight: 300;
-        letter-spacing: 0.06em;
+        letter-spacing: var(--ls-body);
         text-decoration: none;
         color: var(--fg);
       }
@@ -193,9 +193,9 @@
       }
       .nav__links a {
         font-family: var(--sans);
-        font-size: 0.65rem;
+        font-size: var(--text-2);
         font-weight: 700;
-        letter-spacing: 0.2em;
+        letter-spacing: var(--ls-track);
         text-transform: uppercase;
         text-decoration: none;
         color: var(--fg-dim);
@@ -220,9 +220,9 @@
       }
       .nav__back {
         font-family: var(--sans);
-        font-size: 0.62rem;
+        font-size: var(--text-2);
         font-weight: 700;
-        letter-spacing: 0.18em;
+        letter-spacing: var(--ls-track);
         text-transform: uppercase;
         text-decoration: none;
         color: var(--fg-dim);
@@ -269,9 +269,9 @@
       }
       .hero__eyebrow {
         font-family: var(--sans);
-        font-size: 0.62rem;
+        font-size: var(--text-2);
         font-weight: 700;
-        letter-spacing: 0.22em;
+        letter-spacing: var(--ls-eyebrow);
         text-transform: uppercase;
         color: var(--accent);
         margin-bottom: var(--space-5);
@@ -292,7 +292,7 @@
         font-family: var(--serif);
         font-size: clamp(3.5rem, 10vw, 9rem);
         font-weight: 300;
-        line-height: 0.9;
+        line-height: var(--lh-display);
         color: var(--fg);
         opacity: 0;
         animation: fadeUp 0.9s var(--ease) 0.2s forwards;
@@ -309,7 +309,7 @@
         font-weight: 300;
         color: rgba(237, 233, 225, 0.65);
         max-width: 580px;
-        line-height: 1.5;
+        line-height: var(--lh-snug);
         opacity: 0;
         animation: fadeUp 0.9s var(--ease) 0.3s forwards;
       }
@@ -326,16 +326,16 @@
       }
       .meta-item__label {
         font-family: var(--sans);
-        font-size: 0.56rem;
+        font-size: var(--text-1);
         font-weight: 700;
-        letter-spacing: 0.2em;
+        letter-spacing: var(--ls-track);
         text-transform: uppercase;
         color: rgba(237, 233, 225, 0.35);
         margin-bottom: var(--space-2);
       }
       .meta-item__value {
         font-family: var(--body);
-        font-size: 0.82rem;
+        font-size: var(--text-4);
         color: var(--fg);
         font-weight: 300;
       }
@@ -352,9 +352,9 @@
       }
       .section-label {
         font-family: var(--sans);
-        font-size: 0.62rem;
+        font-size: var(--text-2);
         font-weight: 700;
-        letter-spacing: 0.22em;
+        letter-spacing: var(--ls-eyebrow);
         text-transform: uppercase;
         color: var(--accent);
         position: sticky;
@@ -371,8 +371,8 @@
         background: var(--accent);
       }
       .body-text {
-        font-size: 0.92rem;
-        line-height: 1.95;
+        font-size: var(--text-5);
+        line-height: var(--lh-loose);
         color: var(--fg-mid);
         font-weight: 300;
         max-width: 640px;
@@ -409,9 +409,9 @@
       }
       .narrative-card__label {
         font-family: var(--sans);
-        font-size: 0.58rem;
+        font-size: var(--text-1);
         font-weight: 700;
-        letter-spacing: 0.2em;
+        letter-spacing: var(--ls-track);
         text-transform: uppercase;
         color: var(--accent);
         margin-bottom: var(--space-3);
@@ -420,7 +420,7 @@
         font-family: var(--serif);
         font-size: clamp(1.5rem, 2.2vw, 2.1rem);
         font-weight: 300;
-        line-height: 1.1;
+        line-height: var(--lh-tight);
         color: var(--fg);
         margin-bottom: var(--space-3);
       }
@@ -428,8 +428,8 @@
         font-style: italic;
       }
       .narrative-card__body {
-        font-size: 0.82rem;
-        line-height: 1.85;
+        font-size: var(--text-4);
+        line-height: var(--lh-loose);
         color: var(--fg-mid);
         font-weight: 300;
       }
@@ -468,9 +468,9 @@
       }
       .mark-info__label {
         font-family: var(--sans);
-        font-size: 0.58rem;
+        font-size: var(--text-1);
         font-weight: 700;
-        letter-spacing: 0.2em;
+        letter-spacing: var(--ls-track);
         text-transform: uppercase;
         color: var(--accent);
         margin-bottom: var(--space-4);
@@ -479,7 +479,7 @@
         font-family: var(--serif);
         font-size: clamp(1.8rem, 3vw, 2.8rem);
         font-weight: 300;
-        line-height: 1.1;
+        line-height: var(--lh-tight);
         color: var(--fg);
         margin-bottom: var(--space-4);
       }
@@ -488,8 +488,8 @@
         color: var(--accent);
       }
       .mark-info__body {
-        font-size: 0.88rem;
-        line-height: 1.9;
+        font-size: var(--text-5);
+        line-height: var(--lh-loose);
         color: var(--fg-mid);
         font-weight: 300;
       }
@@ -517,26 +517,26 @@
       }
       .step__num {
         font-family: var(--sans);
-        font-size: 0.62rem;
+        font-size: var(--text-2);
         font-weight: 700;
-        letter-spacing: 0.15em;
+        letter-spacing: var(--ls-label);
         color: var(--accent);
         padding-top: 0.15rem;
       }
       .step__title {
         font-family: var(--serif);
-        font-size: 1.1rem;
+        font-size: var(--text-7);
         font-weight: 300;
         color: var(--fg);
         margin-bottom: var(--space-2);
-        line-height: 1.2;
+        line-height: var(--lh-tight);
       }
       .step__title em {
         font-style: italic;
       }
       .step__body {
-        font-size: 0.8rem;
-        line-height: 1.78;
+        font-size: var(--text-4);
+        line-height: var(--lh-loose);
         color: var(--fg-mid);
         font-weight: 300;
       }
@@ -552,14 +552,14 @@
         gap: var(--space-4);
       }
       .notice__icon {
-        font-size: 1rem;
+        font-size: var(--text-6);
         color: var(--fg-dim);
         flex-shrink: 0;
         padding-top: 0.1rem;
       }
       .notice__text {
-        font-size: 0.78rem;
-        line-height: 1.7;
+        font-size: var(--text-3);
+        line-height: var(--lh-base);
         color: var(--fg-mid);
         font-weight: 300;
       }
@@ -587,7 +587,7 @@
         font-family: var(--serif);
         font-size: clamp(2rem, 4vw, 3.2rem);
         font-weight: 300;
-        line-height: 1;
+        line-height: var(--lh-tight);
         color: var(--fg);
         margin-bottom: var(--space-2);
       }
@@ -597,9 +597,9 @@
       }
       .stat-item__label {
         font-family: var(--sans);
-        font-size: 0.58rem;
+        font-size: var(--text-1);
         font-weight: 700;
-        letter-spacing: 0.18em;
+        letter-spacing: var(--ls-track);
         text-transform: uppercase;
         color: var(--fg-dim);
       }
@@ -660,9 +660,9 @@
           transparent 100%
         );
         font-family: var(--sans);
-        font-size: 0.55rem;
+        font-size: var(--text-1);
         font-weight: 700;
-        letter-spacing: 0.14em;
+        letter-spacing: var(--ls-label);
         text-transform: uppercase;
         color: rgba(237, 233, 225, 0.45);
       }
@@ -678,15 +678,15 @@
       }
       .spec-table td {
         padding: var(--space-3) 0;
-        font-size: 0.82rem;
+        font-size: var(--text-4);
         font-weight: 300;
         vertical-align: top;
       }
       .spec-table td:first-child {
         font-family: var(--sans);
-        font-size: 0.6rem;
+        font-size: var(--text-2);
         font-weight: 700;
-        letter-spacing: 0.15em;
+        letter-spacing: var(--ls-label);
         text-transform: uppercase;
         color: var(--accent);
         width: 9rem;
@@ -695,7 +695,7 @@
       }
       .spec-table td:last-child {
         color: var(--fg-mid);
-        line-height: 1.65;
+        line-height: var(--lh-base);
       }
       .live-page-link {
         text-decoration: none;
@@ -713,7 +713,7 @@
         font-size: clamp(1.8rem, 4vw, 3.5rem);
         font-weight: 300;
         font-style: italic;
-        line-height: 1.25;
+        line-height: var(--lh-tight);
         color: var(--fg);
         max-width: 860px;
       }
@@ -725,9 +725,9 @@
         display: block;
         margin-top: var(--space-5);
         font-family: var(--sans);
-        font-size: 0.6rem;
+        font-size: var(--text-2);
         font-weight: 700;
-        letter-spacing: 0.2em;
+        letter-spacing: var(--ls-track);
         text-transform: uppercase;
         color: var(--fg-dim);
         font-style: normal;
@@ -745,9 +745,9 @@
       }
       .next-project__label {
         font-family: var(--sans);
-        font-size: 0.62rem;
+        font-size: var(--text-2);
         font-weight: 700;
-        letter-spacing: 0.2em;
+        letter-spacing: var(--ls-track);
         text-transform: uppercase;
         color: var(--fg-dim);
         margin-bottom: 0.8rem;
@@ -800,9 +800,9 @@
 
       .footer-nav a {
         font-family: var(--sans);
-        font-size: 0.7rem;
+        font-size: var(--text-3);
         font-weight: 500;
-        letter-spacing: 0.16em;
+        letter-spacing: var(--ls-label);
         text-transform: uppercase;
         text-decoration: none;
         color: var(--fg-dim);
@@ -834,7 +834,7 @@
         gap: var(--space-2);
         font-family: var(--serif);
         font-style: italic;
-        font-size: 1rem;
+        font-size: var(--text-6);
         color: var(--fg-dim) !important;
         letter-spacing: 0.02em !important;
       }
@@ -926,8 +926,8 @@
           padding: var(--space-4) var(--space-3);
         }
         .nav__links a {
-          font-size: 0.56rem;
-          letter-spacing: 0.1em;
+          font-size: var(--text-1);
+          letter-spacing: var(--ls-label);
         }
       }
     </style>

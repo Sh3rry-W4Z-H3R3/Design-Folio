@@ -157,9 +157,9 @@
       }
       .cursor-icon span {
         font-family: var(--sans);
-        font-size: 0.5rem;
+        font-size: var(--text-1);
         font-weight: 700;
-        letter-spacing: 0.15em;
+        letter-spacing: var(--ls-label);
         text-transform: uppercase;
         color: var(--accent);
         margin-top: 4px;
@@ -180,9 +180,9 @@
       }
       .nav__home {
         font-family: var(--serif);
-        font-size: 1.1rem;
+        font-size: var(--text-7);
         font-weight: 300;
-        letter-spacing: 0.06em;
+        letter-spacing: var(--ls-body);
         text-decoration: none;
         color: var(--fg);
       }
@@ -196,9 +196,9 @@
       }
       .nav__links a {
         font-family: var(--sans);
-        font-size: 0.65rem;
+        font-size: var(--text-2);
         font-weight: 700;
-        letter-spacing: 0.2em;
+        letter-spacing: var(--ls-track);
         text-transform: uppercase;
         text-decoration: none;
         color: var(--fg-dim);
@@ -236,9 +236,9 @@
       }
       .page-header__eyebrow {
         font-family: var(--sans);
-        font-size: 0.65rem;
+        font-size: var(--text-2);
         font-weight: 700;
-        letter-spacing: 0.22em;
+        letter-spacing: var(--ls-eyebrow);
         text-transform: uppercase;
         color: var(--accent);
         margin-bottom: var(--space-4);
@@ -257,7 +257,7 @@
         font-family: var(--serif);
         font-size: clamp(3rem, 7vw, 6.5rem);
         font-weight: 300;
-        line-height: 0.95;
+        line-height: var(--lh-display);
       }
       .page-header__title em {
         font-style: italic;
@@ -265,8 +265,8 @@
       }
       .page-header__desc {
         font-family: var(--body);
-        font-size: 0.82rem;
-        line-height: 1.85;
+        font-size: var(--text-4);
+        line-height: var(--lh-loose);
         color: var(--fg-mid);
         max-width: 400px;
         align-self: end;
@@ -293,27 +293,27 @@
       }
       .philosophy-card__num {
         font-family: var(--sans);
-        font-size: 0.58rem;
+        font-size: var(--text-1);
         font-weight: 700;
-        letter-spacing: 0.2em;
+        letter-spacing: var(--ls-track);
         text-transform: uppercase;
         color: var(--accent);
         margin-bottom: var(--space-3);
       }
       .philosophy-card__heading {
         font-family: var(--serif);
-        font-size: 1.2rem;
+        font-size: var(--text-7);
         font-weight: 300;
         color: var(--fg);
         margin-bottom: 0.8rem;
-        line-height: 1.2;
+        line-height: var(--lh-tight);
       }
       .philosophy-card__heading em {
         font-style: italic;
       }
       .philosophy-card__body {
-        font-size: 0.78rem;
-        line-height: 1.75;
+        font-size: var(--text-3);
+        line-height: var(--lh-loose);
         color: var(--fg-mid);
         font-weight: 300;
       }
@@ -329,9 +329,9 @@
       }
       .filter-btn {
         font-family: var(--sans);
-        font-size: 0.62rem;
+        font-size: var(--text-2);
         font-weight: 700;
-        letter-spacing: 0.18em;
+        letter-spacing: var(--ls-track);
         text-transform: uppercase;
         background: transparent;
         border: 1px solid #2a2a2a;
@@ -477,9 +477,9 @@
       }
       .card__tag {
         font-family: var(--sans);
-        font-size: 0.58rem;
+        font-size: var(--text-1);
         font-weight: 700;
-        letter-spacing: 0.18em;
+        letter-spacing: var(--ls-track);
         text-transform: uppercase;
         color: var(--accent);
         opacity: 0;
@@ -492,7 +492,7 @@
         font-family: var(--serif);
         font-size: clamp(1.1rem, 2vw, 1.7rem);
         font-weight: 300;
-        line-height: 1.15;
+        line-height: var(--lh-tight);
         color: var(--fg);
       }
       .card__title em {
@@ -500,10 +500,10 @@
       }
       .card__sub {
         font-family: var(--body);
-        font-size: 0.68rem;
+        font-size: var(--text-3);
         color: var(--fg-mid);
         margin-top: var(--space-2);
-        letter-spacing: 0.04em;
+        letter-spacing: var(--ls-body);
         font-weight: 300;
         opacity: 0;
         transform: translateY(6px);
@@ -515,7 +515,7 @@
         position: absolute;
         top: 1.4rem;
         right: 1.6rem;
-        font-size: 1rem;
+        font-size: var(--text-6);
         color: var(--fg);
         opacity: 0;
         transform: translate(-6px, 6px);
@@ -529,9 +529,9 @@
         top: 1.4rem;
         left: 1.8rem;
         font-family: var(--sans);
-        font-size: 0.6rem;
+        font-size: var(--text-2);
         font-weight: 700;
-        letter-spacing: 0.18em;
+        letter-spacing: var(--ls-track);
         color: rgba(237, 233, 225, 0.3);
         z-index: 2;
       }
@@ -540,9 +540,9 @@
         top: 1.4rem;
         right: 1.6rem;
         font-family: var(--sans);
-        font-size: 0.55rem;
+        font-size: var(--text-1);
         font-weight: 700;
-        letter-spacing: 0.15em;
+        letter-spacing: var(--ls-label);
         text-transform: uppercase;
         color: var(--accent);
         background: rgba(109, 191, 158, 0.12);
@@ -555,7 +555,7 @@
       }
       .card__status::before {
         content: "●";
-        font-size: 0.4rem;
+        font-size: var(--text-1);
         animation: pulse 1.5s ease-in-out infinite;
       }
 
@@ -609,9 +609,9 @@
       }
       .material-note__label {
         font-family: var(--sans);
-        font-size: 0.62rem;
+        font-size: var(--text-2);
         font-weight: 700;
-        letter-spacing: 0.2em;
+        letter-spacing: var(--ls-track);
         text-transform: uppercase;
         color: var(--accent);
         writing-mode: vertical-rl;
@@ -621,7 +621,7 @@
         font-family: var(--serif);
         font-size: clamp(1rem, 1.8vw, 1.35rem);
         font-weight: 300;
-        line-height: 1.6;
+        line-height: var(--lh-base);
         color: var(--fg-mid);
       }
       .material-note__text em {
@@ -641,8 +641,8 @@
       }
       .footer__copy {
         font-family: var(--sans);
-        font-size: 0.62rem;
-        letter-spacing: 0.12em;
+        font-size: var(--text-2);
+        letter-spacing: var(--ls-label);
         text-transform: uppercase;
         color: var(--fg-dim);
       }
@@ -652,8 +652,8 @@
       }
       .footer__links a {
         font-family: var(--sans);
-        font-size: 0.62rem;
-        letter-spacing: 0.12em;
+        font-size: var(--text-2);
+        letter-spacing: var(--ls-label);
         text-transform: uppercase;
         text-decoration: none;
         color: var(--fg-dim);
@@ -682,9 +682,9 @@
 
       .footer-nav a {
         font-family: var(--sans);
-        font-size: 0.7rem;
+        font-size: var(--text-3);
         font-weight: 500;
-        letter-spacing: 0.16em;
+        letter-spacing: var(--ls-label);
         text-transform: uppercase;
         text-decoration: none;
         color: var(--fg-dim);
@@ -716,7 +716,7 @@
         gap: var(--space-2);
         font-family: var(--serif);
         font-style: italic;
-        font-size: 1rem;
+        font-size: var(--text-6);
         color: var(--fg-dim) !important;
         letter-spacing: 0.02em !important;
       }

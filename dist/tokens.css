@@ -24,4 +24,33 @@
   /* Back-compat alias — existing per-page rules still using var(--gutter)
      continue to resolve. Maps to the fuller gutter by default. */
   --gutter: var(--gutter-block);
+
+  /* ── TYPOGRAPHY ─────────────────────────────────────────────
+     Display sizes (hero titles, section titles) stay as page-local
+     clamp() values — they're intentionally responsive. These tokens
+     cover the static UI sizes that were drifting across pages.
+     ─────────────────────────────────────────────────────────── */
+
+  /* Font-size scale */
+  --text-1: 0.55rem;   /* cursor labels, pulse-dot micro             */
+  --text-2: 0.62rem;   /* eyebrows, status pills, super-caps         */
+  --text-3: 0.7rem;    /* buttons, footer links, tag pills           */
+  --text-4: 0.82rem;   /* captions, meta values, sub-labels          */
+  --text-5: 0.9rem;    /* body copy                                  */
+  --text-6: 1rem;      /* lead paragraphs, larger body               */
+  --text-7: 1.15rem;   /* sub-display, pull quotes, large meta       */
+
+  /* Line-height scale */
+  --lh-display: 0.92;  /* hero titles, display compression           */
+  --lh-tight:   1.15;  /* section titles, h2 / h3                    */
+  --lh-snug:    1.4;   /* subtitles, narrative-card headings         */
+  --lh-base:    1.6;   /* default body line-height                   */
+  --lh-loose:   1.85;  /* case-study body, descriptive paragraphs    */
+
+  /* Letter-spacing scale */
+  --ls-display: -0.01em;  /* display title compression                */
+  --ls-body:    0.04em;   /* body with mild tracking                  */
+  --ls-label:   0.16em;   /* uppercase buttons, footer links, tags    */
+  --ls-track:   0.2em;    /* secondary labels                         */
+  --ls-eyebrow: 0.22em;   /* eyebrows, super-caps                     */
 }

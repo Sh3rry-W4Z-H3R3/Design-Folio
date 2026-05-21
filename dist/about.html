@@ -86,8 +86,8 @@
     .cursor-icon.visible { opacity: 1; }
     .cursor-icon svg { display: block; }
     .cursor-icon span {
-      font-family: var(--sans); font-size: 0.5rem; font-weight: 700;
-      letter-spacing: 0.15em; text-transform: uppercase;
+      font-family: var(--sans); font-size: var(--text-1); font-weight: 700;
+      letter-spacing: var(--ls-label); text-transform: uppercase;
       color: var(--accent); margin-top: 4px;
     }
 
@@ -98,12 +98,12 @@
       background: rgba(10,10,10,0.92); backdrop-filter: blur(12px);
       border-bottom: 1px solid #1a1a1a;
     }
-    .nav__home { font-family: var(--serif); font-size: 1.1rem; font-weight: 300; letter-spacing: 0.06em; text-decoration: none; color: var(--fg); }
+    .nav__home { font-family: var(--serif); font-size: var(--text-7); font-weight: 300; letter-spacing: var(--ls-body); text-decoration: none; color: var(--fg); }
     .nav__home em { font-style: italic; color: var(--accent); }
     .nav__links { display: flex; gap: var(--space-6); }
     .nav__links a {
-      font-family: var(--sans); font-size: 0.65rem; font-weight: 700;
-      letter-spacing: 0.2em; text-transform: uppercase;
+      font-family: var(--sans); font-size: var(--text-2); font-weight: 700;
+      letter-spacing: var(--ls-track); text-transform: uppercase;
       text-decoration: none; color: var(--fg-dim); transition: color var(--fast); position: relative;
     }
     .nav__links a::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 1px; background: var(--accent); transition: width var(--fast); }
@@ -113,36 +113,36 @@
     /* ── HERO ── */
     .hero { display: grid; grid-template-columns: 1fr 1fr; min-height: 88vh; border-bottom: 1px solid #1a1a1a; }
     .hero__left { padding: var(--space-8) var(--gutter) var(--space-8); display: flex; flex-direction: column; justify-content: space-between; border-right: 1px solid #1a1a1a; opacity: 0; animation: fadeUp 0.9s var(--ease) 0.1s forwards; }
-    .hero__eyebrow { font-family: var(--sans); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); margin-bottom: var(--space-5); display: flex; align-items: center; gap: 0.8rem; }
+    .hero__eyebrow { font-family: var(--sans); font-size: var(--text-2); font-weight: 700; letter-spacing: var(--ls-eyebrow); text-transform: uppercase; color: var(--accent); margin-bottom: var(--space-5); display: flex; align-items: center; gap: 0.8rem; }
     .hero__eyebrow::before { content: ''; display: block; width: 1.5rem; height: 1px; background: var(--accent); }
-    .hero__name { font-family: var(--serif); font-size: clamp(4rem, 9vw, 8.5rem); font-weight: 300; line-height: 0.9; letter-spacing: -0.01em; }
+    .hero__name { font-family: var(--serif); font-size: clamp(4rem, 9vw, 8.5rem); font-weight: 300; line-height: var(--lh-display); letter-spacing: var(--ls-display); }
     .hero__name em { font-style: italic; color: var(--accent); display: block; }
-    .hero__title-line { margin-top: var(--space-6); font-family: var(--sans); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--fg-dim); display: flex; align-items: center; gap: var(--space-4); flex-wrap: wrap; }
+    .hero__title-line { margin-top: var(--space-6); font-family: var(--sans); font-size: var(--text-3); font-weight: 700; letter-spacing: var(--ls-eyebrow); text-transform: uppercase; color: var(--fg-dim); display: flex; align-items: center; gap: var(--space-4); flex-wrap: wrap; }
     .hero__title-line span { color: var(--fg-mid); }
     .divider-dot { width: 3px; height: 3px; background: var(--fg-dim); border-radius: 50%; }
     .hero__right { position: relative; overflow: hidden; opacity: 0; animation: fadeIn 1.2s var(--ease) 0.3s forwards; }
     .hero__photo { position: absolute; inset: 0; background-image: url('img/sherjeel-portrait.jpg'); background-size: cover; background-position: center top; filter: grayscale(20%); transition: filter var(--slow); }
     .hero__right:hover .hero__photo { filter: grayscale(0%); }
     .hero__photo-placeholder { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: var(--space-3); background: #111; }
-    .hero__photo-placeholder p { font-family: var(--sans); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--fg-dim); }
+    .hero__photo-placeholder p { font-family: var(--sans); font-size: var(--text-2); font-weight: 700; letter-spacing: var(--ls-track); text-transform: uppercase; color: var(--fg-dim); }
     .hero__right::after { content: ''; position: absolute; bottom: 0; left: 0; width: 40%; height: 3px; background: var(--accent); }
 
     /* ── SECTIONS ── */
     .two-col { display: grid; grid-template-columns: 1fr 2fr; gap: var(--space-8); align-items: start; }
     .section-block { padding: var(--space-8) var(--gutter); border-bottom: 1px solid #1a1a1a; }
-    .section-sticky-label { font-family: var(--sans); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); position: sticky; top: 6rem; display: flex; align-items: center; gap: 0.8rem; }
+    .section-sticky-label { font-family: var(--sans); font-size: var(--text-2); font-weight: 700; letter-spacing: var(--ls-eyebrow); text-transform: uppercase; color: var(--accent); position: sticky; top: 6rem; display: flex; align-items: center; gap: 0.8rem; }
     .section-sticky-label::before { content: ''; display: block; width: 1.5rem; height: 1px; background: var(--accent); }
 
     /* ── STATEMENT ── */
     .statement { padding: var(--space-8) var(--gutter); display: grid; grid-template-columns: 1fr 2fr; gap: var(--space-8); align-items: start; border-bottom: 1px solid #1a1a1a; }
-    .statement__label { font-family: var(--sans); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); padding-top: var(--space-2); position: sticky; top: 6rem; display: flex; align-items: center; gap: 0.8rem; }
+    .statement__label { font-family: var(--sans); font-size: var(--text-2); font-weight: 700; letter-spacing: var(--ls-eyebrow); text-transform: uppercase; color: var(--accent); padding-top: var(--space-2); position: sticky; top: 6rem; display: flex; align-items: center; gap: 0.8rem; }
     .statement__label::before { content: ''; display: block; width: 1.5rem; height: 1px; background: var(--accent); }
-    .statement__text { font-family: var(--serif); font-size: clamp(1.4rem, 2.8vw, 2.2rem); font-weight: 300; line-height: 1.5; color: var(--fg); }
+    .statement__text { font-family: var(--serif); font-size: clamp(1.4rem, 2.8vw, 2.2rem); font-weight: 300; line-height: var(--lh-snug); color: var(--fg); }
     .statement__text em { font-style: italic; color: var(--accent); }
     .statement__text p + p { margin-top: 1.2em; }
 
     /* ── BACKGROUND ── */
-    .background__body { font-size: 0.92rem; line-height: 1.95; color: var(--fg-mid); font-weight: 300; max-width: 680px; }
+    .background__body { font-size: var(--text-5); line-height: var(--lh-loose); color: var(--fg-mid); font-weight: 300; max-width: 680px; }
     .background__body p + p { margin-top: 1.3em; }
     .background__body strong { color: var(--fg); font-weight: 500; }
     .background__body em { font-style: italic; color: var(--fg); }
@@ -151,15 +151,15 @@
     .timeline__items { display: flex; flex-direction: column; gap: 0; max-width: 680px; }
     .timeline__item { display: grid; grid-template-columns: 5rem 1fr; gap: var(--space-5); padding: var(--space-5) 0; border-top: 1px solid #1a1a1a; transition: border-color var(--fast); }
     .timeline__item:hover { border-top-color: var(--accent); }
-    .timeline__year { font-family: var(--sans); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; color: var(--fg-dim); padding-top: 0.15rem; }
-    .timeline__org { font-family: var(--sans); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: var(--space-2); }
-    .timeline__role { font-family: var(--serif); font-size: 1.15rem; font-weight: 300; color: var(--fg); line-height: 1.2; margin-bottom: 0.6rem; }
+    .timeline__year { font-family: var(--sans); font-size: var(--text-2); font-weight: 700; letter-spacing: var(--ls-label); color: var(--fg-dim); padding-top: 0.15rem; }
+    .timeline__org { font-family: var(--sans); font-size: var(--text-2); font-weight: 700; letter-spacing: var(--ls-label); text-transform: uppercase; color: var(--accent); margin-bottom: var(--space-2); }
+    .timeline__role { font-family: var(--serif); font-size: var(--text-7); font-weight: 300; color: var(--fg); line-height: var(--lh-tight); margin-bottom: 0.6rem; }
     .timeline__role em { font-style: italic; }
-    .timeline__detail { font-size: 0.78rem; line-height: 1.7; color: var(--fg-mid); font-weight: 300; }
+    .timeline__detail { font-size: var(--text-3); line-height: var(--lh-base); color: var(--fg-mid); font-weight: 300; }
 
     /* Exhibition tag */
     .timeline__type {
-      display: inline-block; font-family: var(--sans); font-size: 0.52rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+      display: inline-block; font-family: var(--sans); font-size: var(--text-1); font-weight: 700; letter-spacing: var(--ls-label); text-transform: uppercase;
       padding: var(--space-2) var(--space-2); margin-bottom: var(--space-2);
       border: 1px solid rgba(109,191,158,0.35); color: var(--accent-2);
     }
@@ -167,10 +167,10 @@
     /* ── SKILLS ── */
     .skills-grid { display: flex; flex-direction: column; gap: var(--space-5); max-width: 680px; }
     /* .skill-group {} */
-    .skill-group__title { font-family: var(--sans); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: var(--space-3); }
+    .skill-group__title { font-family: var(--sans); font-size: var(--text-2); font-weight: 700; letter-spacing: var(--ls-track); text-transform: uppercase; color: var(--accent); margin-bottom: var(--space-3); }
     .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
     .skill-tag {
-      font-family: var(--body); font-size: 0.72rem; font-weight: 300;
+      font-family: var(--body); font-size: var(--text-3); font-weight: 300;
       color: var(--fg-mid); border: 1px solid #2a2a2a; padding: var(--space-2) 0.7rem;
       transition: border-color var(--fast), color var(--fast);
     }
@@ -178,19 +178,19 @@
 
     /* ── CONTACT ── */
     .contact-section { padding: var(--space-8) var(--gutter); display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8); align-items: start; border-bottom: 1px solid #1a1a1a; }
-    .availability { display: inline-flex; align-items: center; gap: 0.6rem; font-family: var(--sans); font-size: 0.6rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent-2); border: 1px solid rgba(109,191,158,0.3); padding: var(--space-2) var(--space-3); margin-bottom: var(--space-6); }
-    .availability::before { content: '●'; font-size: 0.45rem; animation: pulse 1.8s ease-in-out infinite; }
-    .contact-eyebrow { font-family: var(--sans); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); margin-bottom: var(--space-5); display: flex; align-items: center; gap: 0.8rem; }
+    .availability { display: inline-flex; align-items: center; gap: 0.6rem; font-family: var(--sans); font-size: var(--text-2); font-weight: 700; letter-spacing: var(--ls-label); text-transform: uppercase; color: var(--accent-2); border: 1px solid rgba(109,191,158,0.3); padding: var(--space-2) var(--space-3); margin-bottom: var(--space-6); }
+    .availability::before { content: '●'; font-size: var(--text-1); animation: pulse 1.8s ease-in-out infinite; }
+    .contact-eyebrow { font-family: var(--sans); font-size: var(--text-2); font-weight: 700; letter-spacing: var(--ls-eyebrow); text-transform: uppercase; color: var(--accent); margin-bottom: var(--space-5); display: flex; align-items: center; gap: 0.8rem; }
     .contact-eyebrow::before { content: ''; display: block; width: 1.5rem; height: 1px; background: var(--accent); }
-    .contact-heading { font-family: var(--serif); font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 300; line-height: 1; color: var(--fg); margin-bottom: var(--space-5); }
+    .contact-heading { font-family: var(--serif); font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 300; line-height: var(--lh-tight); color: var(--fg); margin-bottom: var(--space-5); }
     .contact-heading em { font-style: italic; color: var(--accent); display: block; }
-    .contact-subtext { font-size: 0.88rem; line-height: 1.85; color: var(--fg-mid); font-weight: 300; max-width: 380px; }
+    .contact-subtext { font-size: var(--text-5); line-height: var(--lh-loose); color: var(--fg-mid); font-weight: 300; max-width: 380px; }
     .contact-links { display: flex; flex-direction: column; gap: 2px; padding-top: var(--space-3); }
     .contact-link { display: flex; align-items: center; justify-content: space-between; padding: var(--space-5) var(--space-5); background: #0e0e0e; text-decoration: none; color: var(--fg); border-left: 2px solid transparent; transition: border-color var(--fast), background var(--fast); cursor: none; }
     .contact-link:hover { border-left-color: var(--accent); background: #141414; }
-    .contact-link__label { font-family: var(--sans); font-size: 0.58rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: var(--space-2); }
-    .contact-link__value { font-family: var(--serif); font-size: 1.1rem; font-weight: 300; }
-    .contact-link__arrow { font-size: 1.1rem; color: var(--fg-dim); transition: transform var(--fast), color var(--fast); }
+    .contact-link__label { font-family: var(--sans); font-size: var(--text-1); font-weight: 700; letter-spacing: var(--ls-track); text-transform: uppercase; color: var(--accent); margin-bottom: var(--space-2); }
+    .contact-link__value { font-family: var(--serif); font-size: var(--text-7); font-weight: 300; }
+    .contact-link__arrow { font-size: var(--text-7); color: var(--fg-dim); transition: transform var(--fast), color var(--fast); }
     .contact-link:hover .contact-link__arrow { color: var(--accent); transform: translateX(5px); }
 
  /* ─── FOOTER LINKS ───────────────────────────────────── */
@@ -213,9 +213,9 @@
 
     .footer-nav a {
       font-family: var(--sans);
-      font-size: 0.7rem;
+      font-size: var(--text-3);
       font-weight: 500;
-      letter-spacing: 0.16em;
+      letter-spacing: var(--ls-label);
       text-transform: uppercase;
       text-decoration: none;
       color: var(--fg-dim);
@@ -245,7 +245,7 @@
       gap: var(--space-2);
       font-family: var(--serif);
       font-style: italic;
-      font-size: 1rem;
+      font-size: var(--text-6);
       color: var(--fg-dim) !important;
       letter-spacing: 0.02em !important;
     }
@@ -286,12 +286,12 @@
     }
     @media (max-width: 480px) {
       nav { padding: var(--space-4) var(--space-3); }
-      .nav__links a { font-size: 0.56rem; letter-spacing: 0.1em; }
+      .nav__links a { font-size: var(--text-1); letter-spacing: var(--ls-label); }
       .hero__left { padding: var(--space-7) var(--space-4) var(--space-6); }
       .hero__name { font-size: clamp(3.2rem, 16vw, 6rem); }
       .contact-heading { font-size: clamp(2rem, 12vw, 3.5rem); }
       .skill-tags { gap: 4px; }
-      .skill-tag { font-size: 0.68rem; padding: var(--space-2) var(--space-2); }
+      .skill-tag { font-size: var(--text-3); padding: var(--space-2) var(--space-2); }
     }
   </style>
 </head>
@@ -325,7 +325,7 @@
           <span>Glasgow</span>
         </p>
       </div>
-      <p style="font-size:0.78rem;color:var(--fg-dim);line-height:1.75;font-weight:300;max-width:380px;">
+      <p style="font-size: var(--text-3);color:var(--fg-dim);line-height: var(--lh-loose);font-weight:300;max-width:380px;">
         Designer and ceramicist. I work across physical and digital — not because I can't choose, but because both are part of how I think.
       </p>
     </div>
@@ -333,7 +333,7 @@
       <div class="hero__photo"></div>
       <div class="hero__photo-placeholder" id="photoPlaceholder">
         <p>Portrait</p>
-        <p style="color:var(--fg-dim);font-size:0.55rem;">img/sherjeel-portrait.jpg</p>
+        <p style="color:var(--fg-dim);font-size: var(--text-1);">img/sherjeel-portrait.jpg</p>
       </div>
     </div>
   </div>

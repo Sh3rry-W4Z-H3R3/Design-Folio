@@ -74,17 +74,17 @@
     .cursor-icon { position: fixed; pointer-events: none; z-index: 9998; transform: translate(10px, -50%); opacity: 0; transition: opacity 0.2s ease; display: flex; flex-direction: column; align-items: center; }
     .cursor-icon.visible { opacity: 1; }
     .cursor-icon svg { display: block; }
-    .cursor-icon span { font-family: var(--sans); font-size: 0.5rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--fg); margin-top: 4px; }
+    .cursor-icon span { font-family: var(--sans); font-size: var(--text-1); font-weight: 700; letter-spacing: var(--ls-label); text-transform: uppercase; color: var(--fg); margin-top: 4px; }
 
     nav { display: flex; align-items: center; justify-content: space-between; padding: var(--space-5) var(--gutter); position: sticky; top: 0; z-index: 100; background: rgba(10,10,10,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid #1a1a1a; }
-    .nav__home { font-family: var(--serif); font-size: 1.1rem; font-weight: 300; letter-spacing: 0.06em; text-decoration: none; color: var(--fg); }
+    .nav__home { font-family: var(--serif); font-size: var(--text-7); font-weight: 300; letter-spacing: var(--ls-body); text-decoration: none; color: var(--fg); }
     .nav__home em { font-style: italic; color: var(--accent); }
     .nav__links { display: flex; gap: var(--space-6); align-items: center; }
-    .nav__links a { font-family: var(--sans); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none; color: var(--fg-dim); transition: color var(--fast); position: relative; }
+    .nav__links a { font-family: var(--sans); font-size: var(--text-2); font-weight: 700; letter-spacing: var(--ls-track); text-transform: uppercase; text-decoration: none; color: var(--fg-dim); transition: color var(--fast); position: relative; }
     .nav__links a::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 1px; background: var(--accent); transition: width var(--fast); }
     .nav__links a:hover { color: var(--fg); }
     .nav__links a:hover::after { width: 100%; }
-    .nav__back { font-family: var(--sans); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; text-decoration: none; color: var(--fg-dim); display: flex; align-items: center; gap: var(--space-2); transition: color var(--fast); }
+    .nav__back { font-family: var(--sans); font-size: var(--text-2); font-weight: 700; letter-spacing: var(--ls-track); text-transform: uppercase; text-decoration: none; color: var(--fg-dim); display: flex; align-items: center; gap: var(--space-2); transition: color var(--fast); }
     .nav__back:hover { color: var(--fg); }
     .nav__back::before { content: '←'; }
 
@@ -106,9 +106,9 @@
     }
     .hero__status {
       font-family: var(--sans);
-      font-size: 0.62rem;
+      font-size: var(--text-2);
       font-weight: 700;
-      letter-spacing: 0.28em;
+      letter-spacing: var(--ls-eyebrow);
       text-transform: uppercase;
       color: var(--cherry);
       margin-bottom: var(--space-5);
@@ -128,8 +128,8 @@
       font-family: var(--serif);
       font-size: clamp(3rem, 9vw, 8.5rem);
       font-weight: 300;
-      line-height: 0.92;
-      letter-spacing: -0.01em;
+      line-height: var(--lh-display);
+      letter-spacing: var(--ls-display);
       opacity: 0; animation: fadeUp 0.9s var(--ease) 0.2s forwards;
       max-width: 18ch;
     }
@@ -139,7 +139,7 @@
       font-family: var(--sans);
       font-size: clamp(0.7rem, 1.2vw, 0.95rem);
       font-weight: 500;
-      letter-spacing: 0.22em;
+      letter-spacing: var(--ls-eyebrow);
       text-transform: uppercase;
       color: var(--fg-mid);
       margin-top: var(--space-4);
@@ -153,7 +153,7 @@
       font-weight: 300;
       color: rgba(237,233,225,0.7);
       max-width: 620px;
-      line-height: 1.5;
+      line-height: var(--lh-snug);
       opacity: 0; animation: fadeUp 0.9s var(--ease) 0.4s forwards;
     }
 
@@ -169,19 +169,19 @@
     }
     .detail__label {
       font-family: var(--sans);
-      font-size: 0.56rem;
+      font-size: var(--text-1);
       font-weight: 700;
-      letter-spacing: 0.22em;
+      letter-spacing: var(--ls-eyebrow);
       text-transform: uppercase;
       color: var(--fg-dim);
       margin-bottom: 0.8rem;
     }
     .detail__value {
       font-family: var(--body);
-      font-size: 0.95rem;
+      font-size: var(--text-5);
       color: var(--fg);
       font-weight: 300;
-      line-height: 1.5;
+      line-height: var(--lh-snug);
     }
     .detail__value em { font-style: italic; color: var(--accent); }
 
@@ -194,9 +194,9 @@
     }
     .section-label {
       font-family: var(--sans);
-      font-size: 0.62rem;
+      font-size: var(--text-2);
       font-weight: 700;
-      letter-spacing: 0.22em;
+      letter-spacing: var(--ls-eyebrow);
       text-transform: uppercase;
       color: var(--accent);
       position: sticky;
@@ -206,13 +206,13 @@
       gap: 0.8rem;
     }
     .section-label::before { content: ''; display: block; width: 1.5rem; height: 1px; background: var(--accent); }
-    .body-text { font-size: 0.95rem; line-height: 1.95; color: var(--fg-mid); font-weight: 300; max-width: 640px; }
+    .body-text { font-size: var(--text-5); line-height: var(--lh-loose); color: var(--fg-mid); font-weight: 300; max-width: 640px; }
     .body-text p + p { margin-top: 1.3em; }
     .body-text strong { color: var(--fg); font-weight: 500; }
     .body-text em { font-style: italic; color: var(--fg); }
 
     .next-project { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-5); padding: var(--space-8) var(--gutter); border-top: 1px solid #1a1a1a; }
-    .next-project__label { font-family: var(--sans); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--fg-dim); margin-bottom: 0.8rem; }
+    .next-project__label { font-family: var(--sans); font-size: var(--text-2); font-weight: 700; letter-spacing: var(--ls-track); text-transform: uppercase; color: var(--fg-dim); margin-bottom: 0.8rem; }
     .next-project__title { font-family: var(--serif); font-size: clamp(1.8rem, 3.5vw, 3.2rem); font-weight: 300; color: var(--fg); text-decoration: none; display: block; transition: color var(--fast); }
     .next-project__title em { font-style: italic; color: var(--accent); }
     .next-project__title:hover { color: var(--fg-mid); }
@@ -221,9 +221,9 @@
 
     footer.footer-nav { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; padding: var(--space-6) var(--gutter) var(--space-7); gap: var(--space-3); }
     .footer-nav__left { display: flex; align-items: center; gap: var(--space-6); flex-wrap: wrap; }
-    .footer-nav a { font-family: var(--sans); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; color: var(--fg-dim); transition: color var(--fast); }
+    .footer-nav a { font-family: var(--sans); font-size: var(--text-3); font-weight: 500; letter-spacing: var(--ls-label); text-transform: uppercase; text-decoration: none; color: var(--fg-dim); transition: color var(--fast); }
     .footer-nav a:hover { color: var(--fg); }
-    .footer-nav__all { font-family: var(--serif); font-style: italic; font-size: 1rem; color: var(--fg-dim) !important; letter-spacing: 0.02em !important; }
+    .footer-nav__all { font-family: var(--serif); font-style: italic; font-size: var(--text-6); color: var(--fg-dim) !important; letter-spacing: 0.02em !important; }
     .footer-nav__all:hover { color: var(--fg) !important; }
     .divider { width: 1px; height: 14px; background: #333; flex-shrink: 0; }
 
@@ -239,7 +239,7 @@
     }
     @media (max-width: 480px) {
       nav { padding: var(--space-4) var(--space-3); }
-      .nav__links a { font-size: 0.56rem; }
+      .nav__links a { font-size: var(--text-1); }
       .details__grid { grid-template-columns: 1fr; }
     }
   </style>

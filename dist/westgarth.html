@@ -151,9 +151,9 @@
       }
       .cursor-icon span {
         font-family: var(--sans);
-        font-size: 0.5rem;
+        font-size: var(--text-1);
         font-weight: 700;
-        letter-spacing: 0.15em;
+        letter-spacing: var(--ls-label);
         text-transform: uppercase;
         color: var(--accent);
         margin-top: 4px;
@@ -172,9 +172,9 @@
       }
       .nav__home {
         font-family: var(--serif);
-        font-size: 1.1rem;
+        font-size: var(--text-7);
         font-weight: 300;
-        letter-spacing: 0.06em;
+        letter-spacing: var(--ls-body);
         text-decoration: none;
         color: var(--fg);
       }
@@ -188,9 +188,9 @@
       }
       .nav__links a {
         font-family: var(--sans);
-        font-size: 0.65rem;
+        font-size: var(--text-2);
         font-weight: 700;
-        letter-spacing: 0.2em;
+        letter-spacing: var(--ls-track);
         text-transform: uppercase;
         text-decoration: none;
         color: var(--fg-dim);
@@ -215,9 +215,9 @@
       }
       .nav__back {
         font-family: var(--sans);
-        font-size: 0.62rem;
+        font-size: var(--text-2);
         font-weight: 700;
-        letter-spacing: 0.18em;
+        letter-spacing: var(--ls-track);
         text-transform: uppercase;
         text-decoration: none;
         color: var(--fg-dim);
@@ -263,9 +263,9 @@
       }
       .hero__breadcrumb {
         font-family: var(--sans);
-        font-size: 0.62rem;
+        font-size: var(--text-2);
         font-weight: 700;
-        letter-spacing: 0.22em;
+        letter-spacing: var(--ls-eyebrow);
         text-transform: uppercase;
         color: var(--accent);
         margin-bottom: var(--space-5);
@@ -286,7 +286,7 @@
         font-family: var(--serif);
         font-size: clamp(3rem, 8vw, 7rem);
         font-weight: 300;
-        line-height: 0.9;
+        line-height: var(--lh-display);
         color: var(--fg);
         opacity: 0;
         animation: fadeUp 0.9s var(--ease) 0.2s forwards;
@@ -308,16 +308,16 @@
       }
       .meta-item__label {
         font-family: var(--sans);
-        font-size: 0.56rem;
+        font-size: var(--text-1);
         font-weight: 700;
-        letter-spacing: 0.2em;
+        letter-spacing: var(--ls-track);
         text-transform: uppercase;
         color: rgba(237, 233, 225, 0.35);
         margin-bottom: var(--space-2);
       }
       .meta-item__value {
         font-family: var(--body);
-        font-size: 0.82rem;
+        font-size: var(--text-4);
         color: var(--fg);
         font-weight: 300;
       }
@@ -334,9 +334,9 @@
       }
       .section-label {
         font-family: var(--sans);
-        font-size: 0.62rem;
+        font-size: var(--text-2);
         font-weight: 700;
-        letter-spacing: 0.22em;
+        letter-spacing: var(--ls-eyebrow);
         text-transform: uppercase;
         color: var(--accent);
         position: sticky;
@@ -353,8 +353,8 @@
         background: var(--accent);
       }
       .body-text {
-        font-size: 0.92rem;
-        line-height: 1.95;
+        font-size: var(--text-5);
+        line-height: var(--lh-loose);
         color: var(--fg-mid);
         font-weight: 300;
         max-width: 640px;
@@ -401,15 +401,15 @@
       }
       .spec-table td {
         padding: var(--space-3) 0;
-        font-size: 0.82rem;
+        font-size: var(--text-4);
         font-weight: 300;
         vertical-align: top;
       }
       .spec-table td:first-child {
         font-family: var(--sans);
-        font-size: 0.6rem;
+        font-size: var(--text-2);
         font-weight: 700;
-        letter-spacing: 0.15em;
+        letter-spacing: var(--ls-label);
         text-transform: uppercase;
         color: var(--accent);
         width: 9rem;
@@ -418,7 +418,7 @@
       }
       .spec-table td:last-child {
         color: var(--fg-mid);
-        line-height: 1.6;
+        line-height: var(--lh-base);
       }
       .next-project {
         display: flex;
@@ -431,9 +431,9 @@
       }
       .next-project__label {
         font-family: var(--sans);
-        font-size: 0.62rem;
+        font-size: var(--text-2);
         font-weight: 700;
-        letter-spacing: 0.2em;
+        letter-spacing: var(--ls-track);
         text-transform: uppercase;
         color: var(--fg-dim);
         margin-bottom: 0.8rem;
@@ -516,8 +516,8 @@
           padding: var(--space-4) var(--space-3);
         }
         .nav__links a {
-          font-size: 0.56rem;
-          letter-spacing: 0.1em;
+          font-size: var(--text-1);
+          letter-spacing: var(--ls-label);
         }
       }
 
@@ -538,9 +538,9 @@
       }
       .footer-nav a {
         font-family: var(--sans);
-        font-size: 0.7rem;
+        font-size: var(--text-3);
         font-weight: 500;
-        letter-spacing: 0.16em;
+        letter-spacing: var(--ls-label);
         text-transform: uppercase;
         text-decoration: none;
         color: var(--fg-dim);
@@ -566,7 +566,7 @@
       .footer-nav__all {
         font-family: var(--serif);
         font-style: italic;
-        font-size: 1rem;
+        font-size: var(--text-6);
         color: var(--fg-dim) !important;
         letter-spacing: 0.02em !important;
       }
@@ -588,9 +588,9 @@
       }
       .quick__eyebrow {
         font-family: var(--sans);
-        font-size: 0.62rem;
+        font-size: var(--text-2);
         font-weight: 700;
-        letter-spacing: 0.22em;
+        letter-spacing: var(--ls-eyebrow);
         text-transform: uppercase;
         color: var(--accent);
         margin-bottom: var(--space-5);
@@ -609,8 +609,8 @@
         font-family: var(--serif);
         font-size: clamp(2.6rem, 7vw, 5.2rem);
         font-weight: 300;
-        line-height: 0.95;
-        letter-spacing: -0.005em;
+        line-height: var(--lh-display);
+        letter-spacing: var(--ls-display);
       }
       .quick__title em {
         font-style: italic;
@@ -623,7 +623,7 @@
         font-size: clamp(1rem, 1.6vw, 1.2rem);
         color: rgba(237, 233, 225, 0.7);
         max-width: 560px;
-        line-height: 1.5;
+        line-height: var(--lh-snug);
       }
       .quick__placeholder {
         margin: var(--space-6) 0;
@@ -644,9 +644,9 @@
       }
       .quick__placeholder-label {
         font-family: var(--sans);
-        font-size: 0.58rem;
+        font-size: var(--text-1);
         font-weight: 700;
-        letter-spacing: 0.22em;
+        letter-spacing: var(--ls-eyebrow);
         text-transform: uppercase;
         color: var(--fg-dim);
       }
@@ -661,16 +661,16 @@
       }
       .quick__meta-item__label {
         font-family: var(--sans);
-        font-size: 0.56rem;
+        font-size: var(--text-1);
         font-weight: 700;
-        letter-spacing: 0.2em;
+        letter-spacing: var(--ls-track);
         text-transform: uppercase;
         color: var(--fg-dim);
         margin-bottom: var(--space-2);
       }
       .quick__meta-item__value {
         font-family: var(--body);
-        font-size: 0.85rem;
+        font-size: var(--text-4);
         color: var(--fg);
         font-weight: 300;
       }
@@ -684,7 +684,7 @@
       }
       .quick__deliverables li {
         font-family: var(--body);
-        font-size: 0.9rem;
+        font-size: var(--text-5);
         color: var(--fg-mid);
         font-weight: 300;
         padding-left: var(--space-3);
@@ -711,14 +711,14 @@
         font-style: italic;
         font-size: clamp(1.05rem, 1.8vw, 1.35rem);
         color: var(--fg);
-        line-height: 1.5;
+        line-height: var(--lh-snug);
         margin-bottom: var(--space-4);
       }
       .quick__cta {
         font-family: var(--sans);
-        font-size: 0.68rem;
+        font-size: var(--text-3);
         font-weight: 700;
-        letter-spacing: 0.2em;
+        letter-spacing: var(--ls-track);
         text-transform: uppercase;
         color: var(--fg-dim);
       }
@@ -741,9 +741,9 @@
       }
       .signage__label {
         font-family: var(--sans);
-        font-size: 0.62rem;
+        font-size: var(--text-2);
         font-weight: 700;
-        letter-spacing: 0.22em;
+        letter-spacing: var(--ls-eyebrow);
         text-transform: uppercase;
         color: var(--accent);
         margin-bottom: var(--space-4);
@@ -762,8 +762,8 @@
         font-family: var(--serif);
         font-size: clamp(1.8rem, 4vw, 2.6rem);
         font-weight: 300;
-        line-height: 1.1;
-        letter-spacing: -0.005em;
+        line-height: var(--lh-tight);
+        letter-spacing: var(--ls-display);
         margin-bottom: var(--space-5);
       }
       .signage__title em {
@@ -772,10 +772,10 @@
       }
       .signage__intro {
         font-family: var(--body);
-        font-size: 0.92rem;
+        font-size: var(--text-5);
         font-weight: 300;
         color: var(--fg-mid);
-        line-height: 1.75;
+        line-height: var(--lh-loose);
         max-width: 640px;
         margin-bottom: var(--space-6);
       }
@@ -814,9 +814,9 @@
         align-items: center;
         gap: 0.6rem;
         font-family: var(--sans);
-        font-size: 0.65rem;
+        font-size: var(--text-2);
         font-weight: 700;
-        letter-spacing: 0.2em;
+        letter-spacing: var(--ls-track);
         text-transform: uppercase;
         text-decoration: none;
         color: var(--accent-2);

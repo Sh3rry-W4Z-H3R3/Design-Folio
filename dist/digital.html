@@ -151,9 +151,9 @@
       }
       .nav__home {
         font-family: var(--serif);
-        font-size: 1.1rem;
+        font-size: var(--text-7);
         font-weight: 300;
-        letter-spacing: 0.06em;
+        letter-spacing: var(--ls-body);
         text-decoration: none;
         color: var(--fg);
         transition: color var(--fast);
@@ -171,9 +171,9 @@
         align-items: center;
       }
       .nav__links a {
-        font-size: 0.65rem;
+        font-size: var(--text-2);
         font-weight: 700;
-        letter-spacing: 0.2em;
+        letter-spacing: var(--ls-track);
         text-transform: uppercase;
         text-decoration: none;
         color: var(--fg-dim);
@@ -210,9 +210,9 @@
         animation: fadeUp 0.8s var(--ease) 0.1s forwards;
       }
       .page-header__eyebrow {
-        font-size: 0.65rem;
+        font-size: var(--text-2);
         font-weight: 700;
-        letter-spacing: 0.22em;
+        letter-spacing: var(--ls-eyebrow);
         text-transform: uppercase;
         color: var(--accent);
         margin-bottom: var(--space-4);
@@ -231,15 +231,15 @@
         font-family: var(--serif);
         font-size: clamp(3rem, 7vw, 6.5rem);
         font-weight: 300;
-        line-height: 0.95;
+        line-height: var(--lh-display);
       }
       .page-header__title em {
         font-style: italic;
         display: block;
       }
       .page-header__desc {
-        font-size: 0.82rem;
-        line-height: 1.85;
+        font-size: var(--text-4);
+        line-height: var(--lh-loose);
         color: var(--fg-mid);
         max-width: 400px;
         align-self: end;
@@ -256,9 +256,9 @@
       }
       .filter-btn {
         font-family: var(--sans);
-        font-size: 0.62rem;
+        font-size: var(--text-2);
         font-weight: 700;
-        letter-spacing: 0.18em;
+        letter-spacing: var(--ls-track);
         text-transform: uppercase;
         background: transparent;
         border: 1px solid #2a2a2a;
@@ -411,9 +411,9 @@
         top: 1.2rem;
         right: 1.4rem;
         font-family: var(--sans);
-        font-size: 0.52rem;
+        font-size: var(--text-1);
         font-weight: 700;
-        letter-spacing: 0.18em;
+        letter-spacing: var(--ls-track);
         text-transform: uppercase;
         color: var(--accent);
         background: rgba(232, 84, 122, 0.12);
@@ -459,9 +459,9 @@
         margin-bottom: 0.7rem;
       }
       .card__tag {
-        font-size: 0.58rem;
+        font-size: var(--text-1);
         font-weight: 700;
-        letter-spacing: 0.18em;
+        letter-spacing: var(--ls-track);
         text-transform: uppercase;
         color: var(--accent);
         opacity: 0;
@@ -474,17 +474,17 @@
         font-family: var(--serif);
         font-size: clamp(1.1rem, 2vw, 1.7rem);
         font-weight: 300;
-        line-height: 1.15;
+        line-height: var(--lh-tight);
         color: var(--fg);
       }
       .card__title em {
         font-style: italic;
       }
       .card__sub {
-        font-size: 0.68rem;
+        font-size: var(--text-3);
         color: var(--fg-mid);
         margin-top: var(--space-2);
-        letter-spacing: 0.04em;
+        letter-spacing: var(--ls-body);
         opacity: 0;
         transform: translateY(6px);
         transition:
@@ -495,7 +495,7 @@
         position: absolute;
         top: 1.4rem;
         right: 1.6rem;
-        font-size: 1rem;
+        font-size: var(--text-6);
         color: var(--fg);
         opacity: 0;
         transform: translate(-6px, 6px);
@@ -508,9 +508,9 @@
         position: absolute;
         top: 1.4rem;
         left: 1.8rem;
-        font-size: 0.6rem;
+        font-size: var(--text-2);
         font-weight: 700;
-        letter-spacing: 0.18em;
+        letter-spacing: var(--ls-track);
         color: rgba(237, 233, 225, 0.3);
         z-index: 2;
       }
@@ -571,9 +571,9 @@
 
       .footer-nav a {
         font-family: var(--sans);
-        font-size: 0.7rem;
+        font-size: var(--text-3);
         font-weight: 500;
-        letter-spacing: 0.16em;
+        letter-spacing: var(--ls-label);
         text-transform: uppercase;
         text-decoration: none;
         color: var(--fg-dim);
@@ -605,7 +605,7 @@
         gap: var(--space-2);
         font-family: var(--serif);
         font-style: italic;
-        font-size: 1rem;
+        font-size: var(--text-6);
         color: var(--fg-dim) !important;
         letter-spacing: 0.02em !important;
       }
