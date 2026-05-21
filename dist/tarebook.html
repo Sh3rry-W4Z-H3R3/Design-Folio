@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tarebook — Sherjeel Hussain</title>
+  <meta name="description" content="Tarebook — a mobile-first pricing solution for potters. Designed and built by Sherjeel Hussain. Currently in development, nearing first deploy." />
+  <meta name="keywords" content="Tarebook, pricing app for potters, ceramics pricing tool, mobile-first product design, Sherjeel Hussain, UI designer Scotland" />
+  <meta name="author" content="Sherjeel Hussain" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://sherjeelhussain.com/tarebook.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Tarebook — Mobile-first Pricing for Potters" />
+  <meta property="og:description" content="A mobile-first pricing solution for potters. In development." />
+  <meta property="og:url" content="https://sherjeelhussain.com/tarebook.html" />
+  <meta property="og:image" content="https://sherjeelhussain.com/img/og-default.jpg" />
+  <meta property="og:site_name" content="Sherjeel Hussain — Designer &amp; Ceramicist" />
+  <meta property="og:locale" content="en_GB" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Tarebook — Mobile-first Pricing for Potters" />
+  <meta name="twitter:description" content="A mobile-first pricing solution for potters. In development." />
+  <meta name="twitter:image" content="https://sherjeelhussain.com/img/og-default.jpg" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "name": "Tarebook",
+    "description": "Mobile-first pricing solution for potters. A self-directed product designed and built by Sherjeel Hussain.",
+    "creator": {"@type": "Person", "name": "Sherjeel Hussain", "url": "https://sherjeelhussain.com"},
+    "about": ["Mobile Product Design", "UI Design", "Pricing Tool", "Ceramics"],
+    "url": "https://sherjeelhussain.com/tarebook.html",
+    "dateCreated": "2026"
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Syne:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="tokens.css" />
+
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --fg: #ede9e1;
+      --fg-mid: #999;
+      --accent: #e8547a;
+      --accent-2: #6dbf9e;
+      --gold: #c8b882;
+      --serif: 'Cormorant', Georgia, serif;
+      --sans: 'Syne', sans-serif;
+      --body: 'DM Sans', sans-serif;
+      --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--fg); font-family: var(--body); overflow-x: hidden; cursor: none; min-height: 100vh; }
+
+    .cursor { position: fixed; width: 10px; height: 10px; background: var(--fg); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: width 0.3s var(--ease), height 0.3s var(--ease); }
+    .cursor.grow { width: 44px; height: 44px; background: transparent; border: 1px solid var(--gold); opacity: 0.7; }
+    .cursor-icon { position: fixed; pointer-events: none; z-index: 9998; transform: translate(10px, -50%); opacity: 0; transition: opacity 0.2s ease; display: flex; flex-direction: column; align-items: center; }
+    .cursor-icon.visible { opacity: 1; }
+    .cursor-icon svg { display: block; }
+    .cursor-icon span { font-family: var(--sans); font-size: var(--text-1); font-weight: 700; letter-spacing: var(--ls-label); text-transform: uppercase; color: var(--fg); margin-top: 4px; }
+
+    :where(nav, footer, .footer-nav) a,
+    :where(nav, footer, .footer-nav) a:link,
+    :where(nav, footer, .footer-nav) a:visited { color: inherit; text-decoration: none; }
+
+    nav { display: flex; align-items: center; justify-content: space-between; padding: var(--space-5) var(--gutter); position: sticky; top: 0; z-index: 100; background: rgba(10,10,10,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid #1a1a1a; }
+    .nav__home { font-family: var(--serif); font-size: var(--text-7); font-weight: 300; letter-spacing: 0.06em; color: var(--fg); }
+    .nav__home em { font-style: italic; color: var(--accent); }
+    .nav__links { display: flex; gap: var(--space-6); align-items: center; }
+    .nav__links a { font-family: var(--sans); font-size: var(--text-2); font-weight: 700; letter-spacing: var(--ls-track); text-transform: uppercase; color: var(--fg-mid); transition: color 0.3s var(--ease); position: relative; }
+    .nav__links a::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 1px; background: var(--accent); transition: width 0.3s var(--ease); }
+    .nav__links a:hover { color: var(--fg); }
+    .nav__links a:hover::after { width: 100%; }
+    .nav__back { font-family: var(--sans); font-size: var(--text-2); font-weight: 700; letter-spacing: var(--ls-label); text-transform: uppercase; color: var(--fg-mid); display: flex; align-items: center; gap: var(--space-2); transition: color 0.3s var(--ease); }
+    .nav__back:hover { color: var(--fg); }
+    .nav__back::before { content: '←'; }
+
+    /* HERO */
+    .hero {
+      min-height: 78vh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: var(--space-8) var(--gutter) var(--space-7);
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(60% 60% at 50% 40%, rgba(200,184,130,0.10), transparent 70%);
+      pointer-events: none;
+    }
+    .hero__status {
+      font-family: var(--sans); font-size: var(--text-2); font-weight: 700;
+      letter-spacing: var(--ls-eyebrow); text-transform: uppercase;
+      color: var(--gold); margin-bottom: var(--space-5);
+      display: inline-flex; align-items: center; gap: var(--space-2);
+    }
+    .hero__status::before {
+      content: ''; display: block; width: 8px; height: 8px; border-radius: 50%;
+      background: var(--gold); box-shadow: 0 0 12px var(--gold);
+      animation: pulse 1.8s ease infinite;
+    }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.45; } }
+
+    .hero__title {
+      font-family: var(--serif);
+      font-size: clamp(3rem, 9vw, 8rem);
+      font-weight: 300; line-height: var(--lh-display);
+      letter-spacing: var(--ls-display);
+      max-width: 12ch;
+    }
+    .hero__title em { font-style: italic; color: var(--gold); }
+    .hero__sub {
+      margin-top: var(--space-5);
+      font-family: var(--serif); font-style: italic;
+      font-size: clamp(1rem, 1.8vw, 1.4rem);
+      font-weight: 300; color: rgba(237,233,225,0.7);
+      max-width: 620px; line-height: var(--lh-snug);
+    }
+
+    /* META STRIP */
+    .meta {
+      padding: var(--space-5) var(--gutter);
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-6);
+    }
+    .meta__label { font-family: var(--sans); font-size: var(--text-1); font-weight: 700; letter-spacing: var(--ls-eyebrow); text-transform: uppercase; color: var(--fg-mid); margin-bottom: var(--space-2); }
+    .meta__value { font-family: var(--body); font-size: var(--text-5); color: var(--fg); font-weight: 300; line-height: var(--lh-snug); }
+    .meta__value em { font-style: italic; color: var(--gold); }
+    @media (max-width: 768px) { .meta { grid-template-columns: 1fr 1fr; gap: var(--space-5); } }
+
+    /* PREMISE */
+    .premise {
+      padding: var(--space-8) var(--gutter);
+      display: grid; grid-template-columns: 1fr 2fr; gap: var(--space-8);
+      align-items: start;
+    }
+    .premise__label {
+      font-family: var(--sans); font-size: var(--text-2); font-weight: 700;
+      letter-spacing: var(--ls-eyebrow); text-transform: uppercase;
+      color: var(--gold); position: sticky; top: var(--space-8);
+      display: flex; align-items: center; gap: var(--space-2);
+    }
+    .premise__label::before { content: ''; display: block; width: 1.5rem; height: 1px; background: var(--gold); }
+    .premise__body { font-family: var(--body); font-size: var(--text-5); color: var(--fg-mid); font-weight: 300; line-height: var(--lh-loose); max-width: 640px; }
+    .premise__body p + p { margin-top: var(--space-4); }
+    .premise__body strong { color: var(--fg); font-weight: 500; }
+    .premise__body em { font-style: italic; color: var(--fg); }
+    @media (max-width: 768px) { .premise { grid-template-columns: 1fr; gap: var(--space-5); padding: var(--space-7) var(--gutter); } }
+
+    /* IMAGE GRID */
+    .shots { padding: 0 var(--gutter) var(--space-8); }
+    .shots__label { font-family: var(--sans); font-size: var(--text-2); font-weight: 700; letter-spacing: var(--ls-eyebrow); text-transform: uppercase; color: var(--gold); margin-bottom: var(--space-5); display: flex; align-items: center; gap: var(--space-2); }
+    .shots__label::before { content: ''; display: block; width: 1.5rem; height: 1px; background: var(--gold); }
+    .shots__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-5); }
+    .shots__slot {
+      aspect-ratio: 9/16;
+      border: 1px dashed rgba(237,233,225,0.18);
+      border-radius: 4px;
+      background: rgba(255,255,255,0.015);
+      background-size: cover; background-position: center;
+    }
+    .shots__slot:not(:empty) { border: none; }
+    @media (max-width: 768px) { .shots__grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 480px) { .shots__grid { grid-template-columns: 1fr; } }
+
+    /* NEXT PROJECT */
+    .next-project { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-5); padding: var(--space-7) var(--gutter); border-top: 1px solid #1a1a1a; }
+    .next-project__label { font-family: var(--sans); font-size: var(--text-2); font-weight: 700; letter-spacing: var(--ls-track); text-transform: uppercase; color: var(--fg-mid); margin-bottom: var(--space-2); }
+    .next-project__title { font-family: var(--serif); font-size: clamp(1.8rem, 3.5vw, 3.2rem); font-weight: 300; color: var(--fg); }
+    .next-project__title em { font-style: italic; color: var(--accent); }
+    .next-project__title:hover { color: var(--fg-mid); }
+    .next-project__arrow { font-size: 3rem; color: var(--fg-mid); transition: color 0.3s var(--ease), transform 0.3s var(--ease); }
+    .next-project__arrow:hover { color: var(--accent); transform: translateX(8px); }
+
+    /* FOOTER */
+    footer.footer-nav { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; padding: var(--space-6) var(--gutter) var(--space-7); gap: var(--space-3); border-top: 1px solid #1a1a1a; }
+    .footer-nav__left { display: flex; align-items: center; gap: var(--space-6); flex-wrap: wrap; }
+    .footer-nav a { font-family: var(--sans); font-size: var(--text-3); font-weight: 500; letter-spacing: var(--ls-label); text-transform: uppercase; color: var(--fg-mid); transition: color 0.3s var(--ease); }
+    .footer-nav a:hover { color: var(--fg); }
+    .footer-nav__all { font-family: var(--serif); font-style: italic; font-size: var(--text-6); color: var(--fg-mid) !important; letter-spacing: 0.02em !important; }
+    .footer-nav__all:hover { color: var(--fg) !important; }
+    .divider { width: 1px; height: 14px; background: #333; flex-shrink: 0; }
+
+    @media (max-width: 768px) {
+      body { cursor: auto; }
+      .cursor, .cursor-icon { display: none; }
+      .nav__links { gap: var(--space-4); }
+    }
+    @media (max-width: 480px) {
+      nav { padding: var(--space-4) var(--space-3); }
+      .nav__links a { font-size: var(--text-1); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-icon" id="cursorIcon"></div>
+
+  <nav>
+    <a href="index.html" class="nav__home">Sherjeel <em>Hussain</em></a>
+    <div style="display:flex;align-items:center;gap:var(--space-6);">
+      <a href="digital.html" class="nav__back">Digital</a>
+      <div class="nav__links">
+        <a href="digital.html" data-cursor="monitor">Digital</a>
+        <a href="craft.html" data-cursor="pot">Craft</a>
+        <a href="exhibitions.html">Exhibitions</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <p class="hero__status">In Development &middot; 2026</p>
+    <h1 class="hero__title"><em>Tarebook</em></h1>
+    <p class="hero__sub">
+      Mobile-first pricing solution for potters. Designed and built by Sherjeel Hussain, currently nearing first deploy.
+    </p>
+  </section>
+
+  <section class="meta">
+    <div>
+      <p class="meta__label">Type</p>
+      <p class="meta__value">Self-Directed &middot; Mobile Product</p>
+    </div>
+    <div>
+      <p class="meta__label">Discipline</p>
+      <p class="meta__value">UI Design, Mobile UX, Product</p>
+    </div>
+    <div>
+      <p class="meta__label">Status</p>
+      <p class="meta__value"><em>In Development</em></p>
+    </div>
+    <div>
+      <p class="meta__label">Year</p>
+      <p class="meta__value">2026</p>
+    </div>
+  </section>
+
+  <section class="premise">
+    <p class="premise__label">The Premise</p>
+    <div class="premise__body">
+      <p>Potters pricing their own work tend to do it badly. Material cost, kiln time, glaze, firing fees, studio rent, labour — most production accounting either lives in a spreadsheet nobody updates, or it doesn't exist at all. The pricing decision happens at the kiln door under time pressure.</p>
+      <p><strong>Tarebook</strong> is a mobile-first pricing tool built for that moment. Open it on a phone in the studio, log inputs as they happen, get a defensible price out the other side. Designed and built ground-up — UI, system, product logic — by Sherjeel Hussain.</p>
+      <!-- PLACEHOLDER: Expanded premise / process narrative — designer to write as project nears deploy. -->
+    </div>
+  </section>
+
+  <section class="shots">
+    <p class="shots__label">Screens &amp; Process</p>
+    <div class="shots__grid">
+      <!-- PLACEHOLDER: drop screenshots/wireframes into dist/imgs-digital/Tarebook/ and swap the empty slots for <img> tags. -->
+      <div class="shots__slot" role="img" aria-label="Tarebook screen placeholder — pending"></div>
+      <div class="shots__slot" role="img" aria-label="Tarebook screen placeholder — pending"></div>
+      <div class="shots__slot" role="img" aria-label="Tarebook screen placeholder — pending"></div>
+      <div class="shots__slot" role="img" aria-label="Tarebook screen placeholder — pending"></div>
+      <div class="shots__slot" role="img" aria-label="Tarebook screen placeholder — pending"></div>
+      <div class="shots__slot" role="img" aria-label="Tarebook screen placeholder — pending"></div>
+    </div>
+  </section>
+
+  <section class="next-project" aria-label="Next project">
+    <div>
+      <p class="next-project__label">Next Project</p>
+      <a href="sim-glasgow.html" class="next-project__title">Sim <em>Glasgow</em> ↗</a>
+    </div>
+    <a href="sim-glasgow.html" class="next-project__arrow">→</a>
+  </section>
+
+  <footer class="footer-nav">
+    <div class="footer-nav__left">
+      <a href="work.html" class="footer-nav__all">View all work &nbsp;↗</a>
+      <div class="divider"></div>
+      <a href="craft.html">Craft</a>
+      <a href="digital.html">Digital</a>
+      <a href="exhibitions.html">Exhibitions</a>
+      <a href="./SideQuests.html">Side Quests</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="footer-nav__right">
+      <a href="https://www.linkedin.com/in/sherjeel-hussain-0652431b9/" target="_blank" rel="noopener">LinkedIn</a>
+      &nbsp;&nbsp;
+      <a href="https://www.instagram.com/sherjeel_h27_design_/" target="_blank" rel="noopener">Instagram</a>
+    </div>
+  </footer>
+
+  <script src="mobile-nav.js" defer></script>
+  <script>
+    const cursor = document.getElementById('cursor');
+    const cursorIcon = document.getElementById('cursorIcon');
+    const ICONS = {
+      monitor: `<svg width="28" height="22" viewBox="0 0 28 22" fill="none"><rect x="1" y="1" width="26" height="17" rx="2" stroke="#e8547a" stroke-width="1.5"/><rect x="9" y="18" width="10" height="2" fill="#e8547a" opacity=".5"/><rect x="6" y="20" width="16" height="1.5" fill="#e8547a" opacity=".5"/><circle cx="14" cy="9.5" r="1.5" fill="#e8547a" opacity=".4"/></svg><span>Digital</span>`,
+      pot: `<svg width="22" height="26" viewBox="0 0 22 26" fill="none"><path d="M7 4C5 4 2 7 2 13C2 19 5 23 11 23C17 23 20 19 20 13C20 7 17 4 15 4Z" stroke="#6dbf9e" stroke-width="1.5" fill="none"/><path d="M7 4C8 2 10 1 11 1C12 1 14 2 15 4" stroke="#6dbf9e" stroke-width="1.5" fill="none"/></svg><span>Craft</span>`
+    };
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+      cursorIcon.style.left = (e.clientX + 18) + 'px';
+      cursorIcon.style.top = e.clientY + 'px';
+    });
+    document.querySelectorAll('[data-cursor]').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursor.classList.add('grow');
+        cursorIcon.innerHTML = ICONS[el.dataset.cursor] || '';
+        cursorIcon.classList.add('visible');
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.classList.remove('grow');
+        cursorIcon.classList.remove('visible');
+      });
+    });
+    document.querySelectorAll('a:not([data-cursor])').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('grow'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('grow'));
+    });
+  </script>
+
+</body>
+</html>

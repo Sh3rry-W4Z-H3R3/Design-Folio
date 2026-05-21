@@ -82,6 +82,11 @@
     <priority>0.75</priority>
   </url>
   <url>
+    <loc>https://sherjeelhussain.com/tarebook.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://sherjeelhussain.com/just-rite.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>

@@ -1,657 +1,1055 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Graduate in Residence — Sherjeel Hussain</title>
-  <meta name="description" content="Graduate in Residence at Gray's School of Art, RGU Aberdeen, 2022–23. Ceramics practice, glaze development, Raku Club, and the BLEND exhibition — first public sale of original work." />
-  <link rel="canonical" href="https://sherjeelhussain.com/graduate-in-residence.html" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Syne:wght@400;500;700&display=swap" rel="stylesheet" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Graduate in Residence — Sherjeel Hussain</title>
+    <meta
+      name="description"
+      content="Graduate in Residence at Gray's School of Art, RGU Aberdeen, 2022–23. Ceramics practice, glaze development, Raku Club, and the BLEND exhibition — first public sale of original work."
+    />
+    <link
+      rel="canonical"
+      href="https://sherjeelhussain.com/graduate-in-residence.html"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Syne:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
 
-  <link rel="stylesheet" href="tokens.css" />
+    <link rel="stylesheet" href="tokens.css" />
     <style>
-    /* ─── TOKENS ─────────────────────────────────────────── */
-    :root {
-      --bg:       #0a0a0a;
-      --fg:       #ede9e1;
-      --fg-dim:   #7a7a7a;
-      --fg-mid:   #999;
-      --accent:   #6dbf9e;   /* craft mint */
-      --accent-2: #e8547a;
-      --gold:     #c8b882;
-      --serif:    'Cormorant', Georgia, serif;
-      --sans:     'Syne', sans-serif;
-      --body:     'DM Sans', sans-serif;
-      --ease:     cubic-bezier(0.25, 0.1, 0.25, 1);
-      --slow:     0.7s var(--ease);
-      --fast:     0.3s var(--ease);
-      --gutter:   clamp(1.2rem, 4vw, 3rem);
-    }
+      /* ─── TOKENS ─────────────────────────────────────────── */
+      :root {
+        --bg: #0a0a0a;
+        --fg: #ede9e1;
+        --fg-dim: #7a7a7a;
+        --fg-mid: #999;
+        --accent: #6dbf9e; /* craft mint */
+        --accent-2: #e8547a;
+        --gold: #c8b882;
+        --serif: "Cormorant", Georgia, serif;
+        --sans: "Syne", sans-serif;
+        --body: "DM Sans", sans-serif;
+        --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+        --slow: 0.7s var(--ease);
+        --fast: 0.3s var(--ease);
+        --gutter: clamp(1.2rem, 4vw, 3rem);
+      }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { font-size: 16px; scroll-behavior: smooth; }
-    body {
-      background: var(--bg);
-      color: var(--fg);
-      font-family: var(--body);
-      overflow-x: hidden;
-      cursor: none;
-    }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        font-size: 16px;
+        scroll-behavior: smooth;
+      }
+      body {
+        background: var(--bg);
+        color: var(--fg);
+        font-family: var(--body);
+        overflow-x: hidden;
+        cursor: none;
+      }
 
-    /* ─── CURSOR ──────────────────────────────────────────── */
-    .cursor {
-      position: fixed;
-      width: 10px; height: 10px;
-      background: var(--fg); border-radius: 50%;
-      pointer-events: none; z-index: 9999;
-      transform: translate(-50%, -50%);
-      transition: width var(--fast), height var(--fast), background var(--fast);
-    }
-    .cursor.grow {
-      width: 44px; height: 44px;
-      background: transparent;
-      border: 1px solid var(--accent); opacity: 0.7;
-    }
+      /* ─── CURSOR ──────────────────────────────────────────── */
+      .cursor {
+        position: fixed;
+        width: 10px;
+        height: 10px;
+        background: var(--fg);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+        transform: translate(-50%, -50%);
+        transition:
+          width var(--fast),
+          height var(--fast),
+          background var(--fast);
+      }
+      .cursor.grow {
+        width: 44px;
+        height: 44px;
+        background: transparent;
+        border: 1px solid var(--accent);
+        opacity: 0.7;
+      }
 
-    /* ─── NAV ─────────────────────────────────────────────── */
-    nav {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: var(--space-5) var(--gutter);
-      position: sticky; top: 0; z-index: 100;
-      background: rgba(10,10,10,0.92); backdrop-filter: blur(12px);
-      border-bottom: 1px solid #1a1a1a;
-    }
-    .nav__home {
-      font-family: var(--serif); font-size: var(--text-7); font-weight: 300;
-      letter-spacing: var(--ls-body); text-decoration: none; color: var(--fg);
-    }
-    .nav__home em { font-style: italic; color: var(--accent-2); }
-    .nav__links { display: flex; gap: var(--space-6); }
-    .nav__links a {
-      font-family: var(--sans); font-size: var(--text-2); font-weight: 700;
-      letter-spacing: var(--ls-track); text-transform: uppercase;
-      text-decoration: none; color: var(--fg-dim);
-      transition: color var(--fast); position: relative;
-    }
-    .nav__links a::after {
-      content: ''; position: absolute; bottom: -3px; left: 0;
-      width: 0; height: 1px; background: var(--accent); transition: width var(--fast);
-    }
-    .nav__links a:hover, .nav__links a.active { color: var(--fg); }
-    .nav__links a:hover::after, .nav__links a.active::after { width: 100%; }
+      /* ─── NAV ─────────────────────────────────────────────── */
+      nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: var(--space-5) var(--gutter);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(10, 10, 10, 0.92);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid #1a1a1a;
+      }
+      .nav__home {
+        font-family: var(--serif);
+        font-size: var(--text-7);
+        font-weight: 300;
+        letter-spacing: var(--ls-body);
+        text-decoration: none;
+        color: var(--fg);
+      }
+      .nav__home em {
+        font-style: italic;
+        color: var(--accent-2);
+      }
+      .nav__links {
+        display: flex;
+        gap: var(--space-6);
+      }
+      .nav__links a {
+        font-family: var(--sans);
+        font-size: var(--text-2);
+        font-weight: 700;
+        letter-spacing: var(--ls-track);
+        text-transform: uppercase;
+        text-decoration: none;
+        color: var(--fg-dim);
+        transition: color var(--fast);
+        position: relative;
+      }
+      .nav__links a::after {
+        content: "";
+        position: absolute;
+        bottom: -3px;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background: var(--accent);
+        transition: width var(--fast);
+      }
+      .nav__links a:hover,
+      .nav__links a.active {
+        color: var(--fg);
+      }
+      .nav__links a:hover::after,
+      .nav__links a.active::after {
+        width: 100%;
+      }
 
-    /* ─── PROJECT HERO ────────────────────────────────────── */
-    .project-hero {
-      padding: var(--space-8) var(--gutter) 0;
-      opacity: 0; animation: fadeUp 0.8s var(--ease) 0.1s forwards;
-    }
-    .project-hero__eyebrow {
-      font-family: var(--sans); font-size: var(--text-2); font-weight: 700;
-      letter-spacing: var(--ls-eyebrow); text-transform: uppercase;
-      color: var(--accent); margin-bottom: var(--space-4);
-      display: flex; align-items: center; gap: 0.8rem;
-    }
-    .project-hero__eyebrow::before {
-      content: ''; display: block; width: 2rem; height: 1px; background: var(--accent);
-    }
-    .project-hero__title {
-      font-family: var(--serif);
-      font-size: clamp(3rem, 8vw, 7rem);
-      font-weight: 300; line-height: var(--lh-display);
-      letter-spacing: var(--ls-display);
-    }
-    .project-hero__title em { font-style: italic; display: block; }
+      /* ─── PROJECT HERO ────────────────────────────────────── */
+      .project-hero {
+        padding: var(--space-8) var(--gutter) 0;
+        opacity: 0;
+        animation: fadeUp 0.8s var(--ease) 0.1s forwards;
+      }
+      .project-hero__eyebrow {
+        font-family: var(--sans);
+        font-size: var(--text-2);
+        font-weight: 700;
+        letter-spacing: var(--ls-eyebrow);
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: var(--space-4);
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+      }
+      .project-hero__eyebrow::before {
+        content: "";
+        display: block;
+        width: 2rem;
+        height: 1px;
+        background: var(--accent);
+      }
+      .project-hero__title {
+        font-family: var(--serif);
+        font-size: clamp(3rem, 8vw, 7rem);
+        font-weight: 300;
+        line-height: var(--lh-display);
+        letter-spacing: var(--ls-display);
+      }
+      .project-hero__title em {
+        font-style: italic;
+        display: block;
+      }
 
-    /* ─── META STRIP ──────────────────────────────────────── */
-    .meta-strip {
-      display: grid; grid-template-columns: repeat(4, 1fr);
-      gap: 2px; margin: var(--space-6) 0 0;
-      border-top: 1px solid #1a1a1a;
-      opacity: 0; animation: fadeUp 0.8s var(--ease) 0.3s forwards;
-    }
-    .meta-strip__item {
-      padding: var(--space-5) var(--gutter);
-      border-right: 1px solid #1a1a1a;
-    }
-    .meta-strip__item:last-child { border-right: none; }
-    .meta-strip__label {
-      font-family: var(--sans); font-size: var(--text-1); font-weight: 700;
-      letter-spacing: var(--ls-track); text-transform: uppercase;
-      color: var(--fg-dim); margin-bottom: 0.6rem;
-    }
-    .meta-strip__value {
-      font-family: var(--serif); font-size: var(--text-6); font-weight: 300;
-      color: var(--fg); line-height: var(--lh-snug);
-    }
-    .meta-strip__value em { font-style: italic; color: var(--accent); }
+      /* ─── META STRIP ──────────────────────────────────────── */
+      .meta-strip {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2px;
+        margin: var(--space-6) 0 0;
+        border-top: 1px solid #1a1a1a;
+        opacity: 0;
+        animation: fadeUp 0.8s var(--ease) 0.3s forwards;
+      }
+      .meta-strip__item {
+        padding: var(--space-5) var(--gutter);
+        border-right: 1px solid #1a1a1a;
+      }
+      .meta-strip__item:last-child {
+        border-right: none;
+      }
+      .meta-strip__label {
+        font-family: var(--sans);
+        font-size: var(--text-1);
+        font-weight: 700;
+        letter-spacing: var(--ls-track);
+        text-transform: uppercase;
+        color: var(--fg-dim);
+        margin-bottom: 0.6rem;
+      }
+      .meta-strip__value {
+        font-family: var(--serif);
+        font-size: var(--text-6);
+        font-weight: 300;
+        color: var(--fg);
+        line-height: var(--lh-snug);
+      }
+      .meta-strip__value em {
+        font-style: italic;
+        color: var(--accent);
+      }
 
-    /* ─── HERO IMAGE ──────────────────────────────────────── */
-    .hero-img {
-      width: 100%; aspect-ratio: 16/7;
-      background: #111; overflow: hidden; position: relative;
-      opacity: 0; animation: fadeUp 0.8s var(--ease) 0.45s forwards;
-    }
-    .hero-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .hero-img__placeholder {
-      position: absolute; inset: 0;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center; gap: 0.8rem;
-      background: linear-gradient(135deg, #0e100e 0%, #121610 50%, #0e100e 100%);
-    }
-    .hero-img__placeholder em {
-      font-family: var(--serif); font-size: clamp(1.2rem, 2.5vw, 2rem);
-      font-weight: 300; font-style: italic; color: rgba(237,233,225,0.35);
-    }
-    .hero-img__placeholder span {
-      font-family: var(--sans); font-size: var(--text-1); font-weight: 700;
-      letter-spacing: var(--ls-track); text-transform: uppercase; color: var(--fg-dim);
-    }
+      /* ─── HERO IMAGE ──────────────────────────────────────── */
+      .hero-img {
+        width: 100%;
+        aspect-ratio: 16/7;
+        background: #111;
+        overflow: hidden;
+        position: relative;
+        opacity: 0;
+        animation: fadeUp 0.8s var(--ease) 0.45s forwards;
+      }
+      .hero-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .hero-img__placeholder {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.8rem;
+        background: linear-gradient(
+          135deg,
+          #0e100e 0%,
+          #121610 50%,
+          #0e100e 100%
+        );
+      }
+      .hero-img__placeholder em {
+        font-family: var(--serif);
+        font-size: clamp(1.2rem, 2.5vw, 2rem);
+        font-weight: 300;
+        font-style: italic;
+        color: rgba(237, 233, 225, 0.35);
+      }
+      .hero-img__placeholder span {
+        font-family: var(--sans);
+        font-size: var(--text-1);
+        font-weight: 700;
+        letter-spacing: var(--ls-track);
+        text-transform: uppercase;
+        color: var(--fg-dim);
+      }
 
-    /* ─── SECTIONS ────────────────────────────────────────── */
-    .section {
-      padding: var(--space-8) var(--gutter);
-      border-top: 1px solid #1a1a1a;
-    }
-    .section--split {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: var(--space-7); align-items: start;
-    }
-    .section__num {
-      font-family: var(--sans); font-size: var(--text-1); font-weight: 700;
-      letter-spacing: var(--ls-eyebrow); text-transform: uppercase;
-      color: var(--accent); margin-bottom: var(--space-4);
-      display: flex; align-items: center; gap: 0.8rem;
-    }
-    .section__num::before {
-      content: ''; display: block; width: 1.5rem; height: 1px; background: var(--accent);
-    }
-    .section__heading {
-      font-family: var(--serif);
-      font-size: clamp(2rem, 4vw, 3.5rem);
-      font-weight: 300; line-height: var(--lh-tight); margin-bottom: var(--space-5);
-    }
-    .section__heading em { font-style: italic; }
-    .section__body {
-      font-family: var(--body); font-size: var(--text-5); line-height: var(--lh-loose);
-      color: var(--fg-mid); font-weight: 300; max-width: 52ch;
-    }
-    .section__body + .section__body { margin-top: var(--space-4); }
-    .section__body strong { color: var(--fg); font-weight: 400; }
+      /* ─── SECTIONS ────────────────────────────────────────── */
+      .section {
+        padding: var(--space-8) var(--gutter);
+        border-top: 1px solid #1a1a1a;
+      }
+      .section--split {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-7);
+        align-items: start;
+      }
+      .section__num {
+        font-family: var(--sans);
+        font-size: var(--text-1);
+        font-weight: 700;
+        letter-spacing: var(--ls-eyebrow);
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: var(--space-4);
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+      }
+      .section__num::before {
+        content: "";
+        display: block;
+        width: 1.5rem;
+        height: 1px;
+        background: var(--accent);
+      }
+      .section__heading {
+        font-family: var(--serif);
+        font-size: clamp(2rem, 4vw, 3.5rem);
+        font-weight: 300;
+        line-height: var(--lh-tight);
+        margin-bottom: var(--space-5);
+      }
+      .section__heading em {
+        font-style: italic;
+      }
+      .section__body {
+        font-family: var(--body);
+        font-size: var(--text-5);
+        line-height: var(--lh-loose);
+        color: var(--fg-mid);
+        font-weight: 300;
+        max-width: 52ch;
+      }
+      .section__body + .section__body {
+        margin-top: var(--space-4);
+      }
+      .section__body strong {
+        color: var(--fg);
+        font-weight: 400;
+      }
 
-    /* ─── CALLOUT ─────────────────────────────────────────── */
-    .callout {
-      margin: var(--space-6) 0;
-      padding: var(--space-5) 2.2rem;
-      border-left: 2px solid var(--accent);
-      background: rgba(109,191,158,0.04);
-    }
-    .callout__text {
-      font-family: var(--serif); font-size: clamp(1.1rem, 2vw, 1.5rem);
-      font-weight: 300; line-height: var(--lh-base); color: var(--fg);
-    }
-    .callout__text em { font-style: italic; color: var(--accent); }
+      /* ─── CALLOUT ─────────────────────────────────────────── */
+      .callout {
+        margin: var(--space-6) 0;
+        padding: var(--space-5) 2.2rem;
+        border-left: 2px solid var(--accent);
+        background: rgba(109, 191, 158, 0.04);
+      }
+      .callout__text {
+        font-family: var(--serif);
+        font-size: clamp(1.1rem, 2vw, 1.5rem);
+        font-weight: 300;
+        line-height: var(--lh-base);
+        color: var(--fg);
+      }
+      .callout__text em {
+        font-style: italic;
+        color: var(--accent);
+      }
 
-    /* ─── IMAGE GRID ──────────────────────────────────────── */
-    .img-grid {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 2px; padding: 0 var(--gutter);
-    }
-    .img-grid__item {
-      aspect-ratio: 4/3; background: #111;
-      overflow: hidden; position: relative;
-    }
-    .img-grid__item img {
-      width: 100%; height: 100%; object-fit: cover;
-    }
-    .img-grid__item--tall { aspect-ratio: 3/4; }
-    .img-grid__placeholder {
-      position: absolute; inset: 0;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center; gap: 0.6rem;
-      background: #111;
-    }
-    .img-grid__placeholder span {
-      font-family: var(--sans); font-size: var(--text-1); font-weight: 700;
-      letter-spacing: var(--ls-track); text-transform: uppercase; color: var(--fg-dim);
-    }
+      /* ─── IMAGE GRID ──────────────────────────────────────── */
+      .img-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2px;
+        padding: 0 var(--gutter);
+      }
+      .img-grid__item {
+        aspect-ratio: 4/3;
+        background: #111;
+        overflow: hidden;
+        position: relative;
+      }
+      .img-grid__item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .img-grid__item--tall {
+        aspect-ratio: 3/4;
+      }
+      .img-grid__placeholder {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.6rem;
+        background: #111;
+      }
+      .img-grid__placeholder span {
+        font-family: var(--sans);
+        font-size: var(--text-1);
+        font-weight: 700;
+        letter-spacing: var(--ls-track);
+        text-transform: uppercase;
+        color: var(--fg-dim);
+      }
 
-    /* ─── PROCESS STEPS ───────────────────────────────────── */
-    .process-steps {
-      counter-reset: step;
-      display: flex; flex-direction: column; gap: 0;
-      margin-bottom: 0;
-    }
-    .process-step {
-      display: grid; grid-template-columns: 1fr 2fr; gap: var(--space-6);
-      padding: var(--space-6) 0;
-      border-bottom: 1px solid #1a1a1a;
-      counter-increment: step;
-      align-items: start;
-    }
-    .process-step:first-child { border-top: 1px solid #1a1a1a; }
-    .process-step__num {
-      font-family: var(--sans); font-size: var(--text-1); font-weight: 700;
-      letter-spacing: var(--ls-track); text-transform: uppercase; color: var(--fg-dim);
-      padding-top: var(--space-2);
-    }
-    .process-step__num::before { content: "0" counter(step); }
-    .process-step__heading {
-      font-family: var(--serif); font-size: var(--text-7); font-weight: 300;
-      margin-bottom: 0.8rem; line-height: var(--lh-tight);
-    }
-    .process-step__heading em { font-style: italic; }
-    .process-step__body {
-      font-family: var(--body); font-size: var(--text-4); line-height: var(--lh-loose);
-      color: var(--fg-mid); font-weight: 300; max-width: 48ch;
-    }
+      /* ─── PROCESS STEPS ───────────────────────────────────── */
+      .process-steps {
+        counter-reset: step;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        margin-bottom: 0;
+      }
+      .process-step {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: var(--space-6);
+        padding: var(--space-6) 0;
+        border-bottom: 1px solid #1a1a1a;
+        counter-increment: step;
+        align-items: start;
+      }
+      .process-step:first-child {
+        border-top: 1px solid #1a1a1a;
+      }
+      .process-step__num {
+        font-family: var(--sans);
+        font-size: var(--text-1);
+        font-weight: 700;
+        letter-spacing: var(--ls-track);
+        text-transform: uppercase;
+        color: var(--fg-dim);
+        padding-top: var(--space-2);
+      }
+      .process-step__num::before {
+        content: "0" counter(step);
+      }
+      .process-step__heading {
+        font-family: var(--serif);
+        font-size: var(--text-7);
+        font-weight: 300;
+        margin-bottom: 0.8rem;
+        line-height: var(--lh-tight);
+      }
+      .process-step__heading em {
+        font-style: italic;
+      }
+      .process-step__body {
+        font-family: var(--body);
+        font-size: var(--text-4);
+        line-height: var(--lh-loose);
+        color: var(--fg-mid);
+        font-weight: 300;
+        max-width: 48ch;
+      }
 
-    /* ─── STAT ROW ────────────────────────────────────────── */
-    .stat-row {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 2px; margin-top: var(--space-7);
-    }
-    .stat {
-      padding: var(--space-6) var(--space-5); background: #111;
-      border-top: 1px solid #222;
-      transition: border-top-color var(--fast);
-    }
-    .stat:hover { border-top-color: var(--accent); }
-    .stat__num {
-      font-family: var(--serif);
-      font-size: clamp(2.8rem, 5vw, 4.5rem);
-      font-weight: 300; line-height: var(--lh-tight);
-      color: var(--fg); margin-bottom: 0.6rem;
-    }
-    .stat__num em { font-style: italic; color: var(--accent); }
-    .stat__label {
-      font-family: var(--sans); font-size: var(--text-2); font-weight: 700;
-      letter-spacing: var(--ls-track); text-transform: uppercase; color: var(--fg-dim);
-    }
+      /* ─── STAT ROW ────────────────────────────────────────── */
+      .stat-row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2px;
+        margin-top: var(--space-7);
+      }
+      .stat {
+        padding: var(--space-6) var(--space-5);
+        background: #111;
+        border-top: 1px solid #222;
+        transition: border-top-color var(--fast);
+      }
+      .stat:hover {
+        border-top-color: var(--accent);
+      }
+      .stat__num {
+        font-family: var(--serif);
+        font-size: clamp(2.8rem, 5vw, 4.5rem);
+        font-weight: 300;
+        line-height: var(--lh-tight);
+        color: var(--fg);
+        margin-bottom: 0.6rem;
+      }
+      .stat__num em {
+        font-style: italic;
+        color: var(--accent);
+      }
+      .stat__label {
+        font-family: var(--sans);
+        font-size: var(--text-2);
+        font-weight: 700;
+        letter-spacing: var(--ls-track);
+        text-transform: uppercase;
+        color: var(--fg-dim);
+      }
 
-    /* ─── NEXT PROJECT ────────────────────────────────────── */
-    .next-project {
-      display: block; text-decoration: none; color: inherit;
-      padding: var(--space-8) var(--gutter);
-      border-top: 1px solid #1a1a1a;
-      position: relative; overflow: hidden;
-      transition: background var(--fast);
-    }
-    .next-project:hover { background: #0d0d0d; }
-    .next-project__label {
-      font-family: var(--sans); font-size: var(--text-1); font-weight: 700;
-      letter-spacing: var(--ls-eyebrow); text-transform: uppercase; color: var(--fg-dim);
-      margin-bottom: var(--space-4); display: block;
-    }
-    .next-project__title {
-      font-family: var(--serif);
-      font-size: clamp(2rem, 5vw, 4rem);
-      font-weight: 300; line-height: var(--lh-tight);
-    }
-    .next-project__title em { font-style: italic; color: var(--accent-2); }
-    .next-project__arrow {
-      position: absolute; right: var(--gutter); top: 50%;
-      transform: translateY(-50%);
-      font-size: 2.5rem; color: var(--fg-dim);
-      transition: color var(--fast), transform var(--fast);
-    }
-    .next-project:hover .next-project__arrow {
-      color: var(--fg); transform: translate(6px, -50%);
-    }
+      /* ─── NEXT PROJECT ────────────────────────────────────── */
+      .next-project {
+        display: block;
+        text-decoration: none;
+        color: inherit;
+        padding: var(--space-8) var(--gutter);
+        border-top: 1px solid #1a1a1a;
+        position: relative;
+        overflow: hidden;
+        transition: background var(--fast);
+      }
+      .next-project:hover {
+        background: #0d0d0d;
+      }
+      .next-project__label {
+        font-family: var(--sans);
+        font-size: var(--text-1);
+        font-weight: 700;
+        letter-spacing: var(--ls-eyebrow);
+        text-transform: uppercase;
+        color: var(--fg-dim);
+        margin-bottom: var(--space-4);
+        display: block;
+      }
+      .next-project__title {
+        font-family: var(--serif);
+        font-size: clamp(2rem, 5vw, 4rem);
+        font-weight: 300;
+        line-height: var(--lh-tight);
+      }
+      .next-project__title em {
+        font-style: italic;
+        color: var(--accent-2);
+      }
+      .next-project__arrow {
+        position: absolute;
+        right: var(--gutter);
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 2.5rem;
+        color: var(--fg-dim);
+        transition:
+          color var(--fast),
+          transform var(--fast);
+      }
+      .next-project:hover .next-project__arrow {
+        color: var(--fg);
+        transform: translate(6px, -50%);
+      }
 
-/* ─── FOOTER LINKS ───────────────────────────────────── */
-    .footer-nav {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      padding: var(--space-6) var(--space-5) var(--space-7);
-      gap: var(--space-3);
-      opacity: 0;
-      animation: fadeUp 0.9s var(--ease) 0.7s forwards;
-    }
+      /* ─── FOOTER LINKS ───────────────────────────────────── */
+      .footer-nav {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        padding: var(--space-6) var(--space-5) var(--space-7);
+        gap: var(--space-3);
+        opacity: 0;
+        animation: fadeUp 0.9s var(--ease) 0.7s forwards;
+      }
 
-    .footer-nav__left {
-      display: flex;
-      align-items: center;
-      gap: var(--space-6);
-    }
+      .footer-nav__left {
+        display: flex;
+        align-items: center;
+        gap: var(--space-6);
+      }
 
-    .footer-nav a {
-      font-family: var(--sans);
-      font-size: var(--text-3);
-      font-weight: 500;
-      letter-spacing: var(--ls-label);
-      text-transform: uppercase;
-      text-decoration: none;
-      color: var(--fg-dim);
-      position: relative;
-      transition: color var(--fast);
-    }
+      .footer-nav a {
+        font-family: var(--sans);
+        font-size: var(--text-3);
+        font-weight: 500;
+        letter-spacing: var(--ls-label);
+        text-transform: uppercase;
+        text-decoration: none;
+        color: var(--fg-dim);
+        position: relative;
+        transition: color var(--fast);
+      }
 
-    .footer-nav a::after {
-      content: '';
-      position: absolute;
-      bottom: -3px; left: 0;
-      width: 0; height: 1px;
-      background: var(--accent);
-      transition: width var(--fast);
-    }
+      .footer-nav a::after {
+        content: "";
+        position: absolute;
+        bottom: -3px;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background: var(--accent);
+        transition: width var(--fast);
+      }
 
-    .footer-nav a:hover {
-      color: var(--fg);
-    }
-    .footer-nav a:hover::after {
-      width: 100%;
-    }
+      .footer-nav a:hover {
+        color: var(--fg);
+      }
+      .footer-nav a:hover::after {
+        width: 100%;
+      }
 
-    .footer-nav__all {
-      display: flex;
-      align-items: center;
-      gap: var(--space-2);
-      font-family: var(--serif);
-      font-style: italic;
-      font-size: var(--text-6);
-      color: var(--fg-dim) !important;
-      letter-spacing: 0.02em !important;
-    }
+      .footer-nav__all {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: var(--text-6);
+        color: var(--fg-dim) !important;
+        letter-spacing: 0.02em !important;
+      }
 
-    .footer-nav__all:hover {
-      color: var(--fg) !important;
-    }
+      .footer-nav__all:hover {
+        color: var(--fg) !important;
+      }
 
-    .divider {
-      width: 1px;
-      height: 14px;
-      background: #333;
-      flex-shrink: 0;
-    }
+      .divider {
+        width: 1px;
+        height: 14px;
+        background: #333;
+        flex-shrink: 0;
+      }
 
-    /* ─── KEYFRAMES ───────────────────────────────────────── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(16px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
+      /* ─── KEYFRAMES ───────────────────────────────────────── */
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(16px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
 
-    /* ─── MOBILE ──────────────────────────────────────────── */
-    @media (max-width: 768px) {
-      body { cursor: auto; }
-      .cursor { display: none; }
-      .meta-strip { grid-template-columns: 1fr 1fr; }
-      .meta-strip__item { border-right: none; border-bottom: 1px solid #1a1a1a; }
-      .meta-strip__item:nth-child(odd) { border-right: 1px solid #1a1a1a; }
-      .section--split { grid-template-columns: 1fr; gap: var(--space-5); }
-      .img-grid { grid-template-columns: 1fr; }
-      .img-grid__item--tall { aspect-ratio: 4/3; }
-      .stat-row { grid-template-columns: 1fr; }
-      .process-step { grid-template-columns: 1fr; gap: 0.8rem; }
-      .nav__links { gap: var(--space-4); }
-      .next-project__arrow { display: none; }
-      footer { flex-direction: column; align-items: flex-start; gap: var(--space-4); }
-      .hero-img { aspect-ratio: 4/3; }
-    }
-    @media (max-width: 480px) {
-      .nav__links a { font-size: var(--text-1); letter-spacing: var(--ls-label); }
-    }
-  </style>
-</head>
-<body>
+      /* ─── MOBILE ──────────────────────────────────────────── */
+      @media (max-width: 768px) {
+        body {
+          cursor: auto;
+        }
+        .cursor {
+          display: none;
+        }
+        .meta-strip {
+          grid-template-columns: 1fr 1fr;
+        }
+        .meta-strip__item {
+          border-right: none;
+          border-bottom: 1px solid #1a1a1a;
+        }
+        .meta-strip__item:nth-child(odd) {
+          border-right: 1px solid #1a1a1a;
+        }
+        .section--split {
+          grid-template-columns: 1fr;
+          gap: var(--space-5);
+        }
+        .img-grid {
+          grid-template-columns: 1fr;
+        }
+        .img-grid__item--tall {
+          aspect-ratio: 4/3;
+        }
+        .stat-row {
+          grid-template-columns: 1fr;
+        }
+        .process-step {
+          grid-template-columns: 1fr;
+          gap: 0.8rem;
+        }
+        .nav__links {
+          gap: var(--space-4);
+        }
+        .next-project__arrow {
+          display: none;
+        }
+        footer {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: var(--space-4);
+        }
+        .hero-img {
+          aspect-ratio: 4/3;
+        }
+      }
+      @media (max-width: 480px) {
+        .nav__links a {
+          font-size: var(--text-1);
+          letter-spacing: var(--ls-label);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="cursor" id="cursor"></div>
 
-  <div class="cursor" id="cursor"></div>
+    <!-- ── NAV ──────────────────────────────────────────────── -->
+    <nav>
+      <a href="index.html" class="nav__home">Sherjeel <em>Hussain</em></a>
+      <div style="display: flex; align-items: center; gap: var(--space-6)">
+        <a href="craft.html" class="nav__back">Craft</a>
+        <div class="nav__links">
+          <a href="digital.html" data-cursor="monitor">Digital</a>
+          <a href="craft.html" data-cursor="pot">Craft</a>
+          <a href="exhibitions.html">Exhibitions</a>
+          <a href="about.html">About</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+    </nav>
 
-  <!-- ── NAV ──────────────────────────────────────────────── -->
-  <nav>
-    <a href="index.html" class="nav__home">Sherjeel <em>Hussain</em></a>
-    <div style="display:flex;align-items:center;gap: var(--space-6);">
-      <a href="craft.html" class="nav__back">Craft</a>
-      <div class="nav__links">
-        <a href="digital.html" data-cursor="monitor">Digital</a>
-        <a href="craft.html" data-cursor="pot">Craft</a>
+    <!-- ── PROJECT HERO ─────────────────────────────────────── -->
+    <header class="project-hero">
+      <p class="project-hero__eyebrow">
+        02 — Ceramics &amp; Practice &nbsp;·&nbsp; Gray's School of Art
+      </p>
+      <h1 class="project-hero__title">
+        Graduate in
+        <em>Residence</em>
+      </h1>
+    </header>
+
+    <!-- ── META STRIP ───────────────────────────────────────── -->
+    <div class="meta-strip">
+      <div class="meta-strip__item">
+        <p class="meta-strip__label">Year</p>
+        <p class="meta-strip__value">2022–2023</p>
+      </div>
+      <div class="meta-strip__item">
+        <p class="meta-strip__label">Institution</p>
+        <p class="meta-strip__value">Gray's School<br /><em>of Art, RGU</em></p>
+      </div>
+      <div class="meta-strip__item">
+        <p class="meta-strip__label">Focus</p>
+        <p class="meta-strip__value">
+          Ceramics Practice<br />Teaching &amp; Community
+        </p>
+      </div>
+      <div class="meta-strip__item">
+        <p class="meta-strip__label">Output</p>
+        <p class="meta-strip__value">BLEND Exhibition<br />+ Commissions</p>
+      </div>
+    </div>
+
+    <!-- ── HERO IMAGE ───────────────────────────────────────── -->
+    <div class="hero-img">
+      <img
+        src="./imgs-craft/BLEND/gcs pics-1.webp"
+        alt="Cone 6 Crystal Emerald test glaze. Created during graduate in residence program and Exhibited at BLEND. 2023 Aberdeen"
+        srcset=""
+      />
+    </div>
+
+    <!-- ── 01 CONTEXT ───────────────────────────────────────── -->
+    <section class="section section--split">
+      <div>
+        <p class="section__num">01 — Context</p>
+        <h2 class="section__heading">The <em>Residency</em></h2>
+      </div>
+      <div>
+        <p class="section__body">
+          The Graduate in Residence programme at Gray's School of Art gives
+          recent graduates access to studios, kilns, and equipment for a year
+          after finishing their degree. In exchange, you contribute to the
+          department — workshop prep, supporting technicians, and teaching.
+        </p>
+        <div class="callout">
+          <p class="callout__text">
+            Twelve months of studio access and no excuses.
+            <em>The work either develops or it doesn't.</em>
+          </p>
+        </div>
+        <p class="section__body">
+          For me, the year was about figuring out what my ceramic practice
+          actually was — what I kept returning to, what materials interested me,
+          and how to develop a consistent body of work rather than a collection
+          of individual experiments. It was also the year I started building an
+          audience for it, from scratch, almost entirely through social media.
+        </p>
+      </div>
+    </section>
+
+    <!-- ── IMAGE GRID 1 ─────────────────────────────────────── -->
+    <div class="img-grid">
+      <div class="img-grid__item">
+        <img
+          src="./imgs-expo/BLEND/shelfDetail01.webp"
+          alt="Display shelf detail from BLEND exhibition — individual ceramic piece during the Graduate in Residence"
+          loading="lazy"
+        />
+      </div>
+      <div class="img-grid__item">
+        <img
+          src="./imgs-expo/BLEND/entrance01.webp"
+          alt="Entrance to the BLEND exhibition at Gray's School of Art, Aberdeen"
+          loading="lazy"
+        />
+      </div>
+    </div>
+
+    <!-- ── 02 PRACTICE ──────────────────────────────────────── -->
+    <section class="section section--split">
+      <div>
+        <p class="section__num">02 — Practice Development</p>
+        <h2 class="section__heading">
+          Glazes &amp;<br /><em>Material Research</em>
+        </h2>
+      </div>
+      <div>
+        <p class="section__body">
+          Most of the year went into glaze development and material testing —
+          building recipes through repetition and documenting what actually
+          worked. The two glazes that came out of it were
+          <strong>Spangled White Bird </strong>, a base with iron oxide
+          spangling that produces a crystalline surface somewhere between
+          clinical and organic, and <strong>Crystal Emerald</strong>, both
+          developed in both cone 6 and cone 9 variations for different firing
+          conditions. These glazes were the basis for most of the work in the
+          BLEND exhibition, and future works.
+        </p>
+        <p class="section__body">
+          I also ran a self-directed study combining earthenware clay imported
+          from Pakistan — Multanni Mitti, with British stonewares. It doesn't
+          behave well at high temperatures and several firings confirmed that.
+          But the failures were more useful than the successes; they taught me a
+          lot about how surface and glaze behaviour changes when you push
+          materials outside their range. Some of the pieces from that study were
+          later sold at Crafted By Design. They did however work well when
+          applied as a slip over stoneware forms, which led to a series of
+          slipcast pieces or wheellthrown forms with slip decoration that were
+          glazed over with the White Bird.
+        </p>
+        <div class="callout">
+          <p class="callout__text">
+            The multanni mitti pieces could've failed altogether.
+            <em>They didn't. Combining materials was the saving grace.</em>
+          </p>
+        </div>
+        <p class="section__body">
+          Surface decoration drew on
+          <strong
+            >layered slips, drips and brush effects, and controlled iron oxide
+            spangling</strong
+          >
+          — ways of introducing variation within functional stoneware without it
+          reading as arbitrary. The work across the year was split between
+          functional pieces and more sculptural work, and the residency gave me
+          enough time to let both develop without forcing them to converge.
+        </p>
+      </div>
+    </section>
+
+    <!-- ── IMAGE GRID 2 ─────────────────────────────────────── -->
+    <div class="img-grid">
+      <div class="img-grid__item img-grid__item--tall">
+        <img
+          src="./imgs-expo/BLEND/slipcasts -1.webp"
+          alt="Slipcast multanni mitti and stoneware pieces — collection from the residency on display at BLEND"
+          loading="lazy"
+        />
+      </div>
+      <div class="img-grid__item img-grid__item--tall">
+        <img
+          src="./imgs-expo/BLEND/shelf2.webp"
+          alt="BLEND exhibition shelf — wider view of the GiR display layout"
+          loading="lazy"
+        />
+      </div>
+    </div>
+
+    <!-- ── 03 COMMUNITY ──────────────────────────────────────── -->
+    <section class="section">
+      <p class="section__num">03 — Teaching &amp; Community</p>
+      <h2 class="section__heading" style="margin-bottom: var(--space-6)">
+        Raku Club &amp; <em>Workshop</em>
+      </h2>
+
+      <div class="process-steps">
+        <div class="process-step">
+          <div><p class="process-step__num"></p></div>
+          <div>
+            <h3 class="process-step__heading">
+              Raku Club &amp; <em>Ceramic Society</em>
+            </h3>
+            <p class="process-step__body">
+              What started as a few self-directed firings with like-minded
+              friends gradually turned into something more formal. From skiving
+              my honours project to becoming aIt became a full on officially
+              sanctioned Robert Gordon University Society— with me running
+              informal teaching sessions outside the curriculum, making ceramics
+              accessible to students who wouldn't otherwise have had the chance
+              to fire in a raku kiln or beginner ceramics students who wanted to
+              get more practice in the workshop. It was a way to build community
+              and share what I was learning, and it ended up being one of the
+              most rewarding parts of the year.
+            </p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div><p class="process-step__num"></p></div>
+          <div>
+            <h3 class="process-step__heading">
+              Workshop <em>Responsibilities</em>
+            </h3>
+            <p class="process-step__body">
+              Working alongside the workshop technicians, I was responsible for
+              making up communal base glazes from proprietary recipes, recycling
+              workshop clay, and supporting students with technical questions.
+              It was practical, unglamorous work — and a very good way to
+              understand how a ceramics department actually runs.
+            </p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div><p class="process-step__num"></p></div>
+          <div>
+            <h3 class="process-step__heading">
+              CAD Teaching &amp; <em>Weekly Challenges</em>
+            </h3>
+            <p class="process-step__body">
+              I ran weekly Rhino and Keyshot challenges for students, which
+              served two purposes — it gave students structured support with
+              software they were expected to know, and it sharpened my own CAD
+              thinking considerably. Teaching something you're still developing
+              forces a level of clarity that self-directed practice doesn't.
+            </p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div><p class="process-step__num"></p></div>
+          <div>
+            <h3 class="process-step__heading">
+              Social Media &amp; <em>Building an Audience</em>
+            </h3>
+            <p class="process-step__body">
+              I taught myself CapCut and Adobe Lightroom and posted daily
+              short-form video and photography across social channels. The goal
+              was straightforward — build an audience for the work before it was
+              exhibited. By the time BLEND opened, there was already a
+              following.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- STATS -->
+      <div class="stat-row">
+        <div class="stat">
+          <p class="stat__num">12<em>mo</em></p>
+          <p class="stat__label">Studio Residency</p>
+        </div>
+        <div class="stat">
+          <p class="stat__num">2<em>+</em></p>
+          <p class="stat__label">Original Glaze Recipes Developed</p>
+        </div>
+        <div class="stat">
+          <p class="stat__num"><em>1st</em></p>
+          <p class="stat__label">Public Exhibition &amp; Sale</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── IMAGE GRID 3 ─────────────────────────────────────── -->
+    <div class="img-grid">
+      <div class="img-grid__item">
+        <img
+          src="./imgs-craft/Pottery/RakuKiln.webp"
+          alt="Raku kiln in use during reduction firing — Graduate in Residence workshop"
+          loading="lazy"
+        />
+      </div>
+      <div class="img-grid__item">
+        <img
+          src="./imgs-craft/Pottery/glazeTesting01.webp"
+          alt="Workshop glaze testing — test tiles laid out for cone 6 and cone 9 firing schedules"
+          loading="lazy"
+        />
+      </div>
+    </div>
+
+    <!-- ── 04 EXHIBITION ─────────────────────────────────────── -->
+    <section class="section section--split">
+      <div>
+        <p class="section__num">04 — Exhibition</p>
+        <h2 class="section__heading">BLEND &amp;<br /><em>First Sale</em></h2>
+      </div>
+      <div>
+        <p class="section__body">
+          BLEND opened on the 4th of September 2023 — the Graduate in Residence
+          programme exhibition, showing work by GiR graduates alongside Masters
+          students at Gray's. It was my first proper public exhibition and the
+          first time my ceramics were available to buy.
+        </p>
+        <div class="callout">
+          <p class="callout__text">
+            Exhibited and sold alongside Masters students.
+            <em
+              >The line between student work and professional practice
+              disappeared.</em
+            >
+          </p>
+        </div>
+        <p class="section__body">
+          The work shown at BLEND drew on everything developed across the year —
+          the spangled white bird pieces, the multanni mitti experiments, the
+          functional stoneware. Showing it in that context, alongside work made
+          by people at a more advanced stage of their practice, was a useful
+          pressure. It confirmed that the year had done what it was supposed to
+          do.
+        </p>
+        <p class="section__body">
+          The Greene King commission also came through during this period — a
+          separate client project that ran alongside the residency and gave the
+          practice an early commercial dimension. The residency established my
+          identity as a ceramicist. The commission confirmed it could function
+          as a business.
+        </p>
+      </div>
+    </section>
+
+    <!-- ── IMAGE GRID 4 ─────────────────────────────────────── -->
+    <div class="img-grid" style="padding-bottom: 0">
+      <div class="img-grid__item">
+        <img
+          src="./imgs-expo/BLEND/FarehaBowl1.webp"
+          alt="Multanni mitti bowl on display at BLEND — first piece sold publicly"
+          loading="lazy"
+        />
+      </div>
+      <div class="img-grid__item">
+        <img
+          src="./imgs-expo/BLEND/IMG_8030.webp"
+          alt="BLEND opening night at Gray's School of Art, September 2023"
+          loading="lazy"
+        />
+      </div>
+    </div>
+
+    <!-- ── NEXT PROJECT ──────────────────────────────────────── -->
+    <a href="greene-king.html" class="next-project">
+      <span class="next-project__label">Next Project</span>
+      <h2 class="next-project__title">Greene <em>King</em></h2>
+      <span class="next-project__arrow">→</span>
+    </a>
+
+    <footer class="footer-nav">
+      <div class="footer-nav__left">
+        <a href="work.html" class="footer-nav__all">View all work &nbsp;↗</a>
+        <div class="divider"></div>
+        <a href="craft.html">Craft</a>
+        <a href="digital.html">Digital</a>
         <a href="exhibitions.html">Exhibitions</a>
+        <a href="./SideQuests.html">Side Quests</a>
         <a href="about.html">About</a>
         <a href="contact.html">Contact</a>
       </div>
-    </div>
-  </nav>
-
-  <!-- ── PROJECT HERO ─────────────────────────────────────── -->
-  <header class="project-hero">
-    <p class="project-hero__eyebrow">02 — Ceramics &amp; Practice &nbsp;·&nbsp; Gray's School of Art</p>
-    <h1 class="project-hero__title">
-      Graduate in
-      <em>Residence</em>
-    </h1>
-  </header>
-
-  <!-- ── META STRIP ───────────────────────────────────────── -->
-  <div class="meta-strip">
-    <div class="meta-strip__item">
-      <p class="meta-strip__label">Year</p>
-      <p class="meta-strip__value">2022–2023</p>
-    </div>
-    <div class="meta-strip__item">
-      <p class="meta-strip__label">Institution</p>
-      <p class="meta-strip__value">Gray's School<br><em>of Art, RGU</em></p>
-    </div>
-    <div class="meta-strip__item">
-      <p class="meta-strip__label">Focus</p>
-      <p class="meta-strip__value">Ceramics Practice<br>Teaching &amp; Community</p>
-    </div>
-    <div class="meta-strip__item">
-      <p class="meta-strip__label">Output</p>
-      <p class="meta-strip__value">BLEND Exhibition<br>+ Commissions</p>
-    </div>
-  </div>
-
-  <!-- ── HERO IMAGE ───────────────────────────────────────── -->
-  <div class="hero-img">
-<img src="./imgs-craft/BLEND/gcs pics-1.webp" alt="Cone 6 Crystal Emerald test glaze. Created during graduate in residence program and Exhibited at BLEND. 2023 Aberdeen" srcset="">    </div>
-  </div>
-
-  <!-- ── 01 CONTEXT ───────────────────────────────────────── -->
-  <section class="section section--split">
-    <div>
-      <p class="section__num">01 — Context</p>
-      <h2 class="section__heading">The <em>Residency</em></h2>
-    </div>
-    <div>
-      <p class="section__body">
-        The Graduate in Residence programme at Gray's School of Art gives recent graduates access to studios, kilns, and equipment for a year after finishing their degree. In exchange, you contribute to the department — workshop prep, supporting technicians, and in my case, teaching. It's a proper working arrangement, not just a studio hire dressed up with a title.
-      </p>
-      <div class="callout">
-        <p class="callout__text">
-          Twelve months of studio access and no excuses. <em>The work either develops or it doesn't.</em>
-        </p>
+      <div class="footer-nav__right">
+        <a
+          href="https://www.linkedin.com/in/sherjeel-hussain-0652431b9/"
+          target="_blank"
+          rel="noopener"
+          >LinkedIn</a
+        >
+        &nbsp;&nbsp;
+        <a
+          href="https://www.instagram.com/sherjeel_h27_design_/"
+          target="_blank"
+          rel="noopener"
+          >Instagram</a
+        >
       </div>
-      <p class="section__body">
-        For me, the year was about figuring out what my ceramic practice actually was — what I kept returning to, what materials interested me, and how to develop a consistent body of work rather than a collection of individual experiments. It was also the year I started building an audience for it, from scratch, almost entirely through social media.
-      </p>
-    </div>
-  </section>
+    </footer>
 
-  <!-- ── IMAGE GRID 1 ─────────────────────────────────────── -->
-  <div class="img-grid">
-    <div class="img-grid__item"><img src="./imgs-expo/BLEND/shelfDetail01.webp" alt="Display shelf detail from BLEND exhibition — individual ceramic piece during the Graduate in Residence" loading="lazy" />
-    </div>
-    <div class="img-grid__item"><img src="./imgs-expo/BLEND/entrance01.webp" alt="Entrance to the BLEND exhibition at Gray's School of Art, Aberdeen" loading="lazy" />
-    </div>
-  </div>
+    <!-- ── CURSOR SCRIPT ─────────────────────────────────────── -->
+    <script>
+      const cursor = document.getElementById("cursor");
+      document.addEventListener("mousemove", (e) => {
+        cursor.style.left = e.clientX + "px";
+        cursor.style.top = e.clientY + "px";
+      });
+      document.querySelectorAll("a, button").forEach((el) => {
+        el.addEventListener("mouseenter", () => cursor.classList.add("grow"));
+        el.addEventListener("mouseleave", () =>
+          cursor.classList.remove("grow"),
+        );
+      });
+    </script>
 
-  <!-- ── 02 PRACTICE ──────────────────────────────────────── -->
-  <section class="section section--split">
-    <div>
-      <p class="section__num">02 — Practice Development</p>
-      <h2 class="section__heading">Glazes &amp;<br><em>Material Research</em></h2>
-    </div>
-    <div>
-      <p class="section__body">
-        Most of the year went into glaze development and material testing — building recipes through repetition and documenting what actually worked. The two glazes that came out of it were <strong>Spangled White Bird</strong>, a base with iron oxide spangling that produces a surface somewhere between clinical and organic, and <strong>Crystal Emerald</strong>, developed in both cone 6 and cone 9 variations for different firing conditions.
-      </p>
-      <p class="section__body">
-        I also ran a self-directed study combining earthenware clay imported from Pakistan — multanni mitti — with British stonewares. It doesn't behave well at high temperatures and several firings confirmed that. But the failures were more useful than the successes; they taught me a lot about how surface and glaze behaviour changes when you push materials outside their range. Some of the pieces from that study were later sold at Crafted By Design.
-      </p>
-      <div class="callout">
-        <p class="callout__text">
-          The multanni mitti pieces weren't supposed to work at high temperatures. <em>They didn't. That was the point.</em>
-        </p>
-      </div>
-      <p class="section__body">
-        Surface decoration drew on <strong>layered slips, marbled clays, and controlled iron oxide spangling</strong> — ways of introducing variation within functional stoneware without it reading as arbitrary. The work across the year was split between functional pieces and more sculptural work, and the residency gave me enough time to let both develop without forcing them to converge.
-      </p>
-    </div>
-  </section>
-
-  <!-- ── IMAGE GRID 2 ─────────────────────────────────────── -->
-  <div class="img-grid">
-    <div class="img-grid__item img-grid__item--tall"><img src="./imgs-expo/BLEND/slipcasts -1.webp" alt="Slipcast multanni mitti and stoneware pieces — collection from the residency on display at BLEND" loading="lazy" />
-    </div>
-    <div class="img-grid__item img-grid__item--tall"><img src="./imgs-expo/BLEND/shelf2.webp" alt="BLEND exhibition shelf — wider view of the GiR display layout" loading="lazy" />
-    </div>
-  </div>
-
-  <!-- ── 03 COMMUNITY ──────────────────────────────────────── -->
-  <section class="section">
-    <p class="section__num">03 — Teaching &amp; Community</p>
-    <h2 class="section__heading" style="margin-bottom: var(--space-6);">Raku Club &amp; <em>Workshop</em></h2>
-
-    <div class="process-steps">
-      <div class="process-step">
-        <div><p class="process-step__num"></p></div>
-        <div>
-          <h3 class="process-step__heading">Raku Club &amp; <em>Ceramic Society</em></h3>
-          <p class="process-step__body">
-            What started as a few self-directed firings with like-minded friends gradually turned into something more formal. It became an officially sanctioned University Society — with me running informal teaching sessions outside the curriculum, making ceramics accessible to students who wouldn't otherwise have had the chance to fire in a raku kiln.
-          </p>
-        </div>
-      </div>
-      <div class="process-step">
-        <div><p class="process-step__num"></p></div>
-        <div>
-          <h3 class="process-step__heading">Workshop <em>Responsibilities</em></h3>
-          <p class="process-step__body">
-            Working alongside the workshop technicians, I was responsible for making up communal base glazes from proprietary recipes, recycling workshop clay, and supporting students with technical questions. It was practical, unglamorous work — and a very good way to understand how a ceramics department actually runs.
-          </p>
-        </div>
-      </div>
-      <div class="process-step">
-        <div><p class="process-step__num"></p></div>
-        <div>
-          <h3 class="process-step__heading">CAD Teaching &amp; <em>Weekly Challenges</em></h3>
-          <p class="process-step__body">
-            I ran weekly Rhino and Keyshot challenges for students, which served two purposes — it gave students structured support with software they were expected to know, and it sharpened my own CAD thinking considerably. Teaching something you're still developing forces a level of clarity that self-directed practice doesn't.
-          </p>
-        </div>
-      </div>
-      <div class="process-step">
-        <div><p class="process-step__num"></p></div>
-        <div>
-          <h3 class="process-step__heading">Social Media &amp; <em>Building an Audience</em></h3>
-          <p class="process-step__body">
-            I taught myself CapCut and Adobe Lightroom and posted daily short-form video and photography across social channels. The goal was straightforward — build an audience for the work before it was exhibited. By the time BLEND opened, there was already a following.
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <!-- STATS -->
-    <div class="stat-row">
-      <div class="stat">
-        <p class="stat__num">12<em>mo</em></p>
-        <p class="stat__label">Studio Residency</p>
-      </div>
-      <div class="stat">
-        <p class="stat__num">2<em>+</em></p>
-        <p class="stat__label">Original Glaze Recipes Developed</p>
-      </div>
-      <div class="stat">
-        <p class="stat__num"><em>1st</em></p>
-        <p class="stat__label">Public Exhibition &amp; Sale</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── IMAGE GRID 3 ─────────────────────────────────────── -->
-  <div class="img-grid">
-    <div class="img-grid__item">
-      <img src="./imgs-craft/Pottery/RakuKiln.webp" alt="Raku kiln in use during reduction firing — Graduate in Residence workshop" loading="lazy" />
-    </div>
-    <div class="img-grid__item">
-      <img src="./imgs-craft/Pottery/glazeTesting01.webp" alt="Workshop glaze testing — test tiles laid out for cone 6 and cone 9 firing schedules" loading="lazy" />
-    </div>
-  </div>
-
-  <!-- ── 04 EXHIBITION ─────────────────────────────────────── -->
-  <section class="section section--split">
-    <div>
-      <p class="section__num">04 — Exhibition</p>
-      <h2 class="section__heading">BLEND &amp;<br><em>First Sale</em></h2>
-    </div>
-    <div>
-      <p class="section__body">
-        BLEND opened on the 4th of September 2023 — the Graduate in Residence programme exhibition, showing work by GiR graduates alongside Masters students at Gray's. It was my first proper public exhibition and the first time my ceramics were available to buy.
-      </p>
-      <div class="callout">
-        <p class="callout__text">
-          Exhibited and sold alongside Masters students. <em>The line between student work and professional practice disappeared.</em>
-        </p>
-      </div>
-      <p class="section__body">
-        The work shown at BLEND drew on everything developed across the year — the spangled white bird pieces, the multanni mitti experiments, the functional stoneware. Showing it in that context, alongside work made by people at a more advanced stage of their practice, was a useful pressure. It confirmed that the year had done what it was supposed to do.
-      </p>
-      <p class="section__body">
-        The Greene King commission also came through during this period — a separate client project that ran alongside the residency and gave the practice an early commercial dimension. The residency established my identity as a ceramicist. The commission confirmed it could function as a business.
-      </p>
-    </div>
-  </section>
-
-  <!-- ── IMAGE GRID 4 ─────────────────────────────────────── -->
-  <div class="img-grid" style="padding-bottom: 0;">
-    <div class="img-grid__item">
-      <img src="./imgs-expo/BLEND/FarehaBowl1.webp" alt="Multanni mitti bowl on display at BLEND — first piece sold publicly" loading="lazy" />
-    </div>
-    <div class="img-grid__item">
-      <img src="./imgs-expo/BLEND/IMG_8030.webp" alt="BLEND opening night at Gray's School of Art, September 2023" loading="lazy" />
-    </div>
-  </div>
-
-  <!-- ── NEXT PROJECT ──────────────────────────────────────── -->
-  <a href="greene-king.html" class="next-project">
-    <span class="next-project__label">Next Project</span>
-    <h2 class="next-project__title">Greene <em>King</em></h2>
-    <span class="next-project__arrow">→</span>
-  </a>
-
-<footer class="footer-nav">
-  <div class="footer-nav__left">
-      <a href="work.html" class="footer-nav__all">View all work &nbsp;↗</a>
-      <div class="divider"></div>
-      <a href="craft.html">Craft</a>
-      <a href="digital.html">Digital</a>
-      <a href="exhibitions.html">Exhibitions</a>
-      <a href="./SideQuests.html">Side Quests</a>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
-    </div>
-    <div class="footer-nav__right">
-      <a href="https://www.linkedin.com/in/sherjeel-hussain-0652431b9/" target="_blank" rel="noopener">LinkedIn</a>
-      &nbsp;&nbsp;
-      <a href="https://www.instagram.com/sherjeel_h27_design_/" target="_blank" rel="noopener">Instagram</a>
-    </div></footer>
-
-  <!-- ── CURSOR SCRIPT ─────────────────────────────────────── -->
-  <script>
-    const cursor = document.getElementById('cursor');
-    document.addEventListener('mousemove', e => {
-      cursor.style.left = e.clientX + 'px';
-      cursor.style.top  = e.clientY + 'px';
-    });
-    document.querySelectorAll('a, button').forEach(el => {
-      el.addEventListener('mouseenter', () => cursor.classList.add('grow'));
-      el.addEventListener('mouseleave', () => cursor.classList.remove('grow'));
-    });
-  </script>
-
-<script src="mobile-nav.js" defer></script>
-</body>
+    <script src="mobile-nav.js" defer></script>
+  </body>
 </html>

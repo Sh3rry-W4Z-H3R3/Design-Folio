@@ -405,6 +405,41 @@
         background-position: center;
       }
 
+      /* 8. Sim Glasgow — v9 dashboard hero shot */
+      .card--simglasgow .card__img {
+        background-image: url("./imgs-digital/SimGlasgow/dashboard\ ui\ v8.webp");
+        background-color: #0a0a0e;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center top;
+      }
+
+      /* 9. Tarebook — in-development mobile pricing tool */
+      .card--tarebook .card__img {
+        background-color: #1a120f;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        position: relative;
+      }
+      .card--tarebook .card__img::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(
+          60% 80% at 50% 35%,
+          rgba(200, 184, 130, 0.16),
+          transparent 70%
+        );
+      }
+
+      /* Variant: In Development pill — gold instead of pink */
+      .card__status--dev {
+        color: #c8b882;
+        background: rgba(200, 184, 130, 0.12);
+        border-color: rgba(200, 184, 130, 0.4);
+      }
+
       /* Status / Self-Directed badge — matches craft.html convention */
       .card__status {
         position: absolute;
@@ -856,6 +891,48 @@
           </div>
           <h2 class="card__title">Westgarth <em>Auto</em></h2>
           <p class="card__sub">Brand identity and mobile-first website</p>
+        </div>
+        <span class="card__arrow">↗</span>
+      </a>
+
+      <!-- ROW 5: Sim Glasgow + Tarebook — products, paired narrow row -->
+      <a
+        href="sim-glasgow.html"
+        class="card card--narrow card--simglasgow"
+        data-tags="web"
+      >
+        <div class="card__img"></div>
+        <div class="card__overlay"></div>
+        <span class="card__year">2025</span>
+        <div class="card__info">
+          <div class="card__tags">
+            <span class="card__tag">UI Design |</span>
+            <span class="card__tag">Game UI |</span>
+            <span class="card__tag">Data Viz</span>
+          </div>
+          <h2 class="card__title">Sim <em>Glasgow</em></h2>
+          <p class="card__sub">Dashboard, politics, property and bank screens for a city-management sim. Nine UI iterations.</p>
+        </div>
+        <span class="card__arrow">↗</span>
+      </a>
+
+      <a
+        href="tarebook.html"
+        class="card card--narrow card--tarebook"
+        data-tags="web"
+      >
+        <div class="card__img"></div>
+        <div class="card__overlay"></div>
+        <span class="card__year">2026</span>
+        <span class="card__status card__status--dev">In Development</span>
+        <div class="card__info">
+          <div class="card__tags">
+            <span class="card__tag">Mobile-first |</span>
+            <span class="card__tag">Product |</span>
+            <span class="card__tag">UI Design</span>
+          </div>
+          <h2 class="card__title"><em>Tarebook</em></h2>
+          <p class="card__sub">Mobile-first pricing solution for potters. Building now in Claude Code, nearly ready for deploy.</p>
         </div>
         <span class="card__arrow">↗</span>
       </a>
