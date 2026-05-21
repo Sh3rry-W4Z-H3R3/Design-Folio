@@ -102,7 +102,8 @@
       rel="stylesheet"
     />
 
-    <style>
+    <link rel="stylesheet" href="tokens.css" />
+        <style>
       /* ─── TOKENS ─────────────────────────────────────────── */
       :root {
         --bg: #0a0a0a;
@@ -208,7 +209,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 4.5rem 2rem 3rem;
+        padding: var(--space-7) var(--space-5) var(--space-6);
         text-align: center;
         position: relative;
         z-index: 10;
@@ -233,7 +234,7 @@
       }
 
       .site-tagline {
-        margin-top: 1.4rem;
+        margin-top: var(--space-4);
         max-width: 540px;
         font-family: var(--sans);
         font-size: clamp(0.75rem, 1.4vw, 0.9rem);
@@ -252,8 +253,8 @@
       /* ─── CONNECTIVE COPY ────────────────────────────────── */
       .site-connect {
         max-width: 620px;
-        margin: 0 auto 2.4rem;
-        padding: 0 2rem;
+        margin: 0 auto var(--space-6);
+        padding: 0 var(--space-5);
         font-family: var(--serif);
         font-style: italic;
         font-weight: 300;
@@ -275,7 +276,7 @@
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
         height: clamp(360px, 60vh, 680px);
-        margin: 0 2rem;
+        margin: 0 var(--space-5);
         gap: 2px;
         opacity: 0;
         animation: fadeUp 0.9s var(--ease) 0.4s forwards;
@@ -394,7 +395,7 @@
         text-decoration: none;
         color: var(--fg);
         border: 1px solid rgba(237, 233, 225, 0.25);
-        padding: 0.75rem 1.4rem;
+        padding: 0.75rem var(--space-4);
         transition:
           border-color var(--fast),
           color var(--fast),
@@ -420,7 +421,7 @@
         opacity: 1;
       }
       .panel:hover .panel__btn {
-        gap: 0.9rem;
+        gap: var(--space-3);
       }
       .panel:hover .panel__btn .arrow {
         transform: translateX(4px);
@@ -480,8 +481,8 @@
         flex-wrap: wrap;
         align-items: center;
         justify-content: space-between;
-        padding: 2.8rem 2rem 3.5rem;
-        gap: 1rem;
+        padding: var(--space-6) var(--space-5) var(--space-7);
+        gap: var(--space-3);
         opacity: 0;
         animation: fadeUp 0.9s var(--ease) 0.7s forwards;
       }
@@ -489,7 +490,7 @@
       .footer-nav__left {
         display: flex;
         align-items: center;
-        gap: 2.5rem;
+        gap: var(--space-6);
       }
 
       .footer-nav a {
@@ -525,7 +526,7 @@
       .footer-nav__all {
         display: flex;
         align-items: center;
-        gap: 0.5rem;
+        gap: var(--space-2);
         font-family: var(--serif);
         font-style: italic;
         font-size: 1rem;
@@ -566,7 +567,7 @@
         .gateway {
           grid-template-columns: 1fr;
           grid-template-rows: 1fr 1fr 1fr;
-          margin: 0 1rem;
+          margin: 0 var(--space-3);
           height: auto;
           min-height: clamp(600px, 90vh, 920px);
         }
@@ -574,7 +575,7 @@
           min-height: 200px;
         }
         .site-connect {
-          margin-bottom: 1.6rem;
+          margin-bottom: var(--space-5);
         }
         .panel__title {
           font-size: 1.6rem;
@@ -596,7 +597,7 @@
           text-decoration: none;
           color: var(--fg);
           border: 1px solid rgba(237, 233, 225, 0.25);
-          padding: 0.75rem 1.4rem;
+          padding: 0.75rem var(--space-4);
           transition:
             border-color var(--fast),
             color var(--fast),
@@ -622,7 +623,7 @@
           opacity: 1;
         }
         .panel:hover .panel__btn {
-          gap: 0.9rem;
+          gap: var(--space-3);
         }
         .panel:hover .panel__btn .arrow {
           transform: translateX(4px);
@@ -679,25 +680,25 @@
         /* ─── FOOTER LINKS ───────────────────────────────────── */
         .footer-nav {
           flex-direction: column;
-          gap: 1.2rem;
-          padding: 2rem 1rem 3rem;
+          gap: var(--space-4);
+          padding: var(--space-5) var(--space-3) var(--space-6);
         }
         .footer-nav__left {
           flex-direction: column;
           flex-wrap: wrap;
-          gap: 1rem;
+          gap: var(--space-3);
         }
       }
       @media (max-width: 480px) {
         .gateway {
           height: clamp(420px, 90vh, 640px);
-          margin: 0 0.5rem;
+          margin: 0 var(--space-2);
         }
         .panel__title {
           font-size: 1.4rem;
         }
         header {
-          padding: 3rem 1.2rem 2rem;
+          padding: var(--space-6) var(--space-4) var(--space-5);
         }
       }
     </style>

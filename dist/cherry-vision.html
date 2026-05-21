@@ -47,7 +47,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Syne:wght@400;500;700&display=swap" rel="stylesheet" />
 
-  <style>
+  <link rel="stylesheet" href="tokens.css" />
+    <style>
     :root {
       --bg: #0a0a0a;
       --fg: #ede9e1;
@@ -75,15 +76,15 @@
     .cursor-icon svg { display: block; }
     .cursor-icon span { font-family: var(--sans); font-size: 0.5rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--fg); margin-top: 4px; }
 
-    nav { display: flex; align-items: center; justify-content: space-between; padding: 2rem var(--gutter); position: sticky; top: 0; z-index: 100; background: rgba(10,10,10,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid #1a1a1a; }
+    nav { display: flex; align-items: center; justify-content: space-between; padding: var(--space-5) var(--gutter); position: sticky; top: 0; z-index: 100; background: rgba(10,10,10,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid #1a1a1a; }
     .nav__home { font-family: var(--serif); font-size: 1.1rem; font-weight: 300; letter-spacing: 0.06em; text-decoration: none; color: var(--fg); }
     .nav__home em { font-style: italic; color: var(--accent); }
-    .nav__links { display: flex; gap: 2.5rem; align-items: center; }
+    .nav__links { display: flex; gap: var(--space-6); align-items: center; }
     .nav__links a { font-family: var(--sans); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none; color: var(--fg-dim); transition: color var(--fast); position: relative; }
     .nav__links a::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 1px; background: var(--accent); transition: width var(--fast); }
     .nav__links a:hover { color: var(--fg); }
     .nav__links a:hover::after { width: 100%; }
-    .nav__back { font-family: var(--sans); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; text-decoration: none; color: var(--fg-dim); display: flex; align-items: center; gap: 0.5rem; transition: color var(--fast); }
+    .nav__back { font-family: var(--sans); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; text-decoration: none; color: var(--fg-dim); display: flex; align-items: center; gap: var(--space-2); transition: color var(--fast); }
     .nav__back:hover { color: var(--fg); }
     .nav__back::before { content: '←'; }
 
@@ -92,7 +93,7 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: 6rem var(--gutter) 4rem;
+      padding: var(--space-8) var(--gutter) var(--space-7);
       position: relative;
       overflow: hidden;
     }
@@ -110,7 +111,7 @@
       letter-spacing: 0.28em;
       text-transform: uppercase;
       color: var(--cherry);
-      margin-bottom: 2rem;
+      margin-bottom: var(--space-5);
       display: inline-flex;
       align-items: center;
       gap: 0.7rem;
@@ -141,11 +142,11 @@
       letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--fg-mid);
-      margin-top: 1.5rem;
+      margin-top: var(--space-4);
       opacity: 0; animation: fadeUp 0.9s var(--ease) 0.3s forwards;
     }
     .hero__sub {
-      margin-top: 2.5rem;
+      margin-top: var(--space-6);
       font-family: var(--serif);
       font-style: italic;
       font-size: clamp(1rem, 1.8vw, 1.4rem);
@@ -157,14 +158,14 @@
     }
 
     .details {
-      padding: 5rem var(--gutter);
+      padding: var(--space-8) var(--gutter);
       border-top: 1px solid #1a1a1a;
       border-bottom: 1px solid #1a1a1a;
     }
     .details__grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 3rem;
+      gap: var(--space-6);
     }
     .detail__label {
       font-family: var(--sans);
@@ -185,10 +186,10 @@
     .detail__value em { font-style: italic; color: var(--accent); }
 
     .body-section {
-      padding: 6rem var(--gutter);
+      padding: var(--space-8) var(--gutter);
       display: grid;
       grid-template-columns: 1fr 2fr;
-      gap: 6rem;
+      gap: var(--space-8);
       align-items: start;
     }
     .section-label {
@@ -210,7 +211,7 @@
     .body-text strong { color: var(--fg); font-weight: 500; }
     .body-text em { font-style: italic; color: var(--fg); }
 
-    .next-project { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 2rem; padding: 5rem var(--gutter); border-top: 1px solid #1a1a1a; }
+    .next-project { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-5); padding: var(--space-8) var(--gutter); border-top: 1px solid #1a1a1a; }
     .next-project__label { font-family: var(--sans); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--fg-dim); margin-bottom: 0.8rem; }
     .next-project__title { font-family: var(--serif); font-size: clamp(1.8rem, 3.5vw, 3.2rem); font-weight: 300; color: var(--fg); text-decoration: none; display: block; transition: color var(--fast); }
     .next-project__title em { font-style: italic; color: var(--accent); }
@@ -218,8 +219,8 @@
     .next-project__arrow { font-size: 3rem; color: var(--fg-dim); text-decoration: none; transition: color var(--fast), transform var(--fast); }
     .next-project__arrow:hover { color: var(--accent); transform: translateX(8px); }
 
-    footer.footer-nav { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; padding: 2.8rem var(--gutter) 3.5rem; gap: 1rem; }
-    .footer-nav__left { display: flex; align-items: center; gap: 2.5rem; flex-wrap: wrap; }
+    footer.footer-nav { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; padding: var(--space-6) var(--gutter) var(--space-7); gap: var(--space-3); }
+    .footer-nav__left { display: flex; align-items: center; gap: var(--space-6); flex-wrap: wrap; }
     .footer-nav a { font-family: var(--sans); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; color: var(--fg-dim); transition: color var(--fast); }
     .footer-nav a:hover { color: var(--fg); }
     .footer-nav__all { font-family: var(--serif); font-style: italic; font-size: 1rem; color: var(--fg-dim) !important; letter-spacing: 0.02em !important; }
@@ -231,13 +232,13 @@
     @media (max-width: 768px) {
       body { cursor: auto; }
       .cursor, .cursor-icon { display: none; }
-      .details__grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
-      .body-section { grid-template-columns: 1fr; gap: 2.5rem; padding: 4rem 1.4rem; }
+      .details__grid { grid-template-columns: 1fr 1fr; gap: var(--space-5); }
+      .body-section { grid-template-columns: 1fr; gap: var(--space-6); padding: var(--space-7) var(--space-4); }
       .section-label { position: static; }
-      .nav__links { gap: 1.2rem; }
+      .nav__links { gap: var(--space-4); }
     }
     @media (max-width: 480px) {
-      nav { padding: 1.2rem 1rem; }
+      nav { padding: var(--space-4) var(--space-3); }
       .nav__links a { font-size: 0.56rem; }
       .details__grid { grid-template-columns: 1fr; }
     }
@@ -250,7 +251,7 @@
 
   <nav>
     <a href="index.html" class="nav__home">Sherjeel <em>Hussain</em></a>
-    <div style="display:flex;align-items:center;gap:3rem;">
+    <div style="display:flex;align-items:center;gap: var(--space-6);">
       <a href="craft.html" class="nav__back">Craft</a>
       <div class="nav__links">
         <a href="digital.html" data-cursor="monitor">Digital</a>

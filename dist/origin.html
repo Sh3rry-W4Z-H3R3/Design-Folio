@@ -73,7 +73,8 @@
       rel="stylesheet"
     />
 
-    <style>
+    <link rel="stylesheet" href="tokens.css" />
+        <style>
       :root {
         --bg: #0a0a0a;
         --fg: #ede9e1;
@@ -162,7 +163,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 2rem var(--gutter);
+        padding: var(--space-5) var(--gutter);
         position: sticky;
         top: 0;
         z-index: 100;
@@ -184,7 +185,7 @@
       }
       .nav__links {
         display: flex;
-        gap: 2.5rem;
+        gap: var(--space-6);
       }
       .nav__links a {
         font-family: var(--sans);
@@ -223,7 +224,7 @@
         color: var(--fg-dim);
         display: flex;
         align-items: center;
-        gap: 0.5rem;
+        gap: var(--space-2);
         transition: color var(--fast);
       }
       .nav__back:hover {
@@ -258,7 +259,7 @@
       .hero__content {
         position: relative;
         z-index: 2;
-        padding: 8rem var(--gutter) 4rem;
+        padding: var(--space-8) var(--gutter) var(--space-7);
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
@@ -270,7 +271,7 @@
         letter-spacing: 0.22em;
         text-transform: uppercase;
         color: var(--accent);
-        margin-bottom: 1.8rem;
+        margin-bottom: var(--space-5);
         display: flex;
         align-items: center;
         gap: 0.8rem;
@@ -298,7 +299,7 @@
         color: var(--accent);
       }
       .hero__subtitle {
-        margin-top: 1.5rem;
+        margin-top: var(--space-4);
         font-family: var(--serif);
         font-style: italic;
         font-size: clamp(1rem, 2vw, 1.35rem);
@@ -313,9 +314,9 @@
         position: relative;
         z-index: 2;
         display: flex;
-        gap: 3rem;
+        gap: var(--space-6);
         flex-wrap: wrap;
-        padding: 2rem var(--gutter);
+        padding: var(--space-5) var(--gutter);
         border-top: 1px solid rgba(237, 233, 225, 0.12);
         opacity: 0;
         animation: fadeUp 0.8s var(--ease) 0.45s forwards;
@@ -327,7 +328,7 @@
         letter-spacing: 0.2em;
         text-transform: uppercase;
         color: rgba(237, 233, 225, 0.35);
-        margin-bottom: 0.35rem;
+        margin-bottom: var(--space-2);
       }
       .meta-item__value {
         font-family: var(--body);
@@ -338,13 +339,13 @@
 
       /* SECTIONS */
       .case-section {
-        padding: 6rem var(--gutter);
+        padding: var(--space-8) var(--gutter);
         border-bottom: 1px solid #1a1a1a;
       }
       .two-col {
         display: grid;
         grid-template-columns: 1fr 2fr;
-        gap: 6rem;
+        gap: var(--space-8);
         align-items: start;
       }
       .section-label {
@@ -393,7 +394,7 @@
         gap: 2px;
       }
       .narrative-card {
-        padding: 3.5rem 2.8rem;
+        padding: var(--space-7) var(--space-6);
         background: #0e0e0e;
         border-top: 2px solid transparent;
         transition:
@@ -411,7 +412,7 @@
         letter-spacing: 0.2em;
         text-transform: uppercase;
         color: var(--accent);
-        margin-bottom: 1.1rem;
+        margin-bottom: var(--space-3);
       }
       .narrative-card__heading {
         font-family: var(--serif);
@@ -419,7 +420,7 @@
         font-weight: 300;
         line-height: 1.1;
         color: var(--fg);
-        margin-bottom: 1.1rem;
+        margin-bottom: var(--space-3);
       }
       .narrative-card__heading em {
         font-style: italic;
@@ -439,7 +440,7 @@
       }
       .stat-item {
         background: #0e0e0e;
-        padding: 2.8rem 2rem;
+        padding: var(--space-6) var(--space-5);
         border-top: 2px solid transparent;
         transition: border-color var(--fast);
       }
@@ -469,7 +470,7 @@
       .stat-item__desc {
         font-size: 0.76rem;
         color: var(--fg-dim);
-        margin-top: 0.5rem;
+        margin-top: var(--space-2);
         font-weight: 300;
         line-height: 1.6;
       }
@@ -478,7 +479,7 @@
       .constraints-panel {
         background: #0e0e0e;
         border-left: 2px solid var(--accent);
-        padding: 3rem;
+        padding: var(--space-6);
         max-width: 640px;
       }
       .constraints-panel__label {
@@ -488,13 +489,13 @@
         letter-spacing: 0.2em;
         text-transform: uppercase;
         color: var(--accent);
-        margin-bottom: 1.5rem;
+        margin-bottom: var(--space-4);
       }
       .constraint-row {
         display: grid;
         grid-template-columns: 9rem 1fr;
-        gap: 1.5rem;
-        padding: 1rem 0;
+        gap: var(--space-4);
+        padding: var(--space-3) 0;
         border-top: 1px solid #1e1e1e;
       }
       .constraint-row__key {
@@ -515,13 +516,13 @@
 
       /* PIVOT CALLOUT */
       .pivot-callout {
-        padding: 6rem var(--gutter);
+        padding: var(--space-8) var(--gutter);
         background: #0e0a08;
         border-top: 1px solid #1a1a1a;
         border-bottom: 1px solid #1a1a1a;
         display: grid;
         grid-template-columns: auto 1fr;
-        gap: 4rem;
+        gap: var(--space-7);
         align-items: start;
       }
       .pivot-callout__symbol {
@@ -532,7 +533,7 @@
         opacity: 0.5;
         line-height: 1;
         flex-shrink: 0;
-        padding-top: 0.5rem;
+        padding-top: var(--space-2);
       }
       .pivot-callout__heading {
         font-family: var(--serif);
@@ -540,7 +541,7 @@
         font-weight: 300;
         line-height: 1.15;
         color: var(--fg);
-        margin-bottom: 1.8rem;
+        margin-bottom: var(--space-5);
       }
       .pivot-callout__heading em {
         font-style: italic;
@@ -567,7 +568,7 @@
       .step {
         display: grid;
         grid-template-columns: 4rem 1fr;
-        gap: 2rem;
+        gap: var(--space-5);
         padding: 2.2rem 0;
         border-top: 1px solid #1a1a1a;
         transition: border-color var(--fast);
@@ -588,7 +589,7 @@
         font-size: 1.1rem;
         font-weight: 300;
         color: var(--fg);
-        margin-bottom: 0.5rem;
+        margin-bottom: var(--space-2);
         line-height: 1.2;
       }
       .step__title em {
@@ -605,7 +606,7 @@
       .r-step {
         display: grid;
         grid-template-columns: 4rem 1fr;
-        gap: 2rem;
+        gap: var(--space-5);
         padding: 2.2rem 0;
         border-top: 1px solid #1a1a1a;
         transition: border-color var(--fast);
@@ -626,7 +627,7 @@
         font-size: 1.05rem;
         font-weight: 300;
         color: var(--fg);
-        margin-bottom: 0.45rem;
+        margin-bottom: var(--space-2);
         line-height: 1.2;
       }
       .r-step__title em {
@@ -688,7 +689,7 @@
         bottom: 0;
         left: 0;
         right: 0;
-        padding: 0.8rem 1.2rem;
+        padding: 0.8rem var(--space-4);
         background: linear-gradient(
           to top,
           rgba(0, 0, 0, 0.78) 0%,
@@ -712,7 +713,7 @@
         border-bottom: 1px solid #1e1e1e;
       }
       .spec-table td {
-        padding: 1rem 0;
+        padding: var(--space-3) 0;
         font-size: 0.82rem;
         font-weight: 300;
         vertical-align: top;
@@ -725,8 +726,8 @@
         text-transform: uppercase;
         color: var(--accent);
         width: 9rem;
-        padding-right: 2rem;
-        padding-top: 1.1rem;
+        padding-right: var(--space-5);
+        padding-top: var(--space-3);
       }
       .spec-table td:last-child {
         color: var(--fg-mid);
@@ -735,7 +736,7 @@
 
       /* PULL QUOTE */
       .pull-quote {
-        padding: 6rem var(--gutter);
+        padding: var(--space-8) var(--gutter);
         background: #0d0c0a;
         border-top: 1px solid #1a1a1a;
         border-bottom: 1px solid #1a1a1a;
@@ -755,7 +756,7 @@
       }
       .pull-quote cite {
         display: block;
-        margin-top: 2rem;
+        margin-top: var(--space-5);
         font-family: var(--sans);
         font-size: 0.6rem;
         font-weight: 700;
@@ -771,8 +772,8 @@
         align-items: center;
         justify-content: space-between;
         flex-wrap: wrap;
-        gap: 2rem;
-        padding: 5rem var(--gutter);
+        gap: var(--space-5);
+        padding: var(--space-8) var(--gutter);
         border-top: 1px solid #1a1a1a;
       }
       .next-project__label {
@@ -818,8 +819,8 @@
         flex-wrap: wrap;
         align-items: center;
         justify-content: space-between;
-        padding: 2.8rem 2rem 3.5rem;
-        gap: 1rem;
+        padding: var(--space-6) var(--space-5) var(--space-7);
+        gap: var(--space-3);
         opacity: 0;
         animation: fadeUp 0.9s var(--ease) 0.7s forwards;
       }
@@ -827,7 +828,7 @@
       .footer-nav__left {
         display: flex;
         align-items: center;
-        gap: 2.5rem;
+        gap: var(--space-6);
       }
 
       .footer-nav a {
@@ -863,7 +864,7 @@
       .footer-nav__all {
         display: flex;
         align-items: center;
-        gap: 0.5rem;
+        gap: var(--space-2);
         font-family: var(--serif);
         font-style: italic;
         font-size: 1rem;
@@ -899,7 +900,7 @@
         }
         .pivot-callout {
           grid-template-columns: 1fr;
-          gap: 2rem;
+          gap: var(--space-5);
         }
       }
       @media (max-width: 768px) {
@@ -911,17 +912,17 @@
           display: none;
         }
         .hero__content {
-          padding: 5rem 1.4rem 3rem;
+          padding: var(--space-8) var(--space-4) var(--space-6);
         }
         .two-col {
           grid-template-columns: 1fr;
-          gap: 2.5rem;
+          gap: var(--space-6);
         }
         .section-label {
           position: static;
         }
         .case-section {
-          padding: 4rem var(--gutter);
+          padding: var(--space-7) var(--gutter);
         }
         .narrative-grid {
           grid-template-columns: 1fr;
@@ -936,20 +937,20 @@
         .step,
         .r-step {
           grid-template-columns: 3rem 1fr;
-          gap: 1rem;
+          gap: var(--space-3);
         }
         .pull-quote {
-          padding: 4rem var(--gutter);
+          padding: var(--space-7) var(--gutter);
         }
         .pivot-callout {
-          padding: 4rem var(--gutter);
+          padding: var(--space-7) var(--gutter);
         }
         .constraint-row {
           grid-template-columns: 1fr;
-          gap: 0.5rem;
+          gap: var(--space-2);
         }
         .nav__links {
-          gap: 1.2rem;
+          gap: var(--space-4);
         }
         .footer-nav {
           flex-direction: column;
@@ -960,7 +961,7 @@
       }
       @media (max-width: 480px) {
         nav {
-          padding: 1.2rem 1rem;
+          padding: var(--space-4) var(--space-3);
         }
         .nav__links a {
           font-size: 0.56rem;

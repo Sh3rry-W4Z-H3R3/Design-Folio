@@ -1,0 +1,27 @@
+/* ─── SHARED SPACING TOKENS ──────────────────────────────────────────
+   Single source of truth for site-wide spacing rhythm.
+   Linked from every page's <head> BEFORE the page's inline <style>
+   so per-page rules can read these vars and (where needed) override.
+
+   Scale: 8 steps, all multiples of 0.25rem (4px).
+   See: /spacing-plan.md for the mapping rules.
+   ───────────────────────────────────────────────────────────────── */
+:root {
+  /* Spacing scale */
+  --space-1: 0.25rem;   /*  4px  hairlines, icon→text gaps          */
+  --space-2: 0.5rem;    /*  8px  tight clusters, title→sub          */
+  --space-3: 1rem;      /* 16px  baseline                           */
+  --space-4: 1.5rem;    /* 24px  heading → subtitle breathing       */
+  --space-5: 2rem;      /* 32px  card padding, group spacing        */
+  --space-6: 3rem;      /* 48px  block separation, grid gaps        */
+  --space-7: 4.5rem;    /* 72px  small section padding              */
+  --space-8: 6rem;      /* 96px  major section padding (default)    */
+
+  /* Two gutter scales — horizontal page padding */
+  --gutter-inline: clamp(1.2rem, 4vw, 3rem);  /* lighter — hub/grid pages */
+  --gutter-block:  clamp(1.4rem, 5vw, 5rem);  /* fuller — case studies    */
+
+  /* Back-compat alias — existing per-page rules still using var(--gutter)
+     continue to resolve. Maps to the fuller gutter by default. */
+  --gutter: var(--gutter-block);
+}

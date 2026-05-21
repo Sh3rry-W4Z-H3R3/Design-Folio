@@ -39,7 +39,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Syne:wght@400;500;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
 
-  <style>
+  <link rel="stylesheet" href="tokens.css" />
+    <style>
     /* ── TOKENS ───────────────────────────────────────────── */
     :root {
       /* Kala Topi brand palette */
@@ -97,7 +98,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 2rem var(--gutter);
+      padding: var(--space-5) var(--gutter);
       position: sticky; top: 0; z-index: 100;
       background: rgba(10,10,10,0.92);
       backdrop-filter: blur(12px);
@@ -111,7 +112,7 @@
       transition: color var(--fast);
     }
     .nav__home em { font-style: italic; color: var(--accent); }
-    .nav__links { display: flex; gap: 2.5rem; }
+    .nav__links { display: flex; gap: var(--space-6); }
     .nav__links a {
       font-family: var(--sans);
       font-size: 0.65rem; font-weight: 700;
@@ -143,7 +144,7 @@
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      padding: 5rem var(--gutter) 5rem calc(var(--gutter) * 0.8);
+      padding: var(--space-8) var(--gutter) var(--space-8) calc(var(--gutter) * 0.8);
       position: relative; z-index: 2;
     }
 
@@ -153,7 +154,7 @@
       letter-spacing: 0.25em; text-transform: uppercase;
       color: var(--kt-coral);
       display: flex; align-items: center; gap: 0.8rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: var(--space-4);
       opacity: 0;
       animation: fadeUp 0.8s var(--ease) 0.2s forwards;
     }
@@ -183,14 +184,14 @@
       font-weight: 300; line-height: 1.8;
       color: rgba(242, 224, 189, 0.65);
       max-width: 420px;
-      margin-top: 2rem;
+      margin-top: var(--space-5);
       opacity: 0;
       animation: fadeUp 0.8s var(--ease) 0.5s forwards;
     }
 
     .hero__meta {
-      display: flex; gap: 2.5rem;
-      margin-top: 3rem;
+      display: flex; gap: var(--space-6);
+      margin-top: var(--space-6);
       opacity: 0;
       animation: fadeUp 0.8s var(--ease) 0.65s forwards;
     }
@@ -199,7 +200,7 @@
       font-family: var(--sans);
       font-size: 0.55rem; font-weight: 700;
       letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--kt-coral); margin-bottom: 0.3rem;
+      color: var(--kt-coral); margin-bottom: var(--space-2);
     }
     .hero__meta-value {
       font-family: var(--body);
@@ -211,7 +212,7 @@
     .hero__right {
       display: flex;
       align-items: center; justify-content: center;
-      padding: 4rem;
+      padding: var(--space-7);
       position: relative; z-index: 2;
       opacity: 0;
       animation: fadeIn 1.2s var(--ease) 0.4s forwards;
@@ -243,10 +244,10 @@
     /* ── PREMISE ──────────────────────────────────────────── */
     .premise {
       background: #0d0d0d;
-      padding: 8rem var(--gutter);
+      padding: var(--space-8) var(--gutter);
       display: grid;
       grid-template-columns: 1fr 2fr;
-      gap: 4rem;
+      gap: var(--space-7);
       align-items: start;
     }
     .premise__label {
@@ -254,7 +255,7 @@
       font-size: 0.62rem; font-weight: 700;
       letter-spacing: 0.22em; text-transform: uppercase;
       color: var(--kt-coral);
-      padding-top: 0.4rem;
+      padding-top: var(--space-2);
     }
     .premise__body {}
     .premise__statement {
@@ -262,7 +263,7 @@
       font-size: clamp(1.8rem, 3.5vw, 3rem);
       font-weight: 300; line-height: 1.25;
       color: var(--kt-cream);
-      margin-bottom: 2rem;
+      margin-bottom: var(--space-5);
     }
     .premise__statement em { font-style: italic; color: var(--kt-coral); }
     .premise__text {
@@ -271,20 +272,20 @@
       color: var(--fg-mid);
       max-width: 600px;
     }
-    .premise__text + .premise__text { margin-top: 1.2rem; }
+    .premise__text + .premise__text { margin-top: var(--space-4); }
 
     /* ── TENSION CARDS ────────────────────────────────────── */
     .tensions {
       background: var(--kt-brown);
-      padding: 6rem var(--gutter);
+      padding: var(--space-8) var(--gutter);
     }
     .tensions__header {
       font-family: var(--sans);
       font-size: 0.62rem; font-weight: 700;
       letter-spacing: 0.22em; text-transform: uppercase;
       color: var(--kt-coral);
-      margin-bottom: 4rem;
-      display: flex; align-items: center; gap: 1rem;
+      margin-bottom: var(--space-7);
+      display: flex; align-items: center; gap: var(--space-3);
     }
     .tensions__header::after {
       content: ''; flex: 1; height: 1px;
@@ -298,7 +299,7 @@
     }
     .tension-card {
       background: var(--kt-brown);
-      padding: 2.5rem 2rem;
+      padding: var(--space-6) var(--space-5);
       position: relative;
     }
     .tension-card::before {
@@ -314,7 +315,7 @@
       font-size: 0.55rem; font-weight: 700;
       letter-spacing: 0.2em; text-transform: uppercase;
       color: var(--kt-green);
-      margin-bottom: 1.2rem;
+      margin-bottom: var(--space-4);
     }
     .tension-card__a {
       font-family: var(--serif);
@@ -327,7 +328,7 @@
       font-size: 0.7rem;
       color: var(--kt-coral);
       display: block;
-      margin: 0.4rem 0;
+      margin: var(--space-2) 0;
     }
     .tension-card__b {
       font-family: var(--serif);
@@ -340,20 +341,20 @@
       font-family: var(--body);
       font-size: 0.75rem; line-height: 1.7;
       color: rgba(242,224,189,0.45);
-      margin-top: 1rem;
+      margin-top: var(--space-3);
     }
 
     /* ── MENU SHOWCASE ────────────────────────────────────── */
     .menu-section {
       background: #0a0a0a;
-      padding: 8rem var(--gutter);
+      padding: var(--space-8) var(--gutter);
     }
     .section-header {
       display: flex;
       align-items: baseline;
       justify-content: space-between;
-      margin-bottom: 3rem;
-      gap: 2rem;
+      margin-bottom: var(--space-6);
+      gap: var(--space-5);
       flex-wrap: wrap;
     }
     .section-header__left {}
@@ -429,18 +430,18 @@
     /* ── COLOUR SYSTEM ────────────────────────────────────── */
     .colour-section {
       background: #0d0d0d;
-      padding: 8rem var(--gutter);
+      padding: var(--space-8) var(--gutter);
     }
     .palette {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
-      gap: 1.6rem;
-      margin-top: 3rem;
+      gap: var(--space-5);
+      margin-top: var(--space-6);
     }
     .swatch {
       display: flex;
       flex-direction: column;
-      gap: 0.9rem;
+      gap: var(--space-3);
       transition: transform var(--fast);
     }
     .swatch:hover { transform: translateY(-4px); }
@@ -453,7 +454,7 @@
     .swatch__info {
       display: flex;
       flex-direction: column;
-      gap: 0.25rem;
+      gap: var(--space-2);
     }
     .swatch__hex {
       font-family: var(--sans);
@@ -477,7 +478,7 @@
       line-height: 1.45;
     }
     @media (max-width: 768px) {
-      .palette { grid-template-columns: repeat(2, 1fr); gap: 1.4rem; }
+      .palette { grid-template-columns: repeat(2, 1fr); gap: var(--space-4); }
     }
     @media (max-width: 480px) {
       .palette { grid-template-columns: 1fr 1fr; }
@@ -486,20 +487,20 @@
     /* ── BRAND VOICE ──────────────────────────────────────── */
     .voice-section {
       background: var(--kt-brown);
-      padding: 8rem var(--gutter);
+      padding: var(--space-8) var(--gutter);
     }
     .voice-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      margin-top: 4rem;
+      gap: var(--space-7);
+      margin-top: var(--space-7);
     }
     .voice-col__label {
       font-family: var(--sans);
       font-size: 0.58rem; font-weight: 700;
       letter-spacing: 0.2em; text-transform: uppercase;
       color: var(--kt-green);
-      margin-bottom: 1.5rem;
+      margin-bottom: var(--space-4);
       display: flex; align-items: center; gap: 0.6rem;
     }
     .voice-col__label::before {
@@ -508,7 +509,7 @@
       background: var(--kt-green);
     }
     .voice-item {
-      padding: 1.2rem 0;
+      padding: var(--space-4) 0;
       border-bottom: 1px solid rgba(242,224,189,0.08);
     }
     .voice-item:last-child { border-bottom: none; }
@@ -526,15 +527,15 @@
     /* ── CERAMICS SECTION ─────────────────────────────────── */
     .ceramics-section {
       background: #0a0a0a;
-      padding: 8rem var(--gutter);
+      padding: var(--space-8) var(--gutter);
     }
     .ceramics-placeholder {
-      margin-top: 3rem;
+      margin-top: var(--space-6);
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
+      gap: var(--space-5);
     }
-    .ceramic-slot { display: flex; flex-direction: column; gap: 1rem; }
+    .ceramic-slot { display: flex; flex-direction: column; gap: var(--space-3); }
     .ceramic-slot__media {
       aspect-ratio: 4/3;
       background: rgba(255,255,255,0.015);
@@ -543,7 +544,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 1.4rem;
+      padding: var(--space-4);
     }
     .ceramic-slot__media img,
     .ceramic-slot__media > img {
@@ -575,14 +576,14 @@
     }
     .in-production {
       display: inline-flex;
-      align-items: center; gap: 0.5rem;
+      align-items: center; gap: var(--space-2);
       font-family: var(--sans);
       font-size: 0.58rem; font-weight: 700;
       letter-spacing: 0.18em; text-transform: uppercase;
       color: var(--kt-coral);
       border: 1px solid var(--kt-coral);
-      padding: 0.4rem 0.9rem;
-      margin-top: 2rem;
+      padding: var(--space-2) var(--space-3);
+      margin-top: var(--space-5);
     }
     .in-production::before {
       content: '';
@@ -599,10 +600,10 @@
     /* ── FOOTER ───────────────────────────────────────────── */
     .case-footer {
       background: var(--kt-brown);
-      padding: 5rem var(--gutter);
+      padding: var(--space-8) var(--gutter);
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 3rem;
+      gap: var(--space-6);
       align-items: end;
     }
     .case-footer__next-label {
@@ -618,7 +619,7 @@
       font-weight: 300;
       color: var(--kt-cream);
       text-decoration: none;
-      display: flex; align-items: baseline; gap: 1rem;
+      display: flex; align-items: baseline; gap: var(--space-3);
       transition: color var(--fast);
     }
     .case-footer__next-link em { font-style: italic; color: var(--kt-coral); }
@@ -651,14 +652,14 @@
       .cursor { display: none; }
       .hero { grid-template-columns: 1fr; min-height: auto; }
       .hero__right { min-height: 50vw; }
-      .premise { grid-template-columns: 1fr; gap: 2rem; padding: 5rem var(--gutter); }
+      .premise { grid-template-columns: 1fr; gap: var(--space-5); padding: var(--space-8) var(--gutter); }
       .tensions__grid { grid-template-columns: 1fr; }
       .menu-panels { grid-template-columns: 1fr; }
       .palette { grid-template-columns: repeat(5, 1fr); }
-      .voice-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .voice-grid { grid-template-columns: 1fr; gap: var(--space-6); }
       .ceramics-placeholder { grid-template-columns: 1fr; }
       .case-footer { grid-template-columns: 1fr; }
-      .nav__links { gap: 1.2rem; }
+      .nav__links { gap: var(--space-4); }
       .swatch__name, .swatch__meaning { display: none; }
     }
   </style>
@@ -670,7 +671,7 @@
   <!-- ── NAV ──────────────────────────────────────────────── -->
   <nav>
     <a href="index.html" class="nav__home">Sherjeel <em>Hussain</em></a>
-    <div style="display:flex;align-items:center;gap:3rem;">
+    <div style="display:flex;align-items:center;gap: var(--space-6);">
       <a href="digital.html" class="nav__back">Digital</a>
       <div class="nav__links">
         <a href="digital.html" data-cursor="monitor">Digital</a>

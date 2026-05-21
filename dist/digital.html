@@ -75,7 +75,8 @@
       rel="stylesheet"
     />
 
-    <style>
+    <link rel="stylesheet" href="tokens.css" />
+        <style>
       :root {
         --bg: #0a0a0a;
         --fg: #ede9e1;
@@ -140,7 +141,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 2rem var(--gutter);
+        padding: var(--space-5) var(--gutter);
         position: sticky;
         top: 0;
         z-index: 100;
@@ -166,7 +167,7 @@
       }
       .nav__links {
         display: flex;
-        gap: 2.5rem;
+        gap: var(--space-6);
         align-items: center;
       }
       .nav__links a {
@@ -200,10 +201,10 @@
 
       /* ── PAGE HEADER ──────────────────────────────────────── */
       .page-header {
-        padding: 5rem var(--gutter) 4rem;
+        padding: var(--space-8) var(--gutter) var(--space-7);
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 2rem;
+        gap: var(--space-5);
         align-items: end;
         opacity: 0;
         animation: fadeUp 0.8s var(--ease) 0.1s forwards;
@@ -214,7 +215,7 @@
         letter-spacing: 0.22em;
         text-transform: uppercase;
         color: var(--accent);
-        margin-bottom: 1.2rem;
+        margin-bottom: var(--space-4);
         display: flex;
         align-items: center;
         gap: 0.8rem;
@@ -247,8 +248,8 @@
       /* ── FILTER BAR ───────────────────────────────────────── */
       .filter-bar {
         display: flex;
-        gap: 0.4rem;
-        padding: 0 var(--gutter) 3rem;
+        gap: var(--space-2);
+        padding: 0 var(--gutter) var(--space-6);
         flex-wrap: wrap;
         opacity: 0;
         animation: fadeUp 0.8s var(--ease) 0.25s forwards;
@@ -262,7 +263,7 @@
         background: transparent;
         border: 1px solid #2a2a2a;
         color: var(--fg-dim);
-        padding: 0.55rem 1rem;
+        padding: var(--space-2) var(--space-3);
         cursor: none;
         transition:
           border-color var(--fast),
@@ -281,7 +282,7 @@
         display: grid;
         grid-template-columns: repeat(12, 1fr);
         gap: 2px;
-        padding: 0 var(--gutter) 6rem;
+        padding: 0 var(--gutter) var(--space-8);
         opacity: 0;
         animation: fadeUp 0.8s var(--ease) 0.4s forwards;
       }
@@ -417,11 +418,11 @@
         color: var(--accent);
         background: rgba(232, 84, 122, 0.12);
         border: 1px solid rgba(232, 84, 122, 0.35);
-        padding: 0.3rem 0.6rem;
+        padding: var(--space-2) 0.6rem;
         z-index: 2;
         display: inline-flex;
         align-items: center;
-        gap: 0.4rem;
+        gap: var(--space-2);
       }
       .card__status::before {
         content: "●";
@@ -446,14 +447,14 @@
         bottom: 0;
         left: 0;
         right: 0;
-        padding: 1.6rem 1.8rem;
+        padding: var(--space-5) var(--space-5);
         z-index: 2;
         transform: translateY(4px);
         transition: transform var(--slow);
       }
       .card__tags {
         display: flex;
-        gap: 0.5rem;
+        gap: var(--space-2);
         flex-wrap: wrap;
         margin-bottom: 0.7rem;
       }
@@ -482,7 +483,7 @@
       .card__sub {
         font-size: 0.68rem;
         color: var(--fg-mid);
-        margin-top: 0.35rem;
+        margin-top: var(--space-2);
         letter-spacing: 0.04em;
         opacity: 0;
         transform: translateY(6px);
@@ -556,8 +557,8 @@
         flex-wrap: wrap;
         align-items: center;
         justify-content: space-between;
-        padding: 2.8rem 2rem 3.5rem;
-        gap: 1rem;
+        padding: var(--space-6) var(--space-5) var(--space-7);
+        gap: var(--space-3);
         opacity: 0;
         animation: fadeUp 0.9s var(--ease) 0.7s forwards;
       }
@@ -565,7 +566,7 @@
       .footer-nav__left {
         display: flex;
         align-items: center;
-        gap: 2.5rem;
+        gap: var(--space-6);
       }
 
       .footer-nav a {
@@ -601,7 +602,7 @@
       .footer-nav__all {
         display: flex;
         align-items: center;
-        gap: 0.5rem;
+        gap: var(--space-2);
         font-family: var(--serif);
         font-style: italic;
         font-size: 1rem;
@@ -641,7 +642,7 @@
         }
         .page-header {
           grid-template-columns: 1fr;
-          padding: 3rem var(--gutter) 2.5rem;
+          padding: var(--space-6) var(--gutter) var(--space-6);
         }
         .card,
         .card--wide,
@@ -652,7 +653,7 @@
           aspect-ratio: 4/3;
         }
         .nav__links {
-          gap: 1.2rem;
+          gap: var(--space-4);
         }
         .footer-nav {
           flex-direction: column;

@@ -80,7 +80,8 @@
       href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Syne:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
-    <style>
+    <link rel="stylesheet" href="tokens.css" />
+        <style>
       :root {
         --bg: #0a0a0a;
         --fg: #ede9e1;
@@ -165,7 +166,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 2rem var(--gutter);
+        padding: var(--space-5) var(--gutter);
         position: sticky;
         top: 0;
         z-index: 100;
@@ -187,7 +188,7 @@
       }
       .nav__links {
         display: flex;
-        gap: 2.5rem;
+        gap: var(--space-6);
       }
       .nav__links a {
         font-family: var(--sans);
@@ -226,7 +227,7 @@
         color: var(--fg-dim);
         display: flex;
         align-items: center;
-        gap: 0.5rem;
+        gap: var(--space-2);
         transition: color var(--fast);
       }
       .nav__back:hover {
@@ -259,7 +260,7 @@
       .hero__content {
         position: relative;
         z-index: 2;
-        padding: 8rem var(--gutter) 4rem;
+        padding: var(--space-8) var(--gutter) var(--space-7);
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
@@ -271,7 +272,7 @@
         letter-spacing: 0.22em;
         text-transform: uppercase;
         color: var(--accent);
-        margin-bottom: 1.8rem;
+        margin-bottom: var(--space-5);
         display: flex;
         align-items: center;
         gap: 0.8rem;
@@ -299,7 +300,7 @@
         color: var(--accent);
       }
       .hero__subtitle {
-        margin-top: 1.5rem;
+        margin-top: var(--space-4);
         font-family: var(--serif);
         font-style: italic;
         font-size: clamp(1rem, 2vw, 1.35rem);
@@ -314,9 +315,9 @@
         position: relative;
         z-index: 2;
         display: flex;
-        gap: 3rem;
+        gap: var(--space-6);
         flex-wrap: wrap;
-        padding: 2rem var(--gutter);
+        padding: var(--space-5) var(--gutter);
         border-top: 1px solid rgba(237, 233, 225, 0.12);
         opacity: 0;
         animation: fadeUp 0.8s var(--ease) 0.45s forwards;
@@ -328,7 +329,7 @@
         letter-spacing: 0.2em;
         text-transform: uppercase;
         color: rgba(237, 233, 225, 0.35);
-        margin-bottom: 0.35rem;
+        margin-bottom: var(--space-2);
       }
       .meta-item__value {
         font-family: var(--body);
@@ -338,13 +339,13 @@
       }
 
       .case-section {
-        padding: 6rem var(--gutter);
+        padding: var(--space-8) var(--gutter);
         border-bottom: 1px solid #1a1a1a;
       }
       .two-col {
         display: grid;
         grid-template-columns: 1fr 2fr;
-        gap: 6rem;
+        gap: var(--space-8);
         align-items: start;
       }
       .section-label {
@@ -393,7 +394,7 @@
       }
       .stat-item {
         background: #0e0e0e;
-        padding: 2.5rem 2rem;
+        padding: var(--space-6) var(--space-5);
         border-top: 2px solid transparent;
         transition: border-color var(--fast);
       }
@@ -406,7 +407,7 @@
         font-weight: 300;
         line-height: 1;
         color: var(--fg);
-        margin-bottom: 0.5rem;
+        margin-bottom: var(--space-2);
       }
       .stat-item__num em {
         font-style: italic;
@@ -456,10 +457,10 @@
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 2px;
-        margin-top: 2.5rem;
+        margin-top: var(--space-6);
       }
       .deliverable {
-        padding: 2rem 1.8rem;
+        padding: var(--space-5) var(--space-5);
         background: #0e0e0e;
         border-top: 2px solid transparent;
         transition: border-color var(--fast);
@@ -474,7 +475,7 @@
         letter-spacing: 0.2em;
         text-transform: uppercase;
         color: var(--accent);
-        margin-bottom: 1rem;
+        margin-bottom: var(--space-3);
       }
       .deliverable__title {
         font-family: var(--serif);
@@ -495,7 +496,7 @@
       }
 
       .pull-quote {
-        padding: 6rem var(--gutter);
+        padding: var(--space-8) var(--gutter);
         background: #0e0e0e;
         border-top: 1px solid #1a1a1a;
         border-bottom: 1px solid #1a1a1a;
@@ -515,7 +516,7 @@
       }
       .pull-quote cite {
         display: block;
-        margin-top: 2rem;
+        margin-top: var(--space-5);
         font-family: var(--sans);
         font-size: 0.6rem;
         font-weight: 700;
@@ -534,7 +535,7 @@
         border-bottom: 1px solid #1e1e1e;
       }
       .spec-table td {
-        padding: 1rem 0;
+        padding: var(--space-3) 0;
         font-size: 0.82rem;
         font-weight: 300;
         vertical-align: top;
@@ -547,8 +548,8 @@
         text-transform: uppercase;
         color: var(--accent);
         width: 9rem;
-        padding-right: 2rem;
-        padding-top: 1.1rem;
+        padding-right: var(--space-5);
+        padding-top: var(--space-3);
       }
       .spec-table td:last-child {
         color: var(--fg-mid);
@@ -560,8 +561,8 @@
         align-items: center;
         justify-content: space-between;
         flex-wrap: wrap;
-        gap: 2rem;
-        padding: 5rem var(--gutter);
+        gap: var(--space-5);
+        padding: var(--space-8) var(--gutter);
         border-top: 1px solid #1a1a1a;
       }
       .next-project__label {
@@ -607,8 +608,8 @@
         flex-wrap: wrap;
         align-items: center;
         justify-content: space-between;
-        padding: 2.8rem 2rem 3.5rem;
-        gap: 1rem;
+        padding: var(--space-6) var(--space-5) var(--space-7);
+        gap: var(--space-3);
         opacity: 0;
         animation: fadeUp 0.9s var(--ease) 0.7s forwards;
       }
@@ -616,7 +617,7 @@
       .footer-nav__left {
         display: flex;
         align-items: center;
-        gap: 2.5rem;
+        gap: var(--space-6);
       }
 
       .footer-nav a {
@@ -652,7 +653,7 @@
       .footer-nav__all {
         display: flex;
         align-items: center;
-        gap: 0.5rem;
+        gap: var(--space-2);
         font-family: var(--serif);
         font-style: italic;
         font-size: 1rem;
@@ -695,17 +696,17 @@
           display: none;
         }
         .hero__content {
-          padding: 5rem 1.4rem 3rem;
+          padding: var(--space-8) var(--space-4) var(--space-6);
         }
         .two-col {
           grid-template-columns: 1fr;
-          gap: 2.5rem;
+          gap: var(--space-6);
         }
         .section-label {
           position: static;
         }
         .case-section {
-          padding: 4rem 1.4rem;
+          padding: var(--space-7) var(--space-4);
         }
         .img-grid--2,
         .img-grid--3 {
@@ -715,10 +716,10 @@
           grid-template-columns: 1fr;
         }
         .pull-quote {
-          padding: 4rem 1.4rem;
+          padding: var(--space-7) var(--space-4);
         }
         .nav__links {
-          gap: 1.2rem;
+          gap: var(--space-4);
         }
         .footer-nav {
           flex-direction: column;
@@ -729,7 +730,7 @@
       }
       @media (max-width: 480px) {
         nav {
-          padding: 1.2rem 1rem;
+          padding: var(--space-4) var(--space-3);
         }
         .nav__links a {
           font-size: 0.56rem;
@@ -923,7 +924,7 @@
           display: flex;
           align-items: center;
           gap: 0.8rem;
-          margin-bottom: 2.5rem;
+          margin-bottom: var(--space-6);
         "
       >
         <span

@@ -10,7 +10,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Syne:wght@400;500;700&display=swap" rel="stylesheet" />
 
-  <style>
+  <link rel="stylesheet" href="tokens.css" />
+    <style>
     /* ─── TOKENS ─────────────────────────────────────────── */
     :root {
       --bg:       #0a0a0a;
@@ -57,7 +58,7 @@
     /* ─── NAV ─────────────────────────────────────────────── */
     nav {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 2rem var(--gutter);
+      padding: var(--space-5) var(--gutter);
       position: sticky; top: 0; z-index: 100;
       background: rgba(10,10,10,0.92); backdrop-filter: blur(12px);
       border-bottom: 1px solid #1a1a1a;
@@ -67,7 +68,7 @@
       letter-spacing: 0.06em; text-decoration: none; color: var(--fg);
     }
     .nav__home em { font-style: italic; color: var(--accent-2); }
-    .nav__links { display: flex; gap: 2.5rem; }
+    .nav__links { display: flex; gap: var(--space-6); }
     .nav__links a {
       font-family: var(--sans); font-size: 0.65rem; font-weight: 700;
       letter-spacing: 0.2em; text-transform: uppercase;
@@ -83,13 +84,13 @@
 
     /* ─── PROJECT HERO ────────────────────────────────────── */
     .project-hero {
-      padding: 5rem var(--gutter) 0;
+      padding: var(--space-8) var(--gutter) 0;
       opacity: 0; animation: fadeUp 0.8s var(--ease) 0.1s forwards;
     }
     .project-hero__eyebrow {
       font-family: var(--sans); font-size: 0.62rem; font-weight: 700;
       letter-spacing: 0.22em; text-transform: uppercase;
-      color: var(--accent); margin-bottom: 1.5rem;
+      color: var(--accent); margin-bottom: var(--space-4);
       display: flex; align-items: center; gap: 0.8rem;
     }
     .project-hero__eyebrow::before {
@@ -106,12 +107,12 @@
     /* ─── META STRIP ──────────────────────────────────────── */
     .meta-strip {
       display: grid; grid-template-columns: repeat(4, 1fr);
-      gap: 2px; margin: 3rem 0 0;
+      gap: 2px; margin: var(--space-6) 0 0;
       border-top: 1px solid #1a1a1a;
       opacity: 0; animation: fadeUp 0.8s var(--ease) 0.3s forwards;
     }
     .meta-strip__item {
-      padding: 1.8rem var(--gutter);
+      padding: var(--space-5) var(--gutter);
       border-right: 1px solid #1a1a1a;
     }
     .meta-strip__item:last-child { border-right: none; }
@@ -150,17 +151,17 @@
 
     /* ─── SECTIONS ────────────────────────────────────────── */
     .section {
-      padding: 6rem var(--gutter);
+      padding: var(--space-8) var(--gutter);
       border-top: 1px solid #1a1a1a;
     }
     .section--split {
       display: grid; grid-template-columns: 1fr 1fr;
-      gap: 4rem; align-items: start;
+      gap: var(--space-7); align-items: start;
     }
     .section__num {
       font-family: var(--sans); font-size: 0.58rem; font-weight: 700;
       letter-spacing: 0.22em; text-transform: uppercase;
-      color: var(--accent); margin-bottom: 1.5rem;
+      color: var(--accent); margin-bottom: var(--space-4);
       display: flex; align-items: center; gap: 0.8rem;
     }
     .section__num::before {
@@ -169,20 +170,20 @@
     .section__heading {
       font-family: var(--serif);
       font-size: clamp(2rem, 4vw, 3.5rem);
-      font-weight: 300; line-height: 1; margin-bottom: 2rem;
+      font-weight: 300; line-height: 1; margin-bottom: var(--space-5);
     }
     .section__heading em { font-style: italic; }
     .section__body {
       font-family: var(--body); font-size: 0.88rem; line-height: 1.9;
       color: var(--fg-mid); font-weight: 300; max-width: 52ch;
     }
-    .section__body + .section__body { margin-top: 1.2rem; }
+    .section__body + .section__body { margin-top: var(--space-4); }
     .section__body strong { color: var(--fg); font-weight: 400; }
 
     /* ─── CALLOUT ─────────────────────────────────────────── */
     .callout {
-      margin: 2.5rem 0;
-      padding: 2rem 2.2rem;
+      margin: var(--space-6) 0;
+      padding: var(--space-5) 2.2rem;
       border-left: 2px solid var(--accent);
       background: rgba(109,191,158,0.04);
     }
@@ -223,8 +224,8 @@
       margin-bottom: 0;
     }
     .process-step {
-      display: grid; grid-template-columns: 1fr 2fr; gap: 3rem;
-      padding: 2.5rem 0;
+      display: grid; grid-template-columns: 1fr 2fr; gap: var(--space-6);
+      padding: var(--space-6) 0;
       border-bottom: 1px solid #1a1a1a;
       counter-increment: step;
       align-items: start;
@@ -233,7 +234,7 @@
     .process-step__num {
       font-family: var(--sans); font-size: 0.58rem; font-weight: 700;
       letter-spacing: 0.2em; text-transform: uppercase; color: var(--fg-dim);
-      padding-top: 0.25rem;
+      padding-top: var(--space-2);
     }
     .process-step__num::before { content: "0" counter(step); }
     .process-step__heading {
@@ -249,10 +250,10 @@
     /* ─── STAT ROW ────────────────────────────────────────── */
     .stat-row {
       display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 2px; margin-top: 4rem;
+      gap: 2px; margin-top: var(--space-7);
     }
     .stat {
-      padding: 2.5rem 2rem; background: #111;
+      padding: var(--space-6) var(--space-5); background: #111;
       border-top: 1px solid #222;
       transition: border-top-color var(--fast);
     }
@@ -272,7 +273,7 @@
     /* ─── NEXT PROJECT ────────────────────────────────────── */
     .next-project {
       display: block; text-decoration: none; color: inherit;
-      padding: 5rem var(--gutter);
+      padding: var(--space-8) var(--gutter);
       border-top: 1px solid #1a1a1a;
       position: relative; overflow: hidden;
       transition: background var(--fast);
@@ -281,7 +282,7 @@
     .next-project__label {
       font-family: var(--sans); font-size: 0.58rem; font-weight: 700;
       letter-spacing: 0.22em; text-transform: uppercase; color: var(--fg-dim);
-      margin-bottom: 1.2rem; display: block;
+      margin-bottom: var(--space-4); display: block;
     }
     .next-project__title {
       font-family: var(--serif);
@@ -305,8 +306,8 @@
       flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
-      padding: 2.8rem 2rem 3.5rem;
-      gap: 1rem;
+      padding: var(--space-6) var(--space-5) var(--space-7);
+      gap: var(--space-3);
       opacity: 0;
       animation: fadeUp 0.9s var(--ease) 0.7s forwards;
     }
@@ -314,7 +315,7 @@
     .footer-nav__left {
       display: flex;
       align-items: center;
-      gap: 2.5rem;
+      gap: var(--space-6);
     }
 
     .footer-nav a {
@@ -348,7 +349,7 @@
     .footer-nav__all {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: var(--space-2);
       font-family: var(--serif);
       font-style: italic;
       font-size: 1rem;
@@ -380,14 +381,14 @@
       .meta-strip { grid-template-columns: 1fr 1fr; }
       .meta-strip__item { border-right: none; border-bottom: 1px solid #1a1a1a; }
       .meta-strip__item:nth-child(odd) { border-right: 1px solid #1a1a1a; }
-      .section--split { grid-template-columns: 1fr; gap: 2rem; }
+      .section--split { grid-template-columns: 1fr; gap: var(--space-5); }
       .img-grid { grid-template-columns: 1fr; }
       .img-grid__item--tall { aspect-ratio: 4/3; }
       .stat-row { grid-template-columns: 1fr; }
       .process-step { grid-template-columns: 1fr; gap: 0.8rem; }
-      .nav__links { gap: 1.2rem; }
+      .nav__links { gap: var(--space-4); }
       .next-project__arrow { display: none; }
-      footer { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+      footer { flex-direction: column; align-items: flex-start; gap: var(--space-4); }
       .hero-img { aspect-ratio: 4/3; }
     }
     @media (max-width: 480px) {
@@ -402,7 +403,7 @@
   <!-- ── NAV ──────────────────────────────────────────────── -->
   <nav>
     <a href="index.html" class="nav__home">Sherjeel <em>Hussain</em></a>
-    <div style="display:flex;align-items:center;gap:3rem;">
+    <div style="display:flex;align-items:center;gap: var(--space-6);">
       <a href="craft.html" class="nav__back">Craft</a>
       <div class="nav__links">
         <a href="digital.html" data-cursor="monitor">Digital</a>
@@ -512,7 +513,7 @@
   <!-- ── 03 COMMUNITY ──────────────────────────────────────── -->
   <section class="section">
     <p class="section__num">03 — Teaching &amp; Community</p>
-    <h2 class="section__heading" style="margin-bottom: 3rem;">Raku Club &amp; <em>Workshop</em></h2>
+    <h2 class="section__heading" style="margin-bottom: var(--space-6);">Raku Club &amp; <em>Workshop</em></h2>
 
     <div class="process-steps">
       <div class="process-step">

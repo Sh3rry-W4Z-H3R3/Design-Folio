@@ -16,7 +16,8 @@
       rel="stylesheet"
     />
 
-    <style>
+    <link rel="stylesheet" href="tokens.css" />
+        <style>
       /* ─── TOKENS ─────────────────────────────────────────── */
       :root {
         --bg: #0a0a0a;
@@ -82,7 +83,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 2rem var(--gutter);
+        padding: var(--space-5) var(--gutter);
         position: sticky;
         top: 0;
         z-index: 100;
@@ -104,7 +105,7 @@
       }
       .nav__links {
         display: flex;
-        gap: 2.5rem;
+        gap: var(--space-6);
       }
       .nav__links a {
         font-family: var(--sans);
@@ -138,10 +139,10 @@
 
       /* ─── PAGE HEADER ─────────────────────────────────────── */
       .page-header {
-        padding: 5rem var(--gutter) 4rem;
+        padding: var(--space-8) var(--gutter) var(--space-7);
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 2rem;
+        gap: var(--space-5);
         align-items: end;
         opacity: 0;
         animation: fadeUp 0.8s var(--ease) 0.1s forwards;
@@ -153,7 +154,7 @@
         letter-spacing: 0.22em;
         text-transform: uppercase;
         color: var(--gold);
-        margin-bottom: 1.2rem;
+        margin-bottom: var(--space-4);
         display: flex;
         align-items: center;
         gap: 0.8rem;
@@ -182,7 +183,7 @@
         letter-spacing: 0.18em;
         text-transform: uppercase;
         color: var(--fg-dim);
-        margin-top: 1.4rem;
+        margin-top: var(--space-4);
       }
       .page-header__count span {
         color: var(--fg);
@@ -200,10 +201,10 @@
       /* ─── DISCIPLINE KEY ──────────────────────────────────── */
       .discipline-bar {
         display: flex;
-        gap: 2.5rem;
-        padding: 0 var(--gutter) 1.8rem;
+        gap: var(--space-6);
+        padding: 0 var(--gutter) var(--space-5);
         border-bottom: 1px solid #1a1a1a;
-        margin-bottom: 3rem;
+        margin-bottom: var(--space-6);
         opacity: 0;
         animation: fadeUp 0.8s var(--ease) 0.2s forwards;
       }
@@ -237,8 +238,8 @@
       /* ─── FILTER BAR ──────────────────────────────────────── */
       .filter-bar {
         display: flex;
-        gap: 0.4rem;
-        padding: 0 var(--gutter) 3rem;
+        gap: var(--space-2);
+        padding: 0 var(--gutter) var(--space-6);
         flex-wrap: wrap;
         opacity: 0;
         animation: fadeUp 0.8s var(--ease) 0.3s forwards;
@@ -252,7 +253,7 @@
         background: transparent;
         border: 1px solid #2a2a2a;
         color: var(--fg-dim);
-        padding: 0.55rem 1rem;
+        padding: var(--space-2) var(--space-3);
         cursor: none;
         transition:
           border-color var(--fast),
@@ -271,7 +272,7 @@
         display: grid;
         grid-template-columns: repeat(12, 1fr);
         gap: 2px;
-        padding: 0 var(--gutter) 2rem;
+        padding: 0 var(--gutter) var(--space-5);
         opacity: 0;
         animation: fadeUp 0.8s var(--ease) 0.4s forwards;
       }
@@ -384,7 +385,7 @@
         text-transform: uppercase;
         color: var(--gold);
         border: 1px solid rgba(200, 184, 130, 0.3);
-        padding: 0.3rem 0.7rem;
+        padding: var(--space-2) 0.7rem;
         z-index: 2;
         white-space: nowrap;
       }
@@ -394,7 +395,7 @@
         bottom: 0;
         left: 0;
         right: 0;
-        padding: 0 1.4rem 1.6rem;
+        padding: 0 var(--space-4) var(--space-5);
         z-index: 3;
         transform: translateY(4px);
         transition: transform var(--slow);
@@ -406,8 +407,8 @@
       .card__tags {
         display: flex;
         flex-wrap: wrap;
-        gap: 0.3rem;
-        margin-bottom: 0.5rem;
+        gap: var(--space-2);
+        margin-bottom: var(--space-2);
       }
       .card__tag {
         font-family: var(--sans);
@@ -423,7 +424,7 @@
         font-size: clamp(1.2rem, 2.5vw, 1.8rem);
         font-weight: 300;
         line-height: 1.1;
-        margin-bottom: 0.4rem;
+        margin-bottom: var(--space-2);
       }
       .card__title em {
         font-style: italic;
@@ -490,11 +491,11 @@
       /* ─── EXTERNAL LINKS BAR ──────────────────────────────── */
       .ext-bar {
         display: flex;
-        gap: 1.5rem;
+        gap: var(--space-4);
         flex-wrap: wrap;
-        padding: 2.5rem var(--gutter) 2.5rem;
+        padding: var(--space-6) var(--gutter) var(--space-6);
         border-top: 1px solid #1a1a1a;
-        margin-top: 2rem;
+        margin-top: var(--space-5);
       }
       .ext-bar__label {
         font-family: var(--sans);
@@ -504,7 +505,7 @@
         text-transform: uppercase;
         color: var(--fg-dim);
         align-self: center;
-        margin-right: 0.5rem;
+        margin-right: var(--space-2);
       }
       .ext-bar a {
         font-family: var(--sans);
@@ -515,14 +516,14 @@
         text-decoration: none;
         color: var(--fg-dim);
         border: 1px solid #2a2a2a;
-        padding: 0.55rem 1.1rem;
+        padding: var(--space-2) var(--space-3);
         transition:
           border-color var(--fast),
           color var(--fast),
           background var(--fast);
         display: flex;
         align-items: center;
-        gap: 0.5rem;
+        gap: var(--space-2);
       }
       .ext-bar a:hover {
         border-color: var(--gold);
@@ -536,8 +537,8 @@
         flex-wrap: wrap;
         align-items: center;
         justify-content: space-between;
-        padding: 2.8rem 2rem 3.5rem;
-        gap: 1rem;
+        padding: var(--space-6) var(--space-5) var(--space-7);
+        gap: var(--space-3);
         opacity: 0;
         animation: fadeUp 0.9s var(--ease) 0.7s forwards;
       }
@@ -545,7 +546,7 @@
       .footer-nav__left {
         display: flex;
         align-items: center;
-        gap: 2.5rem;
+        gap: var(--space-6);
       }
 
       .footer-nav a {
@@ -581,7 +582,7 @@
       .footer-nav__all {
         display: flex;
         align-items: center;
-        gap: 0.5rem;
+        gap: var(--space-2);
         font-family: var(--serif);
         font-style: italic;
         font-size: 1rem;
@@ -622,7 +623,7 @@
         }
         .page-header {
           grid-template-columns: 1fr;
-          padding: 3rem var(--gutter) 2.5rem;
+          padding: var(--space-6) var(--gutter) var(--space-6);
         }
         .page-header__desc {
           max-width: none;
@@ -635,10 +636,10 @@
           aspect-ratio: 4/3 !important;
         }
         .nav__links {
-          gap: 1.2rem;
+          gap: var(--space-4);
         }
         .discipline-bar {
-          gap: 1.4rem;
+          gap: var(--space-4);
           flex-wrap: wrap;
         }
         .footer-nav {
@@ -648,7 +649,7 @@
           flex-direction: column;
         }
         .ext-bar {
-          gap: 1rem;
+          gap: var(--space-3);
         }
       }
       @media (max-width: 480px) {
@@ -658,7 +659,7 @@
         }
         .filter-btn {
           font-size: 0.56rem;
-          padding: 0.45rem 0.8rem;
+          padding: var(--space-2) 0.8rem;
         }
       }
     </style>

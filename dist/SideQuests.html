@@ -60,7 +60,8 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
-    <style>
+    <link rel="stylesheet" href="tokens.css" />
+        <style>
       /* ── VARIABLES & RESETS ─────────────────────────────── */
       :root {
         --bg: #000000;
@@ -126,7 +127,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 2rem var(--gutter);
+        padding: var(--space-5) var(--gutter);
         position: sticky;
         top: 0;
         z-index: 100;
@@ -152,7 +153,7 @@
       }
       .nav__links {
         display: flex;
-        gap: 2.5rem;
+        gap: var(--space-6);
         align-items: center;
       }
       .nav__links a {
@@ -187,10 +188,10 @@
 
       /* ── PAGE HEADER ──────────────────────────────────────── */
       .page-header {
-        padding: 5rem var(--gutter) 4rem;
+        padding: var(--space-8) var(--gutter) var(--space-7);
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 2rem;
+        gap: var(--space-5);
         align-items: end;
         opacity: 0;
         animation: fadeUp 0.8s var(--ease) 0.1s forwards;
@@ -201,7 +202,7 @@
         letter-spacing: 0.22em;
         text-transform: uppercase;
         color: var(--accent);
-        margin-bottom: 1.2rem;
+        margin-bottom: var(--space-4);
         display: flex;
         align-items: center;
         gap: 0.8rem;
@@ -235,7 +236,7 @@
       .gallery-container {
         column-count: 3;
         column-gap: 20px;
-        padding: 0 var(--gutter) 6rem;
+        padding: 0 var(--gutter) var(--space-8);
         opacity: 0;
         animation: fadeUp 0.8s var(--ease) 0.4s forwards;
       }
@@ -261,7 +262,7 @@
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          gap: 1.5rem;
+          gap: var(--space-4);
         }
         .footer-nav {
           flex-direction: column;
@@ -320,7 +321,7 @@
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
-        padding: 1.4rem 1.3rem;
+        padding: var(--space-4) var(--space-4);
         opacity: 0;
         pointer-events: none;
         transition: opacity 250ms ease-in-out;
@@ -335,7 +336,7 @@
         font-weight: 600;
         color: var(--fg);
         line-height: 1.15;
-        margin-bottom: 0.35rem;
+        margin-bottom: var(--space-2);
       }
       .gallery-overlay__year {
         font-family: var(--sans);
@@ -356,7 +357,7 @@
 
       /* Page intro placeholder above grid */
       .page-intro {
-        padding: 0 var(--gutter) 3rem;
+        padding: 0 var(--gutter) var(--space-6);
         max-width: 720px;
       }
       .page-intro p {
@@ -371,12 +372,12 @@
       /* ── FOOTER ───────────────────────────────────────────── */
       footer {
         border-top: 1px solid #111;
-        padding: 2.5rem var(--gutter);
+        padding: var(--space-6) var(--gutter);
         display: flex;
         justify-content: space-between;
         align-items: center;
         flex-wrap: wrap;
-        gap: 1rem;
+        gap: var(--space-3);
       }
       .footer__copy {
         font-size: 0.62rem;
@@ -386,7 +387,7 @@
       }
       .footer__links {
         display: flex;
-        gap: 2rem;
+        gap: var(--space-5);
       }
       .footer__links a {
         font-size: 0.62rem;
@@ -432,8 +433,8 @@
         flex-wrap: wrap;
         align-items: center;
         justify-content: space-between;
-        padding: 2.8rem 2rem 3.5rem;
-        gap: 1rem;
+        padding: var(--space-6) var(--space-5) var(--space-7);
+        gap: var(--space-3);
         opacity: 0;
         animation: fadeUp 0.9s var(--ease) 0.7s forwards;
       }
@@ -441,7 +442,7 @@
       .footer-nav__left {
         display: flex;
         align-items: center;
-        gap: 2.5rem;
+        gap: var(--space-6);
       }
 
       .footer-nav a {
@@ -477,7 +478,7 @@
       .footer-nav__all {
         display: flex;
         align-items: center;
-        gap: 0.5rem;
+        gap: var(--space-2);
         font-family: var(--serif);
         font-style: italic;
         font-size: 1rem;
