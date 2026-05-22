@@ -414,10 +414,11 @@
         background-position: center top;
       }
 
-      /* 9. Tarebook — in-development mobile pricing tool */
+      /* 9. Tarebook — mobile pricing PWA, home screen thumbnail */
       .card--tarebook .card__img {
+        background-image: url("./imgs-digital/Tarebook/folio/screenshots/01-home-light.png");
         background-color: #1a120f;
-        background-size: cover;
+        background-size: contain;
         background-repeat: no-repeat;
         background-position: center;
         position: relative;
@@ -428,9 +429,10 @@
         inset: 0;
         background-image: radial-gradient(
           60% 80% at 50% 35%,
-          rgba(200, 184, 130, 0.16),
+          rgba(200, 184, 130, 0.18),
           transparent 70%
         );
+        pointer-events: none;
       }
 
       /* Variant: In Development pill — gold instead of pink */
@@ -932,7 +934,7 @@
             <span class="card__tag">UI Design</span>
           </div>
           <h2 class="card__title"><em>Tarebook</em></h2>
-          <p class="card__sub">A pocket accountant and ledger for your studio. Mobile-first pricing for potters.</p>
+          <p class="card__sub">A pocket accountant and ledger for your studio. Mobile-first pricing PWA for potters &mdash; web live, iOS in App Store review.</p>
         </div>
         <span class="card__arrow">↗</span>
       </a>

@@ -4,35 +4,43 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tarebook — Sherjeel Hussain</title>
-  <meta name="description" content="Tarebook — a pocket accountant and ledger for your studio. Mobile-first pricing solution for potters, designed and built by Sherjeel Hussain. Currently in development." />
-  <meta name="keywords" content="Tarebook, pricing app for potters, ceramics pricing tool, mobile-first product design, Sherjeel Hussain, UI designer Scotland" />
+  <meta name="description" content="Tarebook — a pocket accountant and ledger for your studio. A mobile-first pricing PWA for working potters. Designed, built, and shipped by Sherjeel Hussain. Web live; iOS in App Store review." />
+  <meta name="keywords" content="Tarebook, pricing app for potters, ceramics pricing tool, mobile-first product design, PWA, Capacitor iOS, offline-first product, Sherjeel Hussain, UI designer Scotland" />
   <meta name="author" content="Sherjeel Hussain" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://sherjeelhussain.com/tarebook.html" />
 
   <meta property="og:type" content="article" />
   <meta property="og:title" content="Tarebook — A Pocket Accountant for Your Studio" />
-  <meta property="og:description" content="A pocket accountant and ledger for your studio. Mobile-first pricing for potters. In development." />
+  <meta property="og:description" content="A pocket accountant and ledger for your studio. Mobile-first pricing PWA for working potters. Web live, iOS in App Store review." />
   <meta property="og:url" content="https://sherjeelhussain.com/tarebook.html" />
-  <meta property="og:image" content="https://sherjeelhussain.com/img/og-default.jpg" />
+  <meta property="og:image" content="https://sherjeelhussain.com/imgs-digital/Tarebook/folio/screenshots/02-pricing-card-light.png" />
+  <meta property="og:image:width" content="1179" />
+  <meta property="og:image:height" content="2556" />
   <meta property="og:site_name" content="Sherjeel Hussain — Designer &amp; Ceramicist" />
   <meta property="og:locale" content="en_GB" />
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Tarebook — A Pocket Accountant for Your Studio" />
-  <meta name="twitter:description" content="A pocket accountant and ledger for your studio. Mobile-first pricing for potters. In development." />
-  <meta name="twitter:image" content="https://sherjeelhussain.com/img/og-default.jpg" />
+  <meta name="twitter:description" content="Mobile-first pricing PWA for working potters. Web live, iOS in App Store review." />
+  <meta name="twitter:image" content="https://sherjeelhussain.com/imgs-digital/Tarebook/folio/screenshots/02-pricing-card-light.png" />
 
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "CreativeWork",
+    "@type": "SoftwareApplication",
     "name": "Tarebook",
-    "description": "A pocket accountant and ledger for your studio. Mobile-first pricing solution for potters. A self-directed product designed and built by Sherjeel Hussain.",
-    "creator": {"@type": "Person", "name": "Sherjeel Hussain", "url": "https://sherjeelhussain.com"},
-    "about": ["Mobile Product Design", "UI Design", "Pricing Tool", "Ceramics"],
+    "description": "A pocket accountant and ledger for your studio. Mobile-first pricing solution for working potters. Designed and built by Sherjeel Hussain.",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web, iOS",
     "url": "https://sherjeelhussain.com/tarebook.html",
-    "dateCreated": "2026"
+    "sameAs": [
+      "https://tarebook1.netlify.app",
+      "https://github.com/Sh3rry-W4Z-H3R3/GLAZE-CALC"
+    ],
+    "creator": {"@type": "Person", "name": "Sherjeel Hussain", "url": "https://sherjeelhussain.com"},
+    "dateCreated": "2026",
+    "offers": {"@type": "Offer", "price": "0", "priceCurrency": "GBP"}
   }
   </script>
 
@@ -49,6 +57,8 @@
       --accent: #e8547a;
       --accent-2: #6dbf9e;
       --gold: #c8b882;
+      --gold-tint: rgba(200, 184, 130, 0.12);
+      --gold-edge: rgba(200, 184, 130, 0.4);
       --serif: 'Cormorant', Georgia, serif;
       --sans: 'Syne', sans-serif;
       --body: 'DM Sans', sans-serif;
@@ -69,12 +79,13 @@
     :where(nav, footer, .footer-nav) a:link,
     :where(nav, footer, .footer-nav) a:visited { color: inherit; text-decoration: none; }
 
+    /* NAV */
     nav { display: flex; align-items: center; justify-content: space-between; padding: var(--space-5) var(--gutter); position: sticky; top: 0; z-index: 100; background: rgba(10,10,10,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid #1a1a1a; }
     .nav__home { font-family: var(--serif); font-size: var(--text-7); font-weight: 300; letter-spacing: 0.06em; color: var(--fg); }
     .nav__home em { font-style: italic; color: var(--accent); }
     .nav__links { display: flex; gap: var(--space-6); align-items: center; }
     .nav__links a { font-family: var(--sans); font-size: var(--text-2); font-weight: 700; letter-spacing: var(--ls-track); text-transform: uppercase; color: var(--fg-mid); transition: color 0.3s var(--ease); position: relative; }
-    .nav__links a::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 1px; background: var(--accent); transition: width 0.3s var(--ease); }
+    .nav__links a::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 1px; background: var(--gold); transition: width 0.3s var(--ease); }
     .nav__links a:hover { color: var(--fg); }
     .nav__links a:hover::after { width: 100%; }
     .nav__back { font-family: var(--sans); font-size: var(--text-2); font-weight: 700; letter-spacing: var(--ls-label); text-transform: uppercase; color: var(--fg-mid); display: flex; align-items: center; gap: var(--space-2); transition: color 0.3s var(--ease); }
@@ -83,14 +94,14 @@
 
     /* HERO */
     .hero {
-      min-height: 78vh;
+      min-height: 80vh;
       display: flex; flex-direction: column; justify-content: center;
       padding: var(--space-8) var(--gutter) var(--space-7);
       position: relative; overflow: hidden;
     }
     .hero::before {
       content: ''; position: absolute; inset: 0;
-      background: radial-gradient(60% 60% at 50% 40%, rgba(200,184,130,0.10), transparent 70%);
+      background: radial-gradient(60% 60% at 50% 35%, rgba(200,184,130,0.10), transparent 70%);
       pointer-events: none;
     }
     .hero__status {
@@ -105,7 +116,6 @@
       animation: pulse 1.8s ease infinite;
     }
     @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.45; } }
-
     .hero__title {
       font-family: var(--serif);
       font-size: clamp(3rem, 9vw, 8rem);
@@ -117,12 +127,31 @@
     .hero__sub {
       margin-top: var(--space-5);
       font-family: var(--serif); font-style: italic;
-      font-size: clamp(1rem, 1.8vw, 1.4rem);
-      font-weight: 300; color: rgba(237,233,225,0.7);
-      max-width: 620px; line-height: var(--lh-snug);
+      font-size: clamp(1.05rem, 1.9vw, 1.4rem);
+      font-weight: 300; color: rgba(237,233,225,0.78);
+      max-width: 640px; line-height: var(--lh-snug);
     }
+    .hero__lead {
+      margin-top: var(--space-4);
+      font-family: var(--body); font-size: var(--text-5);
+      color: var(--fg-mid); max-width: 560px; line-height: var(--lh-base);
+    }
+    .hero__links {
+      margin-top: var(--space-6);
+      display: flex; flex-wrap: wrap; gap: var(--space-5);
+      font-family: var(--sans); font-size: var(--text-3); font-weight: 700;
+      letter-spacing: var(--ls-label); text-transform: uppercase;
+    }
+    .hero__links a {
+      color: var(--gold); text-decoration: none;
+      border-bottom: 1px solid var(--gold-edge);
+      padding-bottom: var(--space-1);
+      transition: color 0.3s var(--ease), border-color 0.3s var(--ease);
+    }
+    .hero__links a:hover { color: var(--fg); border-bottom-color: var(--fg); }
+    .hero__links span { color: var(--fg-mid); border-bottom: 1px solid transparent; padding-bottom: var(--space-1); }
 
-    /* META STRIP */
+    /* META */
     .meta {
       padding: var(--space-5) var(--gutter);
       border-top: 1px solid #1a1a1a;
@@ -134,43 +163,162 @@
     .meta__value em { font-style: italic; color: var(--gold); }
     @media (max-width: 768px) { .meta { grid-template-columns: 1fr 1fr; gap: var(--space-5); } }
 
-    /* PREMISE */
-    .premise {
-      padding: var(--space-8) var(--gutter);
-      display: grid; grid-template-columns: 1fr 2fr; gap: var(--space-8);
-      align-items: start;
+    /* HERO IMAGE */
+    .hero-image {
+      padding: var(--space-7) var(--gutter);
+      display: flex; justify-content: center;
+      background: linear-gradient(180deg, #0a0a0a 0%, #120e08 100%);
     }
-    .premise__label {
+    .hero-image img {
+      max-width: 320px; width: 100%; height: auto;
+      border-radius: 24px;
+      box-shadow:
+        0 30px 60px -20px rgba(0,0,0,0.7),
+        0 0 0 1px rgba(200,184,130,0.18);
+      display: block;
+    }
+    @media (min-width: 1100px) { .hero-image img { max-width: 360px; } }
+
+    /* CASE SECTIONS */
+    .case-section { padding: var(--space-8) var(--gutter); border-bottom: 1px solid #1a1a1a; }
+    .two-col { display: grid; grid-template-columns: 1fr 2fr; gap: var(--space-8); align-items: start; }
+    .section-label {
       font-family: var(--sans); font-size: var(--text-2); font-weight: 700;
       letter-spacing: var(--ls-eyebrow); text-transform: uppercase;
       color: var(--gold); position: sticky; top: var(--space-8);
       display: flex; align-items: center; gap: var(--space-2);
     }
-    .premise__label::before { content: ''; display: block; width: 1.5rem; height: 1px; background: var(--gold); }
-    .premise__body { font-family: var(--body); font-size: var(--text-5); color: var(--fg-mid); font-weight: 300; line-height: var(--lh-loose); max-width: 640px; }
-    .premise__body p + p { margin-top: var(--space-4); }
-    .premise__body strong { color: var(--fg); font-weight: 500; }
-    .premise__body em { font-style: italic; color: var(--fg); }
-    @media (max-width: 768px) { .premise { grid-template-columns: 1fr; gap: var(--space-5); padding: var(--space-7) var(--gutter); } }
+    .section-label::before { content: ''; display: block; width: 1.5rem; height: 1px; background: var(--gold); }
+    .body-text { font-family: var(--body); font-size: var(--text-5); color: var(--fg-mid); font-weight: 300; line-height: var(--lh-loose); max-width: 640px; }
+    .body-text p + p { margin-top: var(--space-4); }
+    .body-text strong { color: var(--fg); font-weight: 500; }
+    .body-text em { font-style: italic; color: var(--fg); }
+    .body-text a { color: var(--gold); border-bottom: 1px solid var(--gold-edge); text-decoration: none; }
+    .body-text a:hover { color: var(--fg); border-bottom-color: var(--fg); }
+    @media (max-width: 768px) { .two-col { grid-template-columns: 1fr; gap: var(--space-5); } .section-label { position: static; } .case-section { padding: var(--space-7) var(--gutter); } }
+
+    /* PULL QUOTE */
+    .pull-quote {
+      padding: var(--space-8) var(--gutter);
+      background: #120e08;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    .pull-quote blockquote {
+      font-family: var(--serif);
+      font-size: clamp(1.5rem, 3.2vw, 2.6rem);
+      font-weight: 300; font-style: italic;
+      line-height: var(--lh-snug);
+      color: var(--fg);
+      max-width: 880px;
+    }
+    .pull-quote blockquote em { color: var(--gold); font-style: normal; }
+    .pull-quote cite {
+      display: block; margin-top: var(--space-5);
+      font-family: var(--sans); font-size: var(--text-2);
+      font-weight: 700; letter-spacing: var(--ls-eyebrow); text-transform: uppercase;
+      color: var(--fg-mid); font-style: normal;
+    }
+
+    /* PROCESS STEPS */
+    .process-steps { display: flex; flex-direction: column; gap: var(--space-6); max-width: 720px; }
+    .step { display: grid; grid-template-columns: 3rem 1fr; gap: var(--space-5); align-items: start; }
+    .step__num {
+      font-family: var(--sans); font-size: var(--text-3); font-weight: 700;
+      letter-spacing: var(--ls-eyebrow); text-transform: uppercase;
+      color: var(--gold); padding-top: var(--space-1);
+    }
+    .step__title {
+      font-family: var(--serif); font-size: clamp(1.15rem, 2vw, 1.5rem);
+      font-weight: 400; line-height: var(--lh-tight); color: var(--fg);
+      margin-bottom: var(--space-3);
+    }
+    .step__title em { font-style: italic; color: var(--gold); }
+    .step__body { font-family: var(--body); font-size: var(--text-4); color: var(--fg-mid); font-weight: 300; line-height: var(--lh-loose); }
+    .step__body code {
+      background: rgba(200,184,130,0.08);
+      color: var(--gold);
+      font-family: 'DM Mono', ui-monospace, monospace;
+      font-size: var(--text-3);
+      padding: 1px 6px; border-radius: 3px;
+    }
 
     /* IMAGE GRID */
-    .shots { padding: 0 var(--gutter) var(--space-8); }
-    .shots__label { font-family: var(--sans); font-size: var(--text-2); font-weight: 700; letter-spacing: var(--ls-eyebrow); text-transform: uppercase; color: var(--gold); margin-bottom: var(--space-5); display: flex; align-items: center; gap: var(--space-2); }
-    .shots__label::before { content: ''; display: block; width: 1.5rem; height: 1px; background: var(--gold); }
-    .shots__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-5); }
-    .shots__slot {
-      aspect-ratio: 9/16;
-      border: 1px dashed rgba(237,233,225,0.18);
-      border-radius: 4px;
-      background: rgba(255,255,255,0.015);
-      background-size: cover; background-position: center;
+    .img-grid { display: grid; gap: var(--space-5); padding: var(--space-7) var(--gutter); }
+    .img-grid--2 { grid-template-columns: 1fr 1fr; }
+    .img-grid--3 { grid-template-columns: 1fr 1fr 1fr; }
+    .img-slot {
+      display: flex; flex-direction: column; align-items: center; gap: var(--space-3);
     }
-    .shots__slot:not(:empty) { border: none; }
-    @media (max-width: 768px) { .shots__grid { grid-template-columns: 1fr 1fr; } }
-    @media (max-width: 480px) { .shots__grid { grid-template-columns: 1fr; } }
+    .img-slot img {
+      max-width: 100%; width: auto; max-height: 70vh; height: auto;
+      display: block; border-radius: 18px;
+      box-shadow:
+        0 18px 36px -16px rgba(0,0,0,0.65),
+        0 0 0 1px rgba(255,255,255,0.04);
+    }
+    .img-slot__caption {
+      font-family: var(--sans); font-size: var(--text-2); font-weight: 500;
+      letter-spacing: var(--ls-label); text-transform: uppercase;
+      color: var(--fg-mid); text-align: center; max-width: 32ch;
+    }
+    @media (max-width: 768px) {
+      .img-grid--2, .img-grid--3 { grid-template-columns: 1fr; }
+    }
+
+    /* STAT ROW */
+    .stat-row {
+      padding: var(--space-7) var(--gutter);
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-6);
+      border-top: 1px solid #1a1a1a; border-bottom: 1px solid #1a1a1a;
+    }
+    .stat-item__num {
+      font-family: var(--serif);
+      font-size: clamp(2.2rem, 4vw, 3.4rem);
+      font-weight: 300; line-height: var(--lh-display); letter-spacing: var(--ls-display);
+      color: var(--gold);
+    }
+    .stat-item__num em { font-style: italic; }
+    .stat-item__label {
+      margin-top: var(--space-3);
+      font-family: var(--sans); font-size: var(--text-2); font-weight: 500;
+      letter-spacing: var(--ls-track); text-transform: uppercase;
+      color: var(--fg-mid); line-height: var(--lh-snug);
+    }
+    @media (max-width: 768px) { .stat-row { grid-template-columns: 1fr 1fr; gap: var(--space-5); } }
+
+    /* OUTCOME TABLE */
+    .outcome-list { max-width: 720px; list-style: none; padding: 0; margin: 0; }
+    .outcome-list li {
+      display: grid; grid-template-columns: 7rem 1fr; gap: var(--space-5);
+      align-items: baseline; padding: var(--space-4) 0;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    .outcome-list li:last-child { border-bottom: 0; }
+    .outcome-status {
+      font-family: var(--sans); font-size: var(--text-1); font-weight: 700;
+      letter-spacing: var(--ls-eyebrow); text-transform: uppercase;
+    }
+    .outcome-status--live    { color: var(--accent-2); }
+    .outcome-status--review  { color: var(--gold); }
+    .outcome-status--planned { color: var(--fg-mid); }
+    .outcome-body { font-family: var(--body); font-size: var(--text-5); color: var(--fg); line-height: var(--lh-base); font-weight: 300; }
+    .outcome-body em { font-style: italic; color: var(--fg-mid); }
+
+    /* LINKS */
+    .links-strip { padding: var(--space-7) var(--gutter); display: flex; flex-wrap: wrap; gap: var(--space-6); border-bottom: 1px solid #1a1a1a; }
+    .link-card { display: flex; flex-direction: column; gap: var(--space-2); }
+    .link-card__label { font-family: var(--sans); font-size: var(--text-1); font-weight: 700; letter-spacing: var(--ls-eyebrow); text-transform: uppercase; color: var(--fg-mid); }
+    .link-card a {
+      font-family: var(--serif); font-style: italic;
+      font-size: clamp(1.15rem, 2vw, 1.6rem); color: var(--gold);
+      border-bottom: 1px solid var(--gold-edge); text-decoration: none;
+      transition: color 0.3s var(--ease), border-color 0.3s var(--ease);
+    }
+    .link-card a:hover { color: var(--fg); border-bottom-color: var(--fg); }
+    .link-card span { font-family: var(--serif); font-style: italic; font-size: clamp(1.15rem, 2vw, 1.6rem); color: var(--fg-mid); }
 
     /* NEXT PROJECT */
-    .next-project { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-5); padding: var(--space-7) var(--gutter); border-top: 1px solid #1a1a1a; }
+    .next-project { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-5); padding: var(--space-7) var(--gutter); }
     .next-project__label { font-family: var(--sans); font-size: var(--text-2); font-weight: 700; letter-spacing: var(--ls-track); text-transform: uppercase; color: var(--fg-mid); margin-bottom: var(--space-2); }
     .next-project__title { font-family: var(--serif); font-size: clamp(1.8rem, 3.5vw, 3.2rem); font-weight: 300; color: var(--fg); }
     .next-project__title em { font-style: italic; color: var(--accent); }
@@ -217,55 +365,274 @@
     </div>
   </nav>
 
+  <!-- HERO -->
   <section class="hero">
-    <p class="hero__status">In Development &middot; 2026</p>
-    <h1 class="hero__title"><em>Tarebook</em></h1>
-    <p class="hero__sub">
-      A pocket accountant and ledger for your studio. Mobile-first pricing for potters &mdash; designed and built by Sherjeel Hussain.
-    </p>
+    <p class="hero__status">Web Live &middot; iOS in Review &middot; 2026</p>
+    <h1 class="hero__title">Tare<em>book</em></h1>
+    <p class="hero__sub">A pocket accountant and ledger for your studio.</p>
+    <p class="hero__lead">Mobile-first pricing for working potters. Built by a working ceramicist for working ceramicists. Web app live; iOS submission in App Store review.</p>
+    <div class="hero__links">
+      <a href="https://tarebook1.netlify.app" target="_blank" rel="noopener">tarebook1.netlify.app ↗</a>
+      <span>App Store &middot; coming soon</span>
+    </div>
   </section>
 
+  <!-- META STRIP -->
   <section class="meta">
     <div>
-      <p class="meta__label">Type</p>
-      <p class="meta__value">Self-Directed &middot; Mobile Product</p>
+      <p class="meta__label">Role</p>
+      <p class="meta__value">Design &middot; Product &middot; Engineering</p>
     </div>
     <div>
-      <p class="meta__label">Discipline</p>
-      <p class="meta__value">UI Design, Mobile UX, Product</p>
+      <p class="meta__label">Stack</p>
+      <p class="meta__value">React &middot; TypeScript &middot; Tailwind &middot; Dexie &middot; Supabase &middot; Capacitor</p>
     </div>
     <div>
-      <p class="meta__label">Status</p>
-      <p class="meta__value"><em>In Development</em></p>
+      <p class="meta__label">Platforms</p>
+      <p class="meta__value">Web PWA <em>(live)</em> &middot; iOS <em>(in review)</em></p>
     </div>
     <div>
-      <p class="meta__label">Year</p>
-      <p class="meta__value">2026</p>
+      <p class="meta__label">Timeline</p>
+      <p class="meta__value">~3 weeks</p>
     </div>
   </section>
 
-  <section class="premise">
-    <p class="premise__label">The Premise</p>
-    <div class="premise__body">
-      <p>Potters pricing their own work tend to do it badly. Material cost, kiln time, glaze, firing fees, studio rent, labour — most production accounting either lives in a spreadsheet nobody updates, or it doesn't exist at all. The pricing decision happens at the kiln door under time pressure.</p>
-      <p><strong>Tarebook</strong> is a mobile-first pricing tool built for that moment. Open it on a phone in the studio, log inputs as they happen, get a defensible price out the other side. Designed and built ground-up — UI, system, product logic — by Sherjeel Hussain.</p>
-      <!-- PLACEHOLDER: Expanded premise / process narrative — designer to write as project nears deploy. -->
+  <!-- HERO IMAGE — Pricing Card -->
+  <div class="hero-image">
+    <img
+      src="./imgs-digital/Tarebook/folio/screenshots/02-pricing-card-light.png"
+      alt="Tarebook Pricing Card screen — large £40 retail figure with itemised breakdown below"
+      width="1179" height="2556"
+      loading="eager"
+    />
+  </div>
+
+  <!-- THE BRIEF -->
+  <div class="case-section">
+    <div class="two-col">
+      <h2 class="section-label">The Brief</h2>
+      <div class="body-text">
+        <p>Build a tool that gives potters honest visibility into what their work actually costs to make &mdash; and what to charge for it.</p>
+        <p>A cost calculator for potters who mix their own glazes. Mobile-first PWA, works offline, syncs across devices when signed in.</p>
+        <p>Not a recipe community. Not a chemistry tool. Not studio management software. The product is <strong>knowing what your glaze actually costs you</strong>, and the v1 says no to everything else.</p>
+        <p><em>Opinionated about scope. One job, done well.</em></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- THE PROBLEM -->
+  <div class="case-section">
+    <div class="two-col">
+      <h2 class="section-label">The Problem</h2>
+      <div class="body-text">
+        <p>There's a financial blind spot at the heart of a creative practice that's growing globally.</p>
+        <p><strong>The market.</strong> The UK ceramics community on Instagram is roughly 50&ndash;100k active accounts. Globally the pottery and ceramics market is projected to grow at a 5.4&ndash;7.1% CAGR through 2033 &mdash; a quiet but durable resurgence, driven by hobbyist sellers turning into one-person businesses on Etsy, Faire, and Instagram.</p>
+        <p><strong>The pain.</strong> Potters underprice their work because raw material costs are tedious to calculate manually. Existing tools focus on recipe sharing (Glazy), chemistry (Insight, Currie), or community &mdash; none of them on finance. The market gap isn't an idea I had to invent. It's missing.</p>
+        <p><strong>The "why now."</strong> Studios are increasingly run as one-person businesses. The same potters who learned to throw and fire from masters never had to learn pricing. Etsy and Instagram force the decision anyway. Most undershoot by 40&ndash;60% because they only count clay and glaze &mdash; not kiln cost, not their own labour, not overhead, not the pieces that crack in the kiln.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PULL QUOTE -->
+  <div class="pull-quote">
+    <blockquote>
+      As a working ceramicist, I knew the problem first-hand. The actual blocker isn't the maths &mdash; it's that nobody wants to do the maths with <em>wet hands at 9pm</em> after firing a kiln.
+      <cite>&mdash; Project notebook, week one</cite>
+    </blockquote>
+  </div>
+
+  <!-- DESIGN INTENT -->
+  <div class="case-section">
+    <div class="two-col">
+      <h2 class="section-label">Design Intent</h2>
+      <div class="body-text">
+        <p>Six decisions that shaped the product. Each one is a "no" to a more obvious option.</p>
+      </div>
+    </div>
+    <div class="process-steps" style="margin-top: var(--space-7);">
+      <div class="step">
+        <span class="step__num">01</span>
+        <div>
+          <p class="step__title">Mobile-first, <em>one-handed</em></p>
+          <p class="step__body">Every screen designed at 390px first, then allowed to breathe outward. Tap targets minimum 44&times;44px (Apple HIG, also good for wet hands). Numeric inputs use <code>inputmode="decimal"</code> so the keypad appears instead of the full keyboard. Auto-save on blur, never on submit &mdash; nothing is lost when the user switches apps or gets a call mid-input.</p>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step__num">02</span>
+        <div>
+          <p class="step__title">Editorial, <em>not dashboard</em></p>
+          <p class="step__body">The first attempt was a SaaS-y dashboard &mdash; three stat tiles, four chrome bars, a FAB competing with action cards. I killed it. The shipped home reads like the cover of a journal: a date, a greeting, one large hero number, supporting metrics inline. Lists use hairline dividers, not nested cards. Hover states shift to italic &mdash; analog, considered.</p>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step__num">03</span>
+        <div>
+          <p class="step__title">Themed via <em>CSS custom properties</em></p>
+          <p class="step__body">Light, dark, and system, with WCAG 2.1 AA contrast verified in both: 16.6:1 on light, 16.5:1 on dark. The palette is warm &mdash; cream <code>#FAF7F2</code>, bark <code>#1E1108</code>, clay <code>#7C4A2D</code> &mdash; not the cold blue-greys of most productivity apps. A paper-grain SVG overlay at 3% opacity gives flat colour fields a sense of material.</p>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step__num">04</span>
+        <div>
+          <p class="step__title">Offline-first, <em>sync optional</em></p>
+          <p class="step__body">Dexie (IndexedDB wrapper) is the source of truth on every device. Supabase is opt-in cloud sync, gated behind passwordless magic-link auth. The sync logic is deliberately conservative: anonymous rows are claimed for the user on first sign-in; rows tagged with a different user_id are never modified or pushed. A potter without internet, an Apple account, or any trust in cloud services gets a fully working product. <em>Sign-in is upsell, not gatekeeper.</em></p>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step__num">05</span>
+        <div>
+          <p class="step__title">Itemised pricing, <em>not opaque magic</em></p>
+          <p class="step__body">A real piece is rarely "one slug of clay + one make-time." A mug has body clay, handle clay, sometimes slip. A teapot has body, lid, spout, handle. Schema v4 lets one piece carry materials and time-entry arrays, each with an optional per-line override. The Pricing Card enumerates every contribution and subtotals where needed. <strong>Every price shows its working.</strong></p>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step__num">06</span>
+        <div>
+          <p class="step__title">Native <em>where it matters</em></p>
+          <p class="step__body">Capacitor wraps the existing web build for the iOS App Store &mdash; no React Native rewrite. But the native touches that distinguish a real iOS app from "website in a wrapper" are wired: native share sheet, haptics on the Share button, status bar that switches with the in-app theme, and an Apple privacy manifest declaring exactly what's collected. Every plugin is dynamically imported and tree-shaken into a separate chunk that only loads on iOS.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- IMG GRID 1 — Home light + dark -->
+  <div class="img-grid img-grid--2">
+    <div class="img-slot">
+      <img
+        src="./imgs-digital/Tarebook/folio/screenshots/01-home-light.png"
+        alt="Tarebook Home screen in light theme — date, greeting, hero retail number, supporting metrics inline"
+        width="1179" height="2556" loading="lazy"
+      />
+      <span class="img-slot__caption">Home &middot; editorial layout, light theme</span>
+    </div>
+    <div class="img-slot">
+      <img
+        src="./imgs-digital/Tarebook/folio/screenshots/01-home-dark.png"
+        alt="Tarebook Home screen in dark theme — same editorial layout in warm dark palette"
+        width="1179" height="2556" loading="lazy"
+      />
+      <span class="img-slot__caption">Same screen &middot; dark mode, WCAG AA contrast verified</span>
+    </div>
+  </div>
+
+  <!-- IMG GRID 2 — Add Piece + Glaze Detail -->
+  <div class="img-grid img-grid--2">
+    <div class="img-slot">
+      <img
+        src="./imgs-digital/Tarebook/folio/screenshots/03-add-piece-light.png"
+        alt="Tarebook Add Piece form — materials and time-entries arrays with per-line overrides"
+        width="1179" height="2556" loading="lazy"
+      />
+      <span class="img-slot__caption">Add Piece &middot; materials + time entries, auto-saves on blur</span>
+    </div>
+    <div class="img-slot">
+      <img
+        src="./imgs-digital/Tarebook/folio/screenshots/04-glaze-detail-light.png"
+        alt="Tarebook Glaze Detail screen — batch and per-piece cost calculated from applied dry weight"
+        width="1179" height="2556" loading="lazy"
+      />
+      <span class="img-slot__caption">Glaze Detail &middot; per kg, per 100g, batch cost, per-piece cost</span>
+    </div>
+  </div>
+
+  <!-- IMG GRID 3 — Settings + Sign In -->
+  <div class="img-grid img-grid--2">
+    <div class="img-slot">
+      <img
+        src="./imgs-digital/Tarebook/folio/screenshots/06-settings-dark.png"
+        alt="Tarebook Settings screen in dark mode — theme toggle, metric/imperial segmented control"
+        width="1179" height="2556" loading="lazy"
+      />
+      <span class="img-slot__caption">Settings &middot; theme toggle, units swap converts without re-entry</span>
+    </div>
+    <div class="img-slot">
+      <img
+        src="./imgs-digital/Tarebook/folio/screenshots/07-sign-in-light.png"
+        alt="Tarebook Sign In screen — magic-link passwordless auth, friendly cloud-sync messaging"
+        width="1179" height="2556" loading="lazy"
+      />
+      <span class="img-slot__caption">Sign in &middot; sync is opt-in, not a gatekeeper</span>
+    </div>
+  </div>
+
+  <!-- STAT ROW — What Shipped -->
+  <section class="stat-row">
+    <div>
+      <p class="stat-item__num"><em>30</em></p>
+      <p class="stat-item__label">TypeScript files, one job each</p>
+    </div>
+    <div>
+      <p class="stat-item__num"><em>173</em>KB</p>
+      <p class="stat-item__label">Main bundle gzipped</p>
+    </div>
+    <div>
+      <p class="stat-item__num"><em>v4</em></p>
+      <p class="stat-item__label">Dexie schema with auto-migration</p>
+    </div>
+    <div>
+      <p class="stat-item__num"><em>6</em></p>
+      <p class="stat-item__label">Screens, end-to-end, no dead ends</p>
     </div>
   </section>
 
-  <section class="shots">
-    <p class="shots__label">Screens &amp; Process</p>
-    <div class="shots__grid">
-      <!-- PLACEHOLDER: drop screenshots/wireframes into dist/imgs-digital/Tarebook/ and swap the empty slots for <img> tags. -->
-      <div class="shots__slot" role="img" aria-label="Tarebook screen placeholder — pending"></div>
-      <div class="shots__slot" role="img" aria-label="Tarebook screen placeholder — pending"></div>
-      <div class="shots__slot" role="img" aria-label="Tarebook screen placeholder — pending"></div>
-      <div class="shots__slot" role="img" aria-label="Tarebook screen placeholder — pending"></div>
-      <div class="shots__slot" role="img" aria-label="Tarebook screen placeholder — pending"></div>
-      <div class="shots__slot" role="img" aria-label="Tarebook screen placeholder — pending"></div>
+  <!-- WHAT SHIPPED -->
+  <div class="case-section">
+    <div class="two-col">
+      <h2 class="section-label">What Shipped</h2>
+      <div class="body-text">
+        <p><strong>Studio Setup</strong> &mdash; onboarding wizard collecting clay price/kg, hourly rate, loss rate, trim loss, overhead/month, kiln cost/firing, unit preference. New users finish in under a minute.</p>
+        <p><strong>Piece library</strong> &mdash; saved pieces with live-recalculated retail prices. Change a studio setting and every card updates instantly. No "save" button, no stale numbers.</p>
+        <p><strong>Add / Edit Piece</strong> &mdash; name, materials and time buckets with optional per-line overrides, pieces per kiln load, glaze picker linking to saved recipes. Inline live preview of the three prices.</p>
+        <p><strong>Pricing Card</strong> &mdash; the hero. Retail leads at display-numeric 80px; wholesale and cost sit in a quieter section below. Multiplier sliders default to 2&times; &times; 2&times;, customise live. Collapsible itemised breakdown. Share via native iOS sheet.</p>
+        <p><strong>Glaze calculator</strong> &mdash; recipe builder with percentage validation (amber if total &ne; 100%, emerald if it is), plus a sub-screen with batch and per-piece cost calculations from applied dry weight.</p>
+        <p><strong>Settings</strong> &mdash; full edit of studio numbers, metric/imperial toggle that converts every displayed weight without re-entry, theme toggle, sync controls when signed in, "wipe local data" for shared devices.</p>
+      </div>
     </div>
-  </section>
+  </div>
 
+  <!-- OUTCOME -->
+  <div class="case-section">
+    <div class="two-col">
+      <h2 class="section-label">The Outcome</h2>
+      <div class="body-text">
+        <p>Publishing this case study during the App Store review window. The page will be updated as milestones land.</p>
+        <ul class="outcome-list" style="margin-top: var(--space-6);">
+          <li>
+            <span class="outcome-status outcome-status--live">✓ Shipped</span>
+            <span class="outcome-body">Web PWA live at <a href="https://tarebook1.netlify.app" target="_blank" rel="noopener">tarebook1.netlify.app</a></span>
+          </li>
+          <li>
+            <span class="outcome-status outcome-status--review">● In review</span>
+            <span class="outcome-body">iOS App Store submission</span>
+          </li>
+          <li>
+            <span class="outcome-status outcome-status--planned">○ Validating</span>
+            <span class="outcome-body">20+ "yes" responses on Instagram before the Pro paywall ships</span>
+          </li>
+        </ul>
+        <p style="margin-top: var(--space-6);"><strong>Goal numbers.</strong> A reachable audience over 12 months, with consistent Instagram content and word of mouth, is 500&ndash;2000 free users. Conversion to Pro at 5&ndash;10% gives 25&ndash;200 paying users. Pro is &pound;3.99/month or &pound;200 lifetime; the lifetime cap may be limited to the first 100 users as a Founders' tier.</p>
+        <p><em>Not life-changing money. But recurring revenue from a real audience that pays because the tool genuinely saves them time and makes them more money. The kind of validation that's hard to fake.</em></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- LINKS STRIP -->
+  <div class="links-strip">
+    <div class="link-card">
+      <p class="link-card__label">Live</p>
+      <a href="https://tarebook1.netlify.app" target="_blank" rel="noopener">tarebook1.netlify.app ↗</a>
+    </div>
+    <div class="link-card">
+      <p class="link-card__label">Source</p>
+      <a href="https://github.com/Sh3rry-W4Z-H3R3/GLAZE-CALC" target="_blank" rel="noopener">github.com/...GLAZE-CALC ↗</a>
+    </div>
+    <div class="link-card">
+      <p class="link-card__label">App Store</p>
+      <span>Coming soon</span>
+    </div>
+  </div>
+
+  <!-- NEXT PROJECT -->
   <section class="next-project" aria-label="Next project">
     <div>
       <p class="next-project__label">Next Project</p>
