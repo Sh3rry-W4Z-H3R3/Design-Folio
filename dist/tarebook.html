@@ -14,7 +14,7 @@
   <meta property="og:title" content="Tarebook — A Pocket Accountant for Your Studio" />
   <meta property="og:description" content="A pocket accountant and ledger for your studio. Mobile-first pricing PWA for working potters. Web live, iOS in App Store review." />
   <meta property="og:url" content="https://sherjeelhussain.com/tarebook.html" />
-  <meta property="og:image" content="https://sherjeelhussain.com/imgs-digital/Tarebook/folio/screenshots/02-pricing-card-light.png" />
+  <meta property="og:image" content="https://sherjeelhussain.com/imgs-digital/Tarebook/02-pricing-card-light.png" />
   <meta property="og:image:width" content="1179" />
   <meta property="og:image:height" content="2556" />
   <meta property="og:site_name" content="Sherjeel Hussain — Designer &amp; Ceramicist" />
@@ -23,7 +23,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Tarebook — A Pocket Accountant for Your Studio" />
   <meta name="twitter:description" content="Mobile-first pricing PWA for working potters. Web live, iOS in App Store review." />
-  <meta name="twitter:image" content="https://sherjeelhussain.com/imgs-digital/Tarebook/folio/screenshots/02-pricing-card-light.png" />
+  <meta name="twitter:image" content="https://sherjeelhussain.com/imgs-digital/Tarebook/02-pricing-card-light.png" />
 
   <script type="application/ld+json">
   {
@@ -56,9 +56,9 @@
       --fg-mid: #999;
       --accent: #e8547a;
       --accent-2: #6dbf9e;
-      --gold: #c8b882;
-      --gold-tint: rgba(200, 184, 130, 0.12);
-      --gold-edge: rgba(200, 184, 130, 0.4);
+      --accent-tint: rgba(232, 84, 122, 0.12);
+      --accent-edge: rgba(232, 84, 122, 0.4);
+      /* (gold removed — digital track uses --accent pink) */
       --serif: 'Cormorant', Georgia, serif;
       --sans: 'Syne', sans-serif;
       --body: 'DM Sans', sans-serif;
@@ -69,7 +69,7 @@
     body { background: var(--bg); color: var(--fg); font-family: var(--body); overflow-x: hidden; cursor: none; min-height: 100vh; }
 
     .cursor { position: fixed; width: 10px; height: 10px; background: var(--fg); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: width 0.3s var(--ease), height 0.3s var(--ease); }
-    .cursor.grow { width: 44px; height: 44px; background: transparent; border: 1px solid var(--gold); opacity: 0.7; }
+    .cursor.grow { width: 44px; height: 44px; background: transparent; border: 1px solid var(--accent); opacity: 0.7; }
     .cursor-icon { position: fixed; pointer-events: none; z-index: 9998; transform: translate(10px, -50%); opacity: 0; transition: opacity 0.2s ease; display: flex; flex-direction: column; align-items: center; }
     .cursor-icon.visible { opacity: 1; }
     .cursor-icon svg { display: block; }
@@ -85,7 +85,7 @@
     .nav__home em { font-style: italic; color: var(--accent); }
     .nav__links { display: flex; gap: var(--space-6); align-items: center; }
     .nav__links a { font-family: var(--sans); font-size: var(--text-2); font-weight: 700; letter-spacing: var(--ls-track); text-transform: uppercase; color: var(--fg-mid); transition: color 0.3s var(--ease); position: relative; }
-    .nav__links a::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 1px; background: var(--gold); transition: width 0.3s var(--ease); }
+    .nav__links a::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 1px; background: var(--accent); transition: width 0.3s var(--ease); }
     .nav__links a:hover { color: var(--fg); }
     .nav__links a:hover::after { width: 100%; }
     .nav__back { font-family: var(--sans); font-size: var(--text-2); font-weight: 700; letter-spacing: var(--ls-label); text-transform: uppercase; color: var(--fg-mid); display: flex; align-items: center; gap: var(--space-2); transition: color 0.3s var(--ease); }
@@ -101,18 +101,18 @@
     }
     .hero::before {
       content: ''; position: absolute; inset: 0;
-      background: radial-gradient(60% 60% at 50% 35%, rgba(200,184,130,0.10), transparent 70%);
+      background: radial-gradient(60% 60% at 50% 35%, rgba(232, 84, 122,0.10), transparent 70%);
       pointer-events: none;
     }
     .hero__status {
       font-family: var(--sans); font-size: var(--text-2); font-weight: 700;
       letter-spacing: var(--ls-eyebrow); text-transform: uppercase;
-      color: var(--gold); margin-bottom: var(--space-5);
+      color: var(--accent); margin-bottom: var(--space-5);
       display: inline-flex; align-items: center; gap: var(--space-2);
     }
     .hero__status::before {
       content: ''; display: block; width: 8px; height: 8px; border-radius: 50%;
-      background: var(--gold); box-shadow: 0 0 12px var(--gold);
+      background: var(--accent); box-shadow: 0 0 12px var(--accent);
       animation: pulse 1.8s ease infinite;
     }
     @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.45; } }
@@ -123,7 +123,7 @@
       letter-spacing: var(--ls-display);
       max-width: 12ch;
     }
-    .hero__title em { font-style: italic; color: var(--gold); }
+    .hero__title em { font-style: italic; color: var(--accent); }
     .hero__sub {
       margin-top: var(--space-5);
       font-family: var(--serif); font-style: italic;
@@ -143,8 +143,8 @@
       letter-spacing: var(--ls-label); text-transform: uppercase;
     }
     .hero__links a {
-      color: var(--gold); text-decoration: none;
-      border-bottom: 1px solid var(--gold-edge);
+      color: var(--accent); text-decoration: none;
+      border-bottom: 1px solid var(--accent-edge);
       padding-bottom: var(--space-1);
       transition: color 0.3s var(--ease), border-color 0.3s var(--ease);
     }
@@ -160,7 +160,7 @@
     }
     .meta__label { font-family: var(--sans); font-size: var(--text-1); font-weight: 700; letter-spacing: var(--ls-eyebrow); text-transform: uppercase; color: var(--fg-mid); margin-bottom: var(--space-2); }
     .meta__value { font-family: var(--body); font-size: var(--text-5); color: var(--fg); font-weight: 300; line-height: var(--lh-snug); }
-    .meta__value em { font-style: italic; color: var(--gold); }
+    .meta__value em { font-style: italic; color: var(--accent); }
     @media (max-width: 768px) { .meta { grid-template-columns: 1fr 1fr; gap: var(--space-5); } }
 
     /* HERO IMAGE */
@@ -174,7 +174,7 @@
       border-radius: 24px;
       box-shadow:
         0 30px 60px -20px rgba(0,0,0,0.7),
-        0 0 0 1px rgba(200,184,130,0.18);
+        0 0 0 1px rgba(232, 84, 122,0.18);
       display: block;
     }
     @media (min-width: 1100px) { .hero-image img { max-width: 360px; } }
@@ -185,15 +185,15 @@
     .section-label {
       font-family: var(--sans); font-size: var(--text-2); font-weight: 700;
       letter-spacing: var(--ls-eyebrow); text-transform: uppercase;
-      color: var(--gold); position: sticky; top: var(--space-8);
+      color: var(--accent); position: sticky; top: var(--space-8);
       display: flex; align-items: center; gap: var(--space-2);
     }
-    .section-label::before { content: ''; display: block; width: 1.5rem; height: 1px; background: var(--gold); }
+    .section-label::before { content: ''; display: block; width: 1.5rem; height: 1px; background: var(--accent); }
     .body-text { font-family: var(--body); font-size: var(--text-5); color: var(--fg-mid); font-weight: 300; line-height: var(--lh-loose); max-width: 640px; }
     .body-text p + p { margin-top: var(--space-4); }
     .body-text strong { color: var(--fg); font-weight: 500; }
     .body-text em { font-style: italic; color: var(--fg); }
-    .body-text a { color: var(--gold); border-bottom: 1px solid var(--gold-edge); text-decoration: none; }
+    .body-text a { color: var(--accent); border-bottom: 1px solid var(--accent-edge); text-decoration: none; }
     .body-text a:hover { color: var(--fg); border-bottom-color: var(--fg); }
     @media (max-width: 768px) { .two-col { grid-template-columns: 1fr; gap: var(--space-5); } .section-label { position: static; } .case-section { padding: var(--space-7) var(--gutter); } }
 
@@ -211,7 +211,7 @@
       color: var(--fg);
       max-width: 880px;
     }
-    .pull-quote blockquote em { color: var(--gold); font-style: normal; }
+    .pull-quote blockquote em { color: var(--accent); font-style: normal; }
     .pull-quote cite {
       display: block; margin-top: var(--space-5);
       font-family: var(--sans); font-size: var(--text-2);
@@ -225,18 +225,18 @@
     .step__num {
       font-family: var(--sans); font-size: var(--text-3); font-weight: 700;
       letter-spacing: var(--ls-eyebrow); text-transform: uppercase;
-      color: var(--gold); padding-top: var(--space-1);
+      color: var(--accent); padding-top: var(--space-1);
     }
     .step__title {
       font-family: var(--serif); font-size: clamp(1.15rem, 2vw, 1.5rem);
       font-weight: 400; line-height: var(--lh-tight); color: var(--fg);
       margin-bottom: var(--space-3);
     }
-    .step__title em { font-style: italic; color: var(--gold); }
+    .step__title em { font-style: italic; color: var(--accent); }
     .step__body { font-family: var(--body); font-size: var(--text-4); color: var(--fg-mid); font-weight: 300; line-height: var(--lh-loose); }
     .step__body code {
-      background: rgba(200,184,130,0.08);
-      color: var(--gold);
+      background: rgba(232, 84, 122,0.08);
+      color: var(--accent);
       font-family: 'DM Mono', ui-monospace, monospace;
       font-size: var(--text-3);
       padding: 1px 6px; border-radius: 3px;
@@ -246,6 +246,7 @@
     .img-grid { display: grid; gap: var(--space-5); padding: var(--space-7) var(--gutter); }
     .img-grid--2 { grid-template-columns: 1fr 1fr; }
     .img-grid--3 { grid-template-columns: 1fr 1fr 1fr; }
+    .img-grid--4 { grid-template-columns: repeat(4, 1fr); }
     .img-slot {
       display: flex; flex-direction: column; align-items: center; gap: var(--space-3);
     }
@@ -261,8 +262,11 @@
       letter-spacing: var(--ls-label); text-transform: uppercase;
       color: var(--fg-mid); text-align: center; max-width: 32ch;
     }
+    @media (max-width: 1024px) {
+      .img-grid--4 { grid-template-columns: 1fr 1fr; }
+    }
     @media (max-width: 768px) {
-      .img-grid--2, .img-grid--3 { grid-template-columns: 1fr; }
+      .img-grid--2, .img-grid--3, .img-grid--4 { grid-template-columns: 1fr; }
     }
 
     /* STAT ROW */
@@ -275,7 +279,7 @@
       font-family: var(--serif);
       font-size: clamp(2.2rem, 4vw, 3.4rem);
       font-weight: 300; line-height: var(--lh-display); letter-spacing: var(--ls-display);
-      color: var(--gold);
+      color: var(--accent);
     }
     .stat-item__num em { font-style: italic; }
     .stat-item__label {
@@ -299,7 +303,7 @@
       letter-spacing: var(--ls-eyebrow); text-transform: uppercase;
     }
     .outcome-status--live    { color: var(--accent-2); }
-    .outcome-status--review  { color: var(--gold); }
+    .outcome-status--review  { color: var(--accent); }
     .outcome-status--planned { color: var(--fg-mid); }
     .outcome-body { font-family: var(--body); font-size: var(--text-5); color: var(--fg); line-height: var(--lh-base); font-weight: 300; }
     .outcome-body em { font-style: italic; color: var(--fg-mid); }
@@ -310,8 +314,8 @@
     .link-card__label { font-family: var(--sans); font-size: var(--text-1); font-weight: 700; letter-spacing: var(--ls-eyebrow); text-transform: uppercase; color: var(--fg-mid); }
     .link-card a {
       font-family: var(--serif); font-style: italic;
-      font-size: clamp(1.15rem, 2vw, 1.6rem); color: var(--gold);
-      border-bottom: 1px solid var(--gold-edge); text-decoration: none;
+      font-size: clamp(1.15rem, 2vw, 1.6rem); color: var(--accent);
+      border-bottom: 1px solid var(--accent-edge); text-decoration: none;
       transition: color 0.3s var(--ease), border-color 0.3s var(--ease);
     }
     .link-card a:hover { color: var(--fg); border-bottom-color: var(--fg); }
@@ -400,7 +404,7 @@
   <!-- HERO IMAGE — Pricing Card -->
   <div class="hero-image">
     <img
-      src="./imgs-digital/Tarebook/folio/screenshots/02-pricing-card-light.png"
+      src="./imgs-digital/Tarebook/02-pricing-card-light.png"
       alt="Tarebook Pricing Card screen — large £40 retail figure with itemised breakdown below"
       width="1179" height="2556"
       loading="eager"
@@ -495,31 +499,55 @@
     </div>
   </div>
 
-  <!-- IMG GRID 1 — Home light + dark -->
-  <div class="img-grid img-grid--2">
+  <!-- THEME PARITY — 4-up showcase, light/dark on two flagship surfaces -->
+  <div class="case-section" style="border-bottom: 0; padding-bottom: var(--space-5);">
+    <div class="two-col">
+      <h2 class="section-label">Theme Parity</h2>
+      <div class="body-text">
+        <p>Light and dark aren't variants. They're <strong>two first-class surfaces</strong> built from one CSS-variable system, each verified for WCAG AA contrast and tuned individually for the warm cream / clay / bark palette. No washed-out greys, no inverted-image cheat. The same editorial restraint reads on both.</p>
+      </div>
+    </div>
+  </div>
+  <div class="img-grid img-grid--4">
     <div class="img-slot">
       <img
-        src="./imgs-digital/Tarebook/folio/screenshots/01-home-light.png"
+        src="./imgs-digital/Tarebook/01-home-light.png"
         alt="Tarebook Home screen in light theme — date, greeting, hero retail number, supporting metrics inline"
         width="1179" height="2556" loading="lazy"
       />
-      <span class="img-slot__caption">Home &middot; editorial layout, light theme</span>
+      <span class="img-slot__caption">Home &middot; light</span>
     </div>
     <div class="img-slot">
       <img
-        src="./imgs-digital/Tarebook/folio/screenshots/01-home-dark.png"
+        src="./imgs-digital/Tarebook/01-home-dark.png"
         alt="Tarebook Home screen in dark theme — same editorial layout in warm dark palette"
         width="1179" height="2556" loading="lazy"
       />
-      <span class="img-slot__caption">Same screen &middot; dark mode, WCAG AA contrast verified</span>
+      <span class="img-slot__caption">Home &middot; dark</span>
+    </div>
+    <div class="img-slot">
+      <img
+        src="./imgs-digital/Tarebook/02-pricing-card-light.png"
+        alt="Tarebook Pricing Card in light theme — itemised breakdown expanded"
+        width="1179" height="2556" loading="lazy"
+      />
+      <span class="img-slot__caption">Pricing Card &middot; light</span>
+    </div>
+    <div class="img-slot">
+      <img
+        src="./imgs-digital/Tarebook/02-pricing-card-dark.png"
+        alt="Tarebook Pricing Card in dark theme — same itemised breakdown, warm dark palette"
+        width="1179" height="2556" loading="lazy"
+      />
+      <span class="img-slot__caption">Pricing Card &middot; dark</span>
     </div>
   </div>
 
-  <!-- IMG GRID 2 — Add Piece + Glaze Detail -->
+  <!-- IMG GRID — Add Piece + Glaze Detail -->
   <div class="img-grid img-grid--2">
     <div class="img-slot">
       <img
-        src="./imgs-digital/Tarebook/folio/screenshots/03-add-piece-light.png"
+        src="./imgs-digital/Tarebook/03-add-piece-light.png"
         alt="Tarebook Add Piece form — materials and time-entries arrays with per-line overrides"
         width="1179" height="2556" loading="lazy"
       />
@@ -527,7 +555,7 @@
     </div>
     <div class="img-slot">
       <img
-        src="./imgs-digital/Tarebook/folio/screenshots/04-glaze-detail-light.png"
+        src="./imgs-digital/Tarebook/04-glaze-detail-light.png"
         alt="Tarebook Glaze Detail screen — batch and per-piece cost calculated from applied dry weight"
         width="1179" height="2556" loading="lazy"
       />
@@ -535,11 +563,122 @@
     </div>
   </div>
 
-  <!-- IMG GRID 3 — Settings + Sign In -->
+  <!-- LIBRARY VIEWS — pieces + glazes -->
+  <div class="case-section" style="border-bottom: 0; padding-bottom: var(--space-5);">
+    <div class="two-col">
+      <h2 class="section-label">Lists as Journal</h2>
+      <div class="body-text">
+        <p>Library views are the most-trafficked surface in a tool like this. The brief was to make them feel like a <strong>journal index, not a database table</strong>. Each saved piece reads as a card with three live prices alongside; each saved glaze with its per-piece cost. Long lists scroll cleanly with hairline dividers and the existing editorial rhythm.</p>
+      </div>
+    </div>
+  </div>
   <div class="img-grid img-grid--2">
     <div class="img-slot">
       <img
-        src="./imgs-digital/Tarebook/folio/screenshots/06-settings-dark.png"
+        src="./imgs-digital/Tarebook/08-pieces-library-light.png"
+        alt="Tarebook Pieces library — list of saved pieces with live-recalculated retail prices"
+        width="1179" height="2556" loading="lazy"
+      />
+      <span class="img-slot__caption">Pieces library &middot; live-recalculated retail prices, no save button</span>
+    </div>
+    <div class="img-slot">
+      <img
+        src="./imgs-digital/Tarebook/09-glazes-library-light.png"
+        alt="Tarebook Glazes library — saved glaze recipes with per-piece cost surfaced"
+        width="1179" height="2556" loading="lazy"
+      />
+      <span class="img-slot__caption">Glazes library &middot; per-piece cost surfaced on every card</span>
+    </div>
+  </div>
+
+  <!-- EMPTY STATES — design thinking section -->
+  <div class="case-section" style="border-bottom: 0; padding-bottom: var(--space-5);">
+    <div class="two-col">
+      <h2 class="section-label">Empty as Conversation</h2>
+      <div class="body-text">
+        <p>Most apps treat empty states as a bug to fix. Tarebook treats them as the start of a conversation. The onboarding wizard asks for studio numbers in plain English &mdash; clay price per kilo, hourly rate, kiln cost per firing &mdash; with sensible defaults so a new potter can finish in under a minute. Home and Add-Piece screens, before any data, explain what's missing and what to do next.</p>
+        <p>Three principles: <em>no dead ends</em>, <em>no jargon</em>, <em>no judgement</em> if a value is left at the default.</p>
+      </div>
+    </div>
+  </div>
+  <div class="img-grid img-grid--4">
+    <div class="img-slot">
+      <img
+        src="./imgs-digital/Tarebook/10-setup-light.png"
+        alt="Tarebook Setup wizard — onboarding step collecting studio numbers in plain English"
+        width="1179" height="2556" loading="lazy"
+      />
+      <span class="img-slot__caption">Setup wizard &middot; under a minute</span>
+    </div>
+    <div class="img-slot">
+      <img
+        src="./imgs-digital/Tarebook/11-home-empty-light.png"
+        alt="Tarebook Home empty state in light theme — no pieces yet, with friendly next-step prompt"
+        width="1179" height="2556" loading="lazy"
+      />
+      <span class="img-slot__caption">Home &middot; empty, light</span>
+    </div>
+    <div class="img-slot">
+      <img
+        src="./imgs-digital/Tarebook/12-home-empty-dark.png"
+        alt="Tarebook Home empty state in dark theme — same friendly conversation, dark palette"
+        width="1179" height="2556" loading="lazy"
+      />
+      <span class="img-slot__caption">Home &middot; empty, dark</span>
+    </div>
+    <div class="img-slot">
+      <img
+        src="./imgs-digital/Tarebook/13-add-piece-empty-light.png"
+        alt="Tarebook Add Piece empty state — fresh form with helper text and field defaults"
+        width="1179" height="2556" loading="lazy"
+      />
+      <span class="img-slot__caption">Add Piece &middot; first-run</span>
+    </div>
+  </div>
+
+  <!-- KILN TRACKING — Mid-Build Pivot -->
+  <div class="case-section" style="border-bottom: 0; padding-bottom: var(--space-5);">
+    <div class="two-col">
+      <h2 class="section-label">A Mid-Build Pivot</h2>
+      <div class="body-text">
+        <p>Week 2. The pricing maths only works if loss rate is honest &mdash; not assumed. Most potters guess "10%" without ever counting what actually came out of the last kiln. So the original schema, which carried a single global loss-rate setting, wasn't going to survive contact with reality.</p>
+        <p>A whole new flow was added: <strong>kiln firings as first-class objects</strong>. Each firing logs pieces in / pieces out / glaze cost / firing cost. The loss rate becomes an emergent measurement from the user's last N firings, not a number they invented once at setup and forgot. Three screens, Dexie schema bumped to v4, auto-migration from v3 written and tested in an afternoon.</p>
+        <p><em>The kind of decision that costs an extra day in week 2 but means the maths is defensible by week 3.</em></p>
+      </div>
+    </div>
+  </div>
+  <div class="img-grid img-grid--3">
+    <div class="img-slot">
+      <img
+        src="./imgs-digital/Tarebook/14-kiln-list-light.png"
+        alt="Tarebook Kiln list — saved firing logs with pieces in, pieces out, calculated loss rate"
+        width="1179" height="2556" loading="lazy"
+      />
+      <span class="img-slot__caption">Kiln list &middot; firing log as journal</span>
+    </div>
+    <div class="img-slot">
+      <img
+        src="./imgs-digital/Tarebook/15-kiln-new-light.png"
+        alt="Tarebook New kiln firing form — pieces in, pieces out, glaze cost, firing cost"
+        width="1179" height="2556" loading="lazy"
+      />
+      <span class="img-slot__caption">New firing &middot; pieces in / pieces out / cost</span>
+    </div>
+    <div class="img-slot">
+      <img
+        src="./imgs-digital/Tarebook/16-firing-detail-light.png"
+        alt="Tarebook Firing detail — breakdown of a completed firing with measured loss rate"
+        width="1179" height="2556" loading="lazy"
+      />
+      <span class="img-slot__caption">Firing detail &middot; measured loss replaces guessed loss</span>
+    </div>
+  </div>
+
+  <!-- IMG GRID — Settings + Sign In -->
+  <div class="img-grid img-grid--2">
+    <div class="img-slot">
+      <img
+        src="./imgs-digital/Tarebook/06-settings-dark.png"
         alt="Tarebook Settings screen in dark mode — theme toggle, metric/imperial segmented control"
         width="1179" height="2556" loading="lazy"
       />
@@ -547,7 +686,7 @@
     </div>
     <div class="img-slot">
       <img
-        src="./imgs-digital/Tarebook/folio/screenshots/07-sign-in-light.png"
+        src="./imgs-digital/Tarebook/07-sign-in-light.png"
         alt="Tarebook Sign In screen — magic-link passwordless auth, friendly cloud-sync messaging"
         width="1179" height="2556" loading="lazy"
       />
