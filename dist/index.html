@@ -914,10 +914,17 @@
         .gateway .panel {
           min-height: 200px;
         }
-        /* Mobile: keep the materials, drop the 3D rotation so a tap doesn't
-           leave a half-open door behind. Click handler also skips animation
-           on touch devices via the hover-capability media query in JS. */
+        /* Mobile: keep the door materials, but drop everything 3D so a tap
+           can't leave a half-open door behind. Reset transform-origin and
+           transform-style defensively in case any inherited animation tries
+           to fire. Touch devices also skip the click animation in JS via
+           the hover-capability media query. */
         .gateway { perspective: none; }
+        .panel {
+          transform-style: flat;
+          transform-origin: center center;
+          will-change: auto;
+        }
         .panel:hover,
         .panel:focus-within { transform: none; box-shadow: none; }
         .panel.is-opening { transform: none; opacity: 0.4; }
@@ -1039,6 +1046,10 @@
       @media (max-width: 480px) {
         .gateway {
           height: clamp(420px, 90vh, 640px);
+          /* Reset min-height inherited from the 640px rule so the smaller
+             clamp above actually governs the gateway height on very small
+             phones (otherwise the larger min-height silently wins). */
+          min-height: 0;
           margin: 0 var(--space-2);
         }
         .panel__title {
