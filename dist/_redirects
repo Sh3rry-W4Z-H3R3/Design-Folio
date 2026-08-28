@@ -1,0 +1,9 @@
+# Cloudflare Pages redirects.
+# Format: <from> <to> <status>
+
+# Page renamed to match the all-lowercase convention used by every other page.
+# 301 so search engines transfer ranking rather than treating it as new.
+/SideQuests.html   /side-quests.html   301
+
+# Removed: an unlinked sandbox page that was never part of the site.
+/Playground.html   /                   301

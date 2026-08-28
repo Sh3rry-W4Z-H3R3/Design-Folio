@@ -21,3 +21,11 @@ Thumbs.db
 # Ignore specific heavy folders
 **/WGA-CaseStudyImgs/
 **/iCloud Photos/.claude/
+
+# Dependencies — never inside dist/, which is the Cloudflare deploy root
+node_modules/
+
+# NOTE: /src-images/ holds the raw jpg/png originals. It is deliberately NOT
+# ignored — only dist/ is deployed to Cloudflare, so keeping the originals
+# tracked here keeps them off the CDN while preserving them in the repo.
+# Git dedupes by content, so re-homing them from dist/ costs no extra space.
