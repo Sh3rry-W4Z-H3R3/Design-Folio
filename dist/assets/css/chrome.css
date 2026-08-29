@@ -1,0 +1,350 @@
+/* ─── CHROME ─────────────────────────────────────────────────────────
+   The furniture every page carries: custom cursor, sticky nav, mobile
+   menu, footer nav, mode switch. Previously duplicated inline across 26
+   pages (and partly injected as a JS string by mobile-nav.js).
+
+   Linked after base.css, before the page's inline <style>.
+   ──────────────────────────────────────────────────────────────────── */
+
+/* ── CUSTOM CURSOR ──────────────────────────────────────────
+   Workshop mode only, and only where a real pointer exists. */
+.cursor,
+.cursor-icon {
+  display: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  :root[data-mode="workshop"] .cursor {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 10px;
+    height: 10px;
+    background: var(--fg);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition:
+      width var(--fast),
+      height var(--fast),
+      background var(--fast),
+      opacity var(--fast);
+  }
+
+  :root[data-mode="workshop"] .cursor.grow {
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: 1px solid var(--accent);
+    opacity: 0.7;
+  }
+
+  :root[data-mode="workshop"] .cursor-icon {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(10px, -50%);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  :root[data-mode="workshop"] .cursor-icon.visible {
+    opacity: 1;
+  }
+}
+
+.cursor-icon span {
+  font-family: var(--sans);
+  font-size: var(--text-1);
+  font-weight: 700;
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--fg-mid);
+  margin-top: 0.35rem;
+}
+
+/* ── TOP NAV ────────────────────────────────────────────────── */
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-5) var(--gutter);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--scrim);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+
+.nav__home {
+  font-family: var(--serif);
+  font-size: var(--text-7);
+  font-weight: 300;
+  letter-spacing: var(--ls-body);
+  text-decoration: none;
+  color: var(--fg);
+  transition: color var(--fast);
+}
+.nav__home em {
+  font-style: italic;
+  color: var(--accent);
+}
+.nav__home:hover {
+  color: var(--fg-mid);
+}
+
+.nav__links {
+  display: flex;
+  gap: var(--space-6);
+  align-items: center;
+}
+
+.nav__links a,
+.nav__back {
+  font-family: var(--sans);
+  font-size: var(--text-2);
+  font-weight: 700;
+  letter-spacing: var(--ls-track);
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--fg-dim);
+  transition: color var(--fast);
+  position: relative;
+}
+
+.nav__links a::after {
+  content: "";
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--accent);
+  transition: width var(--fast);
+}
+
+.nav__links a:hover,
+.nav__links a.active,
+.nav__links a[aria-current="page"] {
+  color: var(--fg);
+}
+
+.nav__links a:hover::after,
+.nav__links a.active::after,
+.nav__links a[aria-current="page"]::after {
+  width: 100%;
+}
+
+/* ── MOBILE MENU ────────────────────────────────────────────
+   Was injected as a CSS string from mobile-nav.js. Living in a real
+   stylesheet means it is styleable, cacheable, and visible to anyone
+   reading the source. */
+.nav__burger {
+  display: none;
+  background: none;
+  border: 0;
+  padding: 11px 9px;
+  width: 44px;
+  height: 44px;
+  position: relative;
+  z-index: 110;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  gap: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.nav__burger span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--fg);
+  transition:
+    transform 0.25s ease,
+    opacity 0.25s ease;
+}
+.nav__burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav__burger.open span:nth-child(2) { opacity: 0; }
+.nav__burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.nav__mobile {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  z-index: 105;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+.nav__mobile.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.nav__mobile a {
+  font-family: var(--serif);
+  font-size: 2.2rem;
+  font-weight: 300;
+  letter-spacing: var(--ls-body);
+  color: var(--fg);
+  text-decoration: none;
+  line-height: 1;
+  transition: color var(--fast);
+}
+.nav__mobile a em {
+  font-style: italic;
+  color: var(--accent);
+}
+.nav__mobile a:hover,
+.nav__mobile a:focus {
+  color: var(--accent);
+}
+.nav__mobile__small {
+  display: flex;
+  gap: var(--space-5);
+  margin-top: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--line-2);
+}
+.nav__mobile__small a {
+  font-family: var(--sans);
+  font-size: var(--text-2);
+  font-weight: 700;
+  letter-spacing: var(--ls-track);
+  text-transform: uppercase;
+  color: var(--fg-mid);
+}
+.nav__mobile__socials {
+  display: flex;
+  gap: var(--space-5);
+  margin-top: var(--space-5);
+}
+.nav__mobile__socials a {
+  font-family: var(--sans);
+  font-size: var(--text-2);
+  font-weight: 500;
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+@media (max-width: 768px) {
+  .nav__links,
+  .nav__back { display: none !important; }
+  .nav__burger { display: flex; }
+  html.nav-open,
+  body.nav-open { overflow: hidden; }
+}
+@media (min-width: 769px) {
+  .nav__mobile,
+  .nav__burger { display: none !important; }
+}
+
+/* ── FOOTER NAV ─────────────────────────────────────────────── */
+.footer-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-6) var(--space-5) var(--space-7);
+  gap: var(--space-3);
+}
+
+.footer-nav__left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+}
+
+.footer-nav a {
+  font-family: var(--sans);
+  font-size: var(--text-3);
+  font-weight: 500;
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--fg-dim);
+  position: relative;
+  transition: color var(--fast);
+}
+.footer-nav a:hover {
+  color: var(--fg);
+}
+
+@media (max-width: 768px) {
+  .footer-nav,
+  .footer-nav__left {
+    flex-direction: column;
+  }
+}
+
+/* Browsers colour unvisited/visited links blue and purple by default.
+   :where() carries zero specificity, so any page rule still wins. */
+:where(nav, footer, .footer-nav, .nav__mobile) a,
+:where(nav, footer, .footer-nav, .nav__mobile) a:visited {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ── MODE SWITCH ────────────────────────────────────────────
+   Lets anyone move between the workshop and the fast editorial
+   version. Quiet, always reachable, never a modal. */
+.mode-switch {
+  position: fixed;
+  right: var(--space-3);
+  bottom: var(--space-3);
+  z-index: 120;
+  font-family: var(--sans);
+  font-size: var(--text-2);
+  font-weight: 700;
+  letter-spacing: var(--ls-track);
+  text-transform: uppercase;
+  color: var(--fg-dim);
+  background: var(--scrim);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--line-2);
+  padding: var(--space-2) var(--space-3);
+  cursor: pointer;
+  transition:
+    color var(--fast),
+    border-color var(--fast);
+}
+.mode-switch:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* ── SKIP LINK ──────────────────────────────────────────────
+   Standard accessibility skip, visible on focus. */
+.skip-link {
+  position: absolute;
+  left: var(--space-3);
+  top: -4rem;
+  z-index: 200;
+  background: var(--bg);
+  color: var(--fg);
+  border: 1px solid var(--accent);
+  padding: var(--space-2) var(--space-3);
+  font-family: var(--sans);
+  font-size: var(--text-3);
+  text-decoration: none;
+  transition: top var(--fast);
+}
+.skip-link:focus {
+  top: var(--space-3);
+}

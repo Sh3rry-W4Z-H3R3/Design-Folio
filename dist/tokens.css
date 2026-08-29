@@ -53,4 +53,59 @@
   --ls-label:   0.16em;   /* uppercase buttons, footer links, tags    */
   --ls-track:   0.2em;    /* secondary labels                         */
   --ls-eyebrow: 0.22em;   /* eyebrows, super-caps                     */
+
+  /* ── COLOUR ─────────────────────────────────────────────────
+     Previously redeclared inline on 26 of 27 pages, with drift.
+     Room accents live in rooms.css, keyed off [data-room] — do not
+     set --accent here, or a room can't override it.
+     ─────────────────────────────────────────────────────────── */
+  --bg:      #0a0a0a;   /* page ground                                */
+  --fg:      #ede9e1;   /* primary text                               */
+  --fg-mid:  #999999;   /* body copy                                  */
+  --fg-dim:  #7a7a7a;   /* muted text, inactive nav                   */
+
+  --line:    #1a1a1a;   /* hairline borders, nav underline            */
+  --line-2:  #2a2a2a;   /* stronger borders, button outlines          */
+  --scrim:   rgba(10, 10, 10, 0.92);  /* sticky nav backdrop          */
+
+  /* Discipline accents. Named by what they are, not where they're
+     used, so rooms.css can assign them to --accent per room. */
+  --pink:    #e8547a;   /* digital / brand                            */
+  --mint:    #6dbf9e;   /* physical / industrial / craft              */
+  --gold:    #c8b882;   /* play / side quests                         */
+  --cream:   #f2ece1;   /* exhibition — the one light room            */
+
+  /* ── TYPEFACES ──────────────────────────────────────────────
+     --sans and --body both resolved to Syne on most pages; DM Sans
+     was loaded but only used on a handful. Kept as separate tokens
+     so body copy can move to DM Sans per room without a find-replace.
+     ─────────────────────────────────────────────────────────── */
+  --serif: "Cormorant", Georgia, "Times New Roman", serif;
+  --sans:  "Syne", "Helvetica Neue", Arial, sans-serif;
+  --body:  "Syne", "Helvetica Neue", Arial, sans-serif;
+
+  /* ── MOTION ─────────────────────────────────────────────────
+     --slow varied between 0.6s and 0.7s across pages; 0.6s is the
+     dominant value and is used here.
+     ─────────────────────────────────────────────────────────── */
+  --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --slow: 0.6s var(--ease);
+  --fast: 0.3s var(--ease);
+}
+
+/* Honour the OS setting site-wide. Individual components should still
+   check the media query where they do JS-driven animation. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --slow: 0.01ms;
+    --fast: 0.01ms;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
