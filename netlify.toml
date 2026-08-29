@@ -7,8 +7,11 @@
 [build]
   # The site is plain static HTML — there is nothing to build. Everything
   # served lives in dist/, which is also what Cloudflare publishes.
+  #
+  # `command` is omitted rather than set to "": Netlify treats a missing
+  # command as "nothing to run", which is what we want, and an empty
+  # string is a less well-trodden path through its config handling.
   publish = "dist"
-  command = ""
 
   # NOTE: `base` is deliberately NOT set.
   #
