@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-room="play">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -62,6 +62,26 @@
       content="https://sherjeelhussain.com/img/og-default.jpg"
     />
 
+    <!-- MODE:START -->
+    <script>
+    (function () {
+    var d = document.documentElement;
+    var m;
+    try { m = localStorage.getItem("sh.mode"); } catch (e) {}
+    if (m !== "workshop" && m !== "editorial") {
+    var q = function (s) { return window.matchMedia && matchMedia(s).matches; };
+    var lean =
+    q("(pointer: coarse)") ||
+    q("(prefers-reduced-motion: reduce)") ||
+    (navigator.connection && navigator.connection.saveData);
+    m = lean ? "editorial" : "workshop";
+    }
+    d.setAttribute("data-mode", m);
+    })();
+    </script>
+    <!-- MODE:END -->
+
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -69,6 +89,9 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="tokens.css" />
+    <link rel="stylesheet" href="assets/css/rooms.css" />
+    <link rel="stylesheet" href="assets/css/base.css" />
+    <link rel="stylesheet" href="assets/css/chrome.css" />
         <style>
       /* ── VARIABLES & RESETS ─────────────────────────────── */
       :root {
@@ -818,13 +841,10 @@
     <a href="#top" class="back-to-top" aria-label="Back to top">↑</a>
 
     <script>
-      const cursor = document.getElementById("cursor");
+      
 
       // Follow mouse
-      document.addEventListener("mousemove", (e) => {
-        cursor.style.left = e.clientX + "px";
-        cursor.style.top = e.clientY + "px";
-      });
+      
 
       // Grow on interactives AND the gallery grid items
       document.querySelectorAll("a, button, .gallery-item").forEach((el) => {
@@ -858,6 +878,6 @@
       })();
     </script>
 
-    <script src="mobile-nav.js" defer></script>
+    <script src="assets/js/chrome.js" defer></script>
   </body>
 </html>

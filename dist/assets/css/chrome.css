@@ -70,8 +70,17 @@
   margin-top: 0.35rem;
 }
 
-/* ── TOP NAV ────────────────────────────────────────────────── */
-nav {
+/* ── TOP NAV ────────────────────────────────────────────────
+   Scoped away from .footer-nav: index.html marks its footer up as
+   <nav class="footer-nav">, so a bare `nav` selector turns the footer
+   into a sticky, bordered header.
+
+   :where() rather than :not() — :where() contributes no specificity, so
+   this stays at (0,0,1) like the bare element selector it replaces.
+   With :not() it becomes (0,1,1) and starts overriding the page-level
+   @media rules that shrink nav padding on mobile, which silently made
+   the nav 16px taller on 18 pages. */
+nav:where(:not(.footer-nav)) {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -255,20 +264,13 @@ nav {
 }
 
 /* ── FOOTER NAV ─────────────────────────────────────────────── */
-.footer-nav {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  padding: var(--space-6) var(--space-5) var(--space-7);
-  gap: var(--space-3);
-}
-
-.footer-nav__left {
-  display: flex;
-  align-items: center;
-  gap: var(--space-6);
-}
+/* NOTE: no .footer-nav / .footer-nav__left layout here, deliberately.
+   24 of 26 pages declare their own footer layout inline, and the two that
+   don't (about.html, kala-topi.html) were laid out fine without it —
+   imposing display:flex on them pushed their links into a single
+   non-wrapping row that ran off the page. Only the link typography,
+   which is genuinely universal, lives here. Phase 4 gives the footer one
+   real shared treatment; until then the pages keep what they have. */
 
 .footer-nav a {
   font-family: var(--sans);
@@ -285,12 +287,11 @@ nav {
   color: var(--fg);
 }
 
-@media (max-width: 768px) {
-  .footer-nav,
-  .footer-nav__left {
-    flex-direction: column;
-  }
-}
+/* NOTE: no mobile `flex-direction: column` for the footer here.
+   Most pages declare it in their own styles, but not all — and forcing it
+   globally made the footer ~300px taller on the pages that had chosen to
+   let it wrap instead. Whether every footer should stack is a Phase 4
+   decision; imposing it during the migration is not. */
 
 /* Browsers colour unvisited/visited links blue and purple by default.
    :where() carries zero specificity, so any page rule still wins. */

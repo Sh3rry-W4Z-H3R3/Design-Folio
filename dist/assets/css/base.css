@@ -37,12 +37,11 @@ body {
   }
 }
 
-img,
-video,
-canvas {
-  max-width: 100%;
-  display: block;
-}
+/* NOTE: no global `img { max-width: 100% }` here, deliberately.
+   Adding it fixes horizontal overflow on several pages — which is a real
+   improvement, and precisely why it does not belong in a migration whose
+   contract is "changes nothing". It reflows layouts that were built
+   around the overflow. Revisit per room in Phase 4. */
 
 /* Keyboard focus must always be visible. Several pages were setting
    outline:none without a replacement, which left keyboard users unable

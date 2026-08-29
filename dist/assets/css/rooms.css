@@ -46,26 +46,43 @@
 }
 
 /* ── EXHIBITION ─────────────────────────────────────────────
-   The one light room. Walking in should feel like stepping out of a
-   workshop and into a gallery, so this inverts the whole ground rather
-   than just swapping an accent. Every token the dark rooms rely on
-   needs a light-ground counterpart here, or text lands on the wrong
-   surface.
+   Currently dark, matching the mint accent these pages already use.
+   The room is *decided* to become the one light room — see below — but
+   flipping the ground before the room is rebuilt would drop pages whose
+   layouts, image treatments and overlays all assume a dark ground onto
+   cream. So the inversion waits for Phase 4, when the room is designed
+   for it, and this keeps the pages as they are until then.
    ─────────────────────────────────────────────────────────── */
 [data-room="exhibition"] {
-  --bg:      var(--cream);
-  --fg:      #1a1815;
-  --fg-mid:  #55504a;
-  --fg-dim:  #7d766c;
-
-  --line:    #ddd6c9;
-  --line-2:  #c9c0b0;
-  --scrim:   rgba(242, 236, 225, 0.92);
-
-  --accent: #8a6a4a;              /* warm brown — reads as a wall label */
-  --accent-2: var(--mint);
-  --accent-soft: rgba(138, 106, 74, 0.07);
-  --accent-edge: rgba(138, 106, 74, 0.28);
-
-  color-scheme: light;
+  --accent: var(--mint);
+  --accent-2: var(--pink);
+  --accent-soft: rgba(109, 191, 158, 0.08);
+  --accent-edge: rgba(109, 191, 158, 0.3);
 }
+
+/* ── EXHIBITION, LIGHT — PHASE 4 ────────────────────────────
+   Walking in should feel like stepping out of a workshop and into a
+   gallery, so the room inverts the whole ground rather than swapping an
+   accent. That means it is the only room needing a full counterpart
+   token set: every colour the dark rooms rely on needs a light-ground
+   equivalent, or text lands on the wrong surface.
+
+   Kept here, inactive, so the intent is recorded and the values are
+   ready. Activate by moving these into the rule above once the
+   exhibition room's layouts have been rebuilt for a light ground.
+
+   [data-room="exhibition"] {
+     --bg:      var(--cream);
+     --fg:      #1a1815;
+     --fg-mid:  #55504a;
+     --fg-dim:  #7d766c;
+     --line:    #ddd6c9;
+     --line-2:  #c9c0b0;
+     --scrim:   rgba(242, 236, 225, 0.92);
+     --accent:  #8a6a4a;            (warm brown — reads as a wall label)
+     --accent-2: var(--mint);
+     --accent-soft: rgba(138, 106, 74, 0.07);
+     --accent-edge: rgba(138, 106, 74, 0.28);
+     color-scheme: light;
+   }
+   ─────────────────────────────────────────────────────────── */

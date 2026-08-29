@@ -497,11 +497,23 @@
       }
 
       /* ─── FOOTER LINKS ───────────────────────────────────── */
-      /* Layout and link styling come from chrome.css. Only the entrance
-         animation and the underline sweep are page-local. */
+      /* Link typography comes from chrome.css; the layout stays here,
+         because footer layout varies page to page. */
       .footer-nav {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        padding: var(--space-6) var(--space-5) var(--space-7);
+        gap: var(--space-3);
         opacity: 0;
         animation: fadeUp 0.9s var(--ease) 0.7s forwards;
+      }
+
+      .footer-nav__left {
+        display: flex;
+        align-items: center;
+        gap: var(--space-6);
       }
 
       .footer-nav a::after {
@@ -559,6 +571,12 @@
         }
         .nav__links {
           gap: var(--space-4);
+        }
+        /* Page-local: this footer stacks on mobile. Not every page's does,
+           so it stays here rather than in chrome.css. */
+        .footer-nav,
+        .footer-nav__left {
+          flex-direction: column;
         }
       }
     </style>
