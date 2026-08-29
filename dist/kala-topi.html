@@ -44,6 +44,10 @@
   }
   </script>
 
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+
     <!-- MODE:START -->
     <script>
     (function () {
@@ -223,7 +227,7 @@
     }
 
     .hero__meta {
-      display: flex; gap: var(--space-6);
+      display: flex; flex-wrap: wrap; gap: var(--space-6);
       margin-top: var(--space-6);
       opacity: 0;
       animation: fadeUp 0.8s var(--ease) 0.65s forwards;
@@ -467,7 +471,9 @@
     }
     .palette {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
+      /* auto-fit so five swatches reflow instead of forcing the page
+         wider than a phone */
+      grid-template-columns: repeat(auto-fit, minmax(min(7rem, 100%), 1fr));
       gap: var(--space-5);
       margin-top: var(--space-6);
     }
@@ -684,11 +690,16 @@
       body { cursor: auto; }
       .cursor { display: none; }
       .hero { grid-template-columns: 1fr; min-height: auto; }
+      /* Without min-width:0 these grid items keep their min-content
+         width and the hero runs wider than the screen. */
+      .hero__left, .hero__right { min-width: 0; }
       .hero__right { min-height: 50vw; }
       .premise { grid-template-columns: 1fr; gap: var(--space-5); padding: var(--space-8) var(--gutter); }
       .tensions__grid { grid-template-columns: 1fr; }
       .menu-panels { grid-template-columns: 1fr; }
-      .palette { grid-template-columns: repeat(5, 1fr); }
+      /* was repeat(5, 1fr) — five columns inside the MOBILE media query,
+         which forced the page 70px wider than a 320px phone */
+      .palette { grid-template-columns: repeat(2, 1fr); }
       .voice-grid { grid-template-columns: 1fr; gap: var(--space-6); }
       .ceramics-placeholder { grid-template-columns: 1fr; }
       .case-footer { grid-template-columns: 1fr; }

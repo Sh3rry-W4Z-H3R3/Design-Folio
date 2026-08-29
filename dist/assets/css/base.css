@@ -43,6 +43,22 @@ body {
    contract is "changes nothing". It reflows layouts that were built
    around the overflow. Revisit per room in Phase 4. */
 
+/* A word that cannot fit its container — an email address, a long URL,
+   a filename — otherwise pushes the whole page sideways on a phone.
+   break-word only engages when the word genuinely does not fit, so text
+   that already fits is unaffected. */
+p,
+li,
+a,
+h1,
+h2,
+h3,
+h4,
+figcaption,
+blockquote {
+  overflow-wrap: break-word;
+}
+
 /* Keyboard focus must always be visible. Several pages were setting
    outline:none without a replacement, which left keyboard users unable
    to see where they were. */

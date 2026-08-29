@@ -264,13 +264,22 @@ nav:where(:not(.footer-nav)) {
 }
 
 /* ── FOOTER NAV ─────────────────────────────────────────────── */
-/* NOTE: no .footer-nav / .footer-nav__left layout here, deliberately.
-   24 of 26 pages declare their own footer layout inline, and the two that
-   don't (about.html, kala-topi.html) were laid out fine without it —
-   imposing display:flex on them pushed their links into a single
-   non-wrapping row that ran off the page. Only the link typography,
-   which is genuinely universal, lives here. Phase 4 gives the footer one
-   real shared treatment; until then the pages keep what they have. */
+/* NOTE: no .footer-nav / .footer-nav__left LAYOUT here, deliberately.
+   24 of 26 pages declare their own footer layout inline, and imposing
+   display:flex on the two that don't pushed their links into a single
+   non-wrapping row that ran off the page. Phase 4 gives the footer one
+   real shared treatment; until then the pages keep what they have.
+
+   The one exception is wrapping. Six pages had footer clusters that ran
+   off the side of the screen on every phone width, because a flex row
+   with nowhere to go just keeps going. flex-wrap is inert on anything
+   that isn't already a flex container, so this fixes the overflow
+   without imposing any layout of its own. */
+.footer-nav,
+.footer-nav__left,
+.footer-nav__right {
+  flex-wrap: wrap;
+}
 
 .footer-nav a {
   font-family: var(--sans);
@@ -292,6 +301,33 @@ nav:where(:not(.footer-nav)) {
    globally made the footer ~300px taller on the pages that had chosen to
    let it wrap instead. Whether every footer should stack is a Phase 4
    decision; imposing it during the migration is not. */
+
+/* ── TOUCH TARGETS ──────────────────────────────────────────
+   Nav and footer links are 11–21px tall, which is well under the 24px
+   WCAG 2.2 asks for and genuinely fiddly to hit on a phone. Vertical
+   padding on an inline element grows the hit area without moving
+   anything around it, so this buys the target size for free.
+
+   Scoped to coarse pointers: on a mouse the small targets are fine, and
+   this keeps desktop layout untouched. */
+@media (pointer: coarse) {
+  nav:where(:not(.footer-nav)) a,
+  .footer-nav a,
+  .nav__mobile a,
+  /* side-quests.html uses .footer__links rather than .footer-nav. */
+  .footer__links a,
+  /* The standalone navigation links case studies end on, and the
+     external project links some of them list. */
+  .next-project__title,
+  .next-project__arrow,
+  .case-footer__next-link,
+  .case-footer__back a,
+  .hero__links a,
+  .link-card a,
+  .back-to-top {
+    padding-block: 9px;
+  }
+}
 
 /* Browsers colour unvisited/visited links blue and purple by default.
    :where() carries zero specificity, so any page rule still wins. */

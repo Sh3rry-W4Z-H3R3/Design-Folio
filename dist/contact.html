@@ -90,6 +90,10 @@
       }
     </script>
 
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+
     <!-- MODE:START -->
     <script>
     (function () {
@@ -825,6 +829,19 @@
           grid-template-columns: 1fr;
           gap: var(--space-6);
           padding: var(--space-7) var(--gutter);
+        }
+        /* Grid items default to min-width:auto, so a track refuses to
+           shrink below its content and pushes past a narrow screen. */
+        .direct-links-section > *,
+        .form-section > *,
+        .expect-section > * {
+          min-width: 0;
+        }
+        /* The email is a single unbreakable-looking string next to a
+           flex-shrink:0 arrow, so the label needs permission to shrink
+           before the arrow gets pushed off the screen. */
+        .direct-link > * {
+          min-width: 0;
         }
         .section-label {
           position: static;

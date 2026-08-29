@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-room="play">
+<html lang="en" data-room="physical">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -75,6 +75,10 @@
       }
     </script>
 
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+
     <!-- MODE:START -->
     <script>
     (function () {
@@ -109,12 +113,12 @@
     <link rel="stylesheet" href="assets/css/floorplan.css" />
         <style>
       :root {
+        /* --accent / --accent-2 now come from rooms.css via
+           <html data-room="physical"> rather than being hardcoded here. */
         --bg: #0a0a0a;
         --fg: #ede9e1;
         --fg-dim: #7a7a7a;
-        --fg-mid: #999;
-        --accent: #c8b882; /* gold — product design track */
-        --accent-2: #6dbf9e;
+        --fg-mid: #999; /* gold — product design track */
         --accent-3: #e8547a;
         --serif: "Cormorant", Georgia, serif;
         --sans: "Syne", sans-serif;
