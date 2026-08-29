@@ -1,0 +1,34 @@
+# Netlify build configuration.
+#
+# Committed rather than left in the dashboard so the settings travel with
+# the branch and can't drift from what's actually deployed. Values here
+# override the equivalent UI fields.
+
+[build]
+  # The site is plain static HTML — there is nothing to build. Everything
+  # served lives in dist/, which is also what Cloudflare publishes.
+  publish = "dist"
+  command = ""
+
+  # NOTE: `base` is deliberately NOT set.
+  #
+  # On Netlify the publish directory is resolved RELATIVE to the base
+  # directory. A base of "dist/" plus a publish of "dist" therefore
+  # resolves to dist/dist, and the deploy fails with "Deploy directory
+  # does not exist". Leaving base unset keeps publish relative to the
+  # repository root, which is where dist/ actually is.
+  #
+  # Netlify also looks for netlify.toml inside the base directory when one
+  # is set, so a base of "dist/" would stop this file being read at all.
+  # The Base directory field in the UI must be cleared for this to apply.
+
+# _headers and _redirects are not repeated here: both already sit in
+# dist/ and Netlify reads them natively from the publish root. They were
+# written for Cloudflare Pages, which uses the same two formats, so the
+# same files serve both hosts without duplication.
+
+[build.processing]
+  # The CSS and HTML are hand-tuned and the cache headers in dist/_headers
+  # assume the filenames that are committed. Post-processing would rewrite
+  # both. Off by default on new sites, set explicitly so it stays off.
+  skip_processing = true
