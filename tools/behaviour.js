@@ -126,6 +126,66 @@ const check = (name, pass, detail) => results.push({ name, pass, detail });
     await ctx.close();
   }
 
+  // 7. Floorplan: opens as a modal, marks the current room, closes on
+  //    Escape, and returns focus.
+  {
+    const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+    const page = await ctx.newPage();
+    await page.goto(url("craft.html"));
+    await page.waitForTimeout(300);
+
+    const trigger = page.locator(".plan-trigger");
+    check("floorplan trigger present in workshop mode", (await trigger.count()) === 1);
+
+    await trigger.click();
+    await page.waitForTimeout(300);
+
+    check("plan opens as a modal dialog", await page.evaluate(() => {
+      const d = document.getElementById("floorplan");
+      return !!d && d.open && d.matches(":modal");
+    }));
+
+    // craft.html is the physical room, so that room should be marked.
+    check("current room is marked", await page.evaluate(() => {
+      const cur = document.querySelector('.plan__room[aria-current="page"]');
+      return !!cur && cur.dataset.room === "physical";
+    }), "expected physical");
+
+    check("every room is a real link", await page.evaluate(() =>
+      [...document.querySelectorAll(".plan__room")].every((a) => a.tagName === "A" && a.getAttribute("href"))
+    ));
+
+    check("doors are real links", await page.evaluate(() =>
+      [...document.querySelectorAll(".plan__door")].every((a) => a.tagName === "A" && a.getAttribute("href"))
+    ));
+
+    // A modal dialog makes the rest of the page inert, which is the
+    // focus trap — verify rather than assume.
+    check("page behind is inert while open", await page.evaluate(() => {
+      const outside = document.querySelector("nav .nav__links a");
+      outside.focus();
+      return document.activeElement !== outside;
+    }));
+
+    await page.keyboard.press("Escape");
+    await page.waitForTimeout(300);
+    check("Escape closes the plan", await page.evaluate(() => !document.getElementById("floorplan").open));
+    check("focus returns to the trigger", await page.evaluate(() =>
+      document.activeElement.classList.contains("plan-trigger")
+    ));
+    await ctx.close();
+  }
+
+  // 8. No floorplan in editorial mode — that mode is the opt-out.
+  {
+    const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: "reduce" });
+    const page = await ctx.newPage();
+    await page.goto(url("craft.html"));
+    await page.waitForTimeout(300);
+    check("no floorplan trigger in editorial mode", (await page.locator(".plan-trigger").count()) === 0);
+    await ctx.close();
+  }
+
   await browser.close();
   server.close();
 
