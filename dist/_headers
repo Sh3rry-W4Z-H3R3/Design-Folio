@@ -1,8 +1,22 @@
-# Cloudflare Pages response headers.
-# Format: a path pattern, then indented header lines.
+# Response headers. Read natively by both Netlify and Cloudflare Pages,
+# which share this file format.
+#
+# Only exact paths and TRAILING splats are used. Netlify's header parser
+# accepts those two forms and rejects a splat in the middle of a pattern,
+# so "/*.html" — which Cloudflare is happy with — fails there. The
+# narrower syntax is the portable one.
 
-# Images and fonts are content-addressed in practice — a changed image gets a
-# new filename — so they can be cached hard and never revalidated.
+# Default for everything, HTML included: always revalidate, so a deploy
+# actually reaches people who have visited before. More specific paths
+# below override this.
+/*
+  Cache-Control: public, max-age=0, must-revalidate
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
+
+# Images are content-addressed in practice — a changed image gets a new
+# filename — so they can be cached hard and never revalidated.
 /imgs-craft/*
   Cache-Control: public, max-age=31536000, immutable
 /imgs-digital/*
@@ -14,18 +28,7 @@
 /imgs-lab/*
   Cache-Control: public, max-age=31536000, immutable
 
-# Shared CSS/JS and the 3D scene assets. These DO change under a stable name,
-# so they are cached for a day and revalidated rather than frozen for a year.
+# Shared CSS/JS and the 3D scene assets change under a stable name, so
+# they are cached for a day and revalidated rather than frozen for a year.
 /assets/*
   Cache-Control: public, max-age=86400, must-revalidate
-
-# HTML must always be revalidated, or a deploy won't reach people who have
-# already visited.
-/*.html
-  Cache-Control: public, max-age=0, must-revalidate
-
-# Site-wide security headers. No page here embeds others or needs to be embedded.
-/*
-  X-Content-Type-Options: nosniff
-  Referrer-Policy: strict-origin-when-cross-origin
-  X-Frame-Options: SAMEORIGIN
