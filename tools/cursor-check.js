@@ -22,6 +22,7 @@ const DIST = path.join(__dirname, "..", "dist");
 const PORT = 8821;
 const TOLERANCE = 2; // px — sub-pixel rounding only
 const PROBES = [[200, 300], [1100, 700]];
+const filter = process.argv[2]; // optional page substring, used by selftest
 
 const MIME = {
   ".html": "text/html", ".css": "text/css", ".js": "text/javascript",
@@ -48,7 +49,11 @@ const server = http.createServer((req, res) => {
   const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
   await ctx.route(/fonts\.(googleapis|gstatic)|googletagmanager|google-analytics/, (r) => r.abort());
 
-  const pages = fs.readdirSync(DIST).filter((f) => f.endsWith(".html")).sort();
+  const pages = fs
+    .readdirSync(DIST)
+    .filter((f) => f.endsWith(".html"))
+    .filter((f) => !filter || f.toLowerCase().includes(filter.toLowerCase()))
+    .sort();
   const bad = [];
 
   for (const file of pages) {
