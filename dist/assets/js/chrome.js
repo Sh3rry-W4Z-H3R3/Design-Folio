@@ -43,6 +43,18 @@
         "</svg><span>Craft</span>",
     };
 
+    // Anchor both elements at the viewport origin from JS, as inline
+    // styles. transform is relative to whatever top/left the CSS gives the
+    // element, and pages that still carry their own .cursor rules set
+    // things like `left: 50vw; top: 50vh` — which silently offsets the dot
+    // from the real pointer by half the screen. An inline style outranks
+    // any stylesheet, so this holds no matter what a page declares.
+    [dot, icon].forEach(function (el) {
+      if (!el) return;
+      el.style.left = "0px";
+      el.style.top = "0px";
+    });
+
     var x = 0, y = 0, queued = false;
 
     function paint() {
