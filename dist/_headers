@@ -6,11 +6,15 @@
 # so "/*.html" — which Cloudflare is happy with — fails there. The
 # narrower syntax is the portable one.
 
-# Default for everything, HTML included: always revalidate, so a deploy
-# actually reaches people who have visited before. More specific paths
-# below override this.
+# Site-wide security headers.
+#
+# Deliberately no Cache-Control here. Both Netlify and Cloudflare already
+# serve HTML as must-revalidate by default, so setting it would be
+# redundant — and setting it on /* would mean the immutable image rules
+# below only work if each platform resolves overlapping rules the same
+# way. Scoping cache policy to the paths that actually need it removes
+# that dependency entirely.
 /*
-  Cache-Control: public, max-age=0, must-revalidate
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   X-Frame-Options: SAMEORIGIN
