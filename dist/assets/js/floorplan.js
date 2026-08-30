@@ -289,9 +289,13 @@
       var chip = el("a", "back-chip glass");
       chip.href = parent.href;
       chip.dataset.room = parent.id;
+      chip.innerHTML =
+        '<svg class="back-chip__arrow" viewBox="0 0 12 9" aria-hidden="true" focusable="false">' +
+        '<path d="M11.5 4.5H1M4.5 1 1 4.5 4.5 8" fill="none" stroke="currentColor" stroke-width="1.3"/>' +
+        "</svg>";
       chip.appendChild(el("span", null, parent.name));
-      // The arrow is drawn by CSS, so the label alone would read as
-      // "Industrial" out of context.
+      // The label is hidden on narrow screens and the arrow carries no
+      // text, so the chip needs a name of its own.
       chip.setAttribute("aria-label", "Back to " + parent.name);
       bar.appendChild(chip);
     }

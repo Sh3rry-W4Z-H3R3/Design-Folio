@@ -130,10 +130,13 @@
     color var(--fast),
     border-color var(--fast);
 }
-.back-chip::before {
-  content: "←";
-  font-size: 1.1em;
-  line-height: 1;
+/* The arrow is an SVG, not a "←" in ::before content. The display
+   faces do not all carry U+2190, and the fallback glyph rendered as a
+   low dash — an arrow is too load-bearing here to leave to font luck. */
+.back-chip__arrow {
+  width: 12px;
+  height: 9px;
+  flex-shrink: 0;
 }
 .back-chip:hover,
 .back-chip:focus-visible {

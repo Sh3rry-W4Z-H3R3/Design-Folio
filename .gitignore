@@ -32,3 +32,8 @@ node_modules/
 
 # Regression screenshots (tools/shoot.js) — local scratch, regenerated on demand.
 .screens/
+
+# selftest.js writes this before each mutation and deletes it after the
+# restore, so an interrupted run can be recovered by the next one. It
+# should never outlive a run.
+tools/.selftest-journal.json

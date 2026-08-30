@@ -156,6 +156,42 @@ function checkFails(script, scope) {
   return r.status !== 0;
 }
 
+/* ── SURVIVING A HARD KILL ──────────────────────────────────
+   An earlier version tracked mutations in memory and restored them from
+   signal handlers. That does not work, and this suite proved it: almost
+   all of its wall-clock time is spent inside spawnSync, which blocks the
+   event loop, so a SIGTERM arriving mid-check is never delivered to a JS
+   handler at all. A run killed by a timeout left a mutated stylesheet
+   behind — silently, in a suite whose entire job is to be trustworthy.
+
+   So the record of what has been changed lives on DISK, written before
+   the mutation and deleted after the restore. Nothing needs to run at
+   exit for it to work: the next run finds the journal and puts the file
+   back. That survives SIGKILL, a timeout, and a container restart. */
+const JOURNAL = path.join(__dirname, ".selftest-journal.json");
+
+function journalWrite(file, original) {
+  fs.writeFileSync(JOURNAL, JSON.stringify({ file, original }));
+}
+function journalClear() {
+  if (fs.existsSync(JOURNAL)) fs.unlinkSync(JOURNAL);
+}
+
+// Replay before anything else, including the dirty check — a leftover
+// mutation IS a dirty tree, and refusing to start because of it would
+// leave the only thing that can clean it up unable to run.
+if (fs.existsSync(JOURNAL)) {
+  try {
+    const { file, original } = JSON.parse(fs.readFileSync(JOURNAL, "utf8"));
+    fs.writeFileSync(file, original);
+    console.log(`recovered a mutation left by an interrupted run: ${path.relative(ROOT, file)}\n`);
+  } catch (e) {
+    console.error("Could not replay the journal — restore by hand:\n" + e.message);
+    process.exit(2);
+  }
+  journalClear();
+}
+
 // Refuse to run against uncommitted work — a crash mid-mutation would be
 // indistinguishable from the user's own edits.
 const dirty = spawnSync("git", ["status", "--porcelain", "dist"], { cwd: ROOT, encoding: "utf8" }).stdout.trim();
@@ -164,27 +200,14 @@ if (dirty) {
   process.exit(2);
 }
 
-// A finally block does not run when the process is killed — a timeout
-// during an earlier version of this suite left a mutated craft.html
-// behind. Track what is currently mutated and restore on the way out,
-// however we exit.
-const inFlight = new Map();
-function restoreAll() {
-  for (const [file, text] of inFlight) fs.writeFileSync(file, text);
-  inFlight.clear();
+// Belt and braces for the cases where the loop IS free to run.
+function panic(e) {
+  journalClear();
+  if (e) console.error(e);
+  process.exit(e ? 1 : 130);
 }
-["SIGINT", "SIGTERM", "SIGHUP"].forEach((sig) =>
-  process.on(sig, () => {
-    restoreAll();
-    process.exit(130);
-  })
-);
-process.on("exit", restoreAll);
-process.on("uncaughtException", (e) => {
-  restoreAll();
-  console.error(e);
-  process.exit(1);
-});
+["SIGINT", "SIGTERM", "SIGHUP"].forEach((sig) => process.on(sig, () => panic()));
+process.on("uncaughtException", panic);
 
 const results = [];
 for (const m of MUTATIONS) {
@@ -193,14 +216,16 @@ for (const m of MUTATIONS) {
   let caught = false;
   let error = null;
   try {
-    inFlight.set(full, original);
+    // Journal first: between this line and the restore below, the file
+    // on disk is wrong, and only the journal knows how to put it right.
+    journalWrite(full, original);
     fs.writeFileSync(full, m.mutate(original));
     caught = checkFails(m.detectedBy, m.scope);
   } catch (e) {
     error = e.message;
   } finally {
     fs.writeFileSync(full, original);
-    inFlight.delete(full);
+    journalClear();
   }
   results.push({ ...m, caught, error });
   console.log(
