@@ -1,0 +1,176 @@
+/* ─── FLOATING GLASS CHROME ──────────────────────────────────────────
+   The site's navigation is the floorplan, so there is no nav bar. What
+   remains on the page is three floating elements: the wordmark that
+   opens the plan, a back chip on case studies, and the plan panel.
+
+   All three share one glass treatment, expressed as tokens rather than
+   literal values — the exhibition room inverts to a light ground in
+   Phase 4, and that should be a token swap, not a rewrite of every
+   surface.
+   ──────────────────────────────────────────────────────────────────── */
+
+:root {
+  --glass-bg: rgba(237, 233, 225, 0.055);
+  --glass-edge: rgba(237, 233, 225, 0.13);
+  --glass-edge-lit: rgba(237, 233, 225, 0.22); /* top highlight */
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  --glass-blur: blur(20px) saturate(140%);
+  /* Used where blur is unavailable — see @supports below. */
+  --glass-solid: rgba(14, 14, 14, 0.93);
+}
+
+/* The exhibition room is light, so its glass sits on a pale ground and
+   needs dark edges rather than light ones. Defined here so activating
+   that room in Phase 4 does not mean revisiting this file. */
+[data-room="exhibition"] {
+  --glass-bg: rgba(26, 24, 21, 0.05);
+  --glass-edge: rgba(26, 24, 21, 0.14);
+  --glass-edge-lit: rgba(255, 255, 255, 0.5);
+  --glass-shadow: 0 8px 32px rgba(90, 80, 65, 0.18);
+  --glass-solid: rgba(242, 236, 225, 0.94);
+}
+
+.glass {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-edge);
+  border-top-color: var(--glass-edge-lit);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+}
+
+/* Without blur the panel is a barely-tinted transparent box over live
+   content — unreadable. Fall back to a near-solid ground. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass {
+    background: var(--glass-solid);
+  }
+}
+
+/* ── SHARED FLOATING RAIL ───────────────────────────────────
+   The wordmark and the back chip sit together, top-left, so they never
+   fight for the same corner. */
+.rail {
+  position: fixed;
+  top: var(--space-3);
+  left: var(--space-3);
+  z-index: 120;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  /* The rail is a positioning shell only — clicks pass through the gaps
+     to the page beneath, but its children stay interactive. */
+  pointer-events: none;
+}
+.rail > * {
+  pointer-events: auto;
+}
+
+/* ── WORDMARK, WHICH IS ALSO THE PLAN TRIGGER ───────────────
+   Your name is the way into the building. One element doing both jobs
+   rather than a mark and a menu button competing for the same corner. */
+.mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0.85rem;
+  border-radius: 2px;
+  font-family: var(--serif);
+  font-size: var(--text-7);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: var(--ls-body);
+  color: var(--fg);
+  cursor: pointer;
+  transition:
+    border-color var(--fast),
+    color var(--fast);
+}
+.mark em {
+  font-style: italic;
+  color: var(--accent);
+}
+.mark:hover,
+.mark:focus-visible {
+  border-color: var(--accent);
+}
+
+/* A small plan glyph, so the control reads as "opens something" rather
+   than as a link home. Matches the favicon. */
+.mark__glyph {
+  width: 11px;
+  height: 11px;
+  flex-shrink: 0;
+  opacity: 0.55;
+  transition: opacity var(--fast);
+}
+.mark:hover .mark__glyph,
+.mark:focus-visible .mark__glyph {
+  opacity: 1;
+}
+
+/* ── BACK CHIP ──────────────────────────────────────────────
+   Case studies only. Carries its room's accent so the way back is
+   colour-coded to where it goes. */
+.back-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.75rem;
+  border-radius: 2px;
+  font-family: var(--sans);
+  font-size: var(--text-2);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: var(--ls-track);
+  text-transform: uppercase;
+  color: var(--fg-dim);
+  text-decoration: none;
+  transition:
+    color var(--fast),
+    border-color var(--fast);
+}
+.back-chip::before {
+  content: "←";
+  font-size: 1.1em;
+  line-height: 1;
+}
+.back-chip:hover,
+.back-chip:focus-visible {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* ── NARROW SCREENS ─────────────────────────────────────────
+   Room enough for the mark; the back chip drops its label and keeps the
+   arrow, so the rail cannot push a phone sideways. */
+@media (max-width: 560px) {
+  .rail {
+    top: var(--space-2);
+    left: var(--space-2);
+    max-width: calc(100vw - var(--space-4));
+  }
+  .mark {
+    font-size: var(--text-6);
+    padding: 0.45rem 0.7rem;
+  }
+  .back-chip {
+    padding: 0.45rem 0.55rem;
+  }
+  /* display:none rather than the usual visually-hidden clip. The chip
+     carries its own aria-label ("Back to Industrial"), so the label text
+     is not doing any accessibility work here — and a clipped 1px span is
+     indistinguishable from genuinely clipped text to the responsive
+     check, which flagged all 18 case studies for it. */
+  .back-chip span {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mark,
+  .back-chip,
+  .mark__glyph {
+    transition: none;
+  }
+}

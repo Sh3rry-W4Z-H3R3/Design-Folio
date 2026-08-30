@@ -61,6 +61,72 @@ const MUTATIONS = [
     mutate: (s) => s.replace('href="digital.html"', 'href="Digital.html"'),
   },
   {
+    name: "the wordmark is no longer wired to the plan",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "assets/js/floorplan.js",
+    // The rail is the only way into the navigation now. A trigger that
+    // renders but does not open the dialog looks completely fine in a
+    // screenshot.
+    mutate: (s) => {
+      const old = 'mark.setAttribute("aria-controls", "floorplan");';
+      if (!s.includes(old)) throw new Error("aria-controls line not found");
+      return s.replace(old, 'mark.setAttribute("aria-controls", "nothing");');
+    },
+  },
+  {
+    name: "the plan is hidden again below 768px",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "assets/css/floorplan.css",
+    // The rule this restores is the one Phase 3b removed. With the top
+    // nav gone it would leave a phone with no navigation at all.
+    mutate: (s) =>
+      s + "\n@media (max-width: 768px) { .plan__inner { display: none; } }\n",
+  },
+  {
+    name: "a case study loses its back chip",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "assets/js/floorplan.js",
+    mutate: (s) => {
+      const old = "    if (parent) {";
+      if (!s.includes(old)) throw new Error("back chip branch not found");
+      return s.replace(old, "    if (false) {");
+    },
+  },
+  {
+    name: "the cursor icons stop reaching the plan",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "assets/js/floorplan.js",
+    // The exact regression the nav removal would have caused silently:
+    // data-cursor lived only on the nav links.
+    mutate: (s) => {
+      const old = "      if (r.cursor) a.dataset.cursor = r.cursor;";
+      if (!s.includes(old)) throw new Error("room cursor line not found");
+      return s
+        .replace(old, "")
+        .replace("      if (d.cursor) a.dataset.cursor = d.cursor;", "");
+    },
+  },
+  {
+    name: "editorial mode is left with no navigation",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "assets/js/floorplan.js",
+    // Restores the pre-3b early return, which was correct only while a
+    // top nav existed to fall back to.
+    mutate: (s) => {
+      const old = "  function init() {\n    if (document.querySelector(\".rail\")) return;";
+      if (!s.includes(old)) throw new Error("init guard not found");
+      return s.replace(
+        old,
+        "  function init() {\n    if (!workshop) return;\n    if (document.querySelector(\".rail\")) return;"
+      );
+    },
+  },
+  {
     name: "the floorplan no longer opens as a modal",
     detectedBy: "behaviour.js",
     scope: [],

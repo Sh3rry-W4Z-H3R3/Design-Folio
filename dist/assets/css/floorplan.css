@@ -4,48 +4,6 @@
    styles real links rather than a decorative drawing.
    ──────────────────────────────────────────────────────────────────── */
 
-/* ── TRIGGER ────────────────────────────────────────────────── */
-/* Sized to sit inside the nav's existing height rather than set it —
-   a taller control here pushes every page's nav down by ~9px. */
-.plan-trigger {
-  display: flex;
-  align-items: center;
-  gap: 0.45rem;
-  background: none;
-  border: 1px solid var(--line-2);
-  color: var(--fg-dim);
-  /* 11px icon + 8px padding + 2px border = 21px, which is exactly the
-     height of .nav__home, so the nav's height is unchanged. */
-  padding: 0.25rem 0.55rem;
-  font-family: var(--sans);
-  font-size: var(--text-2);
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: var(--ls-track);
-  text-transform: uppercase;
-  cursor: pointer;
-  transition:
-    color var(--fast),
-    border-color var(--fast);
-}
-.plan-trigger svg {
-  width: 11px;
-  height: 11px;
-  display: block;
-}
-.plan-trigger:hover {
-  color: var(--accent);
-  border-color: var(--accent);
-}
-
-/* On mobile the burger already opens a menu; two overlapping ways in is
-   worse than one. */
-@media (max-width: 768px) {
-  .plan-trigger {
-    display: none;
-  }
-}
-
 /* ── DIALOG ─────────────────────────────────────────────────── */
 .plan {
   border: 0;
@@ -65,9 +23,10 @@
   -webkit-backdrop-filter: blur(6px);
 }
 
+/* Background, border and shadow come from .glass, which the dialog also
+   carries — declaring them here as well would mean two places to change
+   when the exhibition room inverts to a light ground. */
 .plan__inner {
-  background: var(--bg);
-  border: 1px solid var(--line-2);
   padding: clamp(1rem, 3vw, 2rem);
   display: grid;
   gap: var(--space-4);
@@ -139,6 +98,10 @@
 
 .plan__cell {
   position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: var(--w);
+  height: var(--h);
   padding: 3px;
 }
 
@@ -256,11 +219,13 @@
    marked by its jambs. */
 .plan__door {
   position: absolute;
+  left: var(--x);
+  width: var(--w);
   top: -1px;
   height: calc(100% + 1px);
   border-left: 1px solid var(--fg-dim);
   border-right: 1px solid var(--fg-dim);
-  background: var(--bg);
+  background: var(--glass-solid);
   transition: background var(--fast), border-color var(--fast);
 }
 /* The door leaf, standing open into the room, and the arc it sweeps —
@@ -335,14 +300,100 @@
   color: var(--accent);
 }
 
-/* ── SMALL SCREENS ──────────────────────────────────────────
-   The trigger is hidden below 768px, but the dialog can still be opened
-   by a wider window narrowing, so it has to hold up. */
-@media (max-width: 560px) {
+/* ── EDITORIAL MENU ─────────────────────────────────────────
+   Editorial mode gets the same rooms as an ordinary list. No drawing, no
+   doors, no pulse — someone in this mode asked for the fast version. */
+.plan__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line-2);
+}
+.plan__list-link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: var(--space-3);
+  background: var(--glass-solid);
+  color: var(--fg-dim);
+  text-decoration: none;
+  transition: background var(--fast), color var(--fast);
+}
+.plan__list-link:hover,
+.plan__list-link:focus-visible {
+  color: var(--fg);
+  background: var(--accent-soft, rgba(237, 233, 225, 0.06));
+}
+.plan__list-link[aria-current="page"] {
+  color: var(--fg);
+  box-shadow: inset 3px 0 0 var(--accent);
+}
+.plan__list .plan__room-name {
+  font-size: var(--text-6);
+}
+
+/* ── NARROW SCREENS ─────────────────────────────────────────
+   The plan is the only navigation the site has, so on a phone it cannot
+   simply be hidden — it has to change shape. Below 700px the rooms stop
+   being a positioned drawing and become stacked full-width bands, in the
+   order PLAN declares them.
+
+   Nothing about the geometry is duplicated to do this: the percentages
+   arrive as custom properties, and these rules just decline to use them.
+   PLAN stays the single source of truth for order and identity. */
+@media (max-width: 700px) {
   .plan__box {
-    aspect-ratio: 4 / 5;
+    aspect-ratio: auto;
+    min-height: 0;
+    border: 0;
+    background: none;
   }
-  .plan__room-sub {
+  .plan__rooms {
+    position: static;
+    display: grid;
+    gap: var(--space-2);
+  }
+  .plan__cell {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: 0;
+  }
+  .plan__room {
+    /* Bands are read left to right, so the label leads and the "you are
+       here" marker sits beside it rather than under it. */
+    flex-direction: row;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    min-height: 3.25rem;
+    padding: var(--space-3);
+  }
+  .plan__cell--main .plan__room-name,
+  .plan__room-name {
+    font-size: var(--text-6);
+  }
+  .plan__here {
+    margin-top: 0;
+    margin-left: auto;
+  }
+
+  /* The facade only repeats the two main rooms, which are now the first
+     two bands. Stacked, it would be duplicate links rather than a
+     drawing of a shopfront. */
+  .plan__facade {
     display: none;
+  }
+}
+
+/* Below 700px the sub text is what tells the two "Digital" entries apart
+   from each other in a stack, so unlike the old drawing it stays. It only
+   goes at the point where a band would otherwise wrap to two lines. */
+@media (max-width: 380px) {
+  .plan__room-sub {
+    font-size: var(--text-1);
   }
 }

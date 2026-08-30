@@ -53,6 +53,7 @@
     <link rel="stylesheet" href="assets/css/rooms.css" />
     <link rel="stylesheet" href="assets/css/base.css" />
     <link rel="stylesheet" href="assets/css/chrome.css" />
+    <link rel="stylesheet" href="assets/css/glass.css" />
     <link rel="stylesheet" href="assets/css/floorplan.css" />
         <style>
       /* ─── TOKENS ─────────────────────────────────────────── */
@@ -113,65 +114,6 @@
         background: transparent;
         border: 1px solid var(--fg);
         opacity: 0.7;
-      }
-
-      /* ─── NAV ─────────────────────────────────────────────── */
-      nav {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: var(--space-5) var(--gutter);
-        position: sticky;
-        top: 0;
-        z-index: 100;
-        background: rgba(10, 10, 10, 0.92);
-        backdrop-filter: blur(12px);
-        border-bottom: 1px solid #1a1a1a;
-      }
-      .nav__home {
-        font-family: var(--serif);
-        font-size: var(--text-7);
-        font-weight: 300;
-        letter-spacing: var(--ls-body);
-        text-decoration: none;
-        color: var(--fg);
-      }
-      .nav__home em {
-        font-style: italic;
-        color: var(--accent);
-      }
-      .nav__links {
-        display: flex;
-        gap: var(--space-6);
-      }
-      .nav__links a {
-        font-family: var(--sans);
-        font-size: var(--text-2);
-        font-weight: 700;
-        letter-spacing: var(--ls-track);
-        text-transform: uppercase;
-        text-decoration: none;
-        color: var(--fg-dim);
-        transition: color var(--fast);
-        position: relative;
-      }
-      .nav__links a::after {
-        content: "";
-        position: absolute;
-        bottom: -3px;
-        left: 0;
-        width: 0;
-        height: 1px;
-        background: var(--accent);
-        transition: width var(--fast);
-      }
-      .nav__links a:hover,
-      .nav__links a.active {
-        color: var(--fg);
-      }
-      .nav__links a:hover::after,
-      .nav__links a.active::after {
-        width: 100%;
       }
 
       /* ─── PAGE HEADER ─────────────────────────────────────── */
@@ -672,9 +614,6 @@
           grid-column: span 12 !important;
           aspect-ratio: 4/3 !important;
         }
-        .nav__links {
-          gap: var(--space-4);
-        }
         .discipline-bar {
           gap: var(--space-4);
           flex-wrap: wrap;
@@ -690,10 +629,6 @@
         }
       }
       @media (max-width: 480px) {
-        .nav__links a {
-          font-size: var(--text-1);
-          letter-spacing: var(--ls-label);
-        }
         .filter-btn {
           font-size: var(--text-1);
           padding: var(--space-2) 0.8rem;
@@ -703,18 +638,6 @@
   </head>
   <body>
     <div class="cursor" id="cursor"></div>
-
-    <!-- ── NAV ──────────────────────────────────────────────── -->
-    <nav>
-      <a href="index.html" class="nav__home">Sherjeel <em>Hussain</em></a>
-      <div class="nav__links">
-        <a href="digital.html" data-cursor="monitor">Digital</a>
-        <a href="craft.html" data-cursor="pot">Craft</a>
-        <a href="exhibitions.html">Exhibitions</a>
-        <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
-      </div>
-    </nav>
 
     <!-- ── PAGE HEADER ──────────────────────────────────────── -->
     <header class="page-header">
@@ -1216,9 +1139,6 @@
     <!-- ── SCRIPTS ───────────────────────────────────────────── -->
     <script>
       // Cursor
-      
-      
-      
 
       // Filter with live count
       const cards = document.querySelectorAll(".card");

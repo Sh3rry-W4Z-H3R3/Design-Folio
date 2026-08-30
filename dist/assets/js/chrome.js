@@ -1,8 +1,11 @@
 /* ─── CHROME ─────────────────────────────────────────────────────────
-   Custom cursor, mobile menu, and the workshop/editorial mode switch.
+   Custom cursor and the workshop/editorial mode switch.
 
-   Replaces mobile-nav.js and the ~35 lines of cursor JS that were
-   copy-pasted into all 26 pages.
+   The mobile burger menu that used to live here is gone: the floorplan
+   is the navigation at every width, so there is no second menu to open.
+
+   Replaces the ~35 lines of cursor JS that were copy-pasted into all
+   26 pages.
 
    Loaded with `defer` from every page. Reads the mode that the inline
    head snippet already resolved — it never decides the mode itself,
@@ -76,141 +79,41 @@
       { passive: true }
     );
 
-    // Icons are keyed by a data-cursor attribute on the link.
-    document.querySelectorAll("[data-cursor]").forEach(function (el) {
-      el.addEventListener("mouseenter", function () {
-        dot.classList.add("grow");
-        if (icon && ICONS[el.dataset.cursor]) {
-          icon.innerHTML = ICONS[el.dataset.cursor];
-          icon.classList.add("visible");
-        }
-      });
-      el.addEventListener("mouseleave", function () {
-        dot.classList.remove("grow");
-        if (icon) icon.classList.remove("visible");
-      });
+    /* Hover behaviour is DELEGATED rather than bound per element.
+       floorplan.js builds the plan after this file has run, so anything
+       bound here with querySelectorAll would miss every room and door —
+       and with them the monitor/pot icons, which now live on the plan.
+       mouseenter does not bubble; mouseover does. */
+    var HOVERS = "a, button, [data-cursor]";
+
+    function hovered(node) {
+      return node && node.closest ? node.closest(HOVERS) : null;
+    }
+
+    document.addEventListener("mouseover", function (e) {
+      var el = hovered(e.target);
+      if (!el) return;
+      dot.classList.add("grow");
+      var key = el.getAttribute("data-cursor");
+      if (icon && key && ICONS[key]) {
+        icon.innerHTML = ICONS[key];
+        icon.classList.add("visible");
+      }
     });
 
-    // Every other link just grows the dot.
-    document.querySelectorAll("a:not([data-cursor]), button").forEach(function (el) {
-      el.addEventListener("mouseenter", function () { dot.classList.add("grow"); });
-      el.addEventListener("mouseleave", function () { dot.classList.remove("grow"); });
+    document.addEventListener("mouseout", function (e) {
+      var el = hovered(e.target);
+      if (!el) return;
+      // Moving between two nodes inside the same link is not a leave.
+      if (hovered(e.relatedTarget) === el) return;
+      dot.classList.remove("grow");
+      if (icon) icon.classList.remove("visible");
     });
 
     // Leaving the window should take the dot with it, or it sticks at
     // the last known position over the page edge.
     document.addEventListener("mouseleave", function () { dot.style.opacity = "0"; });
     document.addEventListener("mouseenter", function () { dot.style.opacity = ""; });
-  }
-
-  /* ── MOBILE MENU ──────────────────────────────────────────
-     Built from the page's own nav links rather than a hardcoded list,
-     so a page that gains or loses a nav item stays consistent — the old
-     mobile-nav.js had the menu hardcoded and had already drifted from
-     the desktop nav. */
-  function initMobileNav() {
-    var navLinks = document.querySelector("nav .nav__links");
-    if (!navLinks) return;
-    var nav = navLinks.closest("nav");
-    if (!nav || nav.querySelector(".nav__burger")) return;
-
-    var burger = document.createElement("button");
-    burger.className = "nav__burger";
-    burger.type = "button";
-    burger.setAttribute("aria-label", "Open menu");
-    burger.setAttribute("aria-expanded", "false");
-    burger.setAttribute("aria-controls", "navMobile");
-    burger.innerHTML = "<span></span><span></span><span></span>";
-    nav.appendChild(burger);
-
-    var overlay = document.createElement("div");
-    overlay.className = "nav__mobile";
-    overlay.id = "navMobile";
-    overlay.setAttribute("role", "dialog");
-    overlay.setAttribute("aria-modal", "true");
-    overlay.setAttribute("aria-label", "Site navigation");
-
-    // Mirror the desktop nav.
-    navLinks.querySelectorAll("a").forEach(function (a) {
-      var copy = document.createElement("a");
-      copy.href = a.getAttribute("href");
-      copy.textContent = a.textContent.trim();
-      if (a.classList.contains("active") || a.getAttribute("aria-current") === "page") {
-        copy.setAttribute("aria-current", "page");
-      }
-      overlay.appendChild(copy);
-    });
-
-    // Carry the footer's social links through, if the page has them.
-    var socials = document.querySelectorAll('.footer-nav a[target="_blank"]');
-    if (socials.length) {
-      var row = document.createElement("div");
-      row.className = "nav__mobile__socials";
-      socials.forEach(function (a) {
-        var copy = document.createElement("a");
-        copy.href = a.href;
-        copy.target = "_blank";
-        copy.rel = "noopener";
-        copy.textContent = a.textContent.trim();
-        row.appendChild(copy);
-      });
-      overlay.appendChild(row);
-    }
-
-    document.body.appendChild(overlay);
-
-    var lastFocus = null;
-
-    function close() {
-      burger.classList.remove("open");
-      overlay.classList.remove("open");
-      burger.setAttribute("aria-expanded", "false");
-      burger.setAttribute("aria-label", "Open menu");
-      root.classList.remove("nav-open");
-      document.body.classList.remove("nav-open");
-      if (lastFocus) lastFocus.focus();
-    }
-
-    function open() {
-      lastFocus = document.activeElement;
-      burger.classList.add("open");
-      overlay.classList.add("open");
-      burger.setAttribute("aria-expanded", "true");
-      burger.setAttribute("aria-label", "Close menu");
-      root.classList.add("nav-open");
-      document.body.classList.add("nav-open");
-      var first = overlay.querySelector("a");
-      if (first) first.focus();
-    }
-
-    burger.addEventListener("click", function () {
-      overlay.classList.contains("open") ? close() : open();
-    });
-
-    overlay.querySelectorAll("a").forEach(function (a) {
-      a.addEventListener("click", close);
-    });
-
-    document.addEventListener("keydown", function (e) {
-      if (!overlay.classList.contains("open")) return;
-
-      if (e.key === "Escape") {
-        close();
-        return;
-      }
-
-      // Keep focus inside the dialog while it is open.
-      if (e.key === "Tab") {
-        var items = [burger].concat(Array.prototype.slice.call(overlay.querySelectorAll("a")));
-        var i = items.indexOf(document.activeElement);
-        if (i === -1) return;
-        var next = e.shiftKey ? i - 1 : i + 1;
-        if (next < 0) next = items.length - 1;
-        if (next >= items.length) next = 0;
-        items[next].focus();
-        e.preventDefault();
-      }
-    });
   }
 
   /* ── MODE SWITCH ──────────────────────────────────────────
@@ -243,6 +146,5 @@
   }
 
   initCursor();
-  initMobileNav();
   initModeSwitch();
 })();

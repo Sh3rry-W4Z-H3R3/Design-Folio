@@ -79,6 +79,7 @@
     <link rel="stylesheet" href="assets/css/rooms.css" />
     <link rel="stylesheet" href="assets/css/base.css" />
     <link rel="stylesheet" href="assets/css/chrome.css" />
+    <link rel="stylesheet" href="assets/css/glass.css" />
     <link rel="stylesheet" href="assets/css/floorplan.css" />
     <style>
     :root {
@@ -127,25 +128,6 @@
       letter-spacing: var(--ls-label); text-transform: uppercase;
       color: var(--accent); margin-top: 4px;
     }
-
-    /* ── NAV ── */
-    nav {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: var(--space-5) var(--gutter); position: sticky; top: 0; z-index: 100;
-      background: rgba(10,10,10,0.92); backdrop-filter: blur(12px);
-      border-bottom: 1px solid #1a1a1a;
-    }
-    .nav__home { font-family: var(--serif); font-size: var(--text-7); font-weight: 300; letter-spacing: var(--ls-body); text-decoration: none; color: var(--fg); }
-    .nav__home em { font-style: italic; color: var(--accent); }
-    .nav__links { display: flex; gap: var(--space-6); }
-    .nav__links a {
-      font-family: var(--sans); font-size: var(--text-2); font-weight: 700;
-      letter-spacing: var(--ls-track); text-transform: uppercase;
-      text-decoration: none; color: var(--fg-dim); transition: color var(--fast); position: relative;
-    }
-    .nav__links a::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 1px; background: var(--accent); transition: width var(--fast); }
-    .nav__links a:hover, .nav__links a.active { color: var(--fg); }
-    .nav__links a:hover::after, .nav__links a.active::after { width: 100%; }
 
     /* ── HERO ── */
     .hero { display: grid; grid-template-columns: 1fr 1fr; min-height: 88vh; border-bottom: 1px solid #1a1a1a; }
@@ -318,12 +300,9 @@
       .contact-section { grid-template-columns: 1fr; gap: var(--space-6); padding: var(--space-7) var(--space-4); }
       .timeline__item { grid-template-columns: 4rem 1fr; gap: var(--space-3); }
       .caps-grid { grid-template-columns: 1fr; max-width: 100%; }
-      .nav__links { gap: var(--space-4); }
       footer { flex-direction: column; align-items: flex-start; padding: var(--space-5) var(--space-4); }
     }
     @media (max-width: 480px) {
-      nav { padding: var(--space-4) var(--space-3); }
-      .nav__links a { font-size: var(--text-1); letter-spacing: var(--ls-label); }
       .hero__left { padding: var(--space-7) var(--space-4) var(--space-6); }
       .hero__name { font-size: clamp(3.2rem, 16vw, 6rem); }
       .contact-heading { font-size: clamp(2rem, 12vw, 3.5rem); }
@@ -338,17 +317,6 @@
   <div class="cursor-icon" id="cursorIcon">
     <!-- swapped by JS -->
   </div>
-
-  <nav>
-    <a href="index.html" class="nav__home">Sherjeel <em>Hussain</em></a>
-    <div class="nav__links">
-      <a href="digital.html" data-cursor="monitor">Digital</a>
-      <a href="craft.html" data-cursor="pot">Craft</a>
-      <a href="exhibitions.html">Exhibitions</a>
-      <a href="about.html" class="active">About</a>
-      <a href="contact.html">Contact</a>
-    </div>
-  </nav>
 
   <!-- HERO -->
   <div class="hero">
@@ -588,15 +556,9 @@
   </footer>
 
   <script>
+
   
-  
- 
-  
- 
-  
- 
-  
- 
+
   document.querySelectorAll('a:not([data-cursor]), button').forEach(el => {
     el.addEventListener('mouseenter', () => cursor.classList.add('grow'));
     el.addEventListener('mouseleave', () => cursor.classList.remove('grow'));

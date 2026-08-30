@@ -1,7 +1,11 @@
 /* ─── CHROME ─────────────────────────────────────────────────────────
-   The furniture every page carries: custom cursor, sticky nav, mobile
-   menu, footer nav, mode switch. Previously duplicated inline across 26
-   pages (and partly injected as a JS string by mobile-nav.js).
+   The furniture every page carries: custom cursor, footer nav, mode
+   switch and skip link. Previously duplicated inline across 26 pages.
+
+   The sticky top nav and the mobile burger menu used to live here too.
+   Phase 3b removed them: the floorplan (floorplan.css / floorplan.js) is
+   the navigation now, at every width, and the floating chrome that opens
+   it lives in glass.css.
 
    Linked after base.css, before the page's inline <style>.
    ──────────────────────────────────────────────────────────────────── */
@@ -70,199 +74,6 @@
   margin-top: 0.35rem;
 }
 
-/* ── TOP NAV ────────────────────────────────────────────────
-   Scoped away from .footer-nav: index.html marks its footer up as
-   <nav class="footer-nav">, so a bare `nav` selector turns the footer
-   into a sticky, bordered header.
-
-   :where() rather than :not() — :where() contributes no specificity, so
-   this stays at (0,0,1) like the bare element selector it replaces.
-   With :not() it becomes (0,1,1) and starts overriding the page-level
-   @media rules that shrink nav padding on mobile, which silently made
-   the nav 16px taller on 18 pages. */
-nav:where(:not(.footer-nav)) {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: var(--space-5) var(--gutter);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: var(--scrim);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--line);
-}
-
-.nav__home {
-  font-family: var(--serif);
-  font-size: var(--text-7);
-  font-weight: 300;
-  letter-spacing: var(--ls-body);
-  text-decoration: none;
-  color: var(--fg);
-  transition: color var(--fast);
-}
-.nav__home em {
-  font-style: italic;
-  color: var(--accent);
-}
-.nav__home:hover {
-  color: var(--fg-mid);
-}
-
-.nav__links {
-  display: flex;
-  gap: var(--space-6);
-  align-items: center;
-}
-
-.nav__links a,
-.nav__back {
-  font-family: var(--sans);
-  font-size: var(--text-2);
-  font-weight: 700;
-  letter-spacing: var(--ls-track);
-  text-transform: uppercase;
-  text-decoration: none;
-  color: var(--fg-dim);
-  transition: color var(--fast);
-  position: relative;
-}
-
-.nav__links a::after {
-  content: "";
-  position: absolute;
-  bottom: -3px;
-  left: 0;
-  width: 0;
-  height: 1px;
-  background: var(--accent);
-  transition: width var(--fast);
-}
-
-.nav__links a:hover,
-.nav__links a.active,
-.nav__links a[aria-current="page"] {
-  color: var(--fg);
-}
-
-.nav__links a:hover::after,
-.nav__links a.active::after,
-.nav__links a[aria-current="page"]::after {
-  width: 100%;
-}
-
-/* ── MOBILE MENU ────────────────────────────────────────────
-   Was injected as a CSS string from mobile-nav.js. Living in a real
-   stylesheet means it is styleable, cacheable, and visible to anyone
-   reading the source. */
-.nav__burger {
-  display: none;
-  background: none;
-  border: 0;
-  padding: 11px 9px;
-  width: 44px;
-  height: 44px;
-  position: relative;
-  z-index: 110;
-  flex-direction: column;
-  justify-content: center;
-  align-items: stretch;
-  gap: 5px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-.nav__burger span {
-  display: block;
-  width: 100%;
-  height: 2px;
-  background: var(--fg);
-  transition:
-    transform 0.25s ease,
-    opacity 0.25s ease;
-}
-.nav__burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-.nav__burger.open span:nth-child(2) { opacity: 0; }
-.nav__burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-.nav__mobile {
-  position: fixed;
-  inset: 0;
-  background: var(--bg);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-4);
-  z-index: 105;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.35s ease;
-}
-.nav__mobile.open {
-  opacity: 1;
-  pointer-events: auto;
-}
-.nav__mobile a {
-  font-family: var(--serif);
-  font-size: 2.2rem;
-  font-weight: 300;
-  letter-spacing: var(--ls-body);
-  color: var(--fg);
-  text-decoration: none;
-  line-height: 1;
-  transition: color var(--fast);
-}
-.nav__mobile a em {
-  font-style: italic;
-  color: var(--accent);
-}
-.nav__mobile a:hover,
-.nav__mobile a:focus {
-  color: var(--accent);
-}
-.nav__mobile__small {
-  display: flex;
-  gap: var(--space-5);
-  margin-top: var(--space-4);
-  padding-top: var(--space-4);
-  border-top: 1px solid var(--line-2);
-}
-.nav__mobile__small a {
-  font-family: var(--sans);
-  font-size: var(--text-2);
-  font-weight: 700;
-  letter-spacing: var(--ls-track);
-  text-transform: uppercase;
-  color: var(--fg-mid);
-}
-.nav__mobile__socials {
-  display: flex;
-  gap: var(--space-5);
-  margin-top: var(--space-5);
-}
-.nav__mobile__socials a {
-  font-family: var(--sans);
-  font-size: var(--text-2);
-  font-weight: 500;
-  letter-spacing: var(--ls-label);
-  text-transform: uppercase;
-  color: var(--fg-dim);
-}
-
-@media (max-width: 768px) {
-  .nav__links,
-  .nav__back { display: none !important; }
-  .nav__burger { display: flex; }
-  html.nav-open,
-  body.nav-open { overflow: hidden; }
-}
-@media (min-width: 769px) {
-  .nav__mobile,
-  .nav__burger { display: none !important; }
-}
-
 /* ── FOOTER NAV ─────────────────────────────────────────────── */
 /* NOTE: no .footer-nav / .footer-nav__left LAYOUT here, deliberately.
    24 of 26 pages declare their own footer layout inline, and imposing
@@ -303,17 +114,15 @@ nav:where(:not(.footer-nav)) {
    decision; imposing it during the migration is not. */
 
 /* ── TOUCH TARGETS ──────────────────────────────────────────
-   Nav and footer links are 11–21px tall, which is well under the 24px
-   WCAG 2.2 asks for and genuinely fiddly to hit on a phone. Vertical
+   Footer links are 11–21px tall, which is well under the 24px WCAG 2.2
+   asks for and genuinely fiddly to hit on a phone. Vertical
    padding on an inline element grows the hit area without moving
    anything around it, so this buys the target size for free.
 
    Scoped to coarse pointers: on a mouse the small targets are fine, and
    this keeps desktop layout untouched. */
 @media (pointer: coarse) {
-  nav:where(:not(.footer-nav)) a,
   .footer-nav a,
-  .nav__mobile a,
   /* side-quests.html uses .footer__links rather than .footer-nav. */
   .footer__links a,
   /* The standalone navigation links case studies end on, and the
@@ -331,8 +140,8 @@ nav:where(:not(.footer-nav)) {
 
 /* Browsers colour unvisited/visited links blue and purple by default.
    :where() carries zero specificity, so any page rule still wins. */
-:where(nav, footer, .footer-nav, .nav__mobile) a,
-:where(nav, footer, .footer-nav, .nav__mobile) a:visited {
+:where(footer, .footer-nav) a,
+:where(footer, .footer-nav) a:visited {
   color: inherit;
   text-decoration: none;
 }

@@ -76,7 +76,6 @@
     </script>
     <!-- MODE:END -->
 
-
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Syne:wght@400;500;700&display=swap" rel="stylesheet" />
@@ -84,6 +83,7 @@
     <link rel="stylesheet" href="assets/css/rooms.css" />
     <link rel="stylesheet" href="assets/css/base.css" />
     <link rel="stylesheet" href="assets/css/chrome.css" />
+    <link rel="stylesheet" href="assets/css/glass.css" />
     <link rel="stylesheet" href="assets/css/floorplan.css" />
 
   <style>
@@ -115,19 +115,6 @@
     :where(nav, footer, .footer-nav) a,
     :where(nav, footer, .footer-nav) a:link,
     :where(nav, footer, .footer-nav) a:visited { color: inherit; text-decoration: none; }
-
-    /* NAV */
-    nav { display: flex; align-items: center; justify-content: space-between; padding: var(--space-5) var(--gutter); position: sticky; top: 0; z-index: 100; background: rgba(10,10,10,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid #1a1a1a; }
-    .nav__home { font-family: var(--serif); font-size: var(--text-7); font-weight: 300; letter-spacing: 0.06em; color: var(--fg); }
-    .nav__home em { font-style: italic; color: var(--accent); }
-    .nav__links { display: flex; gap: var(--space-6); align-items: center; }
-    .nav__links a { font-family: var(--sans); font-size: var(--text-2); font-weight: 700; letter-spacing: var(--ls-track); text-transform: uppercase; color: var(--fg-mid); transition: color 0.3s var(--ease); position: relative; }
-    .nav__links a::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 1px; background: var(--accent); transition: width 0.3s var(--ease); }
-    .nav__links a:hover { color: var(--fg); }
-    .nav__links a:hover::after { width: 100%; }
-    .nav__back { font-family: var(--sans); font-size: var(--text-2); font-weight: 700; letter-spacing: var(--ls-label); text-transform: uppercase; color: var(--fg-mid); display: flex; align-items: center; gap: var(--space-2); transition: color 0.3s var(--ease); }
-    .nav__back:hover { color: var(--fg); }
-    .nav__back::before { content: '←'; }
 
     /* HERO */
     .hero {
@@ -379,32 +366,14 @@
     @media (max-width: 768px) {
       body { cursor: auto; }
       .cursor, .cursor-icon { display: none; }
-      .nav__links { gap: var(--space-4); }
     }
-    @media (max-width: 480px) {
-      nav { padding: var(--space-4) var(--space-3); }
-      .nav__links a { font-size: var(--text-1); }
-    }
+    
   </style>
 </head>
 <body>
 
   <div class="cursor" id="cursor"></div>
   <div class="cursor-icon" id="cursorIcon"></div>
-
-  <nav>
-    <a href="index.html" class="nav__home">Sherjeel <em>Hussain</em></a>
-    <div style="display:flex;align-items:center;gap:var(--space-6);">
-      <a href="digital.html" class="nav__back">Digital</a>
-      <div class="nav__links">
-        <a href="digital.html" data-cursor="monitor">Digital</a>
-        <a href="craft.html" data-cursor="pot">Craft</a>
-        <a href="exhibitions.html">Exhibitions</a>
-        <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
-      </div>
-    </div>
-  </nav>
 
   <!-- HERO -->
   <section class="hero">
@@ -837,7 +806,6 @@
 
   <script src="assets/js/chrome.js" defer></script>
   <script src="assets/js/floorplan.js" defer></script>
-  
 
 </body>
 </html>

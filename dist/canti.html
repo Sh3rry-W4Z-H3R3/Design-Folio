@@ -101,7 +101,6 @@
     </script>
     <!-- MODE:END -->
 
-
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -113,6 +112,7 @@
     <link rel="stylesheet" href="assets/css/rooms.css" />
     <link rel="stylesheet" href="assets/css/base.css" />
     <link rel="stylesheet" href="assets/css/chrome.css" />
+    <link rel="stylesheet" href="assets/css/glass.css" />
     <link rel="stylesheet" href="assets/css/floorplan.css" />
     <style>
       :root {
@@ -198,82 +198,6 @@
         text-transform: uppercase;
         color: var(--accent);
         margin-top: 4px;
-      }
-
-      /* ── NAV ──────────────────────────────────────────────── */
-      nav {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: var(--space-5) var(--gutter);
-        position: sticky;
-        top: 0;
-        z-index: 100;
-        background: rgba(10, 10, 10, 0.92);
-        backdrop-filter: blur(12px);
-        border-bottom: 1px solid #1a1a1a;
-      }
-      .nav__home {
-        font-family: var(--serif);
-        font-size: var(--text-7);
-        font-weight: 300;
-        letter-spacing: var(--ls-body);
-        text-decoration: none;
-        color: var(--fg);
-      }
-      .nav__home em {
-        font-style: italic;
-        color: var(--accent-2);
-      }
-      .nav__links {
-        display: flex;
-        gap: var(--space-6);
-      }
-      .nav__links a {
-        font-family: var(--sans);
-        font-size: var(--text-2);
-        font-weight: 700;
-        letter-spacing: var(--ls-track);
-        text-transform: uppercase;
-        text-decoration: none;
-        color: var(--fg-dim);
-        transition: color var(--fast);
-        position: relative;
-      }
-      .nav__links a::after {
-        content: "";
-        position: absolute;
-        bottom: -3px;
-        left: 0;
-        width: 0;
-        height: 1px;
-        background: var(--accent);
-        transition: width var(--fast);
-      }
-      .nav__links a:hover {
-        color: var(--fg);
-      }
-      .nav__links a:hover::after {
-        width: 100%;
-      }
-      .nav__back {
-        font-family: var(--sans);
-        font-size: var(--text-2);
-        font-weight: 700;
-        letter-spacing: var(--ls-track);
-        text-transform: uppercase;
-        text-decoration: none;
-        color: var(--fg-dim);
-        display: flex;
-        align-items: center;
-        gap: var(--space-2);
-        transition: color var(--fast);
-      }
-      .nav__back:hover {
-        color: var(--fg);
-      }
-      .nav__back::before {
-        content: "←";
       }
 
       /* ── HERO ─────────────────────────────────────────────── */
@@ -984,9 +908,6 @@
         .c2c-panel {
           padding: 2.2rem var(--space-5);
         }
-        .nav__links {
-          gap: var(--space-4);
-        }
         .footer-nav {
           flex-direction: column;
         }
@@ -995,13 +916,6 @@
         }
       }
       @media (max-width: 480px) {
-        nav {
-          padding: var(--space-4) var(--space-3);
-        }
-        .nav__links a {
-          font-size: var(--text-1);
-          letter-spacing: var(--ls-label);
-        }
         .stat-row {
           grid-template-columns: 1fr;
         }
@@ -1011,21 +925,6 @@
   <body>
     <div class="cursor" id="cursor"></div>
     <div class="cursor-icon" id="cursorIcon"></div>
-
-    <!-- ── NAV ──────────────────────────────────────────────── -->
-    <nav>
-      <a href="index.html" class="nav__home">Sherjeel <em>Hussain</em></a>
-      <div style="display: flex; align-items: center; gap: 3rem">
-        <a href="craft.html" class="nav__back">Craft</a>
-        <div class="nav__links">
-          <a href="digital.html" data-cursor="monitor">Digital</a>
-          <a href="craft.html" data-cursor="pot">Craft</a>
-          <a href="exhibitions.html">Exhibitions</a>
-          <a href="about.html">About</a>
-          <a href="contact.html">Contact</a>
-        </div>
-      </div>
-    </nav>
 
     <!-- ── HERO ─────────────────────────────────────────────── -->
     <section class="hero">
@@ -1795,7 +1694,6 @@
       </div>
     </footer>
     <!-- ── SCRIPTS ───────────────────────────────────────────── -->
-    
 
     <script src="assets/js/chrome.js" defer></script>
     <script src="assets/js/floorplan.js" defer></script>

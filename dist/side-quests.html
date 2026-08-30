@@ -85,7 +85,6 @@
     </script>
     <!-- MODE:END -->
 
-
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -96,6 +95,7 @@
     <link rel="stylesheet" href="assets/css/rooms.css" />
     <link rel="stylesheet" href="assets/css/base.css" />
     <link rel="stylesheet" href="assets/css/chrome.css" />
+    <link rel="stylesheet" href="assets/css/glass.css" />
     <link rel="stylesheet" href="assets/css/floorplan.css" />
         <style>
       /* ── VARIABLES & RESETS ─────────────────────────────── */
@@ -156,70 +156,6 @@
         background: transparent;
         border: 1px solid var(--accent);
         opacity: 0.7;
-      }
-
-      /* ── NAV ──────────────────────────────────────────────── */
-      nav {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: var(--space-5) var(--gutter);
-        position: sticky;
-        top: 0;
-        z-index: 100;
-        background: rgba(0, 0, 0, 0.92);
-        backdrop-filter: blur(12px);
-        border-bottom: 1px solid #111;
-      }
-      .nav__home {
-        font-family: var(--serif);
-        font-size: var(--text-7);
-        font-weight: 300;
-        letter-spacing: var(--ls-body);
-        text-decoration: none;
-        color: var(--fg);
-        transition: color var(--fast);
-      }
-      .nav__home em {
-        font-style: italic;
-        color: var(--accent);
-      }
-      .nav__home:hover {
-        color: var(--fg-mid);
-      }
-      .nav__links {
-        display: flex;
-        gap: var(--space-6);
-        align-items: center;
-      }
-      .nav__links a {
-        font-size: var(--text-2);
-        font-weight: 700;
-        letter-spacing: var(--ls-track);
-        text-transform: uppercase;
-        text-decoration: none;
-        color: var(--fg-dim);
-        transition: color var(--fast);
-        position: relative;
-        cursor: none; /* Ensures system cursor stays hidden */
-      }
-      .nav__links a::after {
-        content: "";
-        position: absolute;
-        bottom: -3px;
-        left: 0;
-        width: 0;
-        height: 1px;
-        background: var(--accent);
-        transition: width var(--fast);
-      }
-      .nav__links a:hover,
-      .nav__links a.active {
-        color: var(--fg);
-      }
-      .nav__links a:hover::after,
-      .nav__links a.active::after {
-        width: 100%;
       }
 
       /* ── PAGE HEADER ──────────────────────────────────────── */
@@ -557,17 +493,6 @@
 
     <div id="top"></div>
 
-    <nav>
-      <a href="index.html" class="nav__home">Sherjeel <em>Hussain</em></a>
-      <div class="nav__links">
-        <a href="digital.html" data-cursor="monitor">Digital</a>
-        <a href="craft.html" data-cursor="pot">Craft</a>
-        <a href="exhibitions.html">Exhibitions</a>
-        <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
-      </div>
-    </nav>
-
     <header class="page-header">
       <div>
         <p class="page-header__eyebrow">04 — Side Quests &amp; Archives</p>
@@ -852,10 +777,8 @@
     <a href="#top" class="back-to-top" aria-label="Back to top">↑</a>
 
     <script>
-      
 
       // Follow mouse
-      
 
       // Grow on interactives AND the gallery grid items
       document.querySelectorAll("a, button, .gallery-item").forEach((el) => {

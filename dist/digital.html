@@ -111,6 +111,7 @@
     <link rel="stylesheet" href="assets/css/rooms.css" />
     <link rel="stylesheet" href="assets/css/base.css" />
     <link rel="stylesheet" href="assets/css/chrome.css" />
+    <link rel="stylesheet" href="assets/css/glass.css" />
     <link rel="stylesheet" href="assets/css/floorplan.css" />
         <style>
       /* Page-local overrides only. Tokens, reset, cursor, nav and footer
@@ -574,9 +575,6 @@
           grid-column: span 12;
           aspect-ratio: 4/3;
         }
-        .nav__links {
-          gap: var(--space-4);
-        }
         /* Page-local: this footer stacks on mobile. Not every page's does,
            so it stays here rather than in chrome.css. */
         .footer-nav,
@@ -588,18 +586,6 @@
   </head>
   <body>
     <div class="cursor" id="cursor"></div>
-
-    <!-- ── NAV ──────────────────────────────────────────────── -->
-    <nav>
-      <a href="index.html" class="nav__home">Sherjeel <em>Hussain</em></a>
-      <div class="nav__links">
-        <a href="digital.html" class="active" data-cursor="monitor">Digital</a>
-        <a href="craft.html" data-cursor="pot">Craft</a>
-        <a href="exhibitions.html">Exhibitions</a>
-        <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
-      </div>
-    </nav>
 
     <!-- ── PAGE HEADER ──────────────────────────────────────── -->
     <header class="page-header">

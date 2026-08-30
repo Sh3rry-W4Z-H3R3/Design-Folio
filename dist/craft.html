@@ -103,7 +103,6 @@
     </script>
     <!-- MODE:END -->
 
-
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -114,6 +113,7 @@
     <link rel="stylesheet" href="assets/css/rooms.css" />
     <link rel="stylesheet" href="assets/css/base.css" />
     <link rel="stylesheet" href="assets/css/chrome.css" />
+    <link rel="stylesheet" href="assets/css/glass.css" />
     <link rel="stylesheet" href="assets/css/floorplan.css" />
         <style>
       :root {
@@ -200,65 +200,6 @@
         text-transform: uppercase;
         color: var(--accent);
         margin-top: 4px;
-      }
-
-      /* ── NAV ──────────────────────────────────────────────── */
-      nav {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: var(--space-5) var(--gutter);
-        position: sticky;
-        top: 0;
-        z-index: 100;
-        background: rgba(10, 10, 10, 0.92);
-        backdrop-filter: blur(12px);
-        border-bottom: 1px solid #1a1a1a;
-      }
-      .nav__home {
-        font-family: var(--serif);
-        font-size: var(--text-7);
-        font-weight: 300;
-        letter-spacing: var(--ls-body);
-        text-decoration: none;
-        color: var(--fg);
-      }
-      .nav__home em {
-        font-style: italic;
-        color: var(--accent-2);
-      }
-      .nav__links {
-        display: flex;
-        gap: var(--space-6);
-      }
-      .nav__links a {
-        font-family: var(--sans);
-        font-size: var(--text-2);
-        font-weight: 700;
-        letter-spacing: var(--ls-track);
-        text-transform: uppercase;
-        text-decoration: none;
-        color: var(--fg-dim);
-        transition: color var(--fast);
-        position: relative;
-      }
-      .nav__links a::after {
-        content: "";
-        position: absolute;
-        bottom: -3px;
-        left: 0;
-        width: 0;
-        height: 1px;
-        background: var(--accent);
-        transition: width var(--fast);
-      }
-      .nav__links a:hover,
-      .nav__links a.active {
-        color: var(--fg);
-      }
-      .nav__links a:hover::after,
-      .nav__links a.active::after {
-        width: 100%;
       }
 
       /* ── PAGE HEADER ──────────────────────────────────────── */
@@ -821,9 +762,6 @@
           writing-mode: horizontal-tb;
           transform: none;
         }
-        .nav__links {
-          gap: var(--space-4);
-        }
         .footer-nav {
           flex-direction: column;
         }
@@ -836,18 +774,6 @@
   <body>
     <div class="cursor" id="cursor"></div>
     <div class="cursor-icon" id="cursorIcon"></div>
-
-    <!-- ── NAV ──────────────────────────────────────────────── -->
-    <nav>
-      <a href="index.html" class="nav__home">Sherjeel <em>Hussain</em></a>
-      <div class="nav__links">
-        <a href="digital.html" data-cursor="monitor">Digital</a>
-        <a href="craft.html" class="active" data-cursor="pot">Craft</a>
-        <a href="exhibitions.html">Exhibitions</a>
-        <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
-      </div>
-    </nav>
 
     <!-- ── PAGE HEADER ──────────────────────────────────────── -->
     <header class="page-header">
@@ -1154,18 +1080,12 @@
     </footer>
 
     <script>
-      
-      
-      
 
       // Initialize cursor position to center of screen
       cursor.style.left = window.innerWidth / 2 + "px";
       cursor.style.top = window.innerHeight / 2 + "px";
       cursorIcon.style.left = window.innerWidth / 2 + 18 + "px";
       cursorIcon.style.top = window.innerHeight / 2 + "px";
-      
-
-      
 
       document
         .querySelectorAll("a:not([data-cursor]), button")
