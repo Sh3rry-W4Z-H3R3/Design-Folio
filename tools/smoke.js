@@ -14,7 +14,11 @@ const path = require("path");
 const { chromium } = require("playwright");
 
 const DIST = path.join(__dirname, "..", "dist");
-const PORT = 8788;
+/* Port 0 asks the OS for a free one. A fixed port means a single
+   orphaned run — a timeout, a killed process — blocks every run after it
+   with EADDRINUSE, which is a confusing failure for a suite whose whole
+   job is to be trusted. The real port is read back after listen(). */
+const PORT = 0;
 const filter = process.argv[2];
 
 const MIME = {
@@ -39,6 +43,7 @@ const server = http.createServer((req, res) => {
 
 (async () => {
   await new Promise((r) => server.listen(PORT, r));
+  const port = server.address().port;
 
   const pages = fs
     .readdirSync(DIST)
@@ -59,13 +64,13 @@ const server = http.createServer((req, res) => {
     const failed = [];
     const errors = [];
 
-    page.on("requestfailed", (r) => failed.push(`${r.url().replace(`http://localhost:${PORT}/`, "")} (${r.failure()?.errorText})`));
-    page.on("response", (r) => { if (r.status() >= 400) failed.push(`${r.url().replace(`http://localhost:${PORT}/`, "")} (${r.status()})`); });
+    page.on("requestfailed", (r) => failed.push(`${r.url().replace(`http://localhost:${port}/`, "")} (${r.failure()?.errorText})`));
+    page.on("response", (r) => { if (r.status() >= 400) failed.push(`${r.url().replace(`http://localhost:${port}/`, "")} (${r.status()})`); });
     page.on("console", (m) => { if (m.type() === "error") errors.push(m.text()); });
     page.on("pageerror", (e) => errors.push(String(e)));
 
     try {
-      await page.goto(`http://localhost:${PORT}/${file}`, { waitUntil: "networkidle", timeout: 30000 });
+      await page.goto(`http://localhost:${port}/${file}`, { waitUntil: "networkidle", timeout: 30000 });
     } catch (e) {
       errors.push(`navigation: ${e.message}`);
     }

@@ -17,7 +17,11 @@ const path = require("path");
 const { chromium } = require("playwright");
 
 const DIST = path.join(__dirname, "..", "dist");
-const PORT = 8805;
+/* Port 0 asks the OS for a free one. A fixed port means a single
+   orphaned run — a timeout, a killed process — blocks every run after it
+   with EADDRINUSE, which is a confusing failure for a suite whose whole
+   job is to be trusted. The real port is read back after listen(). */
+const PORT = 0;
 const filter = process.argv[2];
 
 // Real device widths, plus the awkward ones between breakpoints where
@@ -106,6 +110,7 @@ function probe() {
 
 (async () => {
   await new Promise((r) => server.listen(PORT, r));
+  const port = server.address().port;
   const roots = fs.readdirSync("/opt/pw-browsers").filter((d) => d.startsWith("chromium-"));
   const exe = path.join("/opt/pw-browsers", roots.sort().pop(), "chrome-linux", "chrome");
   const browser = await chromium.launch({ executablePath: exe });
@@ -129,7 +134,7 @@ function probe() {
     for (const file of pages) {
       const page = await ctx.newPage();
       try {
-        await page.goto(`http://localhost:${PORT}/${file}`, { waitUntil: "networkidle", timeout: 30000 });
+        await page.goto(`http://localhost:${port}/${file}`, { waitUntil: "networkidle", timeout: 30000 });
         await page.waitForTimeout(120);
         const r = await page.evaluate(probe);
         if (r.scrollW > r.docW + 1 || r.clip.length || r.tap.length) {

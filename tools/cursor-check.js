@@ -19,7 +19,11 @@ const path = require("path");
 const { chromium } = require("playwright");
 
 const DIST = path.join(__dirname, "..", "dist");
-const PORT = 8821;
+/* Port 0 asks the OS for a free one. A fixed port means a single
+   orphaned run — a timeout, a killed process — blocks every run after it
+   with EADDRINUSE, which is a confusing failure for a suite whose whole
+   job is to be trusted. The real port is read back after listen(). */
+const PORT = 0;
 const TOLERANCE = 2; // px — sub-pixel rounding only
 const PROBES = [[200, 300], [1100, 700]];
 const filter = process.argv[2]; // optional page substring, used by selftest
@@ -43,6 +47,7 @@ const server = http.createServer((req, res) => {
 
 (async () => {
   await new Promise((r) => server.listen(PORT, r));
+  const port = server.address().port;
   const roots = fs.readdirSync("/opt/pw-browsers").filter((d) => d.startsWith("chromium-"));
   const exe = path.join("/opt/pw-browsers", roots.sort().pop(), "chrome-linux", "chrome");
   const browser = await chromium.launch({ executablePath: exe });
@@ -59,7 +64,7 @@ const server = http.createServer((req, res) => {
   for (const file of pages) {
     const page = await ctx.newPage();
     try {
-      await page.goto(`http://localhost:${PORT}/${file}`, { waitUntil: "networkidle", timeout: 30000 });
+      await page.goto(`http://localhost:${port}/${file}`, { waitUntil: "networkidle", timeout: 30000 });
       await page.waitForTimeout(200);
 
       const hasDot = await page.evaluate(() => !!document.getElementById("cursor"));

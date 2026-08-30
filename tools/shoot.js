@@ -17,7 +17,11 @@ const { PNG } = require("pngjs");
 const ROOT = path.join(__dirname, "..");
 const DIST = path.join(ROOT, "dist");
 const SHOTS = path.join(ROOT, ".screens");
-const PORT = 8790;
+/* Port 0 asks the OS for a free one. A fixed port means a single
+   orphaned run — a timeout, a killed process — blocks every run after it
+   with EADDRINUSE, which is a confusing failure for a suite whose whole
+   job is to be trusted. The real port is read back after listen(). */
+const PORT = 0;
 const mode = process.argv[2] || "baseline";
 
 const WIDTHS = [
@@ -48,6 +52,7 @@ async function shoot(outDir) {
   fs.mkdirSync(outDir, { recursive: true });
   const server = serve();
   await new Promise((r) => server.listen(PORT, r));
+  const port = server.address().port;
 
   const roots = fs.readdirSync("/opt/pw-browsers").filter((d) => d.startsWith("chromium-"));
   const exe = path.join("/opt/pw-browsers", roots.sort().pop(), "chrome-linux", "chrome");
@@ -63,7 +68,7 @@ async function shoot(outDir) {
     for (const file of pages) {
       const page = await ctx.newPage();
       try {
-        await page.goto(`http://localhost:${PORT}/${file}`, { waitUntil: "networkidle", timeout: 30000 });
+        await page.goto(`http://localhost:${port}/${file}`, { waitUntil: "networkidle", timeout: 30000 });
         // Freeze animation and hide the cursor follower, which tracks the mouse.
         await page.addStyleTag({
           content: `*,*::before,*::after{animation:none!important;transition:none!important}
