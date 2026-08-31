@@ -51,6 +51,33 @@ const server = http.createServer((req, res) => {
   const roots = fs.readdirSync("/opt/pw-browsers").filter((d) => d.startsWith("chromium-"));
   const exe = path.join("/opt/pw-browsers", roots.sort().pop(), "chrome-linux", "chrome");
   const browser = await chromium.launch({ executablePath: exe });
+
+  /* Pages link Google Fonts and a gtag snippet. Neither is reachable from
+     the sandbox this runs in, and every page load sat waiting on them:
+     three page loads took 37.8s as-is and 0.26s with them blocked. The
+     harness is testing this site, not Google's uptime, so anything leaving
+     localhost is refused outright. It also makes runs deterministic —
+     nothing here should depend on a third party being up. */
+  const _newContext = browser.newContext.bind(browser);
+  browser.newContext = async (opts) => {
+    const ctx = await _newContext(opts);
+    await ctx.route("**/*", (route) => {
+      const host = new URL(route.request().url()).hostname;
+      if (host === "localhost" || host === "127.0.0.1") return route.continue();
+      // Fulfil with an empty stub rather than aborting. An abort logs
+      // "Failed to load resource: net::ERR_FAILED" to the console, which
+      // smoke.js would then report as this site's error — and filtering
+      // that message out by text would also hide a genuine one.
+      const TYPE = { stylesheet: "text/css", script: "text/javascript", font: "font/woff2" };
+      return route.fulfill({
+        status: 200,
+        contentType: TYPE[route.request().resourceType()] || "text/plain",
+        body: "",
+      });
+    });
+    return ctx;
+  };
+
   const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
   await ctx.route(/fonts\.(googleapis|gstatic)|googletagmanager|google-analytics/, (r) => r.abort());
 

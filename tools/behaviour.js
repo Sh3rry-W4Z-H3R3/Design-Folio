@@ -41,6 +41,33 @@ const check = (name, pass, detail) => results.push({ name, pass, detail });
   const roots = fs.readdirSync("/opt/pw-browsers").filter((d) => d.startsWith("chromium-"));
   const exe = path.join("/opt/pw-browsers", roots.sort().pop(), "chrome-linux", "chrome");
   const browser = await chromium.launch({ executablePath: exe });
+
+  /* Pages link Google Fonts and a gtag snippet. Neither is reachable from
+     the sandbox this runs in, and every page load sat waiting on them:
+     three page loads took 37.8s as-is and 0.26s with them blocked. The
+     harness is testing this site, not Google's uptime, so anything leaving
+     localhost is refused outright. It also makes runs deterministic —
+     nothing here should depend on a third party being up. */
+  const _newContext = browser.newContext.bind(browser);
+  browser.newContext = async (opts) => {
+    const ctx = await _newContext(opts);
+    await ctx.route("**/*", (route) => {
+      const host = new URL(route.request().url()).hostname;
+      if (host === "localhost" || host === "127.0.0.1") return route.continue();
+      // Fulfil with an empty stub rather than aborting. An abort logs
+      // "Failed to load resource: net::ERR_FAILED" to the console, which
+      // smoke.js would then report as this site's error — and filtering
+      // that message out by text would also hide a genuine one.
+      const TYPE = { stylesheet: "text/css", script: "text/javascript", font: "font/woff2" };
+      return route.fulfill({
+        status: 200,
+        contentType: TYPE[route.request().resourceType()] || "text/plain",
+        body: "",
+      });
+    });
+    return ctx;
+  };
+
   const url = (p) => `http://localhost:${port}/${p}`;
 
   // 1. Desktop, fine pointer, motion allowed -> workshop.
@@ -109,22 +136,50 @@ const check = (name, pass, detail) => results.push({ name, pass, detail });
   }
 
   // 6. The old nav is gone everywhere — a leftover would mean two
-  //    navigations disagreeing with each other.
+  //     navigations disagreeing with each other.
+  //
+  //     Read from the source rather than loading 26 pages in a browser.
+  //     This check sits inside every behaviour mutation the selftest runs,
+  //     so a browser sweep here cost about two minutes per mutation and
+  //     stretched the suite past twenty minutes — slow enough that it
+  //     stops being run, which is worse than a slightly weaker check.
+  //
+  //     Nothing injects navigation at runtime any more (initMobileNav is
+  //     gone), but "nothing does" is the sort of thing that quietly stops
+  //     being true, so two representative pages are still checked as
+  //     rendered: index.html, whose only <nav> is a footer, and craft.html,
+  //     which had one of the 25 that were removed.
   {
+    const DEAD_CLASS = /(?<![\w-])nav__(?:home|links|back|burger|mobile)(?![\w-])/;
+    const offenders = [];
+    for (const file of fs.readdirSync(DIST).filter((f) => f.endsWith(".html"))) {
+      const html = fs.readFileSync(path.join(DIST, file), "utf8");
+      const topNav = (html.match(/<nav\b[^>]*>/g) || []).filter(
+        (tag) => !/class=["'][^"']*\bfooter-nav\b/.test(tag)
+      );
+      // footer-nav__left and friends must not trip the class test.
+      if (topNav.length || DEAD_CLASS.test(html)) offenders.push(file);
+    }
+    check("no top nav in the source of any page", offenders.length === 0, offenders.join(", "));
+
     const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
     const page = await ctx.newPage();
-    const pages = fs.readdirSync(DIST).filter((f) => f.endsWith(".html"));
-    const offenders = [];
-    for (const p of pages) {
-      await page.goto(url(p));
+    const rendered = [];
+    for (const file of ["index.html", "craft.html"]) {
+      await page.goto(url(file));
+      await page.waitForTimeout(250);
       const bad = await page.evaluate(() => {
-        const nav = [...document.querySelectorAll("nav")].filter((n) => !n.classList.contains("footer-nav"));
-        const dead = document.querySelectorAll(".nav__home, .nav__links, .nav__back, .nav__burger, .nav__mobile");
+        const nav = [...document.querySelectorAll("nav")].filter(
+          (n) => !n.classList.contains("footer-nav")
+        );
+        const dead = document.querySelectorAll(
+          ".nav__home, .nav__links, .nav__back, .nav__burger, .nav__mobile"
+        );
         return nav.length + dead.length;
       });
-      if (bad) offenders.push(p);
+      if (bad) rendered.push(file);
     }
-    check("no top nav left on any page", offenders.length === 0, offenders.join(", "));
+    check("nothing injects a nav at runtime", rendered.length === 0, rendered.join(", "));
     await ctx.close();
   }
 

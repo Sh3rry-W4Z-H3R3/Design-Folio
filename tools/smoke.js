@@ -56,6 +56,33 @@ const server = http.createServer((req, res) => {
   const roots = fs.readdirSync("/opt/pw-browsers").filter((d) => d.startsWith("chromium-"));
   const exe = path.join("/opt/pw-browsers", roots.sort().pop(), "chrome-linux", "chrome");
   const browser = await chromium.launch({ executablePath: exe });
+
+  /* Pages link Google Fonts and a gtag snippet. Neither is reachable from
+     the sandbox this runs in, and every page load sat waiting on them:
+     three page loads took 37.8s as-is and 0.26s with them blocked. The
+     harness is testing this site, not Google's uptime, so anything leaving
+     localhost is refused outright. It also makes runs deterministic —
+     nothing here should depend on a third party being up. */
+  const _newContext = browser.newContext.bind(browser);
+  browser.newContext = async (opts) => {
+    const ctx = await _newContext(opts);
+    await ctx.route("**/*", (route) => {
+      const host = new URL(route.request().url()).hostname;
+      if (host === "localhost" || host === "127.0.0.1") return route.continue();
+      // Fulfil with an empty stub rather than aborting. An abort logs
+      // "Failed to load resource: net::ERR_FAILED" to the console, which
+      // smoke.js would then report as this site's error — and filtering
+      // that message out by text would also hide a genuine one.
+      const TYPE = { stylesheet: "text/css", script: "text/javascript", font: "font/woff2" };
+      return route.fulfill({
+        status: 200,
+        contentType: TYPE[route.request().resourceType()] || "text/plain",
+        body: "",
+      });
+    });
+    return ctx;
+  };
+
   const results = [];
 
   for (const file of pages) {
@@ -64,7 +91,12 @@ const server = http.createServer((req, res) => {
     const failed = [];
     const errors = [];
 
-    page.on("requestfailed", (r) => failed.push(`${r.url().replace(`http://localhost:${port}/`, "")} (${r.failure()?.errorText})`));
+    page.on("requestfailed", (r) => {
+      // Requests to third parties are aborted on purpose (see the route
+      // above), so they are not this site's failures.
+      if (new URL(r.url()).hostname !== "localhost") return;
+      failed.push(`${r.url().replace(`http://localhost:${port}/`, "")} (${r.failure()?.errorText})`);
+    });
     page.on("response", (r) => { if (r.status() >= 400) failed.push(`${r.url().replace(`http://localhost:${port}/`, "")} (${r.status()})`); });
     page.on("console", (m) => { if (m.type() === "error") errors.push(m.text()); });
     page.on("pageerror", (e) => errors.push(String(e)));

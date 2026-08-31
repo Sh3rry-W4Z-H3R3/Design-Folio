@@ -141,6 +141,23 @@ const MUTATIONS = [
     },
   },
   {
+    name: "a top nav comes back on one page",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "craft.html",
+    // The nav check reads the source rather than loading 26 pages in a
+    // browser, which is fast but easy to get subtly wrong — footer-nav__left
+    // contains the substring nav__left. This proves it still fires.
+    mutate: (s) => {
+      const anchor = "<body>";
+      if (!s.includes(anchor)) throw new Error("no <body> to inject into");
+      return s.replace(
+        anchor,
+        anchor + '\n<nav><a href="index.html" class="nav__home">Sherjeel</a></nav>'
+      );
+    },
+  },
+  {
     name: "the floorplan no longer opens as a modal",
     detectedBy: "behaviour.js",
     scope: [],
