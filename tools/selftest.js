@@ -127,6 +127,20 @@ const MUTATIONS = [
     },
   },
   {
+    name: "the rail falls back to the panel's thin tint",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "assets/css/glass.css",
+    // Over craft.html's pale clay card this drops the wordmark from
+    // 5.68:1 to 2.06:1 — invisible to a screenshot diff, unreadable to a
+    // person.
+    mutate: (s) => {
+      const old = "  background: var(--glass-bg-rail);";
+      if (!s.includes(old)) throw new Error("rail scrim rule not found");
+      return s.replace(old, "  background: var(--glass-bg);");
+    },
+  },
+  {
     name: "the floorplan no longer opens as a modal",
     detectedBy: "behaviour.js",
     scope: [],

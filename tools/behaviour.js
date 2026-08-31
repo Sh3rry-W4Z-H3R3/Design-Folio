@@ -284,6 +284,45 @@ const check = (name, pass, detail) => results.push({ name, pass, detail });
     await ctx.close();
   }
 
+  // 12. The rail floats over arbitrary page imagery, so its scrim has to
+  //     be heavier than the dialog panel's — the panel dims the whole page
+  //     behind it first, the rail cannot. Measured over craft.html's pale
+  //     clay card, the panel's own tint gives 2.06:1 on the wordmark; the
+  //     rail scrim gives 5.68:1. This asserts the rule that buys that.
+  {
+    const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+    const page = await ctx.newPage();
+    await page.goto(url("craft.html"));
+    await page.waitForTimeout(300);
+
+    const alpha = await page.evaluate(() => {
+      const bg = getComputedStyle(document.querySelector(".mark")).backgroundColor;
+      const m = bg.match(/rgba?\(([^)]+)\)/);
+      if (!m) return null;
+      const parts = m[1].split(",").map((n) => parseFloat(n));
+      return parts.length > 3 ? parts[3] : 1;
+    });
+    check(
+      "rail carries an opaque enough scrim for light imagery",
+      alpha !== null && alpha >= 0.4,
+      "wordmark background alpha " + alpha
+    );
+
+    // The back chip floats in the same place and needs the same treatment.
+    await page.goto(url("canti.html"));
+    await page.waitForTimeout(300);
+    const chipAlpha = await page.evaluate(() => {
+      const el = document.querySelector(".back-chip");
+      if (!el) return null;
+      const m = getComputedStyle(el).backgroundColor.match(/rgba?\(([^)]+)\)/);
+      const parts = m[1].split(",").map((n) => parseFloat(n));
+      return parts.length > 3 ? parts[3] : 1;
+    });
+    check("back chip carries the same scrim", chipAlpha !== null && chipAlpha >= 0.4,
+      "chip background alpha " + chipAlpha);
+    await ctx.close();
+  }
+
   await browser.close();
   server.close();
 

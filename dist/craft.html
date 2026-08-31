@@ -796,6 +796,17 @@
       <div class="philosophy-card">
         <p class="philosophy-card__num">Tension 01</p>
         <h3 class="philosophy-card__heading">
+          Luxury &amp; <em>The Overlooked</em>
+        </h3>
+        <p class="philosophy-card__body">
+          Recycled plastic as a premium surface. Waste material treated with the
+          same rigour as hardwood. The practice consistently asks what becomes
+          valuable when handled with enough care and intention.
+        </p>
+      </div>
+      <div class="philosophy-card">
+        <p class="philosophy-card__num">Tension 02</p>
+        <h3 class="philosophy-card__heading">
           Raku &amp; <em>Design Systems</em>
         </h3>
         <p class="philosophy-card__body">
@@ -805,7 +816,7 @@
         </p>
       </div>
       <div class="philosophy-card">
-        <p class="philosophy-card__num">Tension 02</p>
+        <p class="philosophy-card__num">Tension 03</p>
         <h3 class="philosophy-card__heading">
           Multanni Mitti &amp; <em>British Stoneware</em>
         </h3>
@@ -813,17 +824,6 @@
           Pakistani clay thrown alongside British stoneware. Two material
           traditions that don't typically share a kiln. The objects that result
           belong to both lineages and neither exclusively.
-        </p>
-      </div>
-      <div class="philosophy-card">
-        <p class="philosophy-card__num">Tension 03</p>
-        <h3 class="philosophy-card__heading">
-          Luxury &amp; <em>The Overlooked</em>
-        </h3>
-        <p class="philosophy-card__body">
-          Recycled plastic as a premium surface. Waste material treated with the
-          same rigour as hardwood. The practice consistently asks what becomes
-          valuable when handled with enough care and intention.
         </p>
       </div>
     </div>
@@ -839,7 +839,7 @@
 
     <!-- ── PROJECT GRID ──────────────────────────────────────── -->
     <main class="project-grid">
-      <!-- CANTI — full width, leads. Best physical work. -->
+      <!-- CANTI — full width, leads. Furniture, designed to come apart. -->
       <a
         href="canti.html"
         class="card card--full card--canti"
@@ -863,7 +863,56 @@
         <span class="card__arrow">↗</span>
       </a>
 
-      <!-- Graduate Residency ceramics + Multanni practice — side by side -->
+      <!-- The two mass-manufacture projects, side by side. THUDPUK takes the
+           wide slot because its render bleeds to the edges; the Origin lamp is
+           an inset product shot (background-size: 80%) that reads as a hole in
+           a wide card and as a deliberate composition in a narrow one. -->
+      <a
+        href="origin.html"
+        class="card card--narrow card--origin"
+        data-tags="product"
+      >
+        <div class="card__img"></div>
+        <div class="card__overlay"></div>
+        <span class="card__year">2021</span>
+        <div class="card__info">
+          <div class="card__tags">
+            <span class="card__tag">Product Design |</span>
+            <span class="card__tag">Sustainable Manufacture</span>
+          </div>
+          <h2 class="card__title">Origin <em>Plastics</em></h2>
+          <p class="card__sub">
+            Homeware from recycled plastic. Injection moulding, CAD, user
+            research.
+          </p>
+        </div>
+        <span class="card__arrow">↗</span>
+      </a>
+
+      <a
+        href="thudpuk.html"
+        class="card card--wide card--thudpuk"
+        data-tags="product"
+      >
+        <div class="card__img"></div>
+        <div class="card__overlay"></div>
+        <span class="card__year">2022</span>
+        <div class="card__info">
+          <div class="card__tags">
+            <span class="card__tag">Product Design |</span>
+            <span class="card__tag">Recycled Plastic |</span>
+            <span class="card__tag">Injection Moulding</span>
+          </div>
+          <h2 class="card__title">Project 261 — <em>THUDPUK</em></h2>
+          <p class="card__sub">
+            Low-cost, injection-moulded flying toy designed for mass manufacture
+            using recycled plastic
+          </p>
+        </div>
+        <span class="card__arrow">↗</span>
+      </a>
+
+      <!-- Studio and client ceramics. -->
       <a
         href="./graduate-in-residence.html"
         class="card card--wide card--residency"
@@ -888,28 +937,33 @@
       </a>
 
       <a
-        href="multanni.html"
-        class="card card--narrow card--multanni"
+        href="greene-king.html"
+        class="card card--narrow card--residency"
         data-tags="ceramics"
       >
-        <div class="card__img"></div>
+        <div
+          class="card__img"
+          style="
+            background-image: url(&quot;./imgs-craft/GreenKing/gk\ pot\ \(2\).webp&quot;);
+            background-color: #141214;
+          "
+        ></div>
         <div class="card__overlay"></div>
-        <span class="card__year">Ongoing</span>
+        <span class="card__year">2022</span>
         <div class="card__info">
           <div class="card__tags">
             <span class="card__tag">Ceramics |</span>
-            <span class="card__tag">Cultural Practice</span>
+            <span class="card__tag">Client Work</span>
           </div>
-          <h2 class="card__title">Multanni <em>Mitti</em></h2>
+          <h2 class="card__title">Project 262 — <em>Greene King</em></h2>
           <p class="card__sub">
-            Pakistani clay + British stoneware. Personal practice exploring
-            material identity.
+            Ceramic tableware commission. Graduate residency client project.
           </p>
         </div>
         <span class="card__arrow">↗</span>
       </a>
 
-      <!-- Cycle Arts Festival — wide -->
+      <!-- Installation work and what is currently on the bench. -->
       <a
         href="cycle-arts.html"
         class="card card--wide card--cycle"
@@ -939,7 +993,6 @@
         <span class="card__arrow">↗</span>
       </a>
 
-      <!-- Kala Topi ceramics (in progress) -->
       <a
         href="kala-topi.html"
         class="card card--narrow card--kt-ceramics"
@@ -961,76 +1014,24 @@
         </div>
       </a>
 
-      <!-- THUDPUK -->
+      <!-- The ongoing personal thread, as a closing statement. -->
       <a
-        href="thudpuk.html"
-        class="card card--narrow card--thudpuk"
-        data-tags="ceramics product"
+        href="multanni.html"
+        class="card card--full card--multanni"
+        data-tags="ceramics inprogress"
       >
         <div class="card__img"></div>
         <div class="card__overlay"></div>
-        <span class="card__year">2022</span>
-        <div class="card__info">
-          <div class="card__tags">
-            <span class="card__tag">Product Design |</span>
-            <span class="card__tag">Recycled Plastic |</span>
-            <span class="card__tag">Injection Moulding</span>
-          </div>
-          <h2 class="card__title">Project 261 — <em>THUDPUK</em></h2>
-          <p class="card__sub">
-            Low-cost, injection-moulded flying toy designed for mass manufacture
-            using recycled plastic
-          </p>
-        </div>
-        <span class="card__arrow">↗</span>
-      </a>
-
-      <!-- Greene King -->
-      <a
-        href="greene-king.html"
-        class="card card--narrow card--residency"
-        data-tags="ceramics"
-      >
-        <div
-          class="card__img"
-          style="
-            background-image: url(&quot;./imgs-craft/GreenKing/gk\ pot\ \(2\).webp&quot;);
-            background-color: #141214;
-          "
-        ></div>
-        <div class="card__overlay"></div>
-        <span class="card__year">2022</span>
+        <span class="card__year">Ongoing</span>
         <div class="card__info">
           <div class="card__tags">
             <span class="card__tag">Ceramics |</span>
-            <span class="card__tag">Client Work</span>
+            <span class="card__tag">Cultural Practice</span>
           </div>
-          <h2 class="card__title">Project 262 — <em>Greene King</em></h2>
+          <h2 class="card__title">Multanni <em>Mitti</em></h2>
           <p class="card__sub">
-            Ceramic tableware commission. Graduate residency client project.
-          </p>
-        </div>
-        <span class="card__arrow">↗</span>
-      </a>
-
-      <!-- Origin Plastics -->
-      <a
-        href="origin.html"
-        class="card card--wide card--origin"
-        data-tags="product"
-      >
-        <div class="card__img"></div>
-        <div class="card__overlay"></div>
-        <span class="card__year">2021</span>
-        <div class="card__info">
-          <div class="card__tags">
-            <span class="card__tag">Product Design |</span>
-            <span class="card__tag">Sustainable Manufacture</span>
-          </div>
-          <h2 class="card__title">Origin <em>Plastics</em></h2>
-          <p class="card__sub">
-            Homeware from recycled plastic. Injection moulding, CAD, user
-            research.
+            Pakistani clay + British stoneware. Personal practice exploring
+            material identity.
           </p>
         </div>
         <span class="card__arrow">↗</span>

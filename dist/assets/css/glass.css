@@ -17,6 +17,12 @@
   --glass-blur: blur(20px) saturate(140%);
   /* Used where blur is unavailable — see @supports below. */
   --glass-solid: rgba(14, 14, 14, 0.93);
+  /* The rail carries a heavier scrim than the panel. The panel can afford
+     a thin tint because the dialog dims the whole page behind it first;
+     the rail floats over whatever the page happens to put there — a dark
+     hero on one page, a pale clay photograph on the next — and light text
+     on 5% tint disappears over the pale one. */
+  --glass-bg-rail: rgba(14, 14, 14, 0.55);
 }
 
 /* The exhibition room is light, so its glass sits on a pale ground and
@@ -28,6 +34,7 @@
   --glass-edge-lit: rgba(255, 255, 255, 0.5);
   --glass-shadow: 0 8px 32px rgba(90, 80, 65, 0.18);
   --glass-solid: rgba(242, 236, 225, 0.94);
+  --glass-bg-rail: rgba(242, 236, 225, 0.62);
 }
 
 .glass {
@@ -42,7 +49,8 @@
 /* Without blur the panel is a barely-tinted transparent box over live
    content — unreadable. Fall back to a near-solid ground. */
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .glass {
+  .glass,
+  .rail > .glass {
     background: var(--glass-solid);
   }
 }
@@ -64,6 +72,9 @@
 }
 .rail > * {
   pointer-events: auto;
+}
+.rail > .glass {
+  background: var(--glass-bg-rail);
 }
 
 /* ── WORDMARK, WHICH IS ALSO THE PLAN TRIGGER ───────────────
