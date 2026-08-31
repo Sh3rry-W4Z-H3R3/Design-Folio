@@ -104,6 +104,30 @@
         ]
       }
     </script>
+
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+
+    <!-- MODE:START -->
+    <script>
+    (function () {
+    var d = document.documentElement;
+    var m;
+    try { m = localStorage.getItem("sh.mode"); } catch (e) {}
+    if (m !== "workshop" && m !== "editorial") {
+    var q = function (s) { return window.matchMedia && matchMedia(s).matches; };
+    var lean =
+    q("(pointer: coarse)") ||
+    q("(prefers-reduced-motion: reduce)") ||
+    (navigator.connection && navigator.connection.saveData);
+    m = lean ? "editorial" : "workshop";
+    }
+    d.setAttribute("data-mode", m);
+    })();
+    </script>
+    <!-- MODE:END -->
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -112,6 +136,11 @@
     />
 
     <link rel="stylesheet" href="tokens.css" />
+    <link rel="stylesheet" href="assets/css/rooms.css" />
+    <link rel="stylesheet" href="assets/css/base.css" />
+    <link rel="stylesheet" href="assets/css/chrome.css" />
+    <link rel="stylesheet" href="assets/css/glass.css" />
+    <link rel="stylesheet" href="assets/css/floorplan.css" />
         <style>
       /* ─── TOKENS ─────────────────────────────────────────── */
       :root {
@@ -1153,7 +1182,7 @@
         <a href="craft.html">Craft</a>
         <a href="digital.html">Digital</a>
         <a href="exhibitions.html">Exhibitions</a>
-        <a href="./SideQuests.html">Side Quests</a>
+        <a href="./side-quests.html">Side Quests</a>
         <a href="about.html">About</a>
         <a href="contact.html">Contact</a>
       </div>
@@ -1176,38 +1205,10 @@
 
     <!-- ── CURSOR SCRIPT ──────────────────────────────────── -->
     <script>
-      const cursor = document.getElementById("cursor");
-      const cursorIcon = document.getElementById("cursorIcon");
-      const ICONS = {
-        monitor: `<svg width="28" height="22" viewBox="0 0 28 22" fill="none"><rect x="1" y="1" width="26" height="17" rx="2" stroke="#e8547a" stroke-width="1.5"/><rect x="9" y="18" width="10" height="2" fill="#e8547a" opacity="0.5"/><rect x="6" y="20" width="16" height="1.5" fill="#e8547a" opacity="0.5"/><circle cx="14" cy="9.5" r="1.5" fill="#e8547a" opacity="0.4"/></svg><span>Digital</span>`,
-        pot: `<svg width="22" height="26" viewBox="0 0 22 26" fill="none"><path d="M7 4 C5 4 2 7 2 13 C2 19 5 23 11 23 C17 23 20 19 20 13 C20 7 17 4 15 4 Z" stroke="#6dbf9e" stroke-width="1.5" fill="none"/><path d="M7 4 C8 2 10 1 11 1 C12 1 14 2 15 4" stroke="#6dbf9e" stroke-width="1.5" fill="none"/><path d="M5 10 C3 9.5 2.5 8 3 7" stroke="#6dbf9e" stroke-width="1.2" stroke-linecap="round" fill="none"/></svg><span>Craft</span>`,
-      };
 
-      document.addEventListener("mousemove", (e) => {
-        cursor.style.left = e.clientX + "px";
-        cursor.style.top = e.clientY + "px";
-        cursorIcon.style.left = e.clientX + 18 + "px";
-        cursorIcon.style.top = e.clientY + "px";
-      });
+      
 
-      document.querySelectorAll("[data-cursor]").forEach((el) => {
-        el.addEventListener("mouseenter", () => {
-          cursor.classList.add("grow");
-          cursorIcon.innerHTML = ICONS[el.dataset.cursor] || "";
-          cursorIcon.classList.add("visible");
-        });
-        el.addEventListener("mouseleave", () => {
-          cursor.classList.remove("grow");
-          cursorIcon.classList.remove("visible");
-        });
-      });
-
-      document.querySelectorAll("a:not([data-cursor])").forEach((el) => {
-        el.addEventListener("mouseenter", () => cursor.classList.add("grow"));
-        el.addEventListener("mouseleave", () =>
-          cursor.classList.remove("grow"),
-        );
-      });
+      
 
       /* ─── DOOR-OPENING NAVIGATION ─────────────────────────
          Click any panel's Enter button → trigger door rotateY
@@ -1383,5 +1384,8 @@
         window.addEventListener("resize", () => { if (running) sizeCanvas(); });
       })();
     </script>
+    <script src="assets/js/chrome.js" defer></script>
+    <script src="assets/js/floorplan.js" defer></script>
+
   </body>
 </html>

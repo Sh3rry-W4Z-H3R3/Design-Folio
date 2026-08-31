@@ -1,0 +1,818 @@
+<!doctype html>
+<html lang="en" data-room="play">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RYJF91LD9H"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'G-RYJF91LD9H');
+    </script>
+    <title>Side Quests &amp; Archives — Sherjeel Hussain</title>
+    <meta
+      name="description"
+      content="A collection of experiments, technical deep-dives, archival concept work, and creative detours that inform Sherjeel Hussain's professional practice — outside of the main case studies."
+    />
+    <meta
+      name="keywords"
+      content="Sherjeel Hussain side projects, design experiments, archival concept work, poster design, packaging concepts"
+    />
+    <meta name="author" content="Sherjeel Hussain" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://sherjeelhussain.com/side-quests.html" />
+
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="Side Quests &amp; Archives — Sherjeel Hussain"
+    />
+    <meta
+      property="og:description"
+      content="Experiments, deep-dives, and creative detours that inform the professional practice."
+    />
+    <meta
+      property="og:url"
+      content="https://sherjeelhussain.com/side-quests.html"
+    />
+    <meta
+      property="og:image"
+      content="https://sherjeelhussain.com/img/og-default.jpg"
+    />
+    <meta
+      property="og:site_name"
+      content="Sherjeel Hussain — Designer &amp; Ceramicist"
+    />
+    <meta property="og:locale" content="en_GB" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Side Quests &amp; Archives — Sherjeel Hussain"
+    />
+    <meta
+      name="twitter:description"
+      content="Experiments, deep-dives, and creative detours."
+    />
+    <meta
+      name="twitter:image"
+      content="https://sherjeelhussain.com/img/og-default.jpg"
+    />
+
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+
+    <!-- MODE:START -->
+    <script>
+    (function () {
+    var d = document.documentElement;
+    var m;
+    try { m = localStorage.getItem("sh.mode"); } catch (e) {}
+    if (m !== "workshop" && m !== "editorial") {
+    var q = function (s) { return window.matchMedia && matchMedia(s).matches; };
+    var lean =
+    q("(pointer: coarse)") ||
+    q("(prefers-reduced-motion: reduce)") ||
+    (navigator.connection && navigator.connection.saveData);
+    m = lean ? "editorial" : "workshop";
+    }
+    d.setAttribute("data-mode", m);
+    })();
+    </script>
+    <!-- MODE:END -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Syne:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="tokens.css" />
+    <link rel="stylesheet" href="assets/css/rooms.css" />
+    <link rel="stylesheet" href="assets/css/base.css" />
+    <link rel="stylesheet" href="assets/css/chrome.css" />
+    <link rel="stylesheet" href="assets/css/glass.css" />
+    <link rel="stylesheet" href="assets/css/floorplan.css" />
+        <style>
+      /* ── VARIABLES & RESETS ─────────────────────────────── */
+      :root {
+        --bg: #000000;
+        --fg: #ede9e1;
+        --fg-dim: #7a7a7a;
+        --fg-mid: #999;
+        --accent: #e8547a; /* Neon pink from your file */
+        --serif: "Cormorant", Georgia, serif;
+        --sans: "Syne", sans-serif;
+        --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+        --fast: 0.3s var(--ease);
+        --gutter: clamp(1.2rem, 4vw, 3rem);
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        font-size: 16px;
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--fg);
+        font-family: var(--sans);
+        min-height: 100vh;
+        overflow-x: hidden;
+        cursor: none; /* Hides system cursor */
+      }
+
+      /* ── CURSOR (From digital.html) ─────────────────────── */
+      .cursor {
+        position: fixed;
+        width: 10px;
+        height: 10px;
+        background: var(--fg);
+        border-radius: 50%;
+        pointer-events: none; /* Prevents cursor from blocking clicks underneath */
+        z-index: 9999;
+        transform: translate(-50%, -50%);
+        transition:
+          width var(--fast),
+          height var(--fast),
+          background var(--fast),
+          opacity var(--fast);
+      }
+
+      .cursor.grow {
+        width: 50px; /* Slightly larger to account for big gallery items */
+        height: 50px;
+        background: transparent;
+        border: 1px solid var(--accent);
+        opacity: 0.7;
+      }
+
+      /* ── PAGE HEADER ──────────────────────────────────────── */
+      .page-header {
+        padding: var(--space-8) var(--gutter) var(--space-7);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-5);
+        align-items: end;
+        opacity: 0;
+        animation: fadeUp 0.8s var(--ease) 0.1s forwards;
+      }
+      .page-header__eyebrow {
+        font-size: var(--text-2);
+        font-weight: 700;
+        letter-spacing: var(--ls-eyebrow);
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: var(--space-4);
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+      }
+      .page-header__eyebrow::before {
+        content: "";
+        display: block;
+        width: 2rem;
+        height: 1px;
+        background: var(--accent);
+      }
+      .page-header__title {
+        font-family: var(--serif);
+        font-size: clamp(3rem, 7vw, 6.5rem);
+        font-weight: 300;
+        line-height: var(--lh-display);
+      }
+      .page-header__title em {
+        font-style: italic;
+        display: block;
+      }
+      .page-header__desc {
+        font-size: var(--text-4);
+        line-height: var(--lh-loose);
+        color: var(--fg-mid);
+        /* min() so the 400px cap never exceeds a narrow viewport */
+        max-width: min(400px, 100%);
+        align-self: end;
+      }
+
+      /* ── MASONRY GALLERY ────────────────────────────────── */
+      .gallery-container {
+        column-count: 3;
+        column-gap: 20px;
+        padding: 0 var(--gutter) var(--space-8);
+        opacity: 0;
+        animation: fadeUp 0.8s var(--ease) 0.4s forwards;
+      }
+
+      @media (max-width: 900px) {
+        .gallery-container {
+          column-count: 2;
+        }
+      }
+      @media (max-width: 768px) {
+        /* The header was a two-column grid at every width, so its right
+           column ran off the side of the screen on phones. */
+        .page-header {
+          grid-template-columns: 1fr;
+        }
+        body {
+          cursor: auto;
+        } /* Reverts to normal cursor on mobile */
+        .cursor {
+          display: none;
+        }
+      }
+      @media (max-width: 600px) {
+        .gallery-container {
+          column-count: 1;
+        }
+        .footer {
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: var(--space-4);
+        }
+        .footer-nav {
+          flex-direction: column;
+        }
+        .footer-nav__left {
+          flex-direction: column;
+        }
+        .footer__links {
+          flex-direction: column;
+          align-items: center;
+        }
+      }
+
+      .gallery-item {
+        position: relative;
+        display: inline-block;
+        width: 100%;
+        margin-bottom: 20px;
+        border: 1px solid #111;
+        background-color: #050505;
+        overflow: hidden;
+        transform-origin: center center;
+        transition:
+          transform 250ms ease-in-out,
+          border-color 250ms ease,
+          box-shadow 250ms ease;
+        cursor: pointer;
+      }
+
+      .gallery-item img {
+        width: 100%;
+        display: block;
+        height: auto;
+        filter: grayscale(15%) brightness(0.8);
+        transition: filter var(--fast);
+      }
+
+      .gallery-item:hover,
+      .gallery-item.is-open {
+        transform: scale(1.03);
+        z-index: 5;
+        border-color: var(--accent);
+        box-shadow: 0 8px 24px rgba(232, 84, 122, 0.18);
+      }
+
+      .gallery-item:hover img,
+      .gallery-item.is-open img {
+        filter: grayscale(0%) brightness(1);
+      }
+
+      /* Overlay revealed on hover (desktop) or tap (mobile via .is-open) */
+      .gallery-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(10, 10, 10, 0.78);
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: var(--space-4) var(--space-4);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 250ms ease-in-out;
+      }
+      .gallery-item:hover .gallery-overlay,
+      .gallery-item.is-open .gallery-overlay {
+        opacity: 1;
+      }
+      .gallery-overlay__name {
+        font-family: var(--serif);
+        font-size: 1.35rem;
+        font-weight: 600;
+        color: var(--fg);
+        line-height: var(--lh-tight);
+        margin-bottom: var(--space-2);
+      }
+      .gallery-overlay__year {
+        font-family: var(--sans);
+        font-size: var(--text-1);
+        font-weight: 500;
+        letter-spacing: var(--ls-eyebrow);
+        text-transform: uppercase;
+        color: var(--fg-mid);
+        margin-bottom: 0.7rem;
+      }
+      .gallery-overlay__desc {
+        font-family: var(--sans);
+        font-size: var(--text-3);
+        font-weight: 400;
+        line-height: var(--lh-base);
+        color: var(--fg);
+      }
+
+      /* Page intro placeholder above grid */
+      .page-intro {
+        padding: 0 var(--gutter) var(--space-6);
+        max-width: 720px;
+      }
+      .page-intro p {
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: clamp(1rem, 1.6vw, 1.2rem);
+        font-weight: 300;
+        line-height: var(--lh-base);
+        color: var(--fg-mid);
+      }
+
+      /* ── FOOTER ───────────────────────────────────────────── */
+      footer {
+        border-top: 1px solid #111;
+        padding: var(--space-6) var(--gutter);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: var(--space-3);
+      }
+      .footer__copy {
+        font-size: var(--text-2);
+        letter-spacing: var(--ls-label);
+        text-transform: uppercase;
+        color: var(--fg-dim);
+      }
+      .footer__links {
+        display: flex;
+        gap: var(--space-5);
+      }
+      .footer__links a {
+        font-size: var(--text-2);
+        letter-spacing: var(--ls-label);
+        text-transform: uppercase;
+        text-decoration: none;
+        color: var(--fg-dim);
+        transition: color var(--fast);
+      }
+      .footer__links a:hover {
+        color: var(--fg);
+      }
+
+      /* ── BACK TO TOP BUTTON ────────────────────────────── */
+      .back-to-top {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 45px;
+        height: 45px;
+        background-color: #050505;
+        border: 1px solid #111;
+        color: var(--fg);
+        text-decoration: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bold;
+        border-radius: 4px;
+        transition: all var(--fast);
+        z-index: 100;
+      }
+      .back-to-top:hover {
+        background-color: var(--accent);
+        border-color: var(--accent);
+        color: #000;
+        box-shadow: 0 0 15px rgba(232, 84, 122, 0.4);
+        transform: translateY(-3px);
+      }
+      /* ─── FOOTER LINKS ───────────────────────────────────── */
+      .footer-nav {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        padding: var(--space-6) var(--space-5) var(--space-7);
+        gap: var(--space-3);
+        opacity: 0;
+        animation: fadeUp 0.9s var(--ease) 0.7s forwards;
+      }
+
+      .footer-nav__left {
+        display: flex;
+        align-items: center;
+        gap: var(--space-6);
+      }
+
+      .footer-nav a {
+        font-family: var(--sans);
+        font-size: var(--text-3);
+        font-weight: 500;
+        letter-spacing: var(--ls-label);
+        text-transform: uppercase;
+        text-decoration: none;
+        color: var(--fg-dim);
+        position: relative;
+        transition: color var(--fast);
+      }
+
+      .footer-nav a::after {
+        content: "";
+        position: absolute;
+        bottom: -3px;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background: var(--accent);
+        transition: width var(--fast);
+      }
+
+      .footer-nav a:hover {
+        color: var(--fg);
+      }
+      .footer-nav a:hover::after {
+        width: 100%;
+      }
+
+      .footer-nav__all {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: var(--text-6);
+        color: var(--fg-dim) !important;
+        letter-spacing: 0.02em !important;
+      }
+
+      .footer-nav__all:hover {
+        color: var(--fg) !important;
+      }
+
+      .divider {
+        width: 1px;
+        height: 14px;
+        background: #333;
+        flex-shrink: 0;
+      }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="cursor" id="cursor"></div>
+
+    <div id="top"></div>
+
+    <header class="page-header">
+      <div>
+        <p class="page-header__eyebrow">04 — Side Quests &amp; Archives</p>
+        <h1 class="page-header__title">
+          A collection of experiments, technical deep-dives, and creative
+          detours that inform my professional practice.
+        </h1>
+      </div>
+      <p class="page-header__desc">
+        Some small projects, one-off experiments, and works-in-progress that
+        don't fit into the main case studies but are still worth a look for
+        those interested.
+      </p>
+    </header>
+
+    <main class="gallery-container">
+      <div class="gallery-item" tabindex="0">
+        <img
+          src="./imgs-craft/Pottery/GlazeCloseUp.webp"
+          alt="Glazed stoneware bowl close up with spangles"
+          loading="lazy"
+        />
+        <div class="gallery-overlay">
+          <p class="gallery-overlay__name">Name: Spangles + Red Glaze Test</p>
+          <p class="gallery-overlay__year">Year: 2023</p>
+          <p class="gallery-overlay__desc">
+            Description: Stoneware bowl with spangles and red glaze.
+          </p>
+        </div>
+      </div>
+      <div class="gallery-item" tabindex="0">
+        <img
+          src="./imgs-archival/787b poster.webp"
+          alt="Poster for the Mazda 787B, the first Japanese car to win Le Mans in 1991. Made for a motorsport-themed exhibition at the Design Museum in London, 2024."
+          loading="lazy"
+        />
+        <div class="gallery-overlay">
+          <p class="gallery-overlay__name">Name: Mazda 787B Poster</p>
+          <p class="gallery-overlay__year">Year: 2024</p>
+          <p class="gallery-overlay__desc">
+            Description: Poster for the Mazda 787B, the first Japanese car to
+            win Le Mans in 1991.
+          </p>
+        </div>
+      </div>
+
+      <div class="gallery-item" tabindex="0">
+        <img
+          src="./imgs-archival/NoA Purple Pattern Logo.webp"
+          alt="Nation of Artisans Concept work - pattern design "
+          loading="lazy"
+        />
+        <div class="gallery-overlay">
+          <p class="gallery-overlay__name">Name: Nation of Artisans</p>
+          <p class="gallery-overlay__year">Year: 2025</p>
+          <p class="gallery-overlay__desc">
+            Description: Pattern design for the Nation of Artisans conceptual
+            submission.
+          </p>
+        </div>
+      </div>
+
+      <div class="gallery-item" tabindex="0">
+        <img
+          src="./imgs-lab/CherryVisionSlider2.webp"
+          alt="Cherry Vision graphic for socials"
+          loading="lazy"
+        />
+        <div class="gallery-overlay">
+          <p class="gallery-overlay__name">Name: Cherry Vision Slider</p>
+          <p class="gallery-overlay__year">Year: 2025</p>
+          <p class="gallery-overlay__desc">
+            Description: Graphic design experiment for social media content.
+          </p>
+        </div>
+      </div>
+
+      <div class="gallery-item" tabindex="0">
+        <img
+          src="./imgs-lab/CVGarment1WorkingV2.webp"
+          alt="Cherry Vision garment concept — early working version"
+          loading="lazy"
+        />
+        <div class="gallery-overlay">
+          <p class="gallery-overlay__name">Name: Cherry Vision Garment</p>
+          <p class="gallery-overlay__year">Year: 2025</p>
+          <p class="gallery-overlay__desc">
+            Description: Garment concept for the Cherry Vision collection.
+          </p>
+        </div>
+      </div>
+
+      <div class="gallery-item" tabindex="0">
+        <img
+          src="./imgs-lab/GTR Poster.webp"
+          alt="Poster for Nissan GTR R32 by Sherjeel Hussain"
+          loading="lazy"
+        />
+        <div class="gallery-overlay">
+          <p class="gallery-overlay__name">Name: Nissan GTR R32 Poster</p>
+          <p class="gallery-overlay__year">Year: 2025</p>
+          <p class="gallery-overlay__desc">
+            Description: Poster for the Nissan GTR R32 by Sherjeel Hussain.
+          </p>
+        </div>
+      </div>
+
+      <div class="gallery-item" tabindex="0">
+        <img
+          src="./imgs-lab/KQ Packaging mood board_Page_1.webp"
+          alt="Packaging concept made for Kuntrqultura by SCM Design Studio"
+          loading="lazy"
+        />
+        <div class="gallery-overlay">
+          <p class="gallery-overlay__name">Name: Kuntrqultura Packaging</p>
+          <p class="gallery-overlay__year">Year: 2024</p>
+          <p class="gallery-overlay__desc">
+            Description: Packaging concept made for Lithuanian Streetwear brand
+            Kuntrqultura by SCM Design Studio.
+          </p>
+        </div>
+      </div>
+
+      <div class="gallery-item" tabindex="0">
+        <img
+          src="./imgs-lab/KQPackagingmoodboard_Page_2.webp"
+          alt="Packaging concept made for Kuntrqultura by SCM Design Studio"
+          loading="lazy"
+        />
+        <div class="gallery-overlay">
+          <p class="gallery-overlay__name">Name: Kuntrqultura Packaging</p>
+          <p class="gallery-overlay__year">Year: 2024</p>
+          <p class="gallery-overlay__desc">
+            Description: Packaging concept made for Lithuanian Streetwear brand
+            Kuntrqultura by SCM Design Studio.
+          </p>
+        </div>
+      </div>
+
+      <div class="gallery-item" tabindex="0">
+        <img
+          src="./imgs-archival/Bifold Brochure.webp"
+          alt="Nation of Artisans Concept work - brochure design"
+          loading="lazy"
+        />
+        <div class="gallery-overlay">
+          <p class="gallery-overlay__name">Name: Nation of Artisans</p>
+          <p class="gallery-overlay__year">Year: 2025</p>
+          <p class="gallery-overlay__desc">
+            Description: Brochure design for the Nation of Artisans concept.
+          </p>
+        </div>
+      </div>
+
+      <div class="gallery-item" tabindex="0">
+        <img
+          src="./imgs-archival/Men Hoodie Mockup, Back View (3).webp"
+          alt="Nation of Artisans Concept work - hoodie mockup"
+          loading="lazy"
+        />
+        <div class="gallery-overlay">
+          <p class="gallery-overlay__name">Name: Nation of Artisans</p>
+          <p class="gallery-overlay__year">Year: 2025</p>
+          <p class="gallery-overlay__desc">
+            Description: Hoodie mockup for the Nation of Artisans concept.
+          </p>
+        </div>
+      </div>
+
+      <div class="gallery-item" tabindex="0">
+        <img
+          src="./imgs-lab/For Those Who Consider - Working2.webp"
+          alt="Sherjeel Hussain - Concept work - For Those Who Consider"
+          loading="lazy"
+        />
+        <div class="gallery-overlay">
+          <p class="gallery-overlay__name">Name: For Those Who Consider</p>
+          <p class="gallery-overlay__year">Year: 2025</p>
+          <p class="gallery-overlay__desc">
+            Description: Graphic design experiments taking Helmut Lang Archival
+            store as inspiration.
+          </p>
+        </div>
+      </div>
+
+      <div class="gallery-item" tabindex="0">
+        <img
+          src="./imgs-craft/Pottery/RollingTrayConcept01.webp"
+          alt="Stoneware ceramic Rolling Tray Samples 2022-2023"
+          loading="lazy"
+        />
+        <div class="gallery-overlay">
+          <p class="gallery-overlay__name">Name: Rolling Tray Prototype</p>
+          <p class="gallery-overlay__year">Year: 2023</p>
+          <p class="gallery-overlay__desc">
+            Description: Stoneware ceramic rolling tray samples from 2022-2023.
+          </p>
+        </div>
+      </div>
+
+      <div class="gallery-item" tabindex="0">
+        <img
+          src="./imgs-lab/PS2 SUpra no glo.webp"
+          alt="Sherjeel Hussain - Album Concept work for Undead Prexy "
+          loading="lazy"
+        />
+        <div class="gallery-overlay">
+          <p class="gallery-overlay__name">
+            Name: Album Concept for Undead Prexy
+          </p>
+          <p class="gallery-overlay__year">Year: 2024</p>
+          <p class="gallery-overlay__desc">
+            Description: Album concept work for Undead Prexy, a UK-based rapper.
+            Inspired by 90s PS2 game aesthetics and early 2000s streetwear
+            culture.
+          </p>
+        </div>
+      </div>
+
+      <div class="gallery-item" tabindex="0">
+        <img
+          src="./imgs-archival/NoARedLogoConcept.webp"
+          alt="Nation of Artisans Concept work - logo design"
+          loading="lazy"
+        />
+        <div class="gallery-overlay">
+          <p class="gallery-overlay__name">Name: Nation of Artisans</p>
+          <p class="gallery-overlay__year">Year: 2025</p>
+          <p class="gallery-overlay__desc">
+            Description: Logo design for the Nation of Artisans concept.
+          </p>
+        </div>
+      </div>
+
+      <div class="gallery-item" tabindex="0">
+        <img
+          src="./imgs-archival/DevineDelights2.webp"
+          alt="Devine Delights Signage at night in Paisley, Scotland"
+          loading="lazy"
+        />
+        <div class="gallery-overlay">
+          <p class="gallery-overlay__name">Name: Devine Delights</p>
+          <p class="gallery-overlay__year">Year: 2021</p>
+          <p class="gallery-overlay__desc">
+            Description: Signage design for Devine Delights, a local business in
+            Paisley, Scotland.
+          </p>
+        </div>
+      </div>
+
+      <div class="gallery-item" tabindex="0">
+        <img
+          src="./imgs-archival/DevineDelightsSignage.webp"
+          alt="Devine Delights Signage at night in Paisley, Scotland"
+          loading="lazy"
+        />
+        <div class="gallery-overlay">
+          <p class="gallery-overlay__name">Name: Devine Delights Signage</p>
+          <p class="gallery-overlay__year">Year: 2021</p>
+          <p class="gallery-overlay__desc">
+            Description: Signage design for Devine Delights, a local business in
+            Paisley, Scotland.
+          </p>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <span class="footer__copy"
+        >Sherjeel Hussain — Side Quests &amp; Archives</span
+      >
+      <div class="footer__links">
+        <a href="work.html">View all work ↗</a>
+        <a href="craft.html">Craft</a>
+        <a href="digital.html">Digital</a>
+        <a href="exhibitions.html">Exhibitions</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </footer>
+
+    <a href="#top" class="back-to-top" aria-label="Back to top">↑</a>
+
+    <script>
+
+      // Follow mouse
+
+      // Grow on interactives AND the gallery grid items
+      document.querySelectorAll("a, button, .gallery-item").forEach((el) => {
+        el.addEventListener("mouseenter", () => cursor.classList.add("grow"));
+        el.addEventListener("mouseleave", () =>
+          cursor.classList.remove("grow"),
+        );
+      });
+
+      // Mobile tap-to-reveal overlay (touch / no-hover devices)
+      (function () {
+        var isTouch = window.matchMedia("(hover: none)").matches;
+        if (!isTouch) return;
+        var cards = document.querySelectorAll(".gallery-item");
+        cards.forEach(function (card) {
+          card.addEventListener("click", function (e) {
+            // close any other open card
+            cards.forEach(function (other) {
+              if (other !== card) other.classList.remove("is-open");
+            });
+            card.classList.toggle("is-open");
+            e.stopPropagation();
+          });
+        });
+        // tap elsewhere to dismiss
+        document.addEventListener("click", function () {
+          cards.forEach(function (c) {
+            c.classList.remove("is-open");
+          });
+        });
+      })();
+    </script>
+
+    <script src="assets/js/chrome.js" defer></script>
+    <script src="assets/js/floorplan.js" defer></script>
+  </body>
+</html>

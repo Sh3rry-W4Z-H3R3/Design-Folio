@@ -1,0 +1,33 @@
+<!-- ─── MODE SNIPPET ───────────────────────────────────────────────────
+     NOT loaded at runtime. This is the canonical source for the blocking
+     inline script that every page carries in <head>, kept here so there
+     is one place to change it and one place to diff against.
+
+     It must be INLINE and BLOCKING: it sets data-mode before first paint,
+     so the page never flashes the wrong mode. An external file would load
+     too late and the flash would be visible.
+
+     Paste everything between the markers into each page's <head>,
+     immediately before the stylesheet links.
+
+     tools/sync-mode-snippet.js checks every page matches this file.
+     ──────────────────────────────────────────────────────────────────── -->
+
+<!-- MODE:START -->
+<script>
+  (function () {
+    var d = document.documentElement;
+    var m;
+    try { m = localStorage.getItem("sh.mode"); } catch (e) {}
+    if (m !== "workshop" && m !== "editorial") {
+      var q = function (s) { return window.matchMedia && matchMedia(s).matches; };
+      var lean =
+        q("(pointer: coarse)") ||
+        q("(prefers-reduced-motion: reduce)") ||
+        (navigator.connection && navigator.connection.saveData);
+      m = lean ? "editorial" : "workshop";
+    }
+    d.setAttribute("data-mode", m);
+  })();
+</script>
+<!-- MODE:END -->

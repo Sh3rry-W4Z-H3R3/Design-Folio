@@ -1,0 +1,399 @@
+/* ─── FLOORPLAN ──────────────────────────────────────────────────────
+   Drawn like an architect's plan: hairlines, hatching, a title block
+   feel. Rooms are anchors positioned as rectangles, so everything here
+   styles real links rather than a decorative drawing.
+   ──────────────────────────────────────────────────────────────────── */
+
+/* ── DIALOG ─────────────────────────────────────────────────── */
+.plan {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--fg);
+  max-width: min(64rem, 92vw);
+  width: 100%;
+  max-height: 92vh;
+  /* Setting width on a <dialog> overrides the UA's centring, so it has
+     to be put back explicitly or the plan pins to the top-left. */
+  margin: auto;
+}
+.plan::backdrop {
+  background: rgba(6, 6, 6, 0.82);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+/* Background, border and shadow come from .glass, which the dialog also
+   carries — declaring them here as well would mean two places to change
+   when the exhibition room inverts to a light ground. */
+.plan__inner {
+  padding: clamp(1rem, 3vw, 2rem);
+  display: grid;
+  gap: var(--space-4);
+}
+
+.plan__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+.plan__eyebrow {
+  font-family: var(--sans);
+  font-size: var(--text-2);
+  font-weight: 700;
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--fg-dim);
+  margin: 0;
+}
+
+.plan__close {
+  position: relative;
+  width: 34px;
+  height: 34px;
+  background: none;
+  border: 1px solid var(--line-2);
+  cursor: pointer;
+  transition: border-color var(--fast);
+}
+.plan__close span {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  top: 50%;
+  height: 1px;
+  background: var(--fg-dim);
+  transition: background var(--fast);
+}
+.plan__close span:nth-child(1) { transform: rotate(45deg); }
+.plan__close span:nth-child(2) { transform: rotate(-45deg); }
+.plan__close:hover { border-color: var(--accent); }
+.plan__close:hover span { background: var(--accent); }
+
+/* ── THE PLAN ───────────────────────────────────────────────── */
+.plan__box {
+  position: relative;
+  /* Wider than tall, like a plan sheet. Percentage-positioned rooms need
+     a definite height to resolve against. */
+  aspect-ratio: 16 / 11;
+  min-height: 17rem;
+  border: 1px solid var(--line-2);
+  background:
+    repeating-linear-gradient(
+      45deg,
+      transparent 0 7px,
+      rgba(237, 233, 225, 0.018) 7px 8px
+    );
+}
+
+.plan__rooms {
+  position: absolute;
+  inset: 0;
+  bottom: 13%; /* leaves the facade strip its band */
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.plan__cell {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: var(--w);
+  height: var(--h);
+  padding: 3px;
+}
+
+.plan__room {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 0.15rem;
+  width: 100%;
+  height: 100%;
+  padding: clamp(0.5rem, 1.6vw, 1rem);
+  border: 1px solid var(--line-2);
+  color: var(--fg-dim);
+  text-decoration: none;
+  transition:
+    border-color var(--fast),
+    color var(--fast),
+    background var(--fast);
+}
+.plan__room:hover,
+.plan__room:focus-visible {
+  border-color: var(--accent);
+  color: var(--fg);
+  background: var(--accent-soft, rgba(237, 233, 225, 0.04));
+}
+
+.plan__room-name {
+  font-family: var(--serif);
+  font-size: clamp(1rem, 2.4vw, 1.6rem);
+  font-weight: 300;
+  line-height: 1.05;
+  color: var(--fg);
+}
+.plan__cell--main .plan__room-name {
+  font-size: clamp(1.3rem, 3.4vw, 2.3rem);
+}
+
+.plan__room-sub {
+  font-family: var(--sans);
+  font-size: var(--text-2);
+  font-weight: 500;
+  letter-spacing: var(--ls-track);
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+/* Each room carries its own accent inside the plan, so the drawing
+   shows the building's colour logic at a glance. */
+.plan__room[data-room="digital"]:hover,
+.plan__room[data-room="digital"]:focus-visible { border-color: var(--pink); }
+.plan__room[data-room="physical"]:hover,
+.plan__room[data-room="physical"]:focus-visible { border-color: var(--mint); }
+.plan__room[data-room="play"]:hover,
+.plan__room[data-room="play"]:focus-visible { border-color: var(--gold); }
+.plan__room[data-room="exhibition"]:hover,
+.plan__room[data-room="exhibition"]:focus-visible { border-color: var(--cream); }
+
+/* ── YOU ARE HERE ───────────────────────────────────────────── */
+.plan__room[aria-current="page"] {
+  border-color: var(--accent);
+  color: var(--fg);
+  background: var(--accent-soft, rgba(237, 233, 225, 0.05));
+}
+.plan__here {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.35rem;
+}
+.plan__here-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .plan__here-dot {
+    animation: planPulse 2.4s var(--ease) infinite;
+  }
+}
+@keyframes planPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.45; transform: scale(0.72); }
+}
+.plan__here-label {
+  font-family: var(--sans);
+  font-size: var(--text-1);
+  font-weight: 700;
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* ── FACADE ─────────────────────────────────────────────────── */
+.plan__facade {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 13%;
+  border-top: 1px dashed var(--line-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.plan__facade-sign {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(0.8rem, 1.8vw, 1.05rem);
+  color: var(--fg-dim);
+}
+
+/* Doors read as gaps in the facade — the wall stops, and the opening is
+   marked by its jambs. */
+.plan__door {
+  position: absolute;
+  left: var(--x);
+  width: var(--w);
+  top: -1px;
+  height: calc(100% + 1px);
+  border-left: 1px solid var(--fg-dim);
+  border-right: 1px solid var(--fg-dim);
+  background: var(--glass-solid);
+  transition: background var(--fast), border-color var(--fast);
+}
+/* The door leaf, standing open into the room, and the arc it sweeps —
+   drawn the way a plan draws a door. Both are clipped to the opening so
+   the arc reads as a swing, not a flourish across the facade. */
+.plan__door::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 1px;
+  height: 100%;
+  background: var(--fg-dim);
+  transform-origin: bottom left;
+  transform: rotate(-22deg);
+  transition: transform var(--slow);
+}
+.plan__door::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  border-top: 1px solid var(--line-2);
+  border-top-left-radius: 0;
+  border-top-right-radius: 100%;
+  opacity: 0.55;
+}
+/* Hovering a door eases it further open. */
+.plan__door:hover::before,
+.plan__door:focus-visible::before {
+  transform: rotate(-52deg);
+}
+/* Doors light in their own room's colour, so the facade shows where each
+   one leads regardless of which page the plan was opened from. */
+.plan__door[data-room="physical"] {
+  --door: var(--mint);
+}
+.plan__door[data-room="digital"] {
+  --door: var(--pink);
+}
+.plan__door:hover,
+.plan__door:focus-visible {
+  background: color-mix(in srgb, var(--door, var(--fg)) 9%, transparent);
+  border-color: var(--door, var(--accent));
+}
+.plan__door:hover::before,
+.plan__door:focus-visible::before {
+  background: var(--door, var(--fg-dim));
+}
+
+/* ── EXTRA LINKS ────────────────────────────────────────────── */
+.plan__extra {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-5);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--line);
+}
+.plan__extra-link {
+  font-family: var(--sans);
+  font-size: var(--text-3);
+  font-weight: 500;
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--fg-dim);
+  text-decoration: none;
+  transition: color var(--fast);
+}
+.plan__extra-link:hover {
+  color: var(--accent);
+}
+
+/* ── EDITORIAL MENU ─────────────────────────────────────────
+   Editorial mode gets the same rooms as an ordinary list. No drawing, no
+   doors, no pulse — someone in this mode asked for the fast version. */
+.plan__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line-2);
+}
+.plan__list-link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: var(--space-3);
+  background: var(--glass-solid);
+  color: var(--fg-dim);
+  text-decoration: none;
+  transition: background var(--fast), color var(--fast);
+}
+.plan__list-link:hover,
+.plan__list-link:focus-visible {
+  color: var(--fg);
+  background: var(--accent-soft, rgba(237, 233, 225, 0.06));
+}
+.plan__list-link[aria-current="page"] {
+  color: var(--fg);
+  box-shadow: inset 3px 0 0 var(--accent);
+}
+.plan__list .plan__room-name {
+  font-size: var(--text-6);
+}
+
+/* ── NARROW SCREENS ─────────────────────────────────────────
+   The plan is the only navigation the site has, so on a phone it cannot
+   simply be hidden — it has to change shape. Below 700px the rooms stop
+   being a positioned drawing and become stacked full-width bands, in the
+   order PLAN declares them.
+
+   Nothing about the geometry is duplicated to do this: the percentages
+   arrive as custom properties, and these rules just decline to use them.
+   PLAN stays the single source of truth for order and identity. */
+@media (max-width: 700px) {
+  .plan__box {
+    aspect-ratio: auto;
+    min-height: 0;
+    border: 0;
+    background: none;
+  }
+  .plan__rooms {
+    position: static;
+    display: grid;
+    gap: var(--space-2);
+  }
+  .plan__cell {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: 0;
+  }
+  .plan__room {
+    /* Bands are read left to right, so the label leads and the "you are
+       here" marker sits beside it rather than under it. */
+    flex-direction: row;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    min-height: 3.25rem;
+    padding: var(--space-3);
+  }
+  .plan__cell--main .plan__room-name,
+  .plan__room-name {
+    font-size: var(--text-6);
+  }
+  .plan__here {
+    margin-top: 0;
+    margin-left: auto;
+  }
+
+  /* The facade only repeats the two main rooms, which are now the first
+     two bands. Stacked, it would be duplicate links rather than a
+     drawing of a shopfront. */
+  .plan__facade {
+    display: none;
+  }
+}
+
+/* Below 700px the sub text is what tells the two "Digital" entries apart
+   from each other in a stack, so unlike the old drawing it stays. It only
+   goes at the point where a band would otherwise wrap to two lines. */
+@media (max-width: 380px) {
+  .plan__room-sub {
+    font-size: var(--text-1);
+  }
+}

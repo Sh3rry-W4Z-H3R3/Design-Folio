@@ -1,0 +1,196 @@
+/* ─── CHROME ─────────────────────────────────────────────────────────
+   The furniture every page carries: custom cursor, footer nav, mode
+   switch and skip link. Previously duplicated inline across 26 pages.
+
+   The sticky top nav and the mobile burger menu used to live here too.
+   Phase 3b removed them: the floorplan (floorplan.css / floorplan.js) is
+   the navigation now, at every width, and the floating chrome that opens
+   it lives in glass.css.
+
+   Linked after base.css, before the page's inline <style>.
+   ──────────────────────────────────────────────────────────────────── */
+
+/* ── CUSTOM CURSOR ──────────────────────────────────────────
+   Workshop mode only, and only where a real pointer exists. */
+.cursor,
+.cursor-icon {
+  display: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  :root[data-mode="workshop"] .cursor {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 10px;
+    height: 10px;
+    background: var(--fg);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition:
+      width var(--fast),
+      height var(--fast),
+      background var(--fast),
+      opacity var(--fast);
+  }
+
+  :root[data-mode="workshop"] .cursor.grow {
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: 1px solid var(--accent);
+    opacity: 0.7;
+  }
+
+  :root[data-mode="workshop"] .cursor-icon {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(10px, -50%);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  :root[data-mode="workshop"] .cursor-icon.visible {
+    opacity: 1;
+  }
+}
+
+.cursor-icon span {
+  font-family: var(--sans);
+  font-size: var(--text-1);
+  font-weight: 700;
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--fg-mid);
+  margin-top: 0.35rem;
+}
+
+/* ── FOOTER NAV ─────────────────────────────────────────────── */
+/* NOTE: no .footer-nav / .footer-nav__left LAYOUT here, deliberately.
+   24 of 26 pages declare their own footer layout inline, and imposing
+   display:flex on the two that don't pushed their links into a single
+   non-wrapping row that ran off the page. Phase 4 gives the footer one
+   real shared treatment; until then the pages keep what they have.
+
+   The one exception is wrapping. Six pages had footer clusters that ran
+   off the side of the screen on every phone width, because a flex row
+   with nowhere to go just keeps going. flex-wrap is inert on anything
+   that isn't already a flex container, so this fixes the overflow
+   without imposing any layout of its own. */
+.footer-nav,
+.footer-nav__left,
+.footer-nav__right {
+  flex-wrap: wrap;
+}
+
+.footer-nav a {
+  font-family: var(--sans);
+  font-size: var(--text-3);
+  font-weight: 500;
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--fg-dim);
+  position: relative;
+  transition: color var(--fast);
+}
+.footer-nav a:hover {
+  color: var(--fg);
+}
+
+/* NOTE: no mobile `flex-direction: column` for the footer here.
+   Most pages declare it in their own styles, but not all — and forcing it
+   globally made the footer ~300px taller on the pages that had chosen to
+   let it wrap instead. Whether every footer should stack is a Phase 4
+   decision; imposing it during the migration is not. */
+
+/* ── TOUCH TARGETS ──────────────────────────────────────────
+   Footer links are 11–21px tall, which is well under the 24px WCAG 2.2
+   asks for and genuinely fiddly to hit on a phone. Vertical
+   padding on an inline element grows the hit area without moving
+   anything around it, so this buys the target size for free.
+
+   Scoped to coarse pointers: on a mouse the small targets are fine, and
+   this keeps desktop layout untouched. */
+@media (pointer: coarse) {
+  .footer-nav a,
+  /* side-quests.html uses .footer__links rather than .footer-nav. */
+  .footer__links a,
+  /* The standalone navigation links case studies end on, and the
+     external project links some of them list. */
+  .next-project__title,
+  .next-project__arrow,
+  .case-footer__next-link,
+  .case-footer__back a,
+  .hero__links a,
+  .link-card a,
+  .back-to-top {
+    padding-block: 9px;
+  }
+}
+
+/* Browsers colour unvisited/visited links blue and purple by default.
+   :where() carries zero specificity, so any page rule still wins. */
+:where(footer, .footer-nav) a,
+:where(footer, .footer-nav) a:visited {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ── MODE SWITCH ────────────────────────────────────────────
+   Lets anyone move between the workshop and the fast editorial
+   version. Quiet, always reachable, never a modal. */
+.mode-switch {
+  position: fixed;
+  right: var(--space-3);
+  bottom: var(--space-3);
+  z-index: 120;
+  font-family: var(--sans);
+  font-size: var(--text-2);
+  font-weight: 700;
+  letter-spacing: var(--ls-track);
+  text-transform: uppercase;
+  color: var(--fg-dim);
+  background: var(--scrim);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--line-2);
+  padding: var(--space-2) var(--space-3);
+  cursor: pointer;
+  transition:
+    color var(--fast),
+    border-color var(--fast);
+}
+.mode-switch:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* ── SKIP LINK ──────────────────────────────────────────────
+   Standard accessibility skip, visible on focus. */
+.skip-link {
+  position: absolute;
+  left: var(--space-3);
+  top: -4rem;
+  z-index: 200;
+  background: var(--bg);
+  color: var(--fg);
+  border: 1px solid var(--accent);
+  padding: var(--space-2) var(--space-3);
+  font-family: var(--sans);
+  font-size: var(--text-3);
+  text-decoration: none;
+  transition: top var(--fast);
+}
+.skip-link:focus {
+  top: var(--space-3);
+}

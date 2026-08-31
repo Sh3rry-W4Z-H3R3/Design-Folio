@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-room="physical">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -45,11 +45,39 @@
   }
   </script>
 
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+
+    <!-- MODE:START -->
+    <script>
+    (function () {
+    var d = document.documentElement;
+    var m;
+    try { m = localStorage.getItem("sh.mode"); } catch (e) {}
+    if (m !== "workshop" && m !== "editorial") {
+    var q = function (s) { return window.matchMedia && matchMedia(s).matches; };
+    var lean =
+    q("(pointer: coarse)") ||
+    q("(prefers-reduced-motion: reduce)") ||
+    (navigator.connection && navigator.connection.saveData);
+    m = lean ? "editorial" : "workshop";
+    }
+    d.setAttribute("data-mode", m);
+    })();
+    </script>
+    <!-- MODE:END -->
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Syne:wght@400;500;700&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="tokens.css" />
+    <link rel="stylesheet" href="assets/css/rooms.css" />
+    <link rel="stylesheet" href="assets/css/base.css" />
+    <link rel="stylesheet" href="assets/css/chrome.css" />
+    <link rel="stylesheet" href="assets/css/glass.css" />
+    <link rel="stylesheet" href="assets/css/floorplan.css" />
     <style>
     :root {
       --bg:       #0a0a0a;
@@ -77,18 +105,6 @@
     .cursor-icon.visible { opacity: 1; }
     .cursor-icon svg { display: block; }
     .cursor-icon span { font-family: var(--sans); font-size: var(--text-1); font-weight: 700; letter-spacing: var(--ls-label); text-transform: uppercase; color: var(--accent); margin-top: 4px; }
-
-    nav { display: flex; align-items: center; justify-content: space-between; padding: var(--space-5) var(--gutter); position: sticky; top: 0; z-index: 100; background: rgba(10,10,10,.92); backdrop-filter: blur(12px); border-bottom: 1px solid #1a1a1a; }
-    .nav__home { font-family: var(--serif); font-size: var(--text-7); font-weight: 300; letter-spacing: var(--ls-body); text-decoration: none; color: var(--fg); }
-    .nav__home em { font-style: italic; color: var(--accent-2); }
-    .nav__links { display: flex; gap: var(--space-6); }
-    .nav__links a { font-family: var(--sans); font-size: var(--text-2); font-weight: 700; letter-spacing: var(--ls-track); text-transform: uppercase; text-decoration: none; color: var(--fg-dim); transition: color var(--fast); position: relative; }
-    .nav__links a::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 1px; background: var(--accent); transition: width var(--fast); }
-    .nav__links a:hover { color: var(--fg); }
-    .nav__links a:hover::after { width: 100%; }
-    .nav__back { font-family: var(--sans); font-size: var(--text-2); font-weight: 700; letter-spacing: var(--ls-track); text-transform: uppercase; text-decoration: none; color: var(--fg-dim); display: flex; align-items: center; gap: var(--space-2); transition: color var(--fast); }
-    .nav__back:hover { color: var(--fg); }
-    .nav__back::before { content: '←'; }
 
     /* HERO */
     .hero { min-height: 88vh; display: grid; grid-template-rows: 1fr auto; position: relative; overflow: hidden; background: #090c0a; }
@@ -262,29 +278,14 @@
       .step { grid-template-columns: 3rem 1fr; gap: var(--space-3); }
       .pull-quote { padding: var(--space-7) var(--gutter); }
       .callout-panel { padding: 2.2rem var(--space-5); }
-      .nav__links { gap: var(--space-4); }
     }
-    @media (max-width: 480px) { nav { padding: var(--space-4) var(--space-3); } .nav__links a { font-size: var(--text-1); letter-spacing: var(--ls-label); } }
+    
   </style>
 </head>
 <body>
 
   <div class="cursor" id="cursor"></div>
   <div class="cursor-icon" id="cursorIcon"></div>
-
-  <nav>
-    <a href="index.html" class="nav__home">Sherjeel <em>Hussain</em></a>
-    <div style="display:flex;align-items:center;gap: var(--space-6);">
-      <a href="craft.html" class="nav__back">Craft</a>
-      <div class="nav__links">
-        <a href="digital.html" data-cursor="monitor">Digital</a>
-        <a href="craft.html" data-cursor="pot">Craft</a>
-        <a href="exhibitions.html">Exhibitions</a>
-        <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
-      </div>
-    </div>
-  </nav>
 
   <!-- HERO -->
   <section class="hero">
@@ -424,7 +425,7 @@
   <div class="img-grid img-grid--3">
     <div class="img-slot img-slot--tall">
       <img
-        src="./imgs-craft/GreenKing/gk pot (2).jpeg"
+        src="./imgs-craft/GreenKing/gk pot (2).webp"
         alt="Greene King ceramic table number holder — finished with blackboard paint"
         loading="lazy"
       />
@@ -502,7 +503,7 @@
       <a href="craft.html">Craft</a>
       <a href="digital.html">Digital</a>
       <a href="exhibitions.html">Exhibitions</a>
-      <a href="./SideQuests.html">Side Quests</a>
+      <a href="./side-quests.html">Side Quests</a>
       <a href="about.html">About</a>
       <a href="contact.html">Contact</a>
     </div>
@@ -512,28 +513,8 @@
       <a href="https://www.instagram.com/sherjeel_h27_design_/" target="_blank" rel="noopener">Instagram</a>
     </div>
   </footer>
-  <script>
-    const cursor = document.getElementById('cursor');
-    const cursorIcon = document.getElementById('cursorIcon');
-    const ICONS = {
-      monitor: `<svg width="28" height="22" viewBox="0 0 28 22" fill="none"><rect x="1" y="1" width="26" height="17" rx="2" stroke="#e8547a" stroke-width="1.5"/><rect x="9" y="18" width="10" height="2" fill="#e8547a" opacity=".5"/><rect x="6" y="20" width="16" height="1.5" fill="#e8547a" opacity=".5"/><circle cx="14" cy="9.5" r="1.5" fill="#e8547a" opacity=".4"/></svg><span>Digital</span>`,
-      pot: `<svg width="22" height="26" viewBox="0 0 22 26" fill="none"><path d="M7 4C5 4 2 7 2 13C2 19 5 23 11 23C17 23 20 19 20 13C20 7 17 4 15 4Z" stroke="#6dbf9e" stroke-width="1.5" fill="none"/><path d="M7 4C8 2 10 1 11 1C12 1 14 2 15 4" stroke="#6dbf9e" stroke-width="1.5" fill="none"/></svg><span>Craft</span>`
-    };
-    document.addEventListener('mousemove', e => {
-      cursor.style.left = e.clientX + 'px';
-      cursor.style.top = e.clientY + 'px';
-      cursorIcon.style.left = (e.clientX + 18) + 'px';
-      cursorIcon.style.top = e.clientY + 'px';
-    });
-    document.querySelectorAll('[data-cursor]').forEach(el => {
-      el.addEventListener('mouseenter', () => { cursor.classList.add('grow'); cursorIcon.innerHTML = ICONS[el.dataset.cursor] || ''; cursorIcon.classList.add('visible'); });
-      el.addEventListener('mouseleave', () => { cursor.classList.remove('grow'); cursorIcon.classList.remove('visible'); });
-    });
-    document.querySelectorAll('a:not([data-cursor])').forEach(el => {
-      el.addEventListener('mouseenter', () => cursor.classList.add('grow'));
-      el.addEventListener('mouseleave', () => cursor.classList.remove('grow'));
-    });
-  </script>
-<script src="mobile-nav.js" defer></script>
+  
+<script src="assets/js/chrome.js" defer></script>
+<script src="assets/js/floorplan.js" defer></script>
 </body>
 </html>

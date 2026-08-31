@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-room="digital">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -77,6 +77,29 @@
       }
     </script>
 
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+
+    <!-- MODE:START -->
+    <script>
+      (function () {
+        var d = document.documentElement;
+        var m;
+        try { m = localStorage.getItem("sh.mode"); } catch (e) {}
+        if (m !== "workshop" && m !== "editorial") {
+          var q = function (s) { return window.matchMedia && matchMedia(s).matches; };
+          var lean =
+            q("(pointer: coarse)") ||
+            q("(prefers-reduced-motion: reduce)") ||
+            (navigator.connection && navigator.connection.saveData);
+          m = lean ? "editorial" : "workshop";
+        }
+        d.setAttribute("data-mode", m);
+      })();
+    </script>
+    <!-- MODE:END -->
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -85,127 +108,16 @@
     />
 
     <link rel="stylesheet" href="tokens.css" />
+    <link rel="stylesheet" href="assets/css/rooms.css" />
+    <link rel="stylesheet" href="assets/css/base.css" />
+    <link rel="stylesheet" href="assets/css/chrome.css" />
+    <link rel="stylesheet" href="assets/css/glass.css" />
+    <link rel="stylesheet" href="assets/css/floorplan.css" />
         <style>
+      /* Page-local overrides only. Tokens, reset, cursor, nav and footer
+         now come from the shared layer linked above. */
       :root {
-        --bg: #0a0a0a;
-        --fg: #ede9e1;
-        --fg-dim: #7a7a7a;
-        --fg-mid: #999;
-        --accent: #e8547a;
-        --accent-2: #6dbf9e;
-        --serif: "Cormorant", Georgia, serif;
-        --sans: "Syne", sans-serif;
-        --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
-        --slow: 0.6s var(--ease);
-        --fast: 0.3s var(--ease);
         --gutter: clamp(1.2rem, 4vw, 3rem);
-      }
-
-      *,
-      *::before,
-      *::after {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-      html {
-        font-size: 16px;
-        scroll-behavior: smooth;
-      }
-      body {
-        background: var(--bg);
-        color: var(--fg);
-        font-family: var(--sans);
-        min-height: 100vh;
-        overflow-x: hidden;
-        cursor: none;
-      }
-
-      /* ── CURSOR ───────────────────────────────────────────── */
-      .cursor {
-        position: fixed;
-        width: 10px;
-        height: 10px;
-        background: var(--fg);
-        border-radius: 50%;
-        pointer-events: none;
-        z-index: 9999;
-        transform: translate(-50%, -50%);
-        transition:
-          width var(--fast),
-          height var(--fast),
-          background var(--fast),
-          opacity var(--fast);
-      }
-      .cursor.grow {
-        width: 40px;
-        height: 40px;
-        background: transparent;
-        border: 1px solid var(--accent);
-        opacity: 0.7;
-      }
-
-      /* ── NAV ──────────────────────────────────────────────── */
-      nav {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: var(--space-5) var(--gutter);
-        position: sticky;
-        top: 0;
-        z-index: 100;
-        background: rgba(10, 10, 10, 0.92);
-        backdrop-filter: blur(12px);
-        border-bottom: 1px solid #1a1a1a;
-      }
-      .nav__home {
-        font-family: var(--serif);
-        font-size: var(--text-7);
-        font-weight: 300;
-        letter-spacing: var(--ls-body);
-        text-decoration: none;
-        color: var(--fg);
-        transition: color var(--fast);
-      }
-      .nav__home em {
-        font-style: italic;
-        color: var(--accent);
-      }
-      .nav__home:hover {
-        color: var(--fg-mid);
-      }
-      .nav__links {
-        display: flex;
-        gap: var(--space-6);
-        align-items: center;
-      }
-      .nav__links a {
-        font-size: var(--text-2);
-        font-weight: 700;
-        letter-spacing: var(--ls-track);
-        text-transform: uppercase;
-        text-decoration: none;
-        color: var(--fg-dim);
-        transition: color var(--fast);
-        position: relative;
-      }
-      .nav__links a::after {
-        content: "";
-        position: absolute;
-        bottom: -3px;
-        left: 0;
-        width: 0;
-        height: 1px;
-        background: var(--accent);
-        transition: width var(--fast);
-      }
-      .nav__links a:hover,
-      .nav__links a.active {
-        color: var(--fg);
-      }
-      .nav__links a:hover::after,
-      .nav__links a.active::after {
-        width: 100%;
       }
 
       /* ── PAGE HEADER ──────────────────────────────────────── */
@@ -591,6 +503,8 @@
       }
 
       /* ─── FOOTER LINKS ───────────────────────────────────── */
+      /* Link typography comes from chrome.css; the layout stays here,
+         because footer layout varies page to page. */
       .footer-nav {
         display: flex;
         flex-wrap: wrap;
@@ -608,18 +522,6 @@
         gap: var(--space-6);
       }
 
-      .footer-nav a {
-        font-family: var(--sans);
-        font-size: var(--text-3);
-        font-weight: 500;
-        letter-spacing: var(--ls-label);
-        text-transform: uppercase;
-        text-decoration: none;
-        color: var(--fg-dim);
-        position: relative;
-        transition: color var(--fast);
-      }
-
       .footer-nav a::after {
         content: "";
         position: absolute;
@@ -631,9 +533,6 @@
         transition: width var(--fast);
       }
 
-      .footer-nav a:hover {
-        color: var(--fg);
-      }
       .footer-nav a:hover::after {
         width: 100%;
       }
@@ -660,25 +559,10 @@
         flex-shrink: 0;
       }
 
-      @keyframes fadeUp {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
       /* ── MOBILE ───────────────────────────────────────────── */
+      /* fadeUp, the cursor hide and the footer stacking now come from
+         base.css and chrome.css. */
       @media (max-width: 768px) {
-        body {
-          cursor: auto;
-        }
-        .cursor {
-          display: none;
-        }
         .page-header {
           grid-template-columns: 1fr;
           padding: var(--space-6) var(--gutter) var(--space-6);
@@ -691,12 +575,9 @@
           grid-column: span 12;
           aspect-ratio: 4/3;
         }
-        .nav__links {
-          gap: var(--space-4);
-        }
-        .footer-nav {
-          flex-direction: column;
-        }
+        /* Page-local: this footer stacks on mobile. Not every page's does,
+           so it stays here rather than in chrome.css. */
+        .footer-nav,
         .footer-nav__left {
           flex-direction: column;
         }
@@ -705,18 +586,6 @@
   </head>
   <body>
     <div class="cursor" id="cursor"></div>
-
-    <!-- ── NAV ──────────────────────────────────────────────── -->
-    <nav>
-      <a href="index.html" class="nav__home">Sherjeel <em>Hussain</em></a>
-      <div class="nav__links">
-        <a href="digital.html" class="active" data-cursor="monitor">Digital</a>
-        <a href="craft.html" data-cursor="pot">Craft</a>
-        <a href="exhibitions.html">Exhibitions</a>
-        <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
-      </div>
-    </nav>
 
     <!-- ── PAGE HEADER ──────────────────────────────────────── -->
     <header class="page-header">
@@ -949,7 +818,7 @@
         <a href="craft.html">Craft</a>
         <a href="digital.html">Digital</a>
         <a href="exhibitions.html">Exhibitions</a>
-        <a href="./SideQuests.html">Side Quests</a>
+        <a href="./side-quests.html">Side Quests</a>
         <a href="about.html">About</a>
         <a href="contact.html">Contact</a>
       </div>
@@ -971,19 +840,6 @@
     </footer>
 
     <script>
-      // Cursor
-      const cursor = document.getElementById("cursor");
-      document.addEventListener("mousemove", (e) => {
-        cursor.style.left = e.clientX + "px";
-        cursor.style.top = e.clientY + "px";
-      });
-      document.querySelectorAll("a, button").forEach((el) => {
-        el.addEventListener("mouseenter", () => cursor.classList.add("grow"));
-        el.addEventListener("mouseleave", () =>
-          cursor.classList.remove("grow"),
-        );
-      });
-
       // Filter — fades non-matching cards rather than hiding
       document.querySelectorAll(".filter-btn").forEach((btn) => {
         btn.addEventListener("click", () => {
@@ -1003,6 +859,7 @@
       });
     </script>
 
-    <script src="mobile-nav.js" defer></script>
+    <script src="assets/js/chrome.js" defer></script>
+    <script src="assets/js/floorplan.js" defer></script>
   </body>
 </html>
