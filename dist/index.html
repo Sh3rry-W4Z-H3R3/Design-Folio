@@ -312,7 +312,11 @@
       /* ─── DOOR GATEWAY (3D-perspective doors) ────────────── */
       .gateway {
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
+        /* Two doors. The third — "All Work Together" — asked the visitor to
+           choose everything before they had seen anything; that job now
+           belongs to the Selected work strip below, which they reach by
+           scrolling rather than by deciding. */
+        grid-template-columns: 1fr 1fr;
         height: clamp(360px, 60vh, 680px);
         margin: 0 var(--space-5);
         gap: 2px;
@@ -458,29 +462,6 @@
       }
 
       /* ── DOOR 03 · HYBRID (wood ↔ pixel) material ────────── */
-      .panel--all .panel__bg {
-        background:
-          /* same vertical grain as wood door */
-          repeating-linear-gradient(
-            90deg,
-            rgba(0, 0, 0, 0.08) 0px,
-            transparent 1px,
-            transparent 7px,
-            rgba(0, 0, 0, 0.05) 8px,
-            transparent 9px,
-            transparent 21px
-          ),
-          linear-gradient(180deg, #3a2818 0%, #2a1c10 50%, #1f140a 100%);
-      }
-      .panel--all .panel__bg::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.02 0.85' numOctaves='3' seed='8'/%3E%3CfeColorMatrix values='0 0 0 0 0.18 0 0 0 0 0.10 0 0 0 0 0.04 0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-        mix-blend-mode: overlay;
-        opacity: 0.85;
-        pointer-events: none;
-      }
       /* Pixel/digital overlay that fades in over wood — the threshold */
       .door-material-shift {
         position: absolute;
@@ -515,10 +496,6 @@
           clip-path 1.2s cubic-bezier(0.6, 0.05, 0.4, 1);
         pointer-events: none;
         z-index: 1;
-      }
-      .panel--all:hover .door-material-shift,
-      .panel--all:focus-within .door-material-shift {
-        animation: material-oscillate 4.8s ease-in-out infinite;
       }
       @keyframes material-oscillate {
         0%, 100% { opacity: 0;    clip-path: inset(0 100% 0 0); }
@@ -608,47 +585,6 @@
         filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.65));
       }
       /* All handle — morphs between brass + cyan toggle */
-      .panel--all .door-handle {
-        width: 42px;
-        height: 18px;
-        border-radius: 9px;
-        background:
-          linear-gradient(180deg,
-            #f6e1a8 0%,
-            #d4ad55 50%,
-            #5a4416 100%);
-        box-shadow:
-          0 2px 4px rgba(0, 0, 0, 0.55),
-          inset 0 1px 0 rgba(255, 255, 220, 0.45);
-        transition:
-          background 0.6s ease,
-          box-shadow 0.6s ease,
-          transform 0.35s var(--ease);
-      }
-      .panel--all .door-handle::after {
-        /* digital toggle dot */
-        content: "";
-        position: absolute;
-        top: 50%;
-        left: 4px;
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
-        background: #2a1c10;
-        transform: translateY(-50%);
-        transition:
-          left 0.6s ease,
-          background 0.6s ease,
-          box-shadow 0.6s ease;
-      }
-      .panel--all:hover .door-handle,
-      .panel--all:focus-within .door-handle {
-        animation: handle-morph 4.8s ease-in-out infinite;
-      }
-      .panel--all:hover .door-handle::after,
-      .panel--all:focus-within .door-handle::after {
-        animation: toggle-slide 4.8s ease-in-out infinite;
-      }
       @keyframes handle-morph {
         0%, 100% {
           background: linear-gradient(180deg, #f6e1a8 0%, #d4ad55 50%, #5a4416 100%);
@@ -772,37 +708,12 @@
       }
       .panel--digital::before { background: var(--accent); }
       .panel--craft::before   { background: var(--accent-2); }
-      .panel--all::before     { background: var(--gold); }
-      .panel:hover::before,
-      .panel:focus-within::before { width: 100%; }
-
-      .panel--digital:hover .panel__label,
-      .panel--digital:focus-within .panel__label { color: var(--accent); }
-      .panel--craft:hover .panel__label,
-      .panel--craft:focus-within .panel__label   { color: var(--accent-2); }
-      .panel--all:hover .panel__label,
-      .panel--all:focus-within .panel__label     { color: var(--gold); }
-
-      .panel--digital:hover .panel__btn,
-      .panel--digital:focus-within .panel__btn {
-        border-color: var(--accent);
-        background: var(--accent);
-        color: #fff;
-        box-shadow: 0 0 24px rgba(232, 84, 122, 0.45);
-      }
       .panel--craft:hover .panel__btn,
       .panel--craft:focus-within .panel__btn {
         border-color: var(--accent-2);
         background: var(--accent-2);
         color: #0a0a0a;
         box-shadow: 0 0 24px rgba(109, 191, 158, 0.45);
-      }
-      .panel--all:hover .panel__btn,
-      .panel--all:focus-within .panel__btn {
-        border-color: var(--gold);
-        background: var(--gold);
-        color: #0a0a0a;
-        box-shadow: 0 0 24px rgba(200, 184, 130, 0.45);
       }
 
       /* ── CLICK / OPEN ANIMATION ───────────────────────────── */
@@ -831,7 +742,208 @@
       body.is-navigating::after { opacity: 0.95; }
 
       /* ── REDUCED MOTION — drop the theatrics ──────────────── */
+
+      /* ─── SELECTED WORK ───────────────────────────────────
+         The scroll path past the doors. Deliberately quieter than the
+         gateway: the doors are the invitation, this is the shortcut, and
+         it should not compete with them for the first screen. */
+      .scroll-cue {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        margin: var(--space-5) 0 0;
+        font-family: var(--sans);
+        font-size: var(--text-2);
+        font-weight: 700;
+        letter-spacing: var(--ls-track);
+        text-transform: uppercase;
+        color: var(--fg-dim);
+        text-decoration: none;
+        transition: color var(--fast);
+      }
+      .scroll-cue:hover,
+      .scroll-cue:focus-visible { color: var(--fg); }
+      .scroll-cue__line {
+        width: 1px;
+        height: 34px;
+        background: linear-gradient(to bottom, transparent, var(--fg-dim));
+        animation: cueDrop 2.4s var(--ease) infinite;
+      }
+      @keyframes cueDrop {
+        0%, 100% { transform: scaleY(0.4); transform-origin: top; opacity: 0.35; }
+        50%      { transform: scaleY(1);   transform-origin: top; opacity: 1; }
+      }
+
+      .selected {
+        margin: var(--space-6) var(--space-5) var(--space-5);
+      }
+      .selected__head {
+        max-width: 46rem;
+        margin-bottom: var(--space-5);
+      }
+      .selected__eyebrow {
+        font-family: var(--sans);
+        font-size: var(--text-2);
+        font-weight: 700;
+        letter-spacing: var(--ls-eyebrow);
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: var(--space-3);
+      }
+      .selected__title {
+        font-family: var(--serif);
+        font-size: clamp(2rem, 5vw, 3.4rem);
+        font-weight: 300;
+        line-height: 1.05;
+        letter-spacing: var(--ls-body);
+        color: var(--fg);
+      }
+      .selected__title em { font-style: italic; color: var(--accent); }
+      .selected__note {
+        margin-top: var(--space-3);
+        font-family: var(--sans);
+        font-size: var(--text-3);
+        color: var(--fg-mid);
+      }
+
+      .selected__grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2px;
+      }
+      /* The lead spans both columns; the rest alternate physical and
+         digital down the page. */
+      .pick--lead { grid-column: 1 / -1; }
+
+      .pick {
+        position: relative;
+        display: block;
+        overflow: hidden;
+        min-height: 300px;
+        text-decoration: none;
+        color: inherit;
+        background: #0e0e0e;
+      }
+      .pick--lead { min-height: 420px; }
+
+      .pick__img {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        filter: grayscale(25%) brightness(0.7);
+        transform: scale(1.04);
+        transition: transform var(--slow), filter var(--slow);
+      }
+      .pick:hover .pick__img,
+      .pick:focus-visible .pick__img {
+        transform: scale(1);
+        filter: grayscale(0%) brightness(0.85);
+      }
+      /* A gradient rather than a flat wash: the type sits at the bottom,
+         so that is the only part that needs darkening. */
+      .pick__veil {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to top,
+          rgba(10, 10, 10, 0.92) 0%,
+          rgba(10, 10, 10, 0.55) 35%,
+          rgba(10, 10, 10, 0.1) 70%
+        );
+      }
+      .pick__meta {
+        position: absolute;
+        top: var(--space-3);
+        left: var(--space-3);
+        right: var(--space-3);
+        display: flex;
+        justify-content: space-between;
+        font-family: var(--sans);
+        font-size: var(--text-1);
+        font-weight: 700;
+        letter-spacing: var(--ls-label);
+        text-transform: uppercase;
+        color: var(--fg-dim);
+      }
+      .pick__body {
+        position: absolute;
+        left: var(--space-3);
+        right: var(--space-3);
+        bottom: var(--space-3);
+        display: block;
+      }
+      .pick__title {
+        display: block;
+        font-family: var(--serif);
+        font-size: clamp(1.3rem, 2.4vw, 2rem);
+        font-weight: 300;
+        line-height: 1.1;
+        color: var(--fg);
+      }
+      .pick__title em { font-style: italic; color: var(--accent); }
+      .pick__sub {
+        display: block;
+        margin-top: 0.4rem;
+        max-width: 34rem;
+        font-family: var(--sans);
+        font-size: var(--text-2);
+        line-height: 1.5;
+        color: var(--fg-mid);
+      }
+
+      .selected__all {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        margin-top: var(--space-4);
+        padding: var(--space-3) var(--space-4);
+        border: 1px solid var(--line-2);
+        font-family: var(--sans);
+        font-size: var(--text-2);
+        font-weight: 700;
+        letter-spacing: var(--ls-track);
+        text-transform: uppercase;
+        color: var(--fg-dim);
+        text-decoration: none;
+        transition: color var(--fast), border-color var(--fast);
+      }
+      .selected__all:hover,
+      .selected__all:focus-visible {
+        color: var(--accent);
+        border-color: var(--accent);
+      }
+
+      /* Each pick reuses the image its own room already serves, so this
+         adds no new bytes to the deploy. */
+      .pick--canti     .pick__img { background-image: url("./imgs-craft/Canti/LandscapeHero.webp"); }
+      .pick--thudpuk   .pick__img { background-image: url("./imgs-craft/Thudpuk/FINAL RENDER.webp"); }
+      .pick--cycle     .pick__img { background-image: url("./imgs-expo/CycleArtsFestival/CycleArtsHero.webp"); }
+      .pick--sim       .pick__img { background-image: url("./imgs-digital/SimGlasgow/dashboard ui v8.webp"); }
+      .pick--clydeside .pick__img {
+        background-image: url("./imgs-digital/Clydeside/BizCard FrontAsset 2@2x.webp");
+        background-size: 92%;
+        background-color: #0d1116;
+      }
+      /* Two inset product shots rather than bleed images — the lamp is
+         tall and the app screen is a phone, and cropping either to cover
+         loses the object. */
+      .pick--origin    .pick__img {
+        background-image: url("./imgs-craft/Origin/lamp proto rear 34.webp");
+        background-size: contain;
+        background-color: #101418;
+      }
+      .pick--tarebook  .pick__img {
+        background-image: url("./imgs-digital/Tarebook/01-home-light.webp");
+        background-size: contain;
+        background-color: #0d1116;
+      }
+
       @media (prefers-reduced-motion: reduce) {
+        .scroll-cue__line { animation: none; opacity: 0.6; }
+        .pick__img { transition: none; }
         .panel,
         .panel.is-opening,
         .panel:hover,
@@ -840,15 +952,6 @@
           transition: opacity 0.2s ease, background-color 0.2s ease;
         }
         .panel--digital .panel__bg::after,
-        .panel--all:hover .door-material-shift,
-        .panel--all:focus-within .door-material-shift,
-        .panel--digital .door-handle,
-        .panel--all:hover .door-handle,
-        .panel--all:focus-within .door-handle,
-        .panel--all:hover .door-handle::after,
-        .panel--all:focus-within .door-handle::after {
-          animation: none !important;
-        }
         .door-material-shift { opacity: 0 !important; clip-path: none !important; }
         body.is-navigating::after { opacity: 1; }
       }
@@ -941,10 +1044,15 @@
           display: none;
         }
 
+        .selected__grid { grid-template-columns: 1fr; }
+        .pick,
+        .pick--lead { min-height: 260px; }
+        .selected { margin: var(--space-5) var(--space-3); }
+
         /* ─── SPLIT SCREEN ───────────────────────────────────── */
         .gateway {
           grid-template-columns: 1fr;
-          grid-template-rows: 1fr 1fr 1fr;
+          grid-template-rows: 1fr 1fr;
           margin: 0 var(--space-3);
           height: auto;
           min-height: clamp(600px, 90vh, 920px);
@@ -1038,9 +1146,6 @@
         .panel--craft::before {
           background: var(--accent-2);
         }
-        .panel--all::before {
-          background: var(--gold);
-        }
         .panel:hover::before {
           width: 100%;
         }
@@ -1050,9 +1155,6 @@
         .panel--craft:hover .panel__label {
           color: var(--accent-2);
         }
-        .panel--all:hover .panel__label {
-          color: var(--gold);
-        }
         .panel--digital:hover .panel__btn {
           border-color: var(--accent);
           background: var(--accent);
@@ -1061,11 +1163,6 @@
         .panel--craft:hover .panel__btn {
           border-color: var(--accent-2);
           background: var(--accent-2);
-          color: #0a0a0a;
-        }
-        .panel--all:hover .panel__btn {
-          border-color: var(--gold);
-          background: var(--gold);
           color: #0a0a0a;
         }
 
@@ -1117,7 +1214,7 @@
       </p>
     </header>
 
-    <!-- PLACEHOLDER: connective sentence between tagline and the three gateway paths — to be written. Hidden until supplied. -->
+    <!-- Connective sentence between the tagline and the two doors. -->
     <p class="site-connect" aria-hidden="true">
       Everything ever made is designed and built. The split between physical and
       digital is a false one. I believe in a more holistic approach to design,
@@ -1158,22 +1255,129 @@
           </a>
         </div>
 
-        <!-- Path 03: All Work — Hybrid (wood ↔ pixel) Door -->
-        <div class="panel panel--all" data-accent="#c8b882">
-          <div class="panel__bg"></div>
-          <div class="door-material-shift" aria-hidden="true"></div>
-          <div class="panel__overlay"></div>
-          <span class="door-handle" aria-hidden="true"></span>
-          <span class="panel__label">03 — Everything</span>
-          <h2 class="panel__title">
-            All Work
-            <em>Together</em>
-          </h2>
-          <a href="work.html" class="panel__btn">
-            Enter <span class="arrow">→</span>
-          </a>
-        </div>
       </div>
+
+      <!-- ── SELECTED WORK ────────────────────────────────────
+           The way past the doors. Someone who does not want the tour —
+           a hiring manager with six tabs open — scrolls instead and gets
+           a line through both sides of the practice without choosing a
+           room first. This is the job the third door used to do badly:
+           it asked for a decision about "everything" before the visitor
+           had seen anything at all.
+
+           The order alternates physical and digital deliberately. The
+           hybrid claim in the tagline above is only worth making if the
+           work underneath actually reads that way. -->
+      <!-- The doors fill the first screen, so without this there is nothing
+           to say the page continues. A real anchor, not a decorative arrow:
+           it works on a phone, with a keyboard, and with JS off. -->
+      <a href="#selected-heading" class="scroll-cue">
+        <span>Selected work</span>
+        <span class="scroll-cue__line" aria-hidden="true"></span>
+      </a>
+
+      <section class="selected" aria-labelledby="selected-heading">
+        <div class="selected__head">
+          <p class="selected__eyebrow">In a hurry</p>
+          <h2 class="selected__title" id="selected-heading">
+            Selected <em>work</em>
+          </h2>
+          <p class="selected__note">
+            Seven projects, both sides of the practice. No doors.
+          </p>
+        </div>
+
+        <div class="selected__grid">
+        <a href="canti.html" class="pick pick--canti pick--lead" data-cursor="pot">
+          <span class="pick__img" aria-hidden="true"></span>
+          <span class="pick__veil" aria-hidden="true"></span>
+          <span class="pick__meta">
+            <span class="pick__kind">Industrial</span>
+            <span class="pick__year">2022</span>
+          </span>
+          <span class="pick__body">
+            <span class="pick__title">CANTI — <em>001</em></span>
+            <span class="pick__sub">Solid oak, mahogany and recycled plastic. Designed to be taken apart.</span>
+          </span>
+        </a>
+        <a href="origin.html" class="pick pick--origin" data-cursor="pot">
+          <span class="pick__img" aria-hidden="true"></span>
+          <span class="pick__veil" aria-hidden="true"></span>
+          <span class="pick__meta">
+            <span class="pick__kind">Industrial</span>
+            <span class="pick__year">2021</span>
+          </span>
+          <span class="pick__body">
+            <span class="pick__title">Origin <em>Plastics</em></span>
+            <span class="pick__sub">Homeware from recycled plastic. Injection moulding, CAD, user research.</span>
+          </span>
+        </a>
+        <a href="sim-glasgow.html" class="pick pick--sim" data-cursor="monitor">
+          <span class="pick__img" aria-hidden="true"></span>
+          <span class="pick__veil" aria-hidden="true"></span>
+          <span class="pick__meta">
+            <span class="pick__kind">Digital</span>
+            <span class="pick__year">2024</span>
+          </span>
+          <span class="pick__body">
+            <span class="pick__title">Sim <em>Glasgow</em></span>
+            <span class="pick__sub">Dashboard, politics, property and bank screens for a city-management game.</span>
+          </span>
+        </a>
+        <a href="thudpuk.html" class="pick pick--thudpuk" data-cursor="pot">
+          <span class="pick__img" aria-hidden="true"></span>
+          <span class="pick__veil" aria-hidden="true"></span>
+          <span class="pick__meta">
+            <span class="pick__kind">Industrial</span>
+            <span class="pick__year">2022</span>
+          </span>
+          <span class="pick__body">
+            <span class="pick__title">THUDPUK</span>
+            <span class="pick__sub">A flying toy costed for mass manufacture in recycled plastic.</span>
+          </span>
+        </a>
+        <a href="clydeside.html" class="pick pick--clydeside" data-cursor="monitor">
+          <span class="pick__img" aria-hidden="true"></span>
+          <span class="pick__veil" aria-hidden="true"></span>
+          <span class="pick__meta">
+            <span class="pick__kind">Digital</span>
+            <span class="pick__year">2024</span>
+          </span>
+          <span class="pick__body">
+            <span class="pick__title">Clydeside <em>Logistics</em></span>
+            <span class="pick__sub">Identity system, vehicle livery, and the website build.</span>
+          </span>
+        </a>
+        <a href="cycle-arts.html" class="pick pick--cycle" data-cursor="pot">
+          <span class="pick__img" aria-hidden="true"></span>
+          <span class="pick__veil" aria-hidden="true"></span>
+          <span class="pick__meta">
+            <span class="pick__kind">Installation</span>
+            <span class="pick__year">2025</span>
+          </span>
+          <span class="pick__body">
+            <span class="pick__title">Cycle Arts <em>Festival</em></span>
+            <span class="pick__sub">Site-specific ceramic installations along Renfrewshire cycle routes.</span>
+          </span>
+        </a>
+        <a href="tarebook.html" class="pick pick--tarebook" data-cursor="monitor">
+          <span class="pick__img" aria-hidden="true"></span>
+          <span class="pick__veil" aria-hidden="true"></span>
+          <span class="pick__meta">
+            <span class="pick__kind">Digital</span>
+            <span class="pick__year">2024</span>
+          </span>
+          <span class="pick__body">
+            <span class="pick__title">Tarebook</span>
+            <span class="pick__sub">A pocket ledger for a studio. Mobile-first product design.</span>
+          </span>
+        </a>
+        </div>
+
+        <a href="work.html" class="selected__all">
+          Every project <span aria-hidden="true">&rarr;</span>
+        </a>
+      </section>
     </main>
 
     <!-- ── FOOTER NAV ─────────────────────────────────────── -->
