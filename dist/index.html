@@ -311,6 +311,8 @@
 
       /* ─── DOOR GATEWAY (3D-perspective doors) ────────────── */
       .gateway {
+        /* Read by the opening JS too — one number, not two that drift. */
+        --door-open-time: 0.52s;
         display: grid;
         /* Two doors. The third — "All Work Together" — asked the visitor to
            choose everything before they had seen anything; that job now
@@ -326,16 +328,34 @@
         perspective-origin: center 40%;
       }
 
+      /* ─── THE DOORS ───────────────────────────────────────
+         Two doors in a shopfront hinge on their OUTER edges and open
+         outward, away from each other — the frame between them is the
+         jamb, not a hinge. Both used to swing from the left, which read
+         as two doors in a row rather than a pair, and only stopped being
+         obviously wrong when there were three of them.
+
+         --door-swing is the direction each door turns: negative for the
+         left leaf, positive for the right. Every rotation below is
+         written in terms of it, so the pair stays mirrored and the 3D
+         scene has one number to match when it replaces this. */
       .panel {
         position: relative;
         overflow: hidden;
         cursor: none;
         transform-style: preserve-3d;
-        transform-origin: left center;
         transition:
-          transform 0.6s cubic-bezier(0.4, 0.05, 0.2, 1),
-          box-shadow 0.6s var(--ease);
+          transform var(--door-time, 0.6s) cubic-bezier(0.4, 0.05, 0.2, 1),
+          box-shadow var(--door-time, 0.6s) var(--ease);
         will-change: transform;
+      }
+      .panel--digital {
+        transform-origin: left center;
+        --door-swing: -1;
+      }
+      .panel--craft {
+        transform-origin: right center;
+        --door-swing: 1;
       }
 
       /* Door surface (was .panel__bg) — base material */
@@ -672,11 +692,21 @@
       /* ── HOVER + FOCUS PHYSICS (door opens slightly) ──────── */
       .panel:hover,
       .panel:focus-within {
-        transform: rotateY(-9deg) translateZ(0);
+        transform: rotateY(calc(var(--door-swing, -1) * 9deg));
+        z-index: 6;
+      }
+      /* The shadow falls away from the hinge, so it mirrors too. */
+      .panel--digital:hover,
+      .panel--digital:focus-within {
         box-shadow:
           18px 0 36px -10px rgba(0, 0, 0, 0.55),
           inset -1px 0 0 rgba(255, 255, 255, 0.04);
-        z-index: 6;
+      }
+      .panel--craft:hover,
+      .panel--craft:focus-within {
+        box-shadow:
+          -18px 0 36px -10px rgba(0, 0, 0, 0.55),
+          inset 1px 0 0 rgba(255, 255, 255, 0.04);
       }
       .panel:hover .panel__overlay,
       .panel:focus-within .panel__overlay {
@@ -718,15 +748,40 @@
 
       /* ── CLICK / OPEN ANIMATION ───────────────────────────── */
       .panel.is-opening {
-        transform: rotateY(-78deg) translateZ(20px);
-        box-shadow:
-          32px 0 60px -10px rgba(0, 0, 0, 0.8),
-          inset -1px 0 0 rgba(255, 255, 255, 0.06);
-        transition: transform 0.42s cubic-bezier(0.55, 0, 0.2, 1),
-                    box-shadow 0.42s ease;
+        transform: rotateY(calc(var(--door-swing, -1) * 78deg)) translateZ(20px);
+        transition:
+          transform var(--door-open-time) cubic-bezier(0.55, 0, 0.2, 1),
+          box-shadow var(--door-open-time) ease;
         z-index: 7;
       }
+      .panel--digital.is-opening {
+        box-shadow: 32px 0 60px -10px rgba(0, 0, 0, 0.8),
+                    inset -1px 0 0 rgba(255, 255, 255, 0.06);
+      }
+      .panel--craft.is-opening {
+        box-shadow: -32px 0 60px -10px rgba(0, 0, 0, 0.8),
+                    inset 1px 0 0 rgba(255, 255, 255, 0.06);
+      }
+      /* Light spills across the leaf as it swings toward the viewer. */
       .panel.is-opening .panel__bg { filter: brightness(1.25); }
+
+      /* The door you did NOT choose settles back into the frame, so the
+         eye follows the one that is opening rather than splitting
+         between two moving objects. */
+      .gateway.is-entering .panel:not(.is-opening) {
+        transform: rotateY(calc(var(--door-swing, -1) * -2deg)) scale(0.985);
+        filter: brightness(0.55) saturate(0.8);
+        transition:
+          transform var(--door-open-time) ease,
+          filter var(--door-open-time) ease;
+      }
+
+      /* And the whole frame eases forward, so it reads as stepping
+         through the doorway rather than watching it from the pavement. */
+      .gateway.is-entering {
+        transform: scale(1.035);
+        transition: transform var(--door-open-time) cubic-bezier(0.4, 0, 0.2, 1);
+      }
 
       /* Page-wide fade overlay (set --door-accent before adding class) */
       body::after {
@@ -737,11 +792,12 @@
         opacity: 0;
         pointer-events: none;
         z-index: 99999;
-        transition: opacity 0.35s ease;
+        /* Short and late. The flood is the handoff to the next page, not
+           the transition itself — at 0.35s starting early it washed out
+           the swing it was supposed to follow. */
+        transition: opacity 0.2s ease;
       }
       body.is-navigating::after { opacity: 0.95; }
-
-      /* ── REDUCED MOTION — drop the theatrics ──────────────── */
 
       /* ─── SELECTED WORK ───────────────────────────────────
          The scroll path past the doors. Deliberately quieter than the
@@ -941,14 +997,20 @@
         background-color: #0d1116;
       }
 
+      /* ── REDUCED MOTION — drop the theatrics ──────────────── */
       @media (prefers-reduced-motion: reduce) {
         .scroll-cue__line { animation: none; opacity: 0.6; }
         .pick__img { transition: none; }
         .panel,
         .panel.is-opening,
         .panel:hover,
-        .panel:focus-within {
+        .panel:focus-within,
+        /* The frame and the unopened leaf move too now, so they need
+           flattening here as well or reduced-motion still gets a lurch. */
+        .gateway.is-entering,
+        .gateway.is-entering .panel:not(.is-opening) {
           transform: none !important;
+          filter: none !important;
           transition: opacity 0.2s ease, background-color 0.2s ease;
         }
         .panel--digital .panel__bg::after,
@@ -1415,16 +1477,30 @@
       
 
       /* ─── DOOR-OPENING NAVIGATION ─────────────────────────
-         Click any panel's Enter button → trigger door rotateY
-         + accent-tinted full-page fade, then navigate after
-         420ms. prefers-reduced-motion bypasses the animation
+         Click a door's Enter button → that leaf swings open on
+         its own outer hinge, the other settles back, the frame
+         eases forward, then an accent-tinted fade carries the
+         visitor through. Timing comes from --door-open-time. prefers-reduced-motion bypasses the animation
          entirely and follows the link normally. Repeat clicks
          on the same panel skip straight to navigation so it
          never feels stuck on second visit.
          ────────────────────────────────────────────────────── */
       const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
       const isTouchOnly = window.matchMedia("(hover: none)").matches;
-      const OPEN_DURATION_MS = 420;
+      const gateway = document.querySelector(".gateway");
+
+      /* The duration lives in CSS as --door-open-time and is read back
+         here, so the wait before navigating and the length of the swing
+         are the same number by construction. Two hardcoded values drift
+         the moment one of them is tuned. */
+      function openDurationMs() {
+        if (!gateway) return 520;
+        const raw = getComputedStyle(gateway).getPropertyValue("--door-open-time").trim();
+        const n = parseFloat(raw);
+        if (!n) return 520;
+        return raw.endsWith("ms") ? n : n * 1000;
+      }
+
       let isNavigating = false;
 
       document.querySelectorAll(".panel").forEach((panel) => {
@@ -1449,12 +1525,17 @@
           }
           e.preventDefault();
           isNavigating = true;
+          const openMs = openDurationMs();
           document.body.style.setProperty("--door-accent", accent);
+          // is-entering on the frame dims the other leaf and eases the
+          // whole gateway forward; is-opening swings the chosen one.
+          if (gateway) gateway.classList.add("is-entering");
           panel.classList.add("is-opening");
-          // Push the body fade ~100ms after the door starts opening so it
-          // reads as "stepping through" rather than a hard wipe.
-          window.setTimeout(() => document.body.classList.add("is-navigating"), 90);
-          window.setTimeout(() => { window.location.href = link.href; }, OPEN_DURATION_MS);
+          // The flood starts at 60% of the swing and takes 200ms, landing
+          // just as the navigation fires. By then the door is ~75° open,
+          // so the colour follows the swing instead of hiding it.
+          window.setTimeout(() => document.body.classList.add("is-navigating"), openMs * 0.6);
+          window.setTimeout(() => { window.location.href = link.href; }, openMs);
         });
       });
 
@@ -1473,6 +1554,7 @@
       // fade so the page is interactive again on return.
       window.addEventListener("pageshow", () => {
         document.body.classList.remove("is-navigating");
+        if (gateway) gateway.classList.remove("is-entering");
         document.querySelectorAll(".panel.is-opening")
           .forEach((p) => p.classList.remove("is-opening"));
         isNavigating = false;
