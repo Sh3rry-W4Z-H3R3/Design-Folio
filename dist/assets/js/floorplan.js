@@ -303,7 +303,26 @@
     );
     mark.innerHTML =
       '<span class="mark__name">Sherjeel <em>Hussain</em></span>' + glyph();
-    bar.appendChild(mark);
+
+    /* Quick contact. Sits beside the plan rather than inside it: getting
+       in touch is the one thing a visitor might want that is not a room,
+       and burying it a click deep in a floorplan would be a poor trade
+       for a hiring manager with a shortlist to get through. Not rendered
+       on the contact page itself. */
+    if (page !== "contact.html") {
+      var say = el("a", "hail glass");
+      say.href = "contact.html";
+      say.innerHTML =
+        '<svg class="hail__glyph" viewBox="0 0 14 12" aria-hidden="true" focusable="false">' +
+        '<rect x="0.6" y="0.6" width="12.8" height="10.8" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.2"/>' +
+        '<path d="M1 2.2 7 6.6l6-4.4" fill="none" stroke="currentColor" stroke-width="1.2"/>' +
+        "</svg>";
+      say.appendChild(el("span", null, "Contact"));
+      // The word is hidden on narrow screens, so the link needs a name
+      // that does not depend on it.
+      say.setAttribute("aria-label", "Contact Sherjeel");
+      bar.appendChild(say);
+    }
 
     if (parent) {
       var chip = el("a", "back-chip glass");
@@ -317,7 +336,7 @@
       // The label is hidden on narrow screens and the arrow carries no
       // text, so the chip needs a name of its own.
       chip.setAttribute("aria-label", "Back to " + parent.name);
-      bar.appendChild(chip);
+      bar.insertBefore(chip, bar.firstChild);
     }
 
     /* The entrance page carries its own identity in the hero, so the rail
@@ -341,6 +360,9 @@
         bar.classList.add("is-stuck");
       }
     }
+
+    // Last, so it sits in the corner itself.
+    bar.appendChild(mark);
 
     document.body.appendChild(bar);
 

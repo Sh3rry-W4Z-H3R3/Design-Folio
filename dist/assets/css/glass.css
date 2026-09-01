@@ -61,7 +61,10 @@
 .rail {
   position: fixed;
   top: var(--space-3);
-  left: var(--space-3);
+  /* Top-right on every page. The left corner is where a logo lives and
+     reads as "home"; the right is where controls live and reads as
+     "things I can do" — which is what this row is. */
+  right: var(--space-3);
   z-index: 120;
   display: flex;
   align-items: center;
@@ -142,6 +145,38 @@
 .mark__glyph rect[data-room="play"]:hover       { fill: var(--gold);  opacity: 1; }
 .mark__glyph rect[data-room="office"]:hover     { fill: var(--rose);  opacity: 1; }
 
+/* ── QUICK CONTACT ──────────────────────────────────────────
+   Deliberately quieter than the plan and louder than nothing: an
+   envelope and a word, in the same glass as its neighbours. */
+.hail {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.75rem;
+  border-radius: 2px;
+  font-family: var(--sans);
+  font-size: var(--text-2);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: var(--ls-track);
+  text-transform: uppercase;
+  color: var(--fg-dim);
+  text-decoration: none;
+  transition:
+    color var(--fast),
+    border-color var(--fast);
+}
+.hail__glyph {
+  width: 13px;
+  height: 11px;
+  flex-shrink: 0;
+}
+.hail:hover,
+.hail:focus-visible {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
 /* ── BACK CHIP ──────────────────────────────────────────────
    Case studies only. Carries its room's accent so the way back is
    colour-coded to where it goes. */
@@ -190,8 +225,13 @@
     font-size: var(--text-6);
     padding: 0.45rem 0.7rem;
   }
-  .back-chip {
+  .back-chip,
+  .hail {
     padding: 0.45rem 0.55rem;
+  }
+  /* The envelope carries the meaning on its own at this width. */
+  .hail span {
+    display: none;
   }
   /* display:none rather than the usual visually-hidden clip. The chip
      carries its own aria-label ("Back to Industrial"), so the label text
@@ -214,24 +254,13 @@
 /* ── THE ENTRANCE BEACON ────────────────────────────────────
    index.html only. The hero already says the name in full, so a second
    wordmark in the corner was the same word twice on one screen. There the
-   rail is the plan glyph alone, sitting top-right where a door number
-   would be — then, once the hero has scrolled past, it gathers itself into
-   the glass pill the rest of the site uses.
+   mark is the plan glyph alone — larger, so it reads as a building rather
+   than an icon — and it gains the wordmark only once the hero has
+   scrolled past.
 
-   The move is one transform on a fixed left:50%, rather than animating
-   between left and right, because those two do not interpolate. */
-.rail--beacon {
-  left: 50%;
-  right: auto;
-  transform: translateX(calc(50vw - 100% - var(--space-3)));
-  transition: transform var(--slow) var(--ease);
-}
-.rail--beacon.is-stuck {
-  transform: translateX(-50%);
-}
-
-/* Hero state: no glass, no wordmark — just the plan, larger, so it can
-   be read as a building rather than an icon. */
+   Now that the rail lives in the right corner on every page, the beacon
+   no longer travels: it stays put and changes shape, which is both
+   simpler and steadier to look at. */
 .rail--beacon .mark {
   background: transparent;
   border-color: transparent;
@@ -251,8 +280,8 @@
   width: 40px;
   height: 40px;
 }
-/* max-width rather than display, so the name can slide out from behind
-   the glyph rather than appearing from nothing. */
+/* max-width rather than display, so the name slides out from behind the
+   glyph rather than appearing from nothing. */
 .rail--beacon .mark__name {
   max-width: 0;
   opacity: 0;
@@ -261,6 +290,13 @@
   transition:
     max-width var(--slow) var(--ease),
     opacity 0.25s ease;
+}
+/* The neighbours would compete with a 40px plan, so they wait for the
+   scrolled state too. */
+.rail--beacon .hail {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--slow) var(--ease);
 }
 
 /* Scrolled: the pill, as everywhere else. */
@@ -283,6 +319,10 @@
   width: 22px;
   height: 22px;
 }
+.rail--beacon.is-stuck .hail {
+  opacity: 1;
+  pointer-events: auto;
+}
 
 /* Hover: the plan pans out. Big enough that a single room is a target
    you can actually aim at, which is what makes the per-room colours
@@ -299,18 +339,9 @@
 }
 
 @media (max-width: 700px) {
-  /* No room to swing between corners on a phone, and the hero wordmark
-     wraps to two lines — so the beacon behaves like the ordinary rail. */
-  .rail--beacon,
-  .rail--beacon.is-stuck {
-    left: var(--space-2);
-    right: auto;
-    transform: none;
-  }
-  .rail--beacon .mark__glyph {
-    width: 26px;
-    height: 26px;
-  }
+  /* A 40px plan crowds a phone, and the hero wordmark wraps — so the
+     beacon behaves like the ordinary rail. */
+  .rail--beacon .mark__glyph,
   .rail--beacon.is-stuck .mark:hover .mark__glyph {
     width: 26px;
     height: 26px;
@@ -318,10 +349,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .rail--beacon,
   .rail--beacon .mark,
   .rail--beacon .mark__name,
-  .rail--beacon .mark__glyph {
+  .rail--beacon .mark__glyph,
+  .rail--beacon .hail {
     transition: none;
   }
 }

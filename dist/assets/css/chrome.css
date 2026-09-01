@@ -37,12 +37,25 @@
       opacity var(--fast);
   }
 
+  /* The grown ring reads as "this is a target". Its weight is a token
+     because the two main rooms want it heavier — see below. */
   :root[data-mode="workshop"] .cursor.grow {
     width: 40px;
     height: 40px;
     background: transparent;
-    border: 1px solid var(--accent);
-    opacity: 0.7;
+    border: var(--cursor-ring, 1px) solid var(--accent);
+    opacity: var(--cursor-ring-opacity, 0.7);
+  }
+
+  /* Industrial and Digital are where the work actually gets browsed, and
+     a 1px ring at 0.7 opacity is easy to lose against a photograph. A
+     heavier, more opaque ring makes both the highlight and the pointer's
+     position read immediately. Applies to the room pages and to every
+     case study inside them, since both carry the room on <html>. */
+  :root[data-mode="workshop"][data-room="digital"],
+  :root[data-mode="workshop"][data-room="physical"] {
+    --cursor-ring: 2px;
+    --cursor-ring-opacity: 0.95;
   }
 
   :root[data-mode="workshop"] .cursor-icon {

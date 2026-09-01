@@ -134,29 +134,6 @@
       }
 
       /* ── CURSOR (From digital.html) ─────────────────────── */
-      .cursor {
-        position: fixed;
-        width: 10px;
-        height: 10px;
-        background: var(--fg);
-        border-radius: 50%;
-        pointer-events: none; /* Prevents cursor from blocking clicks underneath */
-        z-index: 9999;
-        transform: translate(-50%, -50%);
-        transition:
-          width var(--fast),
-          height var(--fast),
-          background var(--fast),
-          opacity var(--fast);
-      }
-
-      .cursor.grow {
-        width: 50px; /* Slightly larger to account for big gallery items */
-        height: 50px;
-        background: transparent;
-        border: 1px solid var(--accent);
-        opacity: 0.7;
-      }
 
       /* ── PAGE HEADER ──────────────────────────────────────── */
       .page-header {
