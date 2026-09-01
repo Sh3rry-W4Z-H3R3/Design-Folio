@@ -261,6 +261,30 @@
     return dlg;
   }
 
+  /* The mark's plan glyph, drawn from PLAN rather than hand-lettered as a
+     path. It is the same building as the dialog, one twentieth the size,
+     so the two cannot drift apart when the geometry is redrawn — and each
+     cell carries its data-room, which is what lets it light in its own
+     room's colour.
+
+     Percentages map straight onto a 100x100 viewBox, so no arithmetic is
+     needed to keep them in step. */
+  function glyph() {
+    var cells = PLAN.rooms.map(function (r) {
+      return (
+        '<rect data-room="' + r.id + '"' +
+        ' x="' + r.x + '" y="' + r.y + '"' +
+        ' width="' + r.w + '" height="' + r.h + '"' +
+        ' vector-effect="non-scaling-stroke"><title>' + r.name + "</title></rect>"
+      );
+    });
+    return (
+      '<svg class="mark__glyph" viewBox="-2 -2 104 104" aria-hidden="true" focusable="false">' +
+      cells.join("") +
+      "</svg>"
+    );
+  }
+
   /* The floating rail: the wordmark, which is also the way into the plan,
      and — on a case study — the chip back to its room. */
   function rail(dlg) {
@@ -278,11 +302,7 @@
         : "Sherjeel Hussain — open the menu"
     );
     mark.innerHTML =
-      "Sherjeel <em>Hussain</em>" +
-      '<svg class="mark__glyph" viewBox="0 0 16 16" aria-hidden="true" focusable="false">' +
-      '<rect x="0.75" y="0.75" width="14.5" height="14.5" fill="none" stroke="currentColor" stroke-width="1.4"/>' +
-      '<path d="M6.5 1v6.5M0.75 7.5H16M10 7.5V16" stroke="currentColor" stroke-width="1.4"/>' +
-      "</svg>";
+      '<span class="mark__name">Sherjeel <em>Hussain</em></span>' + glyph();
     bar.appendChild(mark);
 
     if (parent) {
@@ -298,6 +318,28 @@
       // text, so the chip needs a name of its own.
       chip.setAttribute("aria-label", "Back to " + parent.name);
       bar.appendChild(chip);
+    }
+
+    /* The entrance page carries its own identity in the hero, so the rail
+       does not need to repeat it: there it starts as the plan glyph alone,
+       in the top-right corner, and only becomes a wordmark pill once the
+       hero has scrolled away. Every other page has no hero wordmark, so
+       the rail is the identity and stays as it is. */
+    if (page === PLAN.entrance.href) {
+      bar.classList.add("rail--beacon");
+      var hero = document.querySelector("header");
+      if (hero && typeof IntersectionObserver === "function") {
+        new IntersectionObserver(
+          function (entries) {
+            bar.classList.toggle("is-stuck", !entries[0].isIntersecting);
+          },
+          { rootMargin: "-32px 0px 0px 0px" }
+        ).observe(hero);
+      } else {
+        // No observer: show the pill rather than leaving the page with
+        // navigation that only appears under a condition we cannot detect.
+        bar.classList.add("is-stuck");
+      }
     }
 
     document.body.appendChild(bar);

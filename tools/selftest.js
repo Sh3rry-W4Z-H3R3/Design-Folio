@@ -158,6 +158,20 @@ const MUTATIONS = [
     },
   },
   {
+    name: "the entrance beacon reverts to an ordinary rail",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "assets/js/floorplan.js",
+    // Restores the second wordmark on index.html: the hero says the name
+    // and so does the corner. Both render fine, which is exactly why a
+    // screenshot would not catch it.
+    mutate: (s) => {
+      const old = 'if (page === PLAN.entrance.href) {';
+      if (!s.includes(old)) throw new Error("beacon branch not found");
+      return s.replace(old, "if (false) {");
+    },
+  },
+  {
     name: "the floorplan no longer opens as a modal",
     detectedBy: "behaviour.js",
     scope: [],

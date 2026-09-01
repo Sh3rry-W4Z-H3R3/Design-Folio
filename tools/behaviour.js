@@ -378,6 +378,61 @@ const check = (name, pass, detail) => results.push({ name, pass, detail });
     await ctx.close();
   }
 
+  // 13. The entrance beacon: on index.html the rail is the plan glyph
+  //     alone in the top-right corner while the hero is on screen — the
+  //     hero already says the name — and gathers into the wordmark pill
+  //     once the hero has scrolled away.
+  {
+    const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+    const page = await ctx.newPage();
+    await page.goto(url("index.html"));
+    await page.waitForTimeout(400);
+
+    const hero = await page.evaluate(() => {
+      const rail = document.querySelector(".rail");
+      const glyph = document.querySelector(".mark__glyph");
+      return {
+        beacon: rail.classList.contains("rail--beacon"),
+        stuck: rail.classList.contains("is-stuck"),
+        nameWidth: document.querySelector(".mark__name").getBoundingClientRect().width,
+        glyphRight: glyph.getBoundingClientRect().right,
+        cells: glyph.querySelectorAll("rect").length,
+      };
+    });
+    check("index rail is the entrance beacon", hero.beacon);
+    check("beacon starts unstuck over the hero", !hero.stuck);
+    check("hero state hides the second wordmark", hero.nameWidth === 0, "width " + hero.nameWidth);
+    check("hero glyph sits in the right-hand corner", hero.glyphRight > 1440 * 0.85,
+      "right edge at " + Math.round(hero.glyphRight));
+    // The glyph is drawn from PLAN, so it has exactly one cell per room.
+    check("glyph has one cell per room", hero.cells === 5, hero.cells + " cells");
+
+    await page.evaluate(() => window.scrollTo(0, 900));
+    await page.waitForTimeout(900);
+    const stuck = await page.evaluate(() => {
+      const rail = document.querySelector(".rail");
+      const mark = document.querySelector(".mark");
+      const bg = getComputedStyle(mark).backgroundColor.match(/[\d.]+/g) || [];
+      return {
+        stuck: rail.classList.contains("is-stuck"),
+        nameWidth: document.querySelector(".mark__name").getBoundingClientRect().width,
+        alpha: bg.length > 3 ? parseFloat(bg[3]) : 1,
+      };
+    });
+    check("beacon sticks once the hero has gone", stuck.stuck);
+    check("scrolled state shows the wordmark", stuck.nameWidth > 40, "width " + stuck.nameWidth);
+    check("scrolled state is glass", stuck.alpha >= 0.4, "alpha " + stuck.alpha);
+
+    // Every other page keeps the ordinary rail.
+    await page.goto(url("craft.html"));
+    await page.waitForTimeout(300);
+    check("other pages keep the ordinary rail", await page.evaluate(() =>
+      !document.querySelector(".rail").classList.contains("rail--beacon") &&
+      document.querySelector(".mark__name").getBoundingClientRect().width > 40
+    ));
+    await ctx.close();
+  }
+
   await browser.close();
   server.close();
 

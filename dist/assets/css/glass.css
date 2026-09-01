@@ -106,19 +106,41 @@
   border-color: var(--accent);
 }
 
-/* A small plan glyph, so the control reads as "opens something" rather
-   than as a link home. Matches the favicon. */
+/* The plan glyph: the building in miniature, so the control reads as
+   "opens the plan" rather than as a link home. Drawn from PLAN by
+   floorplan.js, so the cells here are the same rooms as the dialog's. */
 .mark__glyph {
-  width: 11px;
-  height: 11px;
+  width: 15px;
+  height: 15px;
   flex-shrink: 0;
+  overflow: visible;
+  transition:
+    width var(--slow),
+    height var(--slow);
+}
+.mark__glyph rect {
+  fill: transparent;
+  stroke: currentColor;
+  stroke-width: 1.1;
   opacity: 0.55;
-  transition: opacity var(--fast);
+  transition:
+    fill var(--fast),
+    opacity var(--fast);
 }
-.mark:hover .mark__glyph,
-.mark:focus-visible .mark__glyph {
-  opacity: 1;
+.mark:hover .mark__glyph rect,
+.mark:focus-visible .mark__glyph rect {
+  opacity: 0.9;
 }
+
+/* Each cell lights in the colour of the room it stands for. The values
+   come from the same tokens the rooms themselves use, so a room that is
+   recoloured is recoloured here too. Only meaningful once the glyph is
+   large enough to aim at — see .beacon--open. */
+.mark__glyph rect[data-room="physical"]:hover   { fill: var(--mint);  opacity: 1; }
+.mark__glyph rect[data-room="digital"]:hover    { fill: var(--pink);  opacity: 1; }
+.mark__glyph rect[data-room="exhibition"]:hover { fill: var(--cream); opacity: 1; }
+.mark__glyph rect[data-room="play"]:hover       { fill: var(--gold);  opacity: 1; }
+.mark__glyph rect[data-room="office"]:hover     { fill: var(--rose);  opacity: 1; }
 
 /* ── BACK CHIP ──────────────────────────────────────────────
    Case studies only. Carries its room's accent so the way back is
@@ -185,6 +207,121 @@
   .mark,
   .back-chip,
   .mark__glyph {
+    transition: none;
+  }
+}
+
+/* ── THE ENTRANCE BEACON ────────────────────────────────────
+   index.html only. The hero already says the name in full, so a second
+   wordmark in the corner was the same word twice on one screen. There the
+   rail is the plan glyph alone, sitting top-right where a door number
+   would be — then, once the hero has scrolled past, it gathers itself into
+   the glass pill the rest of the site uses.
+
+   The move is one transform on a fixed left:50%, rather than animating
+   between left and right, because those two do not interpolate. */
+.rail--beacon {
+  left: 50%;
+  right: auto;
+  transform: translateX(calc(50vw - 100% - var(--space-3)));
+  transition: transform var(--slow) var(--ease);
+}
+.rail--beacon.is-stuck {
+  transform: translateX(-50%);
+}
+
+/* Hero state: no glass, no wordmark — just the plan, larger, so it can
+   be read as a building rather than an icon. */
+.rail--beacon .mark {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  gap: 0;
+  padding: var(--space-2);
+  transition:
+    background var(--slow),
+    border-color var(--slow),
+    box-shadow var(--slow),
+    padding var(--slow),
+    gap var(--slow);
+}
+.rail--beacon .mark__glyph {
+  width: 40px;
+  height: 40px;
+}
+/* max-width rather than display, so the name can slide out from behind
+   the glyph rather than appearing from nothing. */
+.rail--beacon .mark__name {
+  max-width: 0;
+  opacity: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  transition:
+    max-width var(--slow) var(--ease),
+    opacity 0.25s ease;
+}
+
+/* Scrolled: the pill, as everywhere else. */
+.rail--beacon.is-stuck .mark {
+  background: var(--glass-bg-rail);
+  border-color: var(--glass-edge);
+  border-top-color: var(--glass-edge-lit);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-radius: 999px;
+  gap: 0.7rem;
+  padding: 0.45rem 0.5rem 0.45rem 1rem;
+}
+.rail--beacon.is-stuck .mark__name {
+  max-width: 16ch;
+  opacity: 1;
+}
+.rail--beacon.is-stuck .mark__glyph {
+  width: 22px;
+  height: 22px;
+}
+
+/* Hover: the plan pans out. Big enough that a single room is a target
+   you can actually aim at, which is what makes the per-room colours
+   worth having. */
+.rail--beacon.is-stuck .mark:hover .mark__glyph,
+.rail--beacon.is-stuck .mark:focus-visible .mark__glyph {
+  width: 76px;
+  height: 76px;
+}
+.rail--beacon.is-stuck .mark:hover,
+.rail--beacon.is-stuck .mark:focus-visible {
+  padding: 0.7rem 0.9rem;
+  border-radius: 14px;
+}
+
+@media (max-width: 700px) {
+  /* No room to swing between corners on a phone, and the hero wordmark
+     wraps to two lines — so the beacon behaves like the ordinary rail. */
+  .rail--beacon,
+  .rail--beacon.is-stuck {
+    left: var(--space-2);
+    right: auto;
+    transform: none;
+  }
+  .rail--beacon .mark__glyph {
+    width: 26px;
+    height: 26px;
+  }
+  .rail--beacon.is-stuck .mark:hover .mark__glyph {
+    width: 26px;
+    height: 26px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rail--beacon,
+  .rail--beacon .mark,
+  .rail--beacon .mark__name,
+  .rail--beacon .mark__glyph {
     transition: none;
   }
 }

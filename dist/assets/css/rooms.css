@@ -60,6 +60,17 @@
   --accent-edge: rgba(200, 184, 130, 0.3);
 }
 
+/* ── OFFICE ─────────────────────────────────────────────────
+   About and contact. A lighter pink than the digital room: the same
+   family, turned down — this is where you find the person rather than
+   the work. */
+[data-room="office"] {
+  --accent: var(--rose);
+  --accent-2: var(--mint);
+  --accent-soft: rgba(240, 145, 159, 0.08);
+  --accent-edge: rgba(240, 145, 159, 0.3);
+}
+
 /* ── EXHIBITION ─────────────────────────────────────────────
    Currently dark, matching the mint accent these pages already use.
    This is the one light room. Walking in should feel like stepping out of
