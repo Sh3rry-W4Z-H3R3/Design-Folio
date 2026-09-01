@@ -23,17 +23,27 @@ const DIST = path.join(ROOT, "dist");
 
 const MUTATIONS = [
   {
-    name: "cursor anchored to page CSS instead of the viewport",
+    name: "the cursor stops following the pointer",
     detectedBy: "cursor-check.js",
     scope: ["craft"],
     file: "assets/js/chrome.js",
-    // Removes the inline left/top anchor, restoring the real bug where a
-    // page's own `left: 50vw` offsets the dot from the pointer.
+    /* This replaces "cursor anchored to page CSS instead of the viewport",
+       which stopped being a bug that could happen. That mutation stripped
+       the inline left/top anchor so a page's own `left: 50vw` would offset
+       the dot — but every page-level .cursor rule has since been removed,
+       and chrome.css positions the dot at the origin itself, so removing
+       the anchor no longer breaks anything. A mutation nothing can catch
+       is not evidence of a weak check; it is a mutation whose hazard is
+       gone.
+
+       The anchor stays as insurance against a page reintroducing that
+       CSS. What cursor-check.js still genuinely defends is the tracking
+       itself, so that is what this breaks. */
     mutate: (s) => {
-      const i = s.indexOf("    // Anchor both elements at the viewport origin");
-      const j = s.indexOf("    var x = 0, y = 0, queued = false;");
-      if (i === -1 || j === -1) throw new Error("anchor block not found");
-      return s.slice(0, i) + s.slice(j);
+      const old = 'dot.style.transform = "translate(" + x + "px," + y + "px) translate(-50%,-50%)";';
+      if (!s.includes(old)) throw new Error("paint transform not found");
+      // Half-speed tracking: the dot still moves, so it looks alive.
+      return s.replace(old, 'dot.style.transform = "translate(" + (x / 2) + "px," + (y / 2) + "px) translate(-50%,-50%)";');
     },
   },
   {
