@@ -58,6 +58,15 @@
   --accent-2: var(--mint);
   --accent-soft: rgba(200, 184, 130, 0.08);
   --accent-edge: rgba(200, 184, 130, 0.3);
+
+  /* Pure black rather than the site's near-black. side-quests.html had
+     chosen this for itself and it is right for the room — the archive and
+     the experiments read better with no floor under them at all — so it
+     belongs here as the room's identity rather than as a page override
+     that the shared layer cannot see. */
+  --bg: #000000;
+  --surface: #0d0d0d;
+  --surface-2: #080808;
 }
 
 /* ── OFFICE ─────────────────────────────────────────────────

@@ -214,6 +214,20 @@ const MUTATIONS = [
     },
   },
   {
+    name: "a room overrides its own accent again",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "side-quests.html",
+    // The exact fault that sat in the Play room unnoticed: the page
+    // declares its room and then quietly repaints it another room's
+    // colour. Consistently wrong looks designed.
+    mutate: (s) => {
+      const anchor = "</head>";
+      if (!s.includes(anchor)) throw new Error("no </head>");
+      return s.replace(anchor, "<style>:root{--accent:#e8547a;}</style>\n" + anchor);
+    },
+  },
+  {
     name: "the floorplan no longer opens as a modal",
     detectedBy: "behaviour.js",
     scope: [],

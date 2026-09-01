@@ -469,6 +469,42 @@ const check = (name, pass, detail) => results.push({ name, pass, detail });
     await ctx.close();
   }
 
+  // 14. Every room actually wears its own accent.
+  //
+  //     side-quests.html carried data-room="play" and then overrode
+  //     --accent to the digital pink in its own :root, so the Play room
+  //     had never once been gold. about.html and contact.html declared no
+  //     room at all. Nothing looked broken — a page with a consistent
+  //     wrong accent looks designed — which is exactly why it needs
+  //     asserting rather than eyeballing.
+  {
+    const ROOMS = {
+      "craft.html": ["physical", "#6dbf9e"],
+      "digital.html": ["digital", "#e8547a"],
+      "exhibitions.html": ["exhibition", "#8a6a4a"],
+      "side-quests.html": ["play", "#c8b882"],
+      "about.html": ["office", "#f0919f"],
+      "contact.html": ["office", "#f0919f"],
+    };
+    const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+    const page = await ctx.newPage();
+    for (const [file, [room, accent]] of Object.entries(ROOMS)) {
+      await page.goto(url(file));
+      await page.waitForTimeout(200);
+      const got = await page.evaluate(() => {
+        const d = document.documentElement;
+        return {
+          room: d.getAttribute("data-room"),
+          accent: getComputedStyle(d).getPropertyValue("--accent").trim().toLowerCase(),
+        };
+      });
+      check(`${file} declares its room`, got.room === room, "got " + got.room);
+      check(`${file} wears the ${room} accent`, got.accent === accent,
+        "expected " + accent + ", got " + got.accent);
+    }
+    await ctx.close();
+  }
+
   await browser.close();
   server.close();
 

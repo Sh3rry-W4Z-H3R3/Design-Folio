@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-room="office">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -83,12 +83,6 @@
     <link rel="stylesheet" href="assets/css/floorplan.css" />
     <style>
     :root {
-      --bg:       #0a0a0a;
-      --fg:       #ede9e1;
-      --fg-dim:   #7a7a7a;
-      --fg-mid:   #999;
-      --accent:   #e8547a;
-      --accent-2: #6dbf9e;
       --serif:    'Cormorant', Georgia, serif;
       --sans:     'Syne', sans-serif;
       --body:     'DM Sans', sans-serif;
@@ -118,7 +112,7 @@
     .hero__right { position: relative; overflow: hidden; opacity: 0; animation: fadeIn 1.2s var(--ease) 0.3s forwards; }
     .hero__photo { position: absolute; inset: 0; background-image: url('img/sherjeel-portrait.jpg'); background-size: cover; background-position: center top; filter: grayscale(20%); transition: filter var(--slow); }
     .hero__right:hover .hero__photo { filter: grayscale(0%); }
-    .hero__photo-placeholder { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: var(--space-3); background: #111; }
+    .hero__photo-placeholder { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: var(--space-3); background: var(--surface); }
     .hero__photo-placeholder p { font-family: var(--sans); font-size: var(--text-2); font-weight: 700; letter-spacing: var(--ls-track); text-transform: uppercase; color: var(--fg-dim); }
     .hero__right::after { content: ''; position: absolute; bottom: 0; left: 0; width: 40%; height: 3px; background: var(--accent); }
 
@@ -172,8 +166,8 @@
     .contact-heading em { font-style: italic; color: var(--accent); display: block; }
     .contact-subtext { font-size: var(--text-5); line-height: var(--lh-loose); color: var(--fg-mid); font-weight: 300; max-width: 380px; }
     .contact-links { display: flex; flex-direction: column; gap: 2px; padding-top: var(--space-3); }
-    .contact-link { display: flex; align-items: center; justify-content: space-between; padding: var(--space-5) var(--space-5); background: #0e0e0e; text-decoration: none; color: var(--fg); border-left: 2px solid transparent; transition: border-color var(--fast), background var(--fast); cursor: none; }
-    .contact-link:hover { border-left-color: var(--accent); background: #141414; }
+    .contact-link { display: flex; align-items: center; justify-content: space-between; padding: var(--space-5) var(--space-5); background: var(--surface-2); text-decoration: none; color: var(--fg); border-left: 2px solid transparent; transition: border-color var(--fast), background var(--fast); cursor: none; }
+    .contact-link:hover { border-left-color: var(--accent); background: var(--surface); }
     .contact-link__label { font-family: var(--sans); font-size: var(--text-1); font-weight: 700; letter-spacing: var(--ls-track); text-transform: uppercase; color: var(--accent); margin-bottom: var(--space-2); }
     .contact-link__value { font-family: var(--serif); font-size: var(--text-7); font-weight: 300; }
     .contact-link__arrow { font-size: var(--text-7); color: var(--fg-dim); transition: transform var(--fast), color var(--fast); }
@@ -243,7 +237,7 @@
     .divider {
       width: 1px;
       height: 14px;
-      background: #333;
+      background: var(--line-2);
       flex-shrink: 0;
     }
 
