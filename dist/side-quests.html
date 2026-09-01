@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-room="play">
+<html lang="en" data-room="play" data-cursor-targets=".gallery-item">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -754,16 +754,6 @@
     <a href="#top" class="back-to-top" aria-label="Back to top">↑</a>
 
     <script>
-
-      // Follow mouse
-
-      // Grow on interactives AND the gallery grid items
-      document.querySelectorAll("a, button, .gallery-item").forEach((el) => {
-        el.addEventListener("mouseenter", () => cursor.classList.add("grow"));
-        el.addEventListener("mouseleave", () =>
-          cursor.classList.remove("grow"),
-        );
-      });
 
       // Mobile tap-to-reveal overlay (touch / no-hover devices)
       (function () {

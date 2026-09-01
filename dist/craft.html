@@ -1036,21 +1036,6 @@
 
     <script>
 
-      // Initialize cursor position to center of screen
-      cursor.style.left = window.innerWidth / 2 + "px";
-      cursor.style.top = window.innerHeight / 2 + "px";
-      cursorIcon.style.left = window.innerWidth / 2 + 18 + "px";
-      cursorIcon.style.top = window.innerHeight / 2 + "px";
-
-      document
-        .querySelectorAll("a:not([data-cursor]), button")
-        .forEach((el) => {
-          el.addEventListener("mouseenter", () => cursor.classList.add("grow"));
-          el.addEventListener("mouseleave", () =>
-            cursor.classList.remove("grow"),
-          );
-        });
-
       document.querySelectorAll(".filter-btn").forEach((btn) => {
         btn.addEventListener("click", () => {
           document

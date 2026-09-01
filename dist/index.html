@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-cursor-targets=".panel">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -1425,8 +1425,6 @@
     <!-- ── CURSOR SCRIPT ──────────────────────────────────── -->
     <script>
 
-      
-
       /* ─── DOOR-OPENING NAVIGATION ─────────────────────────
          Click a door's Enter button → that leaf swings open on
          its own outer hinge, the other settles back, the frame
@@ -1454,14 +1452,13 @@
 
       let isNavigating = false;
 
+      // The doors grow the cursor via data-cursor-targets on <html>, so
+      // this loop only wires up the opening.
       document.querySelectorAll(".panel").forEach((panel) => {
         const link = panel.querySelector(".panel__btn");
         if (!link) return;
         const accent = panel.dataset.accent || "#0a0a0a";
 
-        // Hover on panel (anywhere) grows the cursor — covers the door surface.
-        panel.addEventListener("mouseenter", () => cursor.classList.add("grow"));
-        panel.addEventListener("mouseleave", () => cursor.classList.remove("grow"));
 
         link.addEventListener("click", (e) => {
           if (

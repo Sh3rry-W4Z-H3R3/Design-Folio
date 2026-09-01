@@ -461,11 +461,6 @@
 
   <script>
 
-  document.querySelectorAll('a:not([data-cursor]), button').forEach(el => {
-    el.addEventListener('mouseenter', () => cursor.classList.add('grow'));
-    el.addEventListener('mouseleave', () => cursor.classList.remove('grow'));
-  });
- 
   // Hide portrait placeholder once the real image loads
   const photo = document.querySelector('.hero__photo');
   const ph    = document.getElementById('photoPlaceholder');

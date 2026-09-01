@@ -84,7 +84,14 @@
        bound here with querySelectorAll would miss every room and door —
        and with them the monitor/pot icons, which now live on the plan.
        mouseenter does not bubble; mouseover does. */
-    var HOVERS = "a, button, [data-cursor]";
+    /* Pages can name extra things that should grow the cursor — a gallery
+       tile, a colour swatch, a door panel — by listing selectors in
+       data-cursor-targets on <html>. Six pages were each carrying their
+       own copy of the same mouseenter/mouseleave loop to do this; one
+       attribute replaces all of them, and the delegation below then covers
+       elements added after load for free. */
+    var extra = root.getAttribute("data-cursor-targets");
+    var HOVERS = "a, button, [data-cursor]" + (extra ? ", " + extra : "");
 
     function hovered(node) {
       return node && node.closest ? node.closest(HOVERS) : null;

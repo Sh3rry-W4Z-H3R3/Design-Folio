@@ -172,6 +172,38 @@ const MUTATIONS = [
     },
   },
   {
+    name: "a page grows the cursor with its own inline loop again",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "contact.html",
+    // The exact shape that hid from the old check: a per-element loop
+    // written without getElementById, on a page the check never loaded.
+    mutate: (s) => {
+      const anchor = "</body>";
+      if (!s.includes(anchor)) throw new Error("no </body>");
+      return s.replace(
+        anchor,
+        '<script>document.querySelectorAll("a").forEach(function (el) {' +
+          ' el.addEventListener("mouseenter", function () { cursor.classList.add("grow"); }); });' +
+          "</script>\n" + anchor
+      );
+    },
+  },
+  {
+    name: "a page loses its declared cursor targets",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "side-quests.html",
+    // Removing the attribute costs the grow on .gallery-item — behaviour
+    // the inline loops used to carry, which is exactly what could have
+    // been dropped silently when they were swept.
+    mutate: (s) => {
+      const old = ' data-cursor-targets=".gallery-item"';
+      if (!s.includes(old)) throw new Error("data-cursor-targets not found");
+      return s.replace(old, "");
+    },
+  },
+  {
     name: "the floorplan no longer opens as a modal",
     detectedBy: "behaviour.js",
     scope: [],

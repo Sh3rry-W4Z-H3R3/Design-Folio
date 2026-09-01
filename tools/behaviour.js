@@ -183,16 +183,52 @@ const check = (name, pass, detail) => results.push({ name, pass, detail });
     await ctx.close();
   }
 
-  // 7. No duplicate cursor handling left behind on a migrated page.
+  // 7. No duplicate cursor handling left behind on ANY page.
+  //
+  //    This check used to load craft.html alone and match on
+  //    getElementById("cursor"). Six other pages were carrying their own
+  //    mouseenter/mouseleave loops written a different way, and it saw
+  //    none of them — a check narrow enough to pass is worse than no
+  //    check, because it reads as coverage. It scans every page's inline
+  //    scripts now, for the shapes that actually occurred.
+  {
+    const PATTERNS = [
+      /cursor\.classList\.(?:add|remove)\(/,   // per-element grow loops
+      /getElementById\(["']cursor["']\)/,       // the original shape
+      /cursor(?:Icon)?\.style\.(?:left|top)\s*=/, // pinning it by hand
+    ];
+    const offenders = [];
+    for (const file of fs.readdirSync(DIST).filter((f) => f.endsWith(".html"))) {
+      const html = fs.readFileSync(path.join(DIST, file), "utf8");
+      for (const m of html.matchAll(/<script(?![^>]*\ssrc=)[^>]*>([\s\S]*?)<\/script>/g)) {
+        if (PATTERNS.some((p) => p.test(m[1]))) { offenders.push(file); break; }
+      }
+    }
+    check("no inline cursor JS on any page", offenders.length === 0, offenders.join(", "));
+  }
+
+  // 7b. Removing those loops must not cost the behaviour they carried:
+  //     three pages grew the cursor on things that are neither links nor
+  //     buttons. They declare those in data-cursor-targets now, and this
+  //     proves the declaration is actually wired up.
   {
     const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
     const page = await ctx.newPage();
-    await page.goto(url("craft.html"));
-    await page.waitForTimeout(200);
-    const usesInline = await page.evaluate(() =>
-      [...document.querySelectorAll("script:not([src])")].some((s) => /getElementById\(["\']cursor["\']\)/.test(s.textContent))
-    );
-    check("inline cursor JS removed", !usesInline);
+    for (const [file, sel] of [
+      ["side-quests.html", ".gallery-item"],
+      ["kala-topi.html", ".tension-card"],
+      ["index.html", ".panel"],
+    ]) {
+      await page.goto(url(file));
+      await page.waitForTimeout(400);
+      const grew = await page.evaluate((s) => {
+        const el = document.querySelector(s);
+        if (!el) return "no such element";
+        el.dispatchEvent(new MouseEvent("mouseover", { bubbles: true }));
+        return document.getElementById("cursor").classList.contains("grow");
+      }, sel);
+      check(`${file} still grows the cursor on ${sel}`, grew === true, String(grew));
+    }
     await ctx.close();
   }
 

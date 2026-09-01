@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-room="digital">
+<html lang="en" data-room="digital" data-cursor-targets=".tension-card, .swatch">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -963,11 +963,6 @@
       <a href="https://www.instagram.com/sherjeel_h27_design_/" target="_blank" rel="noopener">Instagram</a>
     </div></footer>
   <script>
-
-    document.querySelectorAll('a, button, .tension-card, .swatch').forEach(el => {
-      el.addEventListener('mouseenter', () => cursor.classList.add('grow'));
-      el.addEventListener('mouseleave', () => cursor.classList.remove('grow'));
-    });
 
     // Scroll-triggered fade for sections
     const observer = new IntersectionObserver((entries) => {
