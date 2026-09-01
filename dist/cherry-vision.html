@@ -87,12 +87,6 @@
     <link rel="stylesheet" href="assets/css/floorplan.css" />
     <style>
     :root {
-      --bg: #0a0a0a;
-      --fg: #ede9e1;
-      --fg-dim: #7a7a7a;
-      --fg-mid: #999;
-      --accent: #6dbf9e;
-      --accent-2: #e8547a;
       --cherry: #b8324a;
       --serif: 'Cormorant', Georgia, serif;
       --sans: 'Syne', sans-serif;
@@ -176,7 +170,7 @@
       font-style: italic;
       font-size: clamp(1rem, 1.8vw, 1.4rem);
       font-weight: 300;
-      color: rgba(237,233,225,0.7);
+      color: var(--fg-mid);
       max-width: 620px;
       line-height: var(--lh-snug);
       opacity: 0; animation: fadeUp 0.9s var(--ease) 0.4s forwards;
@@ -250,7 +244,7 @@
     .footer-nav a:hover { color: var(--fg); }
     .footer-nav__all { font-family: var(--serif); font-style: italic; font-size: var(--text-6); color: var(--fg-dim) !important; letter-spacing: 0.02em !important; }
     .footer-nav__all:hover { color: var(--fg) !important; }
-    .divider { width: 1px; height: 14px; background: #333; flex-shrink: 0; }
+    .divider { width: 1px; height: 14px; background: var(--line-2); flex-shrink: 0; }
 
     @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 

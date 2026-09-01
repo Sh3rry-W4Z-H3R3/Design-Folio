@@ -114,12 +114,6 @@
     <link rel="stylesheet" href="assets/css/floorplan.css" />
         <style>
       :root {
-        --bg: #0a0a0a;
-        --fg: #ede9e1;
-        --fg-dim: #7a7a7a;
-        --fg-mid: #999;
-        --accent: #6dbf9e;
-        --accent-2: #e8547a;
         --cherry: #b8324a;
         --gold: #c8b882;
         --serif: "Cormorant", Georgia, serif;
@@ -279,7 +273,7 @@
         position: relative;
         overflow: hidden;
         aspect-ratio: 4/3;
-        background: #111;
+        background: var(--surface);
         text-decoration: none;
         color: inherit;
         display: block;
@@ -319,7 +313,7 @@
         font-weight: 700;
         letter-spacing: var(--ls-eyebrow);
         text-transform: uppercase;
-        color: var(--fg-dim);
+        color: var(--fg-on-media-dim);
         margin-bottom: var(--space-3);
       }
       .ex-card__tags em {
@@ -332,7 +326,7 @@
         font-weight: 300;
         line-height: var(--lh-tight);
         margin-bottom: var(--space-2);
-        color: var(--fg);
+        color: var(--fg-on-media);
       }
       .ex-card__title em {
         font-style: italic;
@@ -342,7 +336,7 @@
         font-family: var(--body);
         font-size: var(--text-3);
         font-weight: 300;
-        color: var(--fg-mid);
+        color: var(--fg-on-media-mid);
         line-height: var(--lh-snug);
         max-width: 36ch;
       }
@@ -462,7 +456,7 @@
       .divider {
         width: 1px;
         height: 14px;
-        background: #333;
+        background: var(--line-2);
         flex-shrink: 0;
       }
 

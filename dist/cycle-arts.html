@@ -111,12 +111,6 @@
     <link rel="stylesheet" href="assets/css/floorplan.css" />
         <style>
       :root {
-        --bg: #0a0a0a;
-        --fg: #ede9e1;
-        --fg-dim: #7a7a7a;
-        --fg-mid: #999;
-        --accent: #6dbf9e;
-        --accent-2: #e8547a;
         --serif: "Cormorant", Georgia, serif;
         --sans: "Syne", sans-serif;
         --body: "DM Sans", sans-serif;
@@ -200,7 +194,7 @@
         grid-template-rows: 1fr auto;
         position: relative;
         overflow: hidden;
-        background: #0a0e0a;
+        background: var(--surface-2);
       }
       .hero__img {
         position: absolute;
@@ -248,7 +242,7 @@
         font-size: clamp(3.5rem, 10vw, 9rem);
         font-weight: 300;
         line-height: var(--lh-display);
-        color: var(--fg);
+        color: var(--fg-on-media);
         opacity: 0;
         animation: fadeUp 0.9s var(--ease) 0.2s forwards;
       }
@@ -277,21 +271,20 @@
         padding: var(--space-5) var(--gutter);
         border-top: 1px solid rgba(237, 233, 225, 0.12);
         opacity: 0;
-        animation: fadeUp 0.8s var(--ease) 0.45s forwards;
-      }
+        animation: fadeUp 0.8s var(--ease) 0.45s forwards;background: linear-gradient(to top, rgba(10, 10, 10, 0.88), rgba(10, 10, 10, 0.55));}
       .meta-item__label {
         font-family: var(--sans);
         font-size: var(--text-1);
         font-weight: 700;
         letter-spacing: var(--ls-track);
         text-transform: uppercase;
-        color: rgba(237, 233, 225, 0.35);
+        color: var(--fg-on-media-dim);
         margin-bottom: var(--space-2);
       }
       .meta-item__value {
         font-family: var(--body);
         font-size: var(--text-4);
-        color: var(--fg);
+        color: var(--fg-on-media);
         font-weight: 300;
       }
 
@@ -356,7 +349,7 @@
         position: relative;
         overflow: hidden;
         aspect-ratio: 3/4;
-        background: #0e120e;
+        background: var(--surface);
         display: block;
       }
       .piece-card__img {
@@ -428,7 +421,7 @@
 
       /* GLAZE NOTE */
       .glaze-note {
-        background: #0a0f0a;
+        background: var(--surface-2);
         border-left: 2px solid var(--accent);
         padding: var(--space-6);
         max-width: 640px;
@@ -466,7 +459,7 @@
         width: 100%;
         background-size: cover;
         background-position: center;
-        background-color: #0a0e0a;
+        background-color: var(--surface-2);
       }
       .img-grid {
         display: grid;
@@ -479,7 +472,7 @@
         grid-template-columns: 1fr 1fr 1fr;
       }
       .img-slot {
-        background: #111;
+        background: var(--surface);
         background-size: cover;
         background-position: center;
         aspect-ratio: 4/3;
@@ -509,7 +502,7 @@
       }
       .site-panel__text {
         padding: var(--space-7) var(--space-6);
-        background: #0a0f0a;
+        background: var(--surface-2);
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -554,7 +547,7 @@
         max-width: 640px;
       }
       .material-cell {
-        background: #0e0e0e;
+        background: var(--surface-2);
         padding: var(--space-4) var(--space-4);
         border-top: 1px solid transparent;
         transition: border-color var(--fast);
@@ -581,7 +574,7 @@
       /* PULL QUOTE */
       .pull-quote {
         padding: var(--space-8) var(--gutter);
-        background: #0a0f0a;
+        background: var(--surface-2);
         border-top: 1px solid #1a1a1a;
         border-bottom: 1px solid #1a1a1a;
       }
@@ -814,7 +807,7 @@
     .divider {
       width: 1px;
       height: 14px;
-      background: #333;
+      background: var(--line-2);
       flex-shrink: 0;
     }
 
@@ -961,7 +954,7 @@
             background-image: url('./imgs-expo/CycleArtsFestival/IMG-20250916-WA0007.webp');
             background-size: cover;
             background-position: center;
-            background-color: #0e120e;
+            background-color: var(--surface);
           "
         >
         </div>
@@ -979,7 +972,7 @@
             background-image: url('./imgs-expo/CycleArtsFestival/IMG-20250916-WA0008.webp');
             background-size: cover;
             background-position: center;
-            background-color: #0e120e;
+            background-color: var(--surface);
           "
         >
         </div>
@@ -997,7 +990,7 @@
             background-image: url('./imgs-expo/CycleArtsFestival/IMG-20250916-WA0009.webp');
             background-size: cover;
             background-position: center;
-            background-color: #0e120e;
+            background-color: var(--surface);
           "
         >
         </div>
@@ -1017,7 +1010,7 @@
             background-image: url('./imgs-expo/CycleArtsFestival/IMG-20250916-WA0010.webp');
             background-size: cover;
             background-position: center;
-            background-color: #0e120e;
+            background-color: var(--surface);
           "
         >
         </div>
