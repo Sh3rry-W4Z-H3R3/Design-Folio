@@ -279,51 +279,21 @@
       );
     });
     return (
-      '<svg class="mark__glyph" viewBox="-2 -2 104 104" aria-hidden="true" focusable="false">' +
+      '<svg class="plan-btn__glyph" viewBox="-2 -2 104 104" aria-hidden="true" focusable="false">' +
       cells.join("") +
       "</svg>"
     );
   }
 
-  /* The floating rail: the wordmark, which is also the way into the plan,
-     and — on a case study — the chip back to its room. */
+  /* The floating rail, reading left to right: the wordmark, quick
+     contact, and the plan. Three separate controls rather than a wordmark
+     that secretly opens a menu — the name is identity and goes home, the
+     plan glyph is navigation and says so by being a drawing of the
+     building. On a case study a back chip leads the row. */
   function rail(dlg) {
     var bar = el("div", "rail");
 
-    var mark = el("button", "mark glass");
-    mark.type = "button";
-    mark.setAttribute("aria-haspopup", "dialog");
-    mark.setAttribute("aria-controls", "floorplan");
-    mark.setAttribute("aria-expanded", "false");
-    mark.setAttribute(
-      "aria-label",
-      workshop
-        ? "Sherjeel Hussain — open the workshop floorplan"
-        : "Sherjeel Hussain — open the menu"
-    );
-    mark.innerHTML =
-      '<span class="mark__name">Sherjeel <em>Hussain</em></span>' + glyph();
-
-    /* Quick contact. Sits beside the plan rather than inside it: getting
-       in touch is the one thing a visitor might want that is not a room,
-       and burying it a click deep in a floorplan would be a poor trade
-       for a hiring manager with a shortlist to get through. Not rendered
-       on the contact page itself. */
-    if (page !== "contact.html") {
-      var say = el("a", "hail glass");
-      say.href = "contact.html";
-      say.innerHTML =
-        '<svg class="hail__glyph" viewBox="0 0 14 12" aria-hidden="true" focusable="false">' +
-        '<rect x="0.6" y="0.6" width="12.8" height="10.8" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.2"/>' +
-        '<path d="M1 2.2 7 6.6l6-4.4" fill="none" stroke="currentColor" stroke-width="1.2"/>' +
-        "</svg>";
-      say.appendChild(el("span", null, "Contact"));
-      // The word is hidden on narrow screens, so the link needs a name
-      // that does not depend on it.
-      say.setAttribute("aria-label", "Contact Sherjeel");
-      bar.appendChild(say);
-    }
-
+    /* ── back to the room, on case studies ───────────────── */
     if (parent) {
       var chip = el("a", "back-chip glass");
       chip.href = parent.href;
@@ -336,14 +306,50 @@
       // The label is hidden on narrow screens and the arrow carries no
       // text, so the chip needs a name of its own.
       chip.setAttribute("aria-label", "Back to " + parent.name);
-      bar.insertBefore(chip, bar.firstChild);
+      bar.appendChild(chip);
     }
 
+    /* ── the wordmark ────────────────────────────────────── */
+    var mark = el("a", "mark glass");
+    mark.href = PLAN.entrance.href;
+    mark.innerHTML = '<span class="mark__name">Sherjeel <em>Hussain</em></span>';
+    mark.setAttribute("aria-label", "Sherjeel Hussain — front of shop");
+    bar.appendChild(mark);
+
+    /* ── quick contact ───────────────────────────────────── */
+    if (page !== "contact.html") {
+      var say = el("a", "hail");
+      say.href = "contact.html";
+      say.innerHTML =
+        '<svg class="hail__glyph" viewBox="0 0 14 12" aria-hidden="true" focusable="false">' +
+        '<rect x="0.6" y="0.6" width="12.8" height="10.8" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.3"/>' +
+        '<path d="M1 2.2 7 6.6l6-4.4" fill="none" stroke="currentColor" stroke-width="1.3"/>' +
+        "</svg>";
+      say.appendChild(el("span", null, "Contact"));
+      // The word is hidden on narrow screens, so the link needs a name
+      // that does not depend on it.
+      say.setAttribute("aria-label", "Contact Sherjeel");
+      bar.appendChild(say);
+    }
+
+    /* ── the plan ────────────────────────────────────────── */
+    var nav = el("button", "plan-btn glass");
+    nav.type = "button";
+    nav.setAttribute("aria-haspopup", "dialog");
+    nav.setAttribute("aria-controls", "floorplan");
+    nav.setAttribute("aria-expanded", "false");
+    nav.setAttribute(
+      "aria-label",
+      workshop ? "Open the workshop floorplan" : "Open the menu"
+    );
+    nav.innerHTML = glyph();
+    // Last, so the plan sits in the corner itself.
+    bar.appendChild(nav);
+
     /* The entrance page carries its own identity in the hero, so the rail
-       does not need to repeat it: there it starts as the plan glyph alone,
-       in the top-right corner, and only becomes a wordmark pill once the
-       hero has scrolled away. Every other page has no hero wordmark, so
-       the rail is the identity and stays as it is. */
+       does not repeat it: there the wordmark and contact wait until the
+       hero has scrolled away, and the plan stands alone in the corner,
+       larger, reading as a building rather than an icon. */
     if (page === PLAN.entrance.href) {
       bar.classList.add("rail--beacon");
       var hero = document.querySelector("header");
@@ -355,28 +361,26 @@
           { rootMargin: "-32px 0px 0px 0px" }
         ).observe(hero);
       } else {
-        // No observer: show the pill rather than leaving the page with
-        // navigation that only appears under a condition we cannot detect.
+        // No observer: show the full rail rather than leaving the page
+        // with navigation that only appears under a condition we cannot
+        // detect.
         bar.classList.add("is-stuck");
       }
     }
 
-    // Last, so it sits in the corner itself.
-    bar.appendChild(mark);
-
     document.body.appendChild(bar);
 
-    mark.addEventListener("click", function () {
+    nav.addEventListener("click", function () {
       if (typeof dlg.showModal === "function") dlg.showModal();
       else dlg.setAttribute("open", "");
-      mark.setAttribute("aria-expanded", "true");
+      nav.setAttribute("aria-expanded", "true");
     });
 
     // Returning focus to the trigger after close is not automatic when
     // the dialog is closed by Escape.
     dlg.addEventListener("close", function () {
-      mark.setAttribute("aria-expanded", "false");
-      mark.focus();
+      nav.setAttribute("aria-expanded", "false");
+      nav.focus();
     });
   }
 

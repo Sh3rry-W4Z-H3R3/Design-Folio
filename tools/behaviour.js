@@ -240,8 +240,26 @@ const check = (name, pass, detail) => results.push({ name, pass, detail });
     await page.goto(url("craft.html"));
     await page.waitForTimeout(300);
 
-    const mark = page.locator(".mark");
-    check("wordmark is the plan trigger", (await mark.getAttribute("aria-controls")) === "floorplan");
+    const mark = page.locator(".plan-btn");
+    check("the plan button is the trigger", (await mark.getAttribute("aria-controls")) === "floorplan");
+    // The wordmark is identity and a way home, not a hidden menu.
+    check("wordmark goes home rather than opening the plan", await page.evaluate(() => {
+      const w = document.querySelector(".mark");
+      return w.tagName === "A" && /index\.html$/.test(w.getAttribute("href")) &&
+        !w.hasAttribute("aria-controls");
+    }));
+    // Reading order left to right: wordmark, contact, plan.
+    check("rail reads wordmark, contact, plan", await page.evaluate(() =>
+      [...document.querySelectorAll(".rail > *")]
+        .sort((a, b) => a.getBoundingClientRect().left - b.getBoundingClientRect().left)
+        .map((e) => e.className.split(" ")[0])
+        .join(",").endsWith("mark,hail,plan-btn")
+    ));
+    // One height for the row, so it reads as a single object.
+    check("wordmark and contact are the same height", await page.evaluate(() => {
+      const h = (s) => Math.round(document.querySelector(s).getBoundingClientRect().height);
+      return h(".mark") === h(".hail") && h(".mark") === h(".plan-btn");
+    }));
     check("wordmark starts collapsed", (await mark.getAttribute("aria-expanded")) === "false");
 
     await mark.click();
@@ -251,7 +269,7 @@ const check = (name, pass, detail) => results.push({ name, pass, detail });
       const d = document.getElementById("floorplan");
       return !!d && d.open && d.matches(":modal");
     }));
-    check("wordmark reports expanded", (await mark.getAttribute("aria-expanded")) === "true");
+    check("plan button reports expanded", (await mark.getAttribute("aria-expanded")) === "true");
 
     // craft.html is the physical room, so that room should be marked.
     check("current room is marked", await page.evaluate(() => {
@@ -278,7 +296,7 @@ const check = (name, pass, detail) => results.push({ name, pass, detail });
     // A modal dialog makes the rest of the page inert, which is the
     // focus trap — verify rather than assume.
     check("page behind is inert while open", await page.evaluate(() => {
-      const outside = document.querySelector("main a, footer a, .mark");
+      const outside = document.querySelector("main a, footer a, .plan-btn");
       outside.focus();
       return document.activeElement !== outside;
     }));
@@ -286,10 +304,10 @@ const check = (name, pass, detail) => results.push({ name, pass, detail });
     await page.keyboard.press("Escape");
     await page.waitForTimeout(300);
     check("Escape closes the plan", await page.evaluate(() => !document.getElementById("floorplan").open));
-    check("focus returns to the wordmark", await page.evaluate(() =>
-      document.activeElement.classList.contains("mark")
+    check("focus returns to the plan button", await page.evaluate(() =>
+      document.activeElement.classList.contains("plan-btn")
     ));
-    check("wordmark reports collapsed again", (await mark.getAttribute("aria-expanded")) === "false");
+    check("plan button reports collapsed again", (await mark.getAttribute("aria-expanded")) === "false");
     await ctx.close();
   }
 
@@ -303,7 +321,7 @@ const check = (name, pass, detail) => results.push({ name, pass, detail });
     await page.reload();
     await page.waitForTimeout(300);
 
-    await page.locator(".mark").click();
+    await page.locator(".plan-btn").click();
     await page.waitForTimeout(300);
     check("plan opens at 390px", await page.evaluate(() => document.getElementById("floorplan").open));
 
@@ -338,9 +356,9 @@ const check = (name, pass, detail) => results.push({ name, pass, detail });
     const page = await ctx.newPage();
     await page.goto(url("craft.html"));
     await page.waitForTimeout(300);
-    check("editorial mode still has a trigger", (await page.locator(".mark").count()) === 1);
+    check("editorial mode still has a trigger", (await page.locator(".plan-btn").count()) === 1);
 
-    await page.locator(".mark").click();
+    await page.locator(".plan-btn").click();
     await page.waitForTimeout(300);
     check("editorial plan is a plain list", (await page.locator(".plan__list").count()) === 1);
     check("editorial plan has no drawing", (await page.locator(".plan__box").count()) === 0);
@@ -387,7 +405,7 @@ const check = (name, pass, detail) => results.push({ name, pass, detail });
     await page.waitForTimeout(300);
 
     const alpha = await page.evaluate(() => {
-      const bg = getComputedStyle(document.querySelector(".mark")).backgroundColor;
+      const bg = getComputedStyle(document.querySelector(".plan-btn")).backgroundColor;
       const m = bg.match(/rgba?\(([^)]+)\)/);
       if (!m) return null;
       const parts = m[1].split(",").map((n) => parseFloat(n));
@@ -396,7 +414,7 @@ const check = (name, pass, detail) => results.push({ name, pass, detail });
     check(
       "rail carries an opaque enough scrim for light imagery",
       alpha !== null && alpha >= 0.4,
-      "wordmark background alpha " + alpha
+      "plan button background alpha " + alpha
     );
 
     // The back chip floats in the same place and needs the same treatment.
@@ -426,11 +444,12 @@ const check = (name, pass, detail) => results.push({ name, pass, detail });
 
     const hero = await page.evaluate(() => {
       const rail = document.querySelector(".rail");
-      const glyph = document.querySelector(".mark__glyph");
+      const glyph = document.querySelector(".plan-btn__glyph");
       return {
         beacon: rail.classList.contains("rail--beacon"),
         stuck: rail.classList.contains("is-stuck"),
-        nameWidth: document.querySelector(".mark__name").getBoundingClientRect().width,
+        nameWidth: document.querySelector(".mark").getBoundingClientRect().width *
+          (getComputedStyle(document.querySelector(".mark")).opacity === "0" ? 0 : 1),
         glyphRight: glyph.getBoundingClientRect().right,
         cells: glyph.querySelectorAll("rect").length,
       };
@@ -447,11 +466,12 @@ const check = (name, pass, detail) => results.push({ name, pass, detail });
     await page.waitForTimeout(900);
     const stuck = await page.evaluate(() => {
       const rail = document.querySelector(".rail");
-      const mark = document.querySelector(".mark");
+      const mark = document.querySelector(".plan-btn");
       const bg = getComputedStyle(mark).backgroundColor.match(/[\d.]+/g) || [];
       return {
         stuck: rail.classList.contains("is-stuck"),
-        nameWidth: document.querySelector(".mark__name").getBoundingClientRect().width,
+        nameWidth: document.querySelector(".mark").getBoundingClientRect().width *
+          (getComputedStyle(document.querySelector(".mark")).opacity === "0" ? 0 : 1),
         alpha: bg.length > 3 ? parseFloat(bg[3]) : 1,
       };
     });
@@ -501,6 +521,39 @@ const check = (name, pass, detail) => results.push({ name, pass, detail });
       check(`${file} declares its room`, got.room === room, "got " + got.room);
       check(`${file} wears the ${room} accent`, got.accent === accent,
         "expected " + accent + ", got " + got.accent);
+    }
+    await ctx.close();
+  }
+
+  // 15. The contact pill is the one thing on the page asking to be
+  //      pressed, so it is filled rather than more glass — and the fill
+  //      has to carry legible text in every room, including the light one.
+  {
+    const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+    const page = await ctx.newPage();
+    for (const file of ["craft.html", "exhibitions.html", "side-quests.html"]) {
+      await page.goto(url(file));
+      await page.waitForTimeout(300);
+      const r = await page.evaluate(() => {
+        const el = document.querySelector(".hail");
+        if (!el) return null;
+        const cs = getComputedStyle(el);
+        const lum = (c) => {
+          const m = (c.match(/[\d.]+/g) || []).map(Number);
+          const f = (v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
+          return 0.2126 * f(m[0]) + 0.7152 * f(m[1]) + 0.0722 * f(m[2]);
+        };
+        const bg = lum(cs.backgroundColor), fg = lum(cs.color);
+        return {
+          filled: !/rgba\(0, 0, 0, 0\)/.test(cs.backgroundColor),
+          ratio: (Math.max(bg, fg) + 0.05) / (Math.min(bg, fg) + 0.05),
+        };
+      });
+      check(`${file} contact pill is filled, not glass`, r !== null && r.filled);
+      // The pill keeps one colour in every room precisely so it stays
+      // recognisable, so this must hold on the light room too.
+      check(`${file} contact pill text passes AA`, r !== null && r.ratio >= 4.5,
+        r ? r.ratio.toFixed(2) + ":1" : "no pill");
     }
     await ctx.close();
   }

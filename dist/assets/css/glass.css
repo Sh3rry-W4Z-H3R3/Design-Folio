@@ -80,14 +80,33 @@
   background: var(--glass-bg-rail);
 }
 
-/* ── WORDMARK, WHICH IS ALSO THE PLAN TRIGGER ───────────────
-   Your name is the way into the building. One element doing both jobs
-   rather than a mark and a menu button competing for the same corner. */
-.mark {
+/* ── THE THREE CONTROLS ─────────────────────────────────────
+   Wordmark, contact, plan — in that order, left to right, with the plan
+   in the corner. They share a height so the row reads as one object: set
+   once here rather than three times, because three paddings that happen
+   to agree today will not agree after the next change. */
+:root {
+  --rail-h: 2.15rem;
+}
+
+.mark,
+.hail,
+.plan-btn,
+.back-chip {
+  height: var(--rail-h);
   display: inline-flex;
   align-items: center;
+  box-sizing: border-box;
+}
+
+/* ── WORDMARK ───────────────────────────────────────────────
+   The name, and a way home. It used to be the plan trigger as well,
+   which asked one control to be both identity and navigation; the plan
+   glyph does the navigating now and says so by being a drawing of the
+   building. */
+.mark {
   gap: 0.6rem;
-  padding: 0.5rem 0.85rem;
+  padding: 0 0.85rem;
   border-radius: 2px;
   font-family: var(--serif);
   font-size: var(--text-7);
@@ -95,7 +114,7 @@
   line-height: 1;
   letter-spacing: var(--ls-body);
   color: var(--fg);
-  cursor: pointer;
+  text-decoration: none;
   transition:
     border-color var(--fast),
     color var(--fast);
@@ -109,62 +128,37 @@
   border-color: var(--accent);
 }
 
-/* The plan glyph: the building in miniature, so the control reads as
-   "opens the plan" rather than as a link home. Drawn from PLAN by
-   floorplan.js, so the cells here are the same rooms as the dialog's. */
-.mark__glyph {
-  width: 15px;
-  height: 15px;
-  flex-shrink: 0;
-  overflow: visible;
-  transition:
-    width var(--slow),
-    height var(--slow);
-}
-.mark__glyph rect {
-  fill: transparent;
-  stroke: currentColor;
-  stroke-width: 1.1;
-  opacity: 0.55;
-  transition:
-    fill var(--fast),
-    opacity var(--fast);
-}
-.mark:hover .mark__glyph rect,
-.mark:focus-visible .mark__glyph rect {
-  opacity: 0.9;
-}
-
-/* Each cell lights in the colour of the room it stands for. The values
-   come from the same tokens the rooms themselves use, so a room that is
-   recoloured is recoloured here too. Only meaningful once the glyph is
-   large enough to aim at — see .beacon--open. */
-.mark__glyph rect[data-room="physical"]:hover   { fill: var(--mint);  opacity: 1; }
-.mark__glyph rect[data-room="digital"]:hover    { fill: var(--pink);  opacity: 1; }
-.mark__glyph rect[data-room="exhibition"]:hover { fill: var(--cream); opacity: 1; }
-.mark__glyph rect[data-room="play"]:hover       { fill: var(--gold);  opacity: 1; }
-.mark__glyph rect[data-room="office"]:hover     { fill: var(--rose);  opacity: 1; }
-
 /* ── QUICK CONTACT ──────────────────────────────────────────
-   Deliberately quieter than the plan and louder than nothing: an
-   envelope and a word, in the same glass as its neighbours. */
+   A green pill rather than more glass: this is the one thing on the page
+   asking to be pressed, and glass on glass on glass gives a visitor no
+   reason to press any of it. Mint is the site's existing green — the
+   Industrial accent — so it is a colour the palette already owns rather
+   than a new one introduced for a button.
+
+   It keeps its green in every room, including the light exhibition one,
+   because a call to action that changes colour room to room stops being
+   recognisable as the same control. */
 .hail {
-  display: inline-flex;
-  align-items: center;
   gap: 0.45rem;
-  padding: 0.45rem 0.75rem;
-  border-radius: 2px;
+  padding: 0 0.9rem;
+  border-radius: 999px;
+  background: var(--mint);
+  border: 1px solid var(--mint);
   font-family: var(--sans);
   font-size: var(--text-2);
   font-weight: 700;
   line-height: 1;
   letter-spacing: var(--ls-track);
   text-transform: uppercase;
-  color: var(--fg-dim);
+  /* Measured: near-black on mint is 8.83:1, and 10.62:1 on the hover
+     shade. The site's own --fg on mint is 1.81:1 — nowhere near legible,
+     which is why this one control does not use it. */
+  color: #0a0f0d;
   text-decoration: none;
   transition:
-    color var(--fast),
-    border-color var(--fast);
+    background var(--fast),
+    border-color var(--fast),
+    transform var(--fast);
 }
 .hail__glyph {
   width: 13px;
@@ -173,18 +167,64 @@
 }
 .hail:hover,
 .hail:focus-visible {
-  color: var(--accent);
+  background: #7fd0af;
+  border-color: #7fd0af;
+}
+
+/* ── THE PLAN ───────────────────────────────────────────────
+   The building in miniature. Square, so it reads as a plan rather than
+   another pill, and in the corner where the controls end. */
+.plan-btn {
+  justify-content: center;
+  width: var(--rail-h);
+  padding: 0;
+  border-radius: 2px;
+  color: var(--fg);
+  cursor: pointer;
+  transition: border-color var(--fast);
+}
+.plan-btn:hover,
+.plan-btn:focus-visible {
   border-color: var(--accent);
 }
+.plan-btn__glyph {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  overflow: visible;
+  transition:
+    width var(--slow),
+    height var(--slow);
+}
+.plan-btn__glyph rect {
+  fill: transparent;
+  stroke: currentColor;
+  stroke-width: 1.1;
+  opacity: 0.55;
+  transition:
+    fill var(--fast),
+    opacity var(--fast);
+}
+.plan-btn:hover .plan-btn__glyph rect,
+.plan-btn:focus-visible .plan-btn__glyph rect {
+  opacity: 0.9;
+}
+
+/* Each cell lights in the colour of the room it stands for, from the same
+   tokens the rooms use — so a room that is recoloured is recoloured here
+   too. Only meaningful once the glyph is large enough to aim at. */
+.plan-btn__glyph rect[data-room="physical"]:hover   { fill: var(--mint);  opacity: 1; }
+.plan-btn__glyph rect[data-room="digital"]:hover    { fill: var(--pink);  opacity: 1; }
+.plan-btn__glyph rect[data-room="exhibition"]:hover { fill: var(--cream); opacity: 1; }
+.plan-btn__glyph rect[data-room="play"]:hover       { fill: var(--gold);  opacity: 1; }
+.plan-btn__glyph rect[data-room="office"]:hover     { fill: var(--rose);  opacity: 1; }
 
 /* ── BACK CHIP ──────────────────────────────────────────────
    Case studies only. Carries its room's accent so the way back is
    colour-coded to where it goes. */
 .back-chip {
-  display: inline-flex;
-  align-items: center;
   gap: 0.4rem;
-  padding: 0.45rem 0.75rem;
+  padding: 0 0.75rem;
   border-radius: 2px;
   font-family: var(--sans);
   font-size: var(--text-2);
@@ -198,9 +238,8 @@
     color var(--fast),
     border-color var(--fast);
 }
-/* The arrow is an SVG, not a "←" in ::before content. The display
-   faces do not all carry U+2190, and the fallback glyph rendered as a
-   low dash — an arrow is too load-bearing here to leave to font luck. */
+/* The arrow is an SVG, not a "←" in ::before content. The display faces
+   do not all carry U+2190, and the fallback rendered as a low dash. */
 .back-chip__arrow {
   width: 12px;
   height: 9px;
@@ -213,31 +252,25 @@
 }
 
 /* ── NARROW SCREENS ─────────────────────────────────────────
-   Room enough for the mark; the back chip drops its label and keeps the
-   arrow, so the rail cannot push a phone sideways. */
-@media (max-width: 560px) {
+   The words go, the glyphs stay: four controls at full width would push
+   a phone sideways. */
+@media (max-width: 620px) {
   .rail {
     top: var(--space-2);
-    left: var(--space-2);
+    right: var(--space-2);
     max-width: calc(100vw - var(--space-4));
   }
   .mark {
     font-size: var(--text-6);
-    padding: 0.45rem 0.7rem;
+    padding: 0 0.7rem;
   }
   .back-chip,
   .hail {
-    padding: 0.45rem 0.55rem;
+    padding: 0 0.6rem;
   }
-  /* The envelope carries the meaning on its own at this width. */
-  .hail span {
-    display: none;
-  }
-  /* display:none rather than the usual visually-hidden clip. The chip
-     carries its own aria-label ("Back to Industrial"), so the label text
-     is not doing any accessibility work here — and a clipped 1px span is
-     indistinguishable from genuinely clipped text to the responsive
-     check, which flagged all 18 case studies for it. */
+  /* The envelope and the arrow carry the meaning on their own here; both
+     controls keep an aria-label, so nothing is lost to a screen reader. */
+  .hail span,
   .back-chip span {
     display: none;
   }
@@ -245,114 +278,99 @@
 
 @media (prefers-reduced-motion: reduce) {
   .mark,
+  .hail,
+  .plan-btn,
   .back-chip,
-  .mark__glyph {
+  .plan-btn__glyph {
     transition: none;
   }
 }
 
 /* ── THE ENTRANCE BEACON ────────────────────────────────────
-   index.html only. The hero already says the name in full, so a second
-   wordmark in the corner was the same word twice on one screen. There the
-   mark is the plan glyph alone — larger, so it reads as a building rather
-   than an icon — and it gains the wordmark only once the hero has
-   scrolled past.
+   index.html only. The hero already says the name in full, so the rail
+   does not repeat it: there the plan stands alone in the corner, larger,
+   and the wordmark and contact arrive once the hero has scrolled past. */
+.rail--beacon .mark,
+.rail--beacon .hail {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(0.5rem);
+  transition:
+    opacity var(--slow) var(--ease),
+    transform var(--slow) var(--ease);
+}
+.rail--beacon.is-stuck .mark,
+.rail--beacon.is-stuck .hail {
+  opacity: 1;
+  pointer-events: auto;
+  transform: none;
+}
 
-   Now that the rail lives in the right corner on every page, the beacon
-   no longer travels: it stays put and changes shape, which is both
-   simpler and steadier to look at. */
-.rail--beacon .mark {
+.rail--beacon .plan-btn {
+  height: 56px;
+  width: 56px;
   background: transparent;
   border-color: transparent;
   box-shadow: none;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
-  gap: 0;
-  padding: var(--space-2);
   transition:
+    height var(--slow),
+    width var(--slow),
     background var(--slow),
     border-color var(--slow),
-    box-shadow var(--slow),
-    padding var(--slow),
-    gap var(--slow);
+    box-shadow var(--slow);
 }
-.rail--beacon .mark__glyph {
+.rail--beacon .plan-btn__glyph {
   width: 40px;
   height: 40px;
 }
-/* max-width rather than display, so the name slides out from behind the
-   glyph rather than appearing from nothing. */
-.rail--beacon .mark__name {
-  max-width: 0;
-  opacity: 0;
-  overflow: hidden;
-  white-space: nowrap;
-  transition:
-    max-width var(--slow) var(--ease),
-    opacity 0.25s ease;
-}
-/* The neighbours would compete with a 40px plan, so they wait for the
-   scrolled state too. */
-.rail--beacon .hail {
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity var(--slow) var(--ease);
-}
-
-/* Scrolled: the pill, as everywhere else. */
-.rail--beacon.is-stuck .mark {
+.rail--beacon.is-stuck .plan-btn {
+  height: var(--rail-h);
+  width: var(--rail-h);
   background: var(--glass-bg-rail);
   border-color: var(--glass-edge);
   border-top-color: var(--glass-edge-lit);
   box-shadow: var(--glass-shadow);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
-  border-radius: 999px;
-  gap: 0.7rem;
-  padding: 0.45rem 0.5rem 0.45rem 1rem;
 }
-.rail--beacon.is-stuck .mark__name {
-  max-width: 16ch;
-  opacity: 1;
-}
-.rail--beacon.is-stuck .mark__glyph {
-  width: 22px;
-  height: 22px;
-}
-.rail--beacon.is-stuck .hail {
-  opacity: 1;
-  pointer-events: auto;
+.rail--beacon.is-stuck .plan-btn__glyph {
+  width: 15px;
+  height: 15px;
 }
 
-/* Hover: the plan pans out. Big enough that a single room is a target
-   you can actually aim at, which is what makes the per-room colours
-   worth having. */
-.rail--beacon.is-stuck .mark:hover .mark__glyph,
-.rail--beacon.is-stuck .mark:focus-visible .mark__glyph {
-  width: 76px;
-  height: 76px;
-}
-.rail--beacon.is-stuck .mark:hover,
-.rail--beacon.is-stuck .mark:focus-visible {
-  padding: 0.7rem 0.9rem;
+/* Hover: the plan pans out, big enough that a single room is a target you
+   can actually aim at — which is what makes the per-room colours worth
+   having. */
+.rail--beacon.is-stuck .plan-btn:hover,
+.rail--beacon.is-stuck .plan-btn:focus-visible {
+  height: 88px;
+  width: 88px;
   border-radius: 14px;
 }
+.rail--beacon.is-stuck .plan-btn:hover .plan-btn__glyph,
+.rail--beacon.is-stuck .plan-btn:focus-visible .plan-btn__glyph {
+  width: 68px;
+  height: 68px;
+}
 
-@media (max-width: 700px) {
-  /* A 40px plan crowds a phone, and the hero wordmark wraps — so the
-     beacon behaves like the ordinary rail. */
-  .rail--beacon .mark__glyph,
-  .rail--beacon.is-stuck .mark:hover .mark__glyph {
-    width: 26px;
-    height: 26px;
+@media (max-width: 620px) {
+  .rail--beacon .plan-btn {
+    height: 38px;
+    width: 38px;
+  }
+  .rail--beacon .plan-btn__glyph {
+    width: 24px;
+    height: 24px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .rail--beacon .mark,
-  .rail--beacon .mark__name,
-  .rail--beacon .mark__glyph,
-  .rail--beacon .hail {
+  .rail--beacon .hail,
+  .rail--beacon .plan-btn,
+  .rail--beacon .plan-btn__glyph {
     transition: none;
   }
 }

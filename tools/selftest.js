@@ -71,7 +71,7 @@ const MUTATIONS = [
     mutate: (s) => s.replace('href="digital.html"', 'href="Digital.html"'),
   },
   {
-    name: "the wordmark is no longer wired to the plan",
+    name: "the plan button is no longer wired to the dialog",
     detectedBy: "behaviour.js",
     scope: [],
     file: "assets/js/floorplan.js",
@@ -79,9 +79,9 @@ const MUTATIONS = [
     // renders but does not open the dialog looks completely fine in a
     // screenshot.
     mutate: (s) => {
-      const old = 'mark.setAttribute("aria-controls", "floorplan");';
+      const old = 'nav.setAttribute("aria-controls", "floorplan");';
       if (!s.includes(old)) throw new Error("aria-controls line not found");
-      return s.replace(old, 'mark.setAttribute("aria-controls", "nothing");');
+      return s.replace(old, 'nav.setAttribute("aria-controls", "nothing");');
     },
   },
   {
