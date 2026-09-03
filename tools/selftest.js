@@ -232,10 +232,15 @@ const MUTATIONS = [
     detectedBy: "behaviour.js",
     scope: [],
     file: "assets/js/floorplan.js",
+    /* The anchor moved when the click handler grew a body: this used to
+       match a one-line `if (...) dlg.showModal();`. It reported ERROR
+       rather than MISSED, which is the distinction worth keeping — a
+       mutation that cannot be applied says nothing about the check. */
     mutate: (s) => {
-      const old = 'if (typeof dlg.showModal === "function") dlg.showModal();';
-      if (!s.includes(old)) throw new Error("showModal call not found");
-      return s.replace(old, 'if (false) dlg.showModal();');
+      const old = 'if (typeof dlg.showModal === "function") {';
+      if (!s.includes(old)) throw new Error("showModal branch not found");
+      // Falls through to the non-modal setAttribute("open") path.
+      return s.replace(old, "if (false) {");
     },
   },
   {
