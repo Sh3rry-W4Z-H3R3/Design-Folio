@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-room="digital">
+<html lang="en" data-room="digital" data-cursor-targets=".tension-card, .swatch">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -114,21 +114,6 @@
     }
 
     /* ── CURSOR ───────────────────────────────────────────── */
-    .cursor {
-      position: fixed;
-      width: 10px; height: 10px;
-      background: var(--kt-cream);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9999;
-      transform: translate(-50%, -50%);
-      transition: width var(--fast), height var(--fast), background var(--fast);
-    }
-    .cursor.grow {
-      width: 40px; height: 40px;
-      background: transparent;
-      border: 1px solid var(--kt-coral);
-    }
 
     /* ── HERO ─────────────────────────────────────────────── */
     .hero {
@@ -975,14 +960,9 @@
     <div class="footer-nav__right">
       <a href="https://www.linkedin.com/in/sherjeel-hussain-0652431b9/" target="_blank" rel="noopener">LinkedIn</a>
       &nbsp;&nbsp;
-      <a href="https://www.instagram.com/sherjeel_h27_design_/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.instagram.com/sh3rry.vzn/" target="_blank" rel="noopener">Instagram</a>
     </div></footer>
   <script>
-
-    document.querySelectorAll('a, button, .tension-card, .swatch').forEach(el => {
-      el.addEventListener('mouseenter', () => cursor.classList.add('grow'));
-      el.addEventListener('mouseleave', () => cursor.classList.remove('grow'));
-    });
 
     // Scroll-triggered fade for sections
     const observer = new IntersectionObserver((entries) => {

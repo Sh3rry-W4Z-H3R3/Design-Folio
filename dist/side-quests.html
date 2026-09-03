@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-room="play">
+<html lang="en" data-room="play" data-cursor-targets=".gallery-item">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -100,11 +100,7 @@
         <style>
       /* ── VARIABLES & RESETS ─────────────────────────────── */
       :root {
-        --bg: #000000;
-        --fg: #ede9e1;
-        --fg-dim: #7a7a7a;
-        --fg-mid: #999;
-        --accent: #e8547a; /* Neon pink from your file */
+         /* Neon pink from your file */
         --serif: "Cormorant", Georgia, serif;
         --sans: "Syne", sans-serif;
         --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
@@ -134,29 +130,6 @@
       }
 
       /* ── CURSOR (From digital.html) ─────────────────────── */
-      .cursor {
-        position: fixed;
-        width: 10px;
-        height: 10px;
-        background: var(--fg);
-        border-radius: 50%;
-        pointer-events: none; /* Prevents cursor from blocking clicks underneath */
-        z-index: 9999;
-        transform: translate(-50%, -50%);
-        transition:
-          width var(--fast),
-          height var(--fast),
-          background var(--fast),
-          opacity var(--fast);
-      }
-
-      .cursor.grow {
-        width: 50px; /* Slightly larger to account for big gallery items */
-        height: 50px;
-        background: transparent;
-        border: 1px solid var(--accent);
-        opacity: 0.7;
-      }
 
       /* ── PAGE HEADER ──────────────────────────────────────── */
       .page-header {
@@ -260,7 +233,7 @@
         width: 100%;
         margin-bottom: 20px;
         border: 1px solid #111;
-        background-color: #050505;
+        background-color: var(--surface-2);
         overflow: hidden;
         transform-origin: center center;
         transition:
@@ -386,7 +359,7 @@
         right: 30px;
         width: 45px;
         height: 45px;
-        background-color: #050505;
+        background-color: var(--surface-2);
         border: 1px solid #111;
         color: var(--fg);
         text-decoration: none;
@@ -471,7 +444,7 @@
       .divider {
         width: 1px;
         height: 14px;
-        background: #333;
+        background: var(--line-2);
         flex-shrink: 0;
       }
 
@@ -497,14 +470,13 @@
       <div>
         <p class="page-header__eyebrow">04 — Side Quests &amp; Archives</p>
         <h1 class="page-header__title">
-          A collection of experiments, technical deep-dives, and creative
-          detours that inform my professional practice.
+          Experiments
+          <em>&amp; Detours</em>
         </h1>
       </div>
       <p class="page-header__desc">
-        Some small projects, one-off experiments, and works-in-progress that
-        don't fit into the main case studies but are still worth a look for
-        those interested.
+        A collection of experiments, technical deep-dives, and creative
+        detours that inform my professional practice.
       </p>
     </header>
 
@@ -777,16 +749,6 @@
     <a href="#top" class="back-to-top" aria-label="Back to top">↑</a>
 
     <script>
-
-      // Follow mouse
-
-      // Grow on interactives AND the gallery grid items
-      document.querySelectorAll("a, button, .gallery-item").forEach((el) => {
-        el.addEventListener("mouseenter", () => cursor.classList.add("grow"));
-        el.addEventListener("mouseleave", () =>
-          cursor.classList.remove("grow"),
-        );
-      });
 
       // Mobile tap-to-reveal overlay (touch / no-hover devices)
       (function () {

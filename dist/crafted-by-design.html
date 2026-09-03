@@ -60,12 +60,6 @@
     <link rel="stylesheet" href="assets/css/floorplan.css" />
         <style>
       :root {
-        --bg: #0a0a0a;
-        --fg: #ede9e1;
-        --fg-dim: #7a7a7a;
-        --fg-mid: #999;
-        --accent: #6dbf9e;
-        --accent-2: #e8547a;
         --gold: #c8b882;
         --serif: "Cormorant", Georgia, serif;
         --sans: "Syne", sans-serif;
@@ -93,28 +87,6 @@
         font-family: var(--body);
         overflow-x: hidden;
         cursor: none;
-      }
-
-      .cursor {
-        position: fixed;
-        width: 10px;
-        height: 10px;
-        background: var(--fg);
-        border-radius: 50%;
-        pointer-events: none;
-        z-index: 9999;
-        transform: translate(-50%, -50%);
-        transition:
-          width var(--fast),
-          height var(--fast),
-          background var(--fast);
-      }
-      .cursor.grow {
-        width: 44px;
-        height: 44px;
-        background: transparent;
-        border: 1px solid var(--accent);
-        opacity: 0.7;
       }
 
       .project-hero {
@@ -193,7 +165,7 @@
       .hero-img {
         width: 100%;
         aspect-ratio: 16/7;
-        background: #111;
+        background: var(--surface);
         overflow: hidden;
         position: relative;
         opacity: 0;
@@ -317,7 +289,7 @@
       }
       .img-grid__item {
         aspect-ratio: 4/3;
-        background: #111;
+        background: var(--surface);
         overflow: hidden;
         position: relative;
       }
@@ -337,7 +309,7 @@
         align-items: center;
         justify-content: center;
         gap: 0.6rem;
-        background: #111;
+        background: var(--surface);
       }
       .img-grid__placeholder span {
         font-family: var(--sans);
@@ -406,7 +378,7 @@
       }
       .stat {
         padding: var(--space-6) var(--space-5);
-        background: #111;
+        background: var(--surface);
         border-top: 1px solid #222;
         transition: border-top-color var(--fast);
       }
@@ -445,7 +417,7 @@
         transition: background var(--fast);
       }
       .next-project:hover {
-        background: #0d0d0d;
+        background: var(--surface-2);
       }
       .next-project__label {
         font-family: var(--sans);
@@ -549,7 +521,7 @@
       .divider {
         width: 1px;
         height: 14px;
-        background: #333;
+        background: var(--line-2);
         flex-shrink: 0;
       }
 
@@ -843,7 +815,7 @@
         >
         &nbsp;&nbsp;
         <a
-          href="https://www.instagram.com/sherjeel_h27_design_/"
+          href="https://www.instagram.com/sh3rry.vzn/"
           target="_blank"
           rel="noopener"
           >Instagram</a

@@ -37,12 +37,25 @@
       opacity var(--fast);
   }
 
+  /* The grown ring reads as "this is a target". Its weight is a token
+     because the two main rooms want it heavier — see below. */
   :root[data-mode="workshop"] .cursor.grow {
     width: 40px;
     height: 40px;
     background: transparent;
-    border: 1px solid var(--accent);
-    opacity: 0.7;
+    border: var(--cursor-ring, 1px) solid var(--accent);
+    opacity: var(--cursor-ring-opacity, 0.7);
+  }
+
+  /* Industrial and Digital are where the work actually gets browsed, and
+     a 1px ring at 0.7 opacity is easy to lose against a photograph. A
+     heavier, more opaque ring makes both the highlight and the pointer's
+     position read immediately. Applies to the room pages and to every
+     case study inside them, since both carry the room on <html>. */
+  :root[data-mode="workshop"][data-room="digital"],
+  :root[data-mode="workshop"][data-room="physical"] {
+    --cursor-ring: 2px;
+    --cursor-ring-opacity: 0.95;
   }
 
   :root[data-mode="workshop"] .cursor-icon {
@@ -61,6 +74,35 @@
 
   :root[data-mode="workshop"] .cursor-icon.visible {
     opacity: 1;
+  }
+}
+
+/* ── NARROW SCREENS ─────────────────────────────────────────
+   Below 768px the custom cursor goes and the system one comes back.
+
+   BOTH halves of that decision live here, together, which is the point.
+   24 of the 27 pages were making the first half themselves — hiding
+   .cursor in their own @media (max-width: 768px) — and leaving the
+   second half to base.css, which keys off pointer type and does not
+   follow width. So on a laptop with the window dragged under 768px the
+   dot was hidden and the system cursor was still suppressed: those pages
+   had no pointer at all. index.html chose 640px and digital.html never
+   hid it, so the three did not even fail the same way.
+
+   Stated as a pointer question rather than a width one it would be
+   better still, but the pages' own rules are width rules, and a shared
+   rule that disagrees with 24 pages about when to fire is not a fix. */
+@media (max-width: 768px) {
+  :root[data-mode="workshop"] .cursor,
+  :root[data-mode="workshop"] .cursor-icon {
+    display: none;
+  }
+  :root[data-mode="workshop"] body,
+  :root[data-mode="workshop"] a,
+  :root[data-mode="workshop"] button,
+  :root[data-mode="workshop"] summary,
+  :root[data-mode="workshop"] [role="button"] {
+    cursor: auto;
   }
 }
 

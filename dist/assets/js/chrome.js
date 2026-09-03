@@ -48,10 +48,12 @@
 
     // Anchor both elements at the viewport origin from JS, as inline
     // styles. transform is relative to whatever top/left the CSS gives the
-    // element, and pages that still carry their own .cursor rules set
-    // things like `left: 50vw; top: 50vh` — which silently offsets the dot
-    // from the real pointer by half the screen. An inline style outranks
-    // any stylesheet, so this holds no matter what a page declares.
+    // element, and a page carrying its own `.cursor { left: 50vw }` would
+    // silently offset the dot from the real pointer by half the screen.
+    //
+    // No page declares that any more — those rules are all gone — so this
+    // is insurance rather than a fix. It costs two assignments and makes
+    // the dot's position independent of anything a page might add later.
     [dot, icon].forEach(function (el) {
       if (!el) return;
       el.style.left = "0px";
@@ -84,7 +86,14 @@
        bound here with querySelectorAll would miss every room and door —
        and with them the monitor/pot icons, which now live on the plan.
        mouseenter does not bubble; mouseover does. */
-    var HOVERS = "a, button, [data-cursor]";
+    /* Pages can name extra things that should grow the cursor — a gallery
+       tile, a colour swatch, a door panel — by listing selectors in
+       data-cursor-targets on <html>. Six pages were each carrying their
+       own copy of the same mouseenter/mouseleave loop to do this; one
+       attribute replaces all of them, and the delegation below then covers
+       elements added after load for free. */
+    var extra = root.getAttribute("data-cursor-targets");
+    var HOVERS = "a, button, [data-cursor]" + (extra ? ", " + extra : "");
 
     function hovered(node) {
       return node && node.closest ? node.closest(HOVERS) : null;

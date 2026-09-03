@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-room="office">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -45,7 +45,7 @@
     "alumniOf": [{"@type": "EducationalOrganization", "name": "Robert Gordon University, Aberdeen"}, {"@type": "EducationalOrganization", "name": "Gray's School of Art, Aberdeen"}],
     "address": {"@type": "PostalAddress", "addressLocality": "Glasgow", "addressCountry": "GB"},
     "knowsAbout": ["UI Design", "Product Design", "Ceramics", "Brand Identity", "Multanni Mitti", "Raku Firing", "Shopify", "Web Development"],
-    "sameAs": ["https://www.linkedin.com/in/sherjeel-hussain-0652431b9/", "https://www.instagram.com/sherjeel_h27_design_/"]
+    "sameAs": ["https://www.linkedin.com/in/sherjeel-hussain-0652431b9/", "https://www.instagram.com/sh3rry.vzn/"]
   }
   </script>
 
@@ -83,12 +83,6 @@
     <link rel="stylesheet" href="assets/css/floorplan.css" />
     <style>
     :root {
-      --bg:       #0a0a0a;
-      --fg:       #ede9e1;
-      --fg-dim:   #7a7a7a;
-      --fg-mid:   #999;
-      --accent:   #e8547a;
-      --accent-2: #6dbf9e;
       --serif:    'Cormorant', Georgia, serif;
       --sans:     'Syne', sans-serif;
       --body:     'DM Sans', sans-serif;
@@ -102,32 +96,8 @@
     body { background: var(--bg); color: var(--fg); font-family: var(--body); overflow-x: hidden; cursor: none; }
 
     /* ── CURSOR ── */
-    .cursor {
-      position: fixed; width: 10px; height: 10px;
-      background: var(--fg); border-radius: 50%;
-      pointer-events: none; z-index: 9999;
-      transform: translate(-50%, -50%);
-      transition: width var(--fast), height var(--fast), background var(--fast), opacity var(--fast);
-      left: 50vw; top: 50vh;
-    }
-    .cursor.grow {
-      width: 44px; height: 44px; background: transparent;
-      border: 1px solid var(--accent); opacity: 0.8;
-    }
     /* Icon label that floats next to cursor */
-    .cursor-icon {
-      position: fixed; pointer-events: none; z-index: 9998;
-      transform: translate(10px, -50%);
-      opacity: 0; transition: opacity 0.2s ease;
-      display: flex; flex-direction: column; align-items: center;
-    }
-    .cursor-icon.visible { opacity: 1; }
     .cursor-icon svg { display: block; }
-    .cursor-icon span {
-      font-family: var(--sans); font-size: var(--text-1); font-weight: 700;
-      letter-spacing: var(--ls-label); text-transform: uppercase;
-      color: var(--accent); margin-top: 4px;
-    }
 
     /* ── HERO ── */
     .hero { display: grid; grid-template-columns: 1fr 1fr; min-height: 88vh; border-bottom: 1px solid #1a1a1a; }
@@ -142,7 +112,7 @@
     .hero__right { position: relative; overflow: hidden; opacity: 0; animation: fadeIn 1.2s var(--ease) 0.3s forwards; }
     .hero__photo { position: absolute; inset: 0; background-image: url('img/sherjeel-portrait.jpg'); background-size: cover; background-position: center top; filter: grayscale(20%); transition: filter var(--slow); }
     .hero__right:hover .hero__photo { filter: grayscale(0%); }
-    .hero__photo-placeholder { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: var(--space-3); background: #111; }
+    .hero__photo-placeholder { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: var(--space-3); background: var(--surface); }
     .hero__photo-placeholder p { font-family: var(--sans); font-size: var(--text-2); font-weight: 700; letter-spacing: var(--ls-track); text-transform: uppercase; color: var(--fg-dim); }
     .hero__right::after { content: ''; position: absolute; bottom: 0; left: 0; width: 40%; height: 3px; background: var(--accent); }
 
@@ -184,16 +154,7 @@
     }
 
     /* ── SKILLS ── */
-    .skills-grid { display: flex; flex-direction: column; gap: var(--space-5); max-width: 680px; }
-    /* .skill-group {} */
-    .skill-group__title { font-family: var(--sans); font-size: var(--text-2); font-weight: 700; letter-spacing: var(--ls-track); text-transform: uppercase; color: var(--accent); margin-bottom: var(--space-3); }
-    .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
-    .skill-tag {
-      font-family: var(--body); font-size: var(--text-3); font-weight: 300;
-      color: var(--fg-mid); border: 1px solid #2a2a2a; padding: var(--space-2) 0.7rem;
-      transition: border-color var(--fast), color var(--fast);
-    }
-    .skill-tag:hover { border-color: var(--accent); color: var(--fg); }
+    /* */
 
     /* ── CONTACT ── */
     .contact-section { padding: var(--space-8) var(--gutter); display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8); align-items: start; border-bottom: 1px solid #1a1a1a; }
@@ -205,8 +166,8 @@
     .contact-heading em { font-style: italic; color: var(--accent); display: block; }
     .contact-subtext { font-size: var(--text-5); line-height: var(--lh-loose); color: var(--fg-mid); font-weight: 300; max-width: 380px; }
     .contact-links { display: flex; flex-direction: column; gap: 2px; padding-top: var(--space-3); }
-    .contact-link { display: flex; align-items: center; justify-content: space-between; padding: var(--space-5) var(--space-5); background: #0e0e0e; text-decoration: none; color: var(--fg); border-left: 2px solid transparent; transition: border-color var(--fast), background var(--fast); cursor: none; }
-    .contact-link:hover { border-left-color: var(--accent); background: #141414; }
+    .contact-link { display: flex; align-items: center; justify-content: space-between; padding: var(--space-5) var(--space-5); background: var(--surface-2); text-decoration: none; color: var(--fg); border-left: 2px solid transparent; transition: border-color var(--fast), background var(--fast); cursor: none; }
+    .contact-link:hover { border-left-color: var(--accent); background: var(--surface); }
     .contact-link__label { font-family: var(--sans); font-size: var(--text-1); font-weight: 700; letter-spacing: var(--ls-track); text-transform: uppercase; color: var(--accent); margin-bottom: var(--space-2); }
     .contact-link__value { font-family: var(--serif); font-size: var(--text-7); font-weight: 300; }
     .contact-link__arrow { font-size: var(--text-7); color: var(--fg-dim); transition: transform var(--fast), color var(--fast); }
@@ -276,7 +237,7 @@
     .divider {
       width: 1px;
       height: 14px;
-      background: #333;
+      background: var(--line-2);
       flex-shrink: 0;
     }
 
@@ -306,8 +267,6 @@
       .hero__left { padding: var(--space-7) var(--space-4) var(--space-6); }
       .hero__name { font-size: clamp(3.2rem, 16vw, 6rem); }
       .contact-heading { font-size: clamp(2rem, 12vw, 3.5rem); }
-      .skill-tags { gap: 4px; }
-      .skill-tag { font-size: var(--text-3); padding: var(--space-2) var(--space-2); }
     }
   </style>
 </head>
@@ -331,7 +290,7 @@
         </p>
       </div>
       <p style="font-size: var(--text-3);color:var(--fg-dim);line-height: var(--lh-loose);font-weight:300;max-width:380px;">
-        Designer and ceramicist. I work across physical and digital — not because I can't choose, but because both are part of how I think.
+        Designer and ceramicist. I work across physical and digital, because both are part of how I think.
       </p>
     </div>
     <div class="hero__right">
@@ -460,67 +419,6 @@
     </div>
   </div>
 
-  <!-- SKILLS -->
-  <div class="section-block">
-    <div class="two-col">
-      <p class="section-sticky-label">Capabilities</p>
-      <div class="skills-grid">
-
-        <div class="skill-group">
-          <p class="skill-group__title">Design Tools</p>
-          <div class="skill-tags">
-            <span class="skill-tag">Figma</span><span class="skill-tag">Framer</span>
-            <span class="skill-tag">Adobe Illustrator</span><span class="skill-tag">Adobe InDesign</span>
-            <span class="skill-tag">Adobe Photoshop</span><span class="skill-tag">Adobe Lightroom</span>
-            <span class="skill-tag">Rhino 3D</span><span class="skill-tag">KeyShot</span>
-            <span class="skill-tag">Blender</span><span class="skill-tag">SketchUp</span>
-            <span class="skill-tag">RIVE Animation</span><span class="skill-tag">Gravity Sketch</span>
-            <span class="skill-tag">Notion</span><span class="skill-tag">Shopify</span>
-          </div>
-        </div>
-
-        <div class="skill-group">
-          <p class="skill-group__title">Technical</p>
-          <div class="skill-tags">
-            <span class="skill-tag">HTML</span><span class="skill-tag">CSS</span>
-            <span class="skill-tag">JavaScript</span><span class="skill-tag">SASS</span>
-            <span class="skill-tag">Shopify Liquid</span><span class="skill-tag">Three.js</span>
-            <span class="skill-tag">Cloudflare</span><span class="skill-tag">Netlify</span>
-            <span class="skill-tag">cPanel</span><span class="skill-tag">Web Hosting</span>
-            <span class="skill-tag">GitHub</span><span class="skill-tag">VS Code</span>
-            <span class="skill-tag">Command Line</span>
-          </div>
-        </div>
-
-        <div class="skill-group">
-          <p class="skill-group__title">Physical Making</p>
-          <div class="skill-tags">
-            <span class="skill-tag">Wheel Throwing</span><span class="skill-tag">Slip Casting</span>
-            <span class="skill-tag">Raku Firing</span><span class="skill-tag">Glazing &amp; Dipping</span>
-            <span class="skill-tag">Kiln Operation</span><span class="skill-tag">Ceramics</span>
-            <span class="skill-tag">CNC Machining</span><span class="skill-tag">Laser Cutting</span>
-            <span class="skill-tag">3D Printing</span><span class="skill-tag">Injection Moulding</span>
-            <span class="skill-tag">Vacuum Forming</span><span class="skill-tag">Woodwork</span>
-            <span class="skill-tag">Recycled Plastic</span><span class="skill-tag">Metal Tooling</span>
-            <span class="skill-tag">Hi-Fi / Lo-Fi Modelling</span>
-          </div>
-        </div>
-
-        <div class="skill-group">
-          <p class="skill-group__title">Professional</p>
-          <div class="skill-tags">
-            <span class="skill-tag">Client Acquisition</span><span class="skill-tag">Project Management</span>
-            <span class="skill-tag">User Research</span><span class="skill-tag">Exhibition Curation</span>
-            <span class="skill-tag">Mentorship</span><span class="skill-tag">Leadership</span>
-            <span class="skill-tag">Lone Worker</span><span class="skill-tag">Communication</span>
-            <span class="skill-tag">Attention to Detail</span><span class="skill-tag">Problem Solving</span>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
   <!-- AVAILABILITY -->
   <div class="contact-section">
     <div>
@@ -551,19 +449,12 @@
     <div class="footer-nav__right">
       <a href="https://www.linkedin.com/in/sherjeel-hussain-0652431b9/" target="_blank" rel="noopener">LinkedIn</a>
       &nbsp;&nbsp;
-      <a href="https://www.instagram.com/sherjeel_h27_design_/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.instagram.com/sh3rry.vzn/" target="_blank" rel="noopener">Instagram</a>
     </div>
   </footer>
 
   <script>
 
-  
-
-  document.querySelectorAll('a:not([data-cursor]), button').forEach(el => {
-    el.addEventListener('mouseenter', () => cursor.classList.add('grow'));
-    el.addEventListener('mouseleave', () => cursor.classList.remove('grow'));
-  });
- 
   // Hide portrait placeholder once the real image loads
   const photo = document.querySelector('.hero__photo');
   const ph    = document.getElementById('photoPlaceholder');

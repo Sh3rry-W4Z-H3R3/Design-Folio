@@ -17,10 +17,23 @@
      to be put back explicitly or the plan pins to the top-left. */
   margin: auto;
 }
+/* The scrim behind the panel follows the room. It was a fixed near-black,
+   which is right in five rooms and wrong in the sixth: the exhibition
+   room's glass tokens are built for a pale ground, so a dark scrim gave
+   it a dark panel wearing the light room's near-black text — every room
+   name at 1.2:1 on it. The panel and the thing it sits on have to be lit
+   the same way.
+
+   Literal values rather than a custom property: ::backdrop only began
+   inheriting from its originating element in recent Chrome, and a var()
+   here would resolve to nothing in browsers a year or two older. */
 .plan::backdrop {
   background: rgba(6, 6, 6, 0.82);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
+}
+[data-room="exhibition"] .plan::backdrop {
+  background: rgba(210, 202, 188, 0.86);
 }
 
 /* Background, border and shadow come from .glass, which the dialog also
@@ -83,14 +96,18 @@
     repeating-linear-gradient(
       45deg,
       transparent 0 7px,
-      rgba(237, 233, 225, 0.018) 7px 8px
+      var(--plan-hatch, rgba(237, 233, 225, 0.018)) 7px 8px
     );
+}
+/* Hatching is drawn in ink, and in the light room the ink is dark. */
+[data-room="exhibition"] .plan__box {
+  --plan-hatch: rgba(26, 24, 21, 0.05);
 }
 
 .plan__rooms {
   position: absolute;
   inset: 0;
-  bottom: 13%; /* leaves the facade strip its band */
+  top: 13%; /* leaves the facade strip its band, along the top */
   margin: 0;
   padding: 0;
   list-style: none;
@@ -150,14 +167,14 @@
 
 /* Each room carries its own accent inside the plan, so the drawing
    shows the building's colour logic at a glance. */
-.plan__room[data-room="digital"]:hover,
-.plan__room[data-room="digital"]:focus-visible { border-color: var(--pink); }
-.plan__room[data-room="physical"]:hover,
-.plan__room[data-room="physical"]:focus-visible { border-color: var(--mint); }
-.plan__room[data-room="play"]:hover,
-.plan__room[data-room="play"]:focus-visible { border-color: var(--gold); }
-.plan__room[data-room="exhibition"]:hover,
-.plan__room[data-room="exhibition"]:focus-visible { border-color: var(--cream); }
+.plan__room[data-plan-room="digital"]:hover,
+.plan__room[data-plan-room="digital"]:focus-visible { border-color: var(--pink); }
+.plan__room[data-plan-room="physical"]:hover,
+.plan__room[data-plan-room="physical"]:focus-visible { border-color: var(--mint); }
+.plan__room[data-plan-room="play"]:hover,
+.plan__room[data-plan-room="play"]:focus-visible { border-color: var(--gold); }
+.plan__room[data-plan-room="exhibition"]:hover,
+.plan__room[data-plan-room="exhibition"]:focus-visible { border-color: var(--cream); }
 
 /* ── YOU ARE HERE ───────────────────────────────────────────── */
 .plan__room[aria-current="page"] {
@@ -196,14 +213,20 @@
   color: var(--accent);
 }
 
-/* ── FACADE ─────────────────────────────────────────────────── */
+/* ── FACADE ─────────────────────────────────────────────────
+   Across the TOP of the plan, because that is where the rooms it opens
+   into are. The left door stands over Industrial and the right over
+   Digital, so the drawing says where each one leads before a word of it
+   is read — which is the only reason to draw a plan instead of listing
+   links. With the strip at the bottom the two doors sat as far from
+   their own rooms as the sheet allowed. */
 .plan__facade {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 0;
+  top: 0;
   height: 13%;
-  border-top: 1px dashed var(--line-2);
+  border-bottom: 1px dashed var(--line-2);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -216,12 +239,14 @@
 }
 
 /* Doors read as gaps in the facade — the wall stops, and the opening is
-   marked by its jambs. */
+   marked by its jambs. The extra pixel of height carries the opening
+   across the strip's own border, so the gap is a gap rather than a
+   recess with a lid on it. */
 .plan__door {
   position: absolute;
   left: var(--x);
   width: var(--w);
-  top: -1px;
+  top: 0;
   height: calc(100% + 1px);
   border-left: 1px solid var(--fg-dim);
   border-right: 1px solid var(--fg-dim);
@@ -230,42 +255,46 @@
 }
 /* The door leaf, standing open into the room, and the arc it sweeps —
    drawn the way a plan draws a door. Both are clipped to the opening so
-   the arc reads as a swing, not a flourish across the facade. */
+   the arc reads as a swing, not a flourish across the facade.
+
+   The leaf hinges at the TOP of the opening and swings downward, because
+   downward is now where the room is. A leaf swinging up would be opening
+   out into the street. */
 .plan__door::before {
   content: "";
   position: absolute;
   left: 0;
-  bottom: 0;
+  top: 0;
   width: 1px;
   height: 100%;
   background: var(--fg-dim);
-  transform-origin: bottom left;
-  transform: rotate(-22deg);
+  transform-origin: top left;
+  transform: rotate(22deg);
   transition: transform var(--slow);
 }
 .plan__door::after {
   content: "";
   position: absolute;
   left: 0;
-  bottom: 0;
+  top: 0;
   width: 100%;
   height: 100%;
-  border-top: 1px solid var(--line-2);
-  border-top-left-radius: 0;
-  border-top-right-radius: 100%;
+  border-bottom: 1px solid var(--line-2);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 100%;
   opacity: 0.55;
 }
 /* Hovering a door eases it further open. */
 .plan__door:hover::before,
 .plan__door:focus-visible::before {
-  transform: rotate(-52deg);
+  transform: rotate(52deg);
 }
 /* Doors light in their own room's colour, so the facade shows where each
    one leads regardless of which page the plan was opened from. */
-.plan__door[data-room="physical"] {
+.plan__door[data-plan-room="physical"] {
   --door: var(--mint);
 }
-.plan__door[data-room="digital"] {
+.plan__door[data-plan-room="digital"] {
   --door: var(--pink);
 }
 .plan__door:hover,
@@ -364,7 +393,14 @@
   }
   .plan__room {
     /* Bands are read left to right, so the label leads and the "you are
-       here" marker sits beside it rather than under it. */
+       here" marker sits beside it rather than under it.
+
+       justify-content has to be reset too. The drawing sets flex-end so a
+       room's label sits at the bottom of its rectangle; turned on its
+       side by flex-direction: row that same value became "align right",
+       and every band read from the right-hand edge with the marker
+       wedged against the name. */
+    justify-content: flex-start;
     flex-direction: row;
     align-items: baseline;
     flex-wrap: wrap;

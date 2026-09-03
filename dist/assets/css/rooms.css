@@ -15,6 +15,21 @@
 :root {
   --accent: var(--pink);
   --accent-2: var(--mint);
+
+  /* Panel grounds. Pages hardcoded #111 and #0e0e0e for these, which was
+     invisible until the exhibition room inverted: a dark panel stayed
+     dark while the text on it went dark with the tokens. Reading them
+     from here means a panel follows whatever room it is standing in. */
+  --surface: #111111;
+  --surface-2: #0e0e0e;
+
+  /* Text sitting ON a photograph. In the dark rooms this is simply the
+     ordinary foreground, but it is a separate token because a picture
+     with a scrim over it is dark in EVERY room — including the light
+     one, where --fg is near-black and would vanish into the image. */
+  --fg-on-media: var(--fg);
+  --fg-on-media-mid: var(--fg-mid);
+  --fg-on-media-dim: var(--fg-dim);
 }
 
 /* ── DIGITAL & BRAND ────────────────────────────────────────
@@ -43,46 +58,65 @@
   --accent-2: var(--mint);
   --accent-soft: rgba(200, 184, 130, 0.08);
   --accent-edge: rgba(200, 184, 130, 0.3);
+
+  /* Pure black rather than the site's near-black. side-quests.html had
+     chosen this for itself and it is right for the room — the archive and
+     the experiments read better with no floor under them at all — so it
+     belongs here as the room's identity rather than as a page override
+     that the shared layer cannot see. */
+  --bg: #000000;
+  --surface: #0d0d0d;
+  --surface-2: #080808;
+}
+
+/* ── OFFICE ─────────────────────────────────────────────────
+   About and contact. A lighter pink than the digital room: the same
+   family, turned down — this is where you find the person rather than
+   the work. */
+[data-room="office"] {
+  --accent: var(--rose);
+  --accent-2: var(--mint);
+  --accent-soft: rgba(240, 145, 159, 0.08);
+  --accent-edge: rgba(240, 145, 159, 0.3);
 }
 
 /* ── EXHIBITION ─────────────────────────────────────────────
    Currently dark, matching the mint accent these pages already use.
-   The room is *decided* to become the one light room — see below — but
-   flipping the ground before the room is rebuilt would drop pages whose
-   layouts, image treatments and overlays all assume a dark ground onto
-   cream. So the inversion waits for Phase 4, when the room is designed
-   for it, and this keeps the pages as they are until then.
+   This is the one light room. Walking in should feel like stepping out of
+   a workshop and into a gallery, so it inverts the whole ground rather
+   than swapping an accent — which makes it the only room needing a full
+   counterpart token set. Every colour the dark rooms rely on needs a
+   light-ground equivalent here, or text lands on the wrong surface.
+
+   Anything on an exhibition page that hardcodes a dark value instead of
+   reading these tokens will not follow. Those are listed in the pages
+   themselves; grep the room for rgba(10, 10, 10 and #0a0a0a before
+   assuming a page is clean.
    ─────────────────────────────────────────────────────────── */
 [data-room="exhibition"] {
-  --accent: var(--mint);
-  --accent-2: var(--pink);
-  --accent-soft: rgba(109, 191, 158, 0.08);
-  --accent-edge: rgba(109, 191, 158, 0.3);
+  --bg: var(--cream);
+  --fg: #1a1815;
+  --fg-mid: #55504a;
+  --fg-dim: #7d766c;
+  --line: #ddd6c9;
+  --line-2: #c9c0b0;
+  --scrim: rgba(242, 236, 225, 0.92);
+  /* Warm brown — reads as a wall label rather than a UI accent. */
+  --accent: #8a6a4a;
+  --accent-2: var(--mint);
+  --accent-soft: rgba(138, 106, 74, 0.07);
+  --accent-edge: rgba(138, 106, 74, 0.28);
+
+  /* Lighter than the wall, like a gallery label card. */
+  --surface: #fbf8f2;
+  --surface-2: #ece5d8;
+
+  /* The photographs did not get lighter just because the room did. */
+  --fg-on-media: #ede9e1;
+  --fg-on-media-mid: rgba(237, 233, 225, 0.72);
+  --fg-on-media-dim: rgba(237, 233, 225, 0.5);
+
+  color-scheme: light;
 }
 
-/* ── EXHIBITION, LIGHT — PHASE 4 ────────────────────────────
-   Walking in should feel like stepping out of a workshop and into a
-   gallery, so the room inverts the whole ground rather than swapping an
-   accent. That means it is the only room needing a full counterpart
-   token set: every colour the dark rooms rely on needs a light-ground
-   equivalent, or text lands on the wrong surface.
 
-   Kept here, inactive, so the intent is recorded and the values are
-   ready. Activate by moving these into the rule above once the
-   exhibition room's layouts have been rebuilt for a light ground.
-
-   [data-room="exhibition"] {
-     --bg:      var(--cream);
-     --fg:      #1a1815;
-     --fg-mid:  #55504a;
-     --fg-dim:  #7d766c;
-     --line:    #ddd6c9;
-     --line-2:  #c9c0b0;
-     --scrim:   rgba(242, 236, 225, 0.92);
-     --accent:  #8a6a4a;            (warm brown — reads as a wall label)
-     --accent-2: var(--mint);
-     --accent-soft: rgba(138, 106, 74, 0.07);
-     --accent-edge: rgba(138, 106, 74, 0.28);
-     color-scheme: light;
-   }
-   ─────────────────────────────────────────────────────────── */

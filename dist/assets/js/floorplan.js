@@ -32,8 +32,13 @@
   var workshop = root.getAttribute("data-mode") === "workshop";
 
   /* Placeholder geometry — a building read from the front.
-     Top band: the two main rooms. Middle band: the smaller rooms.
-     Bottom: the facade the visitor arrives at, with its two doors. */
+     Top: the facade the visitor arrives at, with its two doors. Below it,
+     the two rooms those doors open into. Bottom band: the smaller rooms.
+
+     The doors sit directly above the rooms they lead to, which is the
+     whole point of drawing a plan rather than listing links — the left
+     door is over Industrial, the right one over Digital, so the drawing
+     says where each one goes before anything is read. */
   var PLAN = {
     rooms: [
       {
@@ -142,6 +147,17 @@
     if (box.h != null) node.style.setProperty("--h", box.h + "%");
   }
 
+  /* Every element in here that stands for a room carries data-PLAN-room,
+     not data-room. They are two different statements: data-room on <html>
+     says "this page is in that room" and switches the whole token set;
+     data-plan-room says "this link leads there" and must not.
+
+     The distinction was learned the hard way. rooms.css matches on a bare
+     [data-room="exhibition"], so a plan link carrying data-room turned the
+     light room's tokens on for its own subtree — and the Exhibition cell
+     drew its name in #1a1815 on the dark glass panel. The title had not
+     gone missing; it was being painted in the gallery's ink on the
+     workshop's wall. */
   function drawing() {
     var box = el("div", "plan__box");
     var list = el("ul", "plan__rooms");
@@ -152,7 +168,7 @@
 
       var a = el("a", "plan__room");
       a.href = r.href;
-      a.dataset.room = r.id;
+      a.dataset.planRoom = r.id;
       // The monitor/pot cursor icons used to live on the top nav's links.
       // With the nav gone they live here, where they are arguably more at
       // home: hovering the room shows the room's tool.
@@ -172,9 +188,8 @@
       list.appendChild(li);
     });
 
-    box.appendChild(list);
-
-    // Facade strip along the bottom, with the two doors. Decorative
+    // Facade strip across the top, with the two doors cut into it, each
+    // sitting directly above the room it opens into. Decorative
     // duplication of the two main rooms, so narrow screens drop it
     // rather than repeating those links in the stack.
     var facade = el("div", "plan__facade");
@@ -185,7 +200,7 @@
       a.href = d.href;
       // Each door carries the colour of the room it opens into, not the
       // room the visitor happens to be standing in.
-      a.dataset.room = d.room;
+      a.dataset.planRoom = d.room;
       if (d.cursor) a.dataset.cursor = d.cursor;
       // The facade is aria-hidden, so these links must leave the tab
       // order too — a focusable element inside aria-hidden content is an
@@ -195,7 +210,10 @@
       a.appendChild(el("span", "sr-only", d.label));
       facade.appendChild(a);
     });
+    // Appended first, because it is drawn first: source order and reading
+    // order agree, so the next person to open this file is not misled.
     box.appendChild(facade);
+    box.appendChild(list);
     return box;
   }
 
@@ -207,7 +225,7 @@
       var li = el("li");
       var a = el("a", "plan__list-link");
       a.href = r.href;
-      a.dataset.room = r.id;
+      a.dataset.planRoom = r.id;
       a.appendChild(el("span", "plan__room-name", r.name));
       a.appendChild(el("span", "plan__room-sub", r.sub));
       if (r.id === current) a.setAttribute("aria-current", "page");
@@ -261,34 +279,47 @@
     return dlg;
   }
 
-  /* The floating rail: the wordmark, which is also the way into the plan,
-     and — on a case study — the chip back to its room. */
-  function rail(dlg) {
-    var bar = el("div", "rail");
+  /* The mark's plan glyph, drawn from PLAN rather than hand-lettered as a
+     path. It is the same building as the dialog, one twentieth the size,
+     so the two cannot drift apart when the geometry is redrawn — and each
+     cell carries its data-plan-room, which is what lets it light in its own
+     room's colour.
 
-    var mark = el("button", "mark glass");
-    mark.type = "button";
-    mark.setAttribute("aria-haspopup", "dialog");
-    mark.setAttribute("aria-controls", "floorplan");
-    mark.setAttribute("aria-expanded", "false");
-    mark.setAttribute(
-      "aria-label",
-      workshop
-        ? "Sherjeel Hussain — open the workshop floorplan"
-        : "Sherjeel Hussain — open the menu"
+     Percentages map straight onto a 100x100 viewBox, so no arithmetic is
+     needed to keep them in step. */
+  function glyph() {
+    var cells = PLAN.rooms.map(function (r) {
+      return (
+        '<rect data-plan-room="' + r.id + '"' +
+        ' x="' + r.x + '" y="' + r.y + '"' +
+        ' width="' + r.w + '" height="' + r.h + '"' +
+        ' vector-effect="non-scaling-stroke"><title>' + r.name + "</title></rect>"
+      );
+    });
+    return (
+      '<svg class="plan-btn__glyph" viewBox="-2 -2 104 104" aria-hidden="true" focusable="false">' +
+      cells.join("") +
+      "</svg>"
     );
-    mark.innerHTML =
-      "Sherjeel <em>Hussain</em>" +
-      '<svg class="mark__glyph" viewBox="0 0 16 16" aria-hidden="true" focusable="false">' +
-      '<rect x="0.75" y="0.75" width="14.5" height="14.5" fill="none" stroke="currentColor" stroke-width="1.4"/>' +
-      '<path d="M6.5 1v6.5M0.75 7.5H16M10 7.5V16" stroke="currentColor" stroke-width="1.4"/>' +
-      "</svg>";
-    bar.appendChild(mark);
+  }
 
+  /* The floating rail, reading left to right: the wordmark, quick
+     contact, and the plan. Three separate controls rather than a wordmark
+     that secretly opens a menu — the name is identity and goes home, the
+     plan glyph is navigation and says so by being a drawing of the
+     building. On a case study a back chip leads the row. */
+  function rail(dlg) {
+    /* One glass container, not four. Each control used to carry .glass of
+       its own, which meant four stacked backdrop-filters — and blur over
+       blur over blur reads as smear rather than as glass. The row is one
+       object now: the shell is the glass, and the controls sit inside it. */
+    var bar = el("div", "rail glass");
+
+    /* ── back to the room, on case studies ───────────────── */
     if (parent) {
-      var chip = el("a", "back-chip glass");
+      var chip = el("a", "back-chip");
       chip.href = parent.href;
-      chip.dataset.room = parent.id;
+      chip.dataset.planRoom = parent.id;
       chip.innerHTML =
         '<svg class="back-chip__arrow" viewBox="0 0 12 9" aria-hidden="true" focusable="false">' +
         '<path d="M11.5 4.5H1M4.5 1 1 4.5 4.5 8" fill="none" stroke="currentColor" stroke-width="1.3"/>' +
@@ -300,19 +331,106 @@
       bar.appendChild(chip);
     }
 
+    /* ── the wordmark ────────────────────────────────────── */
+    var mark = el("a", "mark");
+    mark.href = PLAN.entrance.href;
+    mark.innerHTML = '<span class="mark__name">Sherjeel <em>Hussain</em></span>';
+    mark.setAttribute("aria-label", "Sherjeel Hussain — front of shop");
+    bar.appendChild(mark);
+
+    /* ── quick contact ───────────────────────────────────── */
+    if (page !== "contact.html") {
+      var say = el("a", "hail");
+      say.href = "contact.html";
+      say.innerHTML =
+        '<svg class="hail__glyph" viewBox="0 0 14 12" aria-hidden="true" focusable="false">' +
+        '<rect x="0.6" y="0.6" width="12.8" height="10.8" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.3"/>' +
+        '<path d="M1 2.2 7 6.6l6-4.4" fill="none" stroke="currentColor" stroke-width="1.3"/>' +
+        "</svg>";
+      say.appendChild(el("span", null, "Contact"));
+      // The word is hidden on narrow screens, so the link needs a name
+      // that does not depend on it.
+      say.setAttribute("aria-label", "Contact Sherjeel");
+      bar.appendChild(say);
+    }
+
+    /* ── the plan ────────────────────────────────────────── */
+    var nav = el("button", "plan-btn");
+    nav.type = "button";
+    nav.setAttribute("aria-haspopup", "dialog");
+    nav.setAttribute("aria-controls", "floorplan");
+    nav.setAttribute("aria-expanded", "false");
+    nav.setAttribute(
+      "aria-label",
+      workshop ? "Open the workshop floorplan" : "Open the menu"
+    );
+    nav.innerHTML = glyph();
+    // Last, so the plan sits in the corner itself.
+    bar.appendChild(nav);
+
+    /* The entrance page carries its own identity in the hero, so the rail
+       does not repeat it: there the wordmark and contact wait until the
+       hero has scrolled away, and the plan stands alone in the corner,
+       larger, reading as a building rather than an icon. */
+    if (page === PLAN.entrance.href) {
+      bar.classList.add("rail--beacon");
+      var hero = document.querySelector("header");
+      if (hero && typeof IntersectionObserver === "function") {
+        new IntersectionObserver(
+          function (entries) {
+            bar.classList.toggle("is-stuck", !entries[0].isIntersecting);
+          },
+          { rootMargin: "-32px 0px 0px 0px" }
+        ).observe(hero);
+      } else {
+        // No observer: show the full rail rather than leaving the page
+        // with navigation that only appears under a condition we cannot
+        // detect.
+        bar.classList.add("is-stuck");
+      }
+    }
+
     document.body.appendChild(bar);
 
-    mark.addEventListener("click", function () {
-      if (typeof dlg.showModal === "function") dlg.showModal();
-      else dlg.setAttribute("open", "");
-      mark.setAttribute("aria-expanded", "true");
+    /* showModal() promotes the dialog into the TOP LAYER, which is painted
+       above every z-index on the page — including the custom cursor's
+       9999. The dot did not stop tracking; it was simply behind the
+       overlay, so the plan was the one screen on the site with no pointer
+       of its own. Moving the two nodes into the dialog puts them in the
+       same layer as the thing they have to sit on top of.
+
+       They are position:fixed and the dialog carries no transform, so
+       their coordinates do not change with the move — no re-anchoring,
+       and nothing for chrome.js to know about. */
+    var carried = [];
+    function carry(into) {
+      ["cursor", "cursorIcon"].forEach(function (id) {
+        var n = document.getElementById(id);
+        if (n) into.appendChild(n);
+      });
+    }
+
+    nav.addEventListener("click", function () {
+      if (typeof dlg.showModal === "function") {
+        carried = [document.getElementById("cursor"), document.getElementById("cursorIcon")];
+        dlg.showModal();
+        carry(dlg);
+      } else {
+        dlg.setAttribute("open", "");
+      }
+      nav.setAttribute("aria-expanded", "true");
     });
 
     // Returning focus to the trigger after close is not automatic when
     // the dialog is closed by Escape.
     dlg.addEventListener("close", function () {
-      mark.setAttribute("aria-expanded", "false");
-      mark.focus();
+      // Back to the body, or the next page-level hover would be updating
+      // a node inside a closed dialog — display:none, and invisible.
+      carried.forEach(function (n) {
+        if (n) document.body.appendChild(n);
+      });
+      nav.setAttribute("aria-expanded", "false");
+      nav.focus();
     });
   }
 

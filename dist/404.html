@@ -1,0 +1,158 @@
+<!doctype html>
+<!-- ─── 404 ─────────────────────────────────────────────────────────────
+     A door that is not there. Both Cloudflare Pages and Netlify serve
+     /404.html for any unmatched path with no configuration, so this file
+     existing at the publish root is the whole setup — there is no rule to
+     add to _redirects, and adding one would only be another thing to keep
+     in step.
+
+     It carries the ordinary chrome, so the floorplan and the contact link
+     are here too: someone who has landed on a broken link should not have
+     to go back to the front door to find their way.
+     ──────────────────────────────────────────────────────────────────── -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Not found — Sherjeel Hussain</title>
+    <meta name="robots" content="noindex" />
+    <meta name="description" content="That page is not here. Find your way back into the workshop." />
+
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="favicon.ico" sizes="32x32" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Syne:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="tokens.css" />
+    <link rel="stylesheet" href="assets/css/rooms.css" />
+    <link rel="stylesheet" href="assets/css/base.css" />
+    <link rel="stylesheet" href="assets/css/chrome.css" />
+    <link rel="stylesheet" href="assets/css/glass.css" />
+    <link rel="stylesheet" href="assets/css/floorplan.css" />
+
+    <script>
+    (function () {
+    var d = document.documentElement;
+    var m;
+    try { m = localStorage.getItem("sh.mode"); } catch (e) {}
+    if (m !== "workshop" && m !== "editorial") {
+    var q = function (s) { return window.matchMedia && matchMedia(s).matches; };
+    var lean =
+    q("(pointer: coarse)") ||
+    q("(prefers-reduced-motion: reduce)") ||
+    (navigator.connection && navigator.connection.saveData);
+    m = lean ? "editorial" : "workshop";
+    }
+    d.setAttribute("data-mode", m);
+    })();
+    </script>
+
+    <style>
+      .lost {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: var(--space-7) var(--gutter);
+        /* The gutter is part of this width, and at its widest it takes
+           160px of it — enough to push the fourth way onto its own line. */
+        max-width: 56rem;
+      }
+      .lost__code {
+        font-family: var(--sans);
+        font-size: var(--text-2);
+        font-weight: 700;
+        letter-spacing: var(--ls-eyebrow);
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: var(--space-4);
+      }
+      .lost__title {
+        font-family: var(--serif);
+        font-size: clamp(2.6rem, 9vw, 6rem);
+        font-weight: 300;
+        line-height: 0.95;
+        letter-spacing: var(--ls-display);
+        color: var(--fg);
+      }
+      .lost__title em {
+        font-style: italic;
+        color: var(--accent);
+      }
+      .lost__body {
+        margin-top: var(--space-5);
+        /* The prose keeps a readable measure even though the row above
+           it does not. */
+        max-width: 34rem;
+        font-family: var(--sans);
+        font-size: var(--text-4);
+        font-weight: 300;
+        line-height: var(--lh-loose);
+        color: var(--fg-mid);
+      }
+      .lost__ways {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-3);
+        margin-top: var(--space-6);
+      }
+      .lost__way {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: var(--space-3) var(--space-4);
+        border: 1px solid var(--line-2);
+        font-family: var(--sans);
+        font-size: var(--text-2);
+        font-weight: 700;
+        letter-spacing: var(--ls-track);
+        text-transform: uppercase;
+        color: var(--fg-dim);
+        text-decoration: none;
+        transition: color var(--fast), border-color var(--fast);
+      }
+      .lost__way:hover,
+      .lost__way:focus-visible {
+        color: var(--accent);
+        border-color: var(--accent);
+      }
+      .lost__way--lead {
+        color: var(--fg);
+        border-color: var(--fg-dim);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-icon" id="cursorIcon"></div>
+
+    <main class="lost">
+      <p class="lost__code">Error 404</p>
+      <h1 class="lost__title">A door that <em>isn&rsquo;t there</em></h1>
+      <p class="lost__body">
+        Whatever was at this address has been renamed, moved, or never
+        existed. Nothing is broken behind it &mdash; the rest of the
+        workshop is where you left it.
+      </p>
+      <div class="lost__ways">
+        <a class="lost__way lost__way--lead" href="index.html" data-cursor="pot">
+          Front of shop
+        </a>
+        <a class="lost__way" href="work.html">Every project</a>
+        <a class="lost__way" href="craft.html" data-cursor="pot">Industrial</a>
+        <a class="lost__way" href="digital.html" data-cursor="monitor">Digital</a>
+      </div>
+    </main>
+
+    <button class="mode-switch" type="button"></button>
+
+    <script src="assets/js/chrome.js" defer></script>
+    <script src="assets/js/floorplan.js" defer></script>
+  </body>
+</html>

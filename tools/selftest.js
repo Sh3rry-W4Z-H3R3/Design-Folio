@@ -23,17 +23,27 @@ const DIST = path.join(ROOT, "dist");
 
 const MUTATIONS = [
   {
-    name: "cursor anchored to page CSS instead of the viewport",
+    name: "the cursor stops following the pointer",
     detectedBy: "cursor-check.js",
     scope: ["craft"],
     file: "assets/js/chrome.js",
-    // Removes the inline left/top anchor, restoring the real bug where a
-    // page's own `left: 50vw` offsets the dot from the pointer.
+    /* This replaces "cursor anchored to page CSS instead of the viewport",
+       which stopped being a bug that could happen. That mutation stripped
+       the inline left/top anchor so a page's own `left: 50vw` would offset
+       the dot — but every page-level .cursor rule has since been removed,
+       and chrome.css positions the dot at the origin itself, so removing
+       the anchor no longer breaks anything. A mutation nothing can catch
+       is not evidence of a weak check; it is a mutation whose hazard is
+       gone.
+
+       The anchor stays as insurance against a page reintroducing that
+       CSS. What cursor-check.js still genuinely defends is the tracking
+       itself, so that is what this breaks. */
     mutate: (s) => {
-      const i = s.indexOf("    // Anchor both elements at the viewport origin");
-      const j = s.indexOf("    var x = 0, y = 0, queued = false;");
-      if (i === -1 || j === -1) throw new Error("anchor block not found");
-      return s.slice(0, i) + s.slice(j);
+      const old = 'dot.style.transform = "translate(" + x + "px," + y + "px) translate(-50%,-50%)";';
+      if (!s.includes(old)) throw new Error("paint transform not found");
+      // Half-speed tracking: the dot still moves, so it looks alive.
+      return s.replace(old, 'dot.style.transform = "translate(" + (x / 2) + "px," + (y / 2) + "px) translate(-50%,-50%)";');
     },
   },
   {
@@ -61,7 +71,7 @@ const MUTATIONS = [
     mutate: (s) => s.replace('href="digital.html"', 'href="Digital.html"'),
   },
   {
-    name: "the wordmark is no longer wired to the plan",
+    name: "the plan button is no longer wired to the dialog",
     detectedBy: "behaviour.js",
     scope: [],
     file: "assets/js/floorplan.js",
@@ -69,9 +79,9 @@ const MUTATIONS = [
     // renders but does not open the dialog looks completely fine in a
     // screenshot.
     mutate: (s) => {
-      const old = 'mark.setAttribute("aria-controls", "floorplan");';
+      const old = 'nav.setAttribute("aria-controls", "floorplan");';
       if (!s.includes(old)) throw new Error("aria-controls line not found");
-      return s.replace(old, 'mark.setAttribute("aria-controls", "nothing");');
+      return s.replace(old, 'nav.setAttribute("aria-controls", "nothing");');
     },
   },
   {
@@ -127,14 +137,197 @@ const MUTATIONS = [
     },
   },
   {
+    name: "the rail falls back to the panel's thin tint",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "assets/css/glass.css",
+    // Over craft.html's pale clay card this drops the wordmark from
+    // 5.68:1 to 2.06:1 — invisible to a screenshot diff, unreadable to a
+    // person.
+    mutate: (s) => {
+      const old = "  background: var(--glass-bg-rail);";
+      if (!s.includes(old)) throw new Error("rail scrim rule not found");
+      return s.replace(old, "  background: var(--glass-bg);");
+    },
+  },
+  {
+    name: "a top nav comes back on one page",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "craft.html",
+    // The nav check reads the source rather than loading 26 pages in a
+    // browser, which is fast but easy to get subtly wrong — footer-nav__left
+    // contains the substring nav__left. This proves it still fires.
+    mutate: (s) => {
+      const anchor = "<body>";
+      if (!s.includes(anchor)) throw new Error("no <body> to inject into");
+      return s.replace(
+        anchor,
+        anchor + '\n<nav><a href="index.html" class="nav__home">Sherjeel</a></nav>'
+      );
+    },
+  },
+  {
+    name: "the entrance beacon reverts to an ordinary rail",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "assets/js/floorplan.js",
+    // Restores the second wordmark on index.html: the hero says the name
+    // and so does the corner. Both render fine, which is exactly why a
+    // screenshot would not catch it.
+    mutate: (s) => {
+      const old = 'if (page === PLAN.entrance.href) {';
+      if (!s.includes(old)) throw new Error("beacon branch not found");
+      return s.replace(old, "if (false) {");
+    },
+  },
+  {
+    name: "a page grows the cursor with its own inline loop again",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "contact.html",
+    // The exact shape that hid from the old check: a per-element loop
+    // written without getElementById, on a page the check never loaded.
+    mutate: (s) => {
+      const anchor = "</body>";
+      if (!s.includes(anchor)) throw new Error("no </body>");
+      return s.replace(
+        anchor,
+        '<script>document.querySelectorAll("a").forEach(function (el) {' +
+          ' el.addEventListener("mouseenter", function () { cursor.classList.add("grow"); }); });' +
+          "</script>\n" + anchor
+      );
+    },
+  },
+  {
+    name: "a page loses its declared cursor targets",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "side-quests.html",
+    // Removing the attribute costs the grow on .gallery-item — behaviour
+    // the inline loops used to carry, which is exactly what could have
+    // been dropped silently when they were swept.
+    mutate: (s) => {
+      const old = ' data-cursor-targets=".gallery-item"';
+      if (!s.includes(old)) throw new Error("data-cursor-targets not found");
+      return s.replace(old, "");
+    },
+  },
+  {
+    name: "a room overrides its own accent again",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "side-quests.html",
+    // The exact fault that sat in the Play room unnoticed: the page
+    // declares its room and then quietly repaints it another room's
+    // colour. Consistently wrong looks designed.
+    mutate: (s) => {
+      const anchor = "</head>";
+      if (!s.includes(anchor)) throw new Error("no </head>");
+      return s.replace(anchor, "<style>:root{--accent:#e8547a;}</style>\n" + anchor);
+    },
+  },
+  {
     name: "the floorplan no longer opens as a modal",
     detectedBy: "behaviour.js",
     scope: [],
     file: "assets/js/floorplan.js",
+    /* The anchor moved when the click handler grew a body: this used to
+       match a one-line `if (...) dlg.showModal();`. It reported ERROR
+       rather than MISSED, which is the distinction worth keeping — a
+       mutation that cannot be applied says nothing about the check. */
     mutate: (s) => {
-      const old = 'if (typeof dlg.showModal === "function") dlg.showModal();';
-      if (!s.includes(old)) throw new Error("showModal call not found");
-      return s.replace(old, 'if (false) dlg.showModal();');
+      const old = 'if (typeof dlg.showModal === "function") {';
+      if (!s.includes(old)) throw new Error("showModal branch not found");
+      // Falls through to the non-modal setAttribute("open") path.
+      return s.replace(old, "if (false) {");
+    },
+  },
+  {
+    name: "the facade drifts back to the bottom of the plan",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "assets/css/floorplan.css",
+    // The doors have to sit over the rooms they open into — that is the
+    // only reason to draw a plan rather than list links. Nobody re-checks
+    // that by eye after moving a wall.
+    mutate: (s) => {
+      const old = ".plan__facade {\n  position: absolute;\n  left: 0;\n  right: 0;\n  top: 0;";
+      if (!s.includes(old)) throw new Error("facade block not found");
+      return s.replace(old, ".plan__facade {\n  position: absolute;\n  left: 0;\n  right: 0;\n  bottom: 0;");
+    },
+  },
+  {
+    name: "a plan link carries data-room again",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "assets/js/floorplan.js",
+    /* The bug that hid the Exhibition title. rooms.css matches a bare
+       [data-room="exhibition"], so a plan link carrying it turned the
+       light room's tokens on for its own subtree and drew the name in
+       near-black on the dark panel. */
+    mutate: (s) => {
+      const old = "      a.dataset.planRoom = r.id;\n      // The monitor/pot cursor icons";
+      if (!s.includes(old)) throw new Error("room link assignment not found");
+      return s.replace(old, "      a.dataset.planRoom = r.id;\n      a.dataset.room = r.id;\n      // The monitor/pot cursor icons");
+    },
+  },
+  {
+    name: "the light room's plan loses its own scrim",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "assets/css/floorplan.css",
+    // A light panel over a near-black backdrop: the exhibition room's
+    // glass tokens are built for a pale ground, and the dialog was
+    // painting one it could not sit on.
+    mutate: (s) => {
+      const old = '[data-room="exhibition"] .plan::backdrop {\n  background: rgba(210, 202, 188, 0.86);\n}';
+      if (!s.includes(old)) throw new Error("light-room backdrop not found");
+      return s.replace(old, "");
+    },
+  },
+  {
+    name: "each rail control carries its own glass again",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "assets/js/floorplan.js",
+    // Four stacked backdrop-filters, which is what the single pane
+    // replaced. It looks plausible in a diff and smeared on screen.
+    mutate: (s) => {
+      const old = 'var nav = el("button", "plan-btn");';
+      if (!s.includes(old)) throw new Error("plan button not found");
+      return s.replace(old, 'var nav = el("button", "plan-btn glass");');
+    },
+  },
+  {
+    name: "the cursor stays on the body when the plan opens",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "assets/js/floorplan.js",
+    /* showModal() puts the dialog in the top layer, above every z-index
+       on the page. Leaving the dot behind does not stop it tracking — it
+       just paints it underneath, which is why the plan was the one screen
+       on the site with no pointer of its own. */
+    mutate: (s) => {
+      const old = "        dlg.showModal();\n        carry(dlg);";
+      if (!s.includes(old)) throw new Error("carry call not found");
+      return s.replace(old, "        dlg.showModal();");
+    },
+  },
+  {
+    name: "a narrow window loses its pointer entirely",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "assets/css/chrome.css",
+    /* The pages hide the custom cursor below 768px; base.css suppresses
+       the system one by pointer type, which does not follow width. With
+       only one half of that pair in place, a laptop window dragged under
+       768px has nothing pointing at all — and nothing about the page
+       looks broken, because the page looks exactly the same. */
+    mutate: (s) => {
+      const old = '  :root[data-mode="workshop"] body,\n  :root[data-mode="workshop"] a,\n  :root[data-mode="workshop"] button,\n  :root[data-mode="workshop"] summary,\n  :root[data-mode="workshop"] [role="button"] {\n    cursor: auto;\n  }';
+      if (!s.includes(old)) throw new Error("narrow-screen cursor restore not found");
+      return s.replace(old, "");
     },
   },
 ];
