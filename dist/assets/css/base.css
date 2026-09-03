@@ -30,9 +30,26 @@ body {
 
 /* The custom cursor replaces the system one, but only where there is a
    real pointer to replace. On touch, and in editorial mode, the system
-   cursor stays — hiding it there leaves people with no pointer at all. */
+   cursor stays — hiding it there leaves people with no pointer at all.
+
+   The interactive elements are named as well as `body`, because the
+   browser's own stylesheet gives links and buttons `cursor: pointer` on
+   the element itself, and a declaration on the element beats an inherited
+   one however specific the inherited one is. Only `body` was listed here,
+   so the system hand kept appearing beside the custom ring on anything
+   no page had thought to cover — most visibly inside the floorplan,
+   where the plan's own room links are built by JS and no page CSS
+   reaches them at all.
+
+   Form fields are deliberately absent: the I-beam over a text input is
+   telling the truth about what that element does, and the custom dot
+   does not replace it. */
 @media (hover: hover) and (pointer: fine) {
-  :root[data-mode="workshop"] body {
+  :root[data-mode="workshop"] body,
+  :root[data-mode="workshop"] a,
+  :root[data-mode="workshop"] button,
+  :root[data-mode="workshop"] summary,
+  :root[data-mode="workshop"] [role="button"] {
     cursor: none;
   }
 }

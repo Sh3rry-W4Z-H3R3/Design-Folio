@@ -77,6 +77,35 @@
   }
 }
 
+/* ── NARROW SCREENS ─────────────────────────────────────────
+   Below 768px the custom cursor goes and the system one comes back.
+
+   BOTH halves of that decision live here, together, which is the point.
+   24 of the 27 pages were making the first half themselves — hiding
+   .cursor in their own @media (max-width: 768px) — and leaving the
+   second half to base.css, which keys off pointer type and does not
+   follow width. So on a laptop with the window dragged under 768px the
+   dot was hidden and the system cursor was still suppressed: those pages
+   had no pointer at all. index.html chose 640px and digital.html never
+   hid it, so the three did not even fail the same way.
+
+   Stated as a pointer question rather than a width one it would be
+   better still, but the pages' own rules are width rules, and a shared
+   rule that disagrees with 24 pages about when to fire is not a fix. */
+@media (max-width: 768px) {
+  :root[data-mode="workshop"] .cursor,
+  :root[data-mode="workshop"] .cursor-icon {
+    display: none;
+  }
+  :root[data-mode="workshop"] body,
+  :root[data-mode="workshop"] a,
+  :root[data-mode="workshop"] button,
+  :root[data-mode="workshop"] summary,
+  :root[data-mode="workshop"] [role="button"] {
+    cursor: auto;
+  }
+}
+
 .cursor-icon span {
   font-family: var(--sans);
   font-size: var(--text-1);

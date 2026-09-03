@@ -274,7 +274,7 @@ const check = (name, pass, detail) => results.push({ name, pass, detail });
     // craft.html is the physical room, so that room should be marked.
     check("current room is marked", await page.evaluate(() => {
       const cur = document.querySelector('.plan__room[aria-current="page"]');
-      return !!cur && cur.dataset.room === "physical";
+      return !!cur && cur.dataset.planRoom === "physical";
     }), "expected physical");
 
     check("every room is a real link", await page.evaluate(() =>
@@ -398,37 +398,57 @@ const check = (name, pass, detail) => results.push({ name, pass, detail });
   //     behind it first, the rail cannot. Measured over craft.html's pale
   //     clay card, the panel's own tint gives 2.06:1 on the wordmark; the
   //     rail scrim gives 5.68:1. This asserts the rule that buys that.
+  //
+  //     The scrim lives on the rail itself now rather than on each
+  //     control, because the row is one glass container. That is asserted
+  //     here too: four stacked backdrop-filters is what it replaced, and
+  //     nothing in the row's markup stops a later change putting them
+  //     back one control at a time.
   {
     const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
     const page = await ctx.newPage();
     await page.goto(url("craft.html"));
     await page.waitForTimeout(300);
 
-    const alpha = await page.evaluate(() => {
-      const bg = getComputedStyle(document.querySelector(".plan-btn")).backgroundColor;
-      const m = bg.match(/rgba?\(([^)]+)\)/);
+    const alphaOf = (sel) => page.evaluate((s) => {
+      const el = document.querySelector(s);
+      if (!el) return null;
+      const m = getComputedStyle(el).backgroundColor.match(/rgba?\(([^)]+)\)/);
       if (!m) return null;
       const parts = m[1].split(",").map((n) => parseFloat(n));
       return parts.length > 3 ? parts[3] : 1;
-    });
+    }, sel);
+
+    const alpha = await alphaOf(".rail");
     check(
       "rail carries an opaque enough scrim for light imagery",
       alpha !== null && alpha >= 0.4,
-      "plan button background alpha " + alpha
+      "rail background alpha " + alpha
     );
 
-    // The back chip floats in the same place and needs the same treatment.
+    check("the rail is one glass pane, not one per control", await page.evaluate(() => {
+      const rail = document.querySelector(".rail");
+      const blurred = [rail, ...rail.querySelectorAll("*")].filter((el) => {
+        const f = getComputedStyle(el);
+        const v = f.backdropFilter || f.webkitBackdropFilter;
+        return v && v !== "none";
+      });
+      return blurred.length === 1 && blurred[0] === rail;
+    }));
+
+    // Everything in the row is a pill, so the wordmark and the contact
+    // button agree on their radius rather than one being a rectangle.
+    check("wordmark and contact share the pill shape", await page.evaluate(() => {
+      const r = (s) => getComputedStyle(document.querySelector(s)).borderTopLeftRadius;
+      return r(".mark") === r(".hail") && parseFloat(r(".mark")) >= 16;
+    }));
+
+    // The back chip floats in the same row and rides the same pane.
     await page.goto(url("canti.html"));
     await page.waitForTimeout(300);
-    const chipAlpha = await page.evaluate(() => {
-      const el = document.querySelector(".back-chip");
-      if (!el) return null;
-      const m = getComputedStyle(el).backgroundColor.match(/rgba?\(([^)]+)\)/);
-      const parts = m[1].split(",").map((n) => parseFloat(n));
-      return parts.length > 3 ? parts[3] : 1;
-    });
-    check("back chip carries the same scrim", chipAlpha !== null && chipAlpha >= 0.4,
-      "chip background alpha " + chipAlpha);
+    const chipAlpha = await alphaOf(".rail");
+    check("back chip rides the same scrim", chipAlpha !== null && chipAlpha >= 0.4,
+      "rail background alpha " + chipAlpha);
     await ctx.close();
   }
 
@@ -448,8 +468,12 @@ const check = (name, pass, detail) => results.push({ name, pass, detail });
       return {
         beacon: rail.classList.contains("rail--beacon"),
         stuck: rail.classList.contains("is-stuck"),
-        nameWidth: document.querySelector(".mark").getBoundingClientRect().width *
-          (getComputedStyle(document.querySelector(".mark")).opacity === "0" ? 0 : 1),
+        /* display:none rather than opacity:0 now: with the glass on the
+           row itself, two invisible-but-present controls would hold open
+           an empty pill the width of the name. */
+        nameWidth: getComputedStyle(document.querySelector(".mark")).display === "none"
+          ? 0
+          : document.querySelector(".mark").getBoundingClientRect().width,
         glyphRight: glyph.getBoundingClientRect().right,
         cells: glyph.querySelectorAll("rect").length,
       };
@@ -466,12 +490,11 @@ const check = (name, pass, detail) => results.push({ name, pass, detail });
     await page.waitForTimeout(900);
     const stuck = await page.evaluate(() => {
       const rail = document.querySelector(".rail");
-      const mark = document.querySelector(".plan-btn");
-      const bg = getComputedStyle(mark).backgroundColor.match(/[\d.]+/g) || [];
+      const bg = getComputedStyle(rail).backgroundColor.match(/[\d.]+/g) || [];
+      const mk = document.querySelector(".mark");
       return {
         stuck: rail.classList.contains("is-stuck"),
-        nameWidth: document.querySelector(".mark").getBoundingClientRect().width *
-          (getComputedStyle(document.querySelector(".mark")).opacity === "0" ? 0 : 1),
+        nameWidth: getComputedStyle(mk).display === "none" ? 0 : mk.getBoundingClientRect().width,
         alpha: bg.length > 3 ? parseFloat(bg[3]) : 1,
       };
     });
@@ -555,6 +578,171 @@ const check = (name, pass, detail) => results.push({ name, pass, detail });
       check(`${file} contact pill text passes AA`, r !== null && r.ratio >= 4.5,
         r ? r.ratio.toFixed(2) + ":1" : "no pill");
     }
+    await ctx.close();
+  }
+
+  // 16. The doors sit over the rooms they open into. That is the whole
+  //      claim the drawing makes — that a plan tells you where a door
+  //      leads before you read anything — and it is a claim about
+  //      coordinates, which nobody re-checks by eye after moving a wall.
+  //      The facade also has to be the TOP band: with it along the bottom
+  //      the two doors sat as far from their own rooms as the sheet
+  //      allowed, which is what this replaced.
+  {
+    const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+    const page = await ctx.newPage();
+    await page.goto(url("craft.html"));
+    await page.locator(".plan-btn").click();
+    await page.waitForTimeout(400);
+
+    const geo = await page.evaluate(() => {
+      const box = (s) => {
+        const el = document.querySelector(s);
+        return el ? el.getBoundingClientRect() : null;
+      };
+      const facade = box(".plan__facade");
+      const rooms = box(".plan__rooms");
+      const pair = [...document.querySelectorAll(".plan__door")].map((d) => {
+        const r = d.getBoundingClientRect();
+        const room = document.querySelector(
+          '.plan__room[data-plan-room="' + d.dataset.planRoom + '"]'
+        );
+        const rr = room ? room.getBoundingClientRect() : null;
+        return {
+          id: d.dataset.planRoom,
+          over: !!rr && r.left >= rr.left - 1 && r.right <= rr.right + 1,
+          above: !!rr && r.bottom <= rr.top + 2,
+        };
+      });
+      return { facadeTop: facade && facade.top, roomsTop: rooms && rooms.top, pair };
+    });
+
+    check("the facade is the top band", geo.facadeTop !== null && geo.roomsTop !== null &&
+      geo.facadeTop < geo.roomsTop, `facade ${Math.round(geo.facadeTop)}, rooms ${Math.round(geo.roomsTop)}`);
+    check("there are two doors", geo.pair.length === 2, geo.pair.length + " doors");
+    for (const d of geo.pair) {
+      check(`the ${d.id} door stands over the ${d.id} room`, d.over);
+      check(`the ${d.id} door stands above it, not in it`, d.above);
+    }
+    await ctx.close();
+  }
+
+  // 17. Room tokens are keyed on a bare [data-room], so ANY element
+  //      carrying that attribute switches the whole set for its subtree.
+  //      The plan's links used to carry it, and the exhibition cell drew
+  //      its name in the light room's near-black on the dark glass panel:
+  //      the title had not gone missing, it was painted in the gallery's
+  //      ink on the workshop's wall. They carry data-plan-room now. This
+  //      asserts the outcome — every room name legible — rather than the
+  //      attribute, so it still holds if the mechanism changes again.
+  {
+    const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+    const page = await ctx.newPage();
+    // Once from a dark room and once from the light one: the panel and
+    // its scrim have to be lit the same way in both, and the exhibition
+    // page is where they were not.
+    for (const file of ["craft.html", "exhibitions.html"]) {
+      await page.goto(url(file));
+      await page.locator(".plan-btn").click();
+      await page.waitForTimeout(400);
+      const worst = await page.evaluate(() => {
+        const rgba = (c) => {
+          const m = (c.match(/[\d.]+/g) || []).map(Number);
+          return [m[0] || 0, m[1] || 0, m[2] || 0, m.length > 3 ? m[3] : 1];
+        };
+        const over = (top, bottom) => {
+          const a = top[3];
+          return [0, 1, 2].map((i) => top[i] * a + bottom[i] * (1 - a)).concat(1);
+        };
+        const lum = (c) => {
+          const f = (v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
+          return 0.2126 * f(c[0]) + 0.7152 * f(c[1]) + 0.0722 * f(c[2]);
+        };
+        /* The real ground under a room name is three translucent layers:
+           the page, the dialog's ::backdrop over it, and the panel's own
+           tint over that. Reading the body's colour alone would have
+           called the light room legible while its panel was in fact dark
+           — which is exactly the bug this is here to catch. */
+        const dlg = document.querySelector(".plan");
+        const page_ = rgba(getComputedStyle(document.body).backgroundColor);
+        const back = rgba(getComputedStyle(dlg, "::backdrop").backgroundColor);
+        const pane = rgba(getComputedStyle(document.querySelector(".plan__inner")).backgroundColor);
+        const scrim = lum(over(pane, over(back, page_)));
+        let low = Infinity, who = "";
+        document.querySelectorAll(".plan__room-name").forEach((n) => {
+          const fg = lum(rgba(getComputedStyle(n).color));
+          const ratio = (Math.max(scrim, fg) + 0.05) / (Math.min(scrim, fg) + 0.05);
+          if (ratio < low) { low = ratio; who = n.textContent; }
+        });
+        return { low, who, seen: document.querySelectorAll(".plan__room-name").length };
+      });
+      /* `seen` is checked as well as the ratio. The first version of this
+         handed a colour STRING to a luminance function expecting a
+         triple, which made every ratio NaN — and NaN < Infinity is false,
+         so `low` stayed Infinity and the check passed against two
+         deliberately broken builds. A comparison that no measurement can
+         lose is not a check. */
+      check(`${file}: every room name reads on the plan`,
+        worst.seen === 5 && Number.isFinite(worst.low) && worst.low >= 4.5,
+        `${worst.seen} names, worst ${worst.who} at ${worst.low.toFixed(2)}:1`);
+      await page.keyboard.press("Escape");
+    }
+    await ctx.close();
+  }
+
+  // 18. showModal() promotes the dialog into the top layer, which paints
+  //      above every z-index on the page — including the custom cursor's
+  //      9999. The dot never stopped tracking; it was behind the overlay,
+  //      so the plan was the one screen on the site with no pointer of its
+  //      own, and the system hand was all that showed.
+  {
+    const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+    const page = await ctx.newPage();
+    await page.goto(url("craft.html"));
+    await page.waitForTimeout(200);
+
+    check("the cursor starts on the body", await page.evaluate(() =>
+      document.getElementById("cursor").parentElement === document.body));
+
+    await page.locator(".plan-btn").click();
+    await page.waitForTimeout(400);
+    check("the cursor joins the dialog in the top layer", await page.evaluate(() => {
+      const dot = document.getElementById("cursor");
+      const dlg = document.querySelector(".plan");
+      return dot.parentElement === dlg && getComputedStyle(dot).display !== "none";
+    }));
+
+    // And the system hand stays hidden in there, which is what made the
+    // absence obvious: the browser gives links their own cursor, and an
+    // inherited `cursor: none` on body loses to it.
+    check("the plan's rooms show no system cursor", await page.evaluate(() =>
+      [...document.querySelectorAll(".plan__room, .plan__door")]
+        .every((a) => getComputedStyle(a).cursor === "none")));
+
+    await page.keyboard.press("Escape");
+    await page.waitForTimeout(300);
+    check("the cursor goes back to the body on close", await page.evaluate(() =>
+      document.getElementById("cursor").parentElement === document.body));
+    await ctx.close();
+  }
+
+  // 19. Below 768px the pages hide the custom cursor. base.css suppresses
+  //      the system one by pointer type, which does not follow width — so
+  //      a laptop window dragged under 768px had NO pointer at all. Both
+  //      halves of that decision live in chrome.css now. Asserted as
+  //      "something is pointing", not as which rule does it.
+  {
+    const ctx = await browser.newContext({ viewport: { width: 700, height: 800 } });
+    const page = await ctx.newPage();
+    await page.goto(url("craft.html"));
+    await page.waitForTimeout(300);
+    check("a narrow window still has a pointer", await page.evaluate(() => {
+      const dot = document.getElementById("cursor");
+      const custom = dot && getComputedStyle(dot).display !== "none";
+      const system = getComputedStyle(document.body).cursor !== "none";
+      // Exactly one of them, or the page has two pointers or none.
+      return custom !== system;
+    }));
     await ctx.close();
   }
 

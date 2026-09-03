@@ -238,6 +238,93 @@ const MUTATIONS = [
       return s.replace(old, 'if (false) dlg.showModal();');
     },
   },
+  {
+    name: "the facade drifts back to the bottom of the plan",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "assets/css/floorplan.css",
+    // The doors have to sit over the rooms they open into — that is the
+    // only reason to draw a plan rather than list links. Nobody re-checks
+    // that by eye after moving a wall.
+    mutate: (s) => {
+      const old = ".plan__facade {\n  position: absolute;\n  left: 0;\n  right: 0;\n  top: 0;";
+      if (!s.includes(old)) throw new Error("facade block not found");
+      return s.replace(old, ".plan__facade {\n  position: absolute;\n  left: 0;\n  right: 0;\n  bottom: 0;");
+    },
+  },
+  {
+    name: "a plan link carries data-room again",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "assets/js/floorplan.js",
+    /* The bug that hid the Exhibition title. rooms.css matches a bare
+       [data-room="exhibition"], so a plan link carrying it turned the
+       light room's tokens on for its own subtree and drew the name in
+       near-black on the dark panel. */
+    mutate: (s) => {
+      const old = "      a.dataset.planRoom = r.id;\n      // The monitor/pot cursor icons";
+      if (!s.includes(old)) throw new Error("room link assignment not found");
+      return s.replace(old, "      a.dataset.planRoom = r.id;\n      a.dataset.room = r.id;\n      // The monitor/pot cursor icons");
+    },
+  },
+  {
+    name: "the light room's plan loses its own scrim",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "assets/css/floorplan.css",
+    // A light panel over a near-black backdrop: the exhibition room's
+    // glass tokens are built for a pale ground, and the dialog was
+    // painting one it could not sit on.
+    mutate: (s) => {
+      const old = '[data-room="exhibition"] .plan::backdrop {\n  background: rgba(210, 202, 188, 0.86);\n}';
+      if (!s.includes(old)) throw new Error("light-room backdrop not found");
+      return s.replace(old, "");
+    },
+  },
+  {
+    name: "each rail control carries its own glass again",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "assets/js/floorplan.js",
+    // Four stacked backdrop-filters, which is what the single pane
+    // replaced. It looks plausible in a diff and smeared on screen.
+    mutate: (s) => {
+      const old = 'var nav = el("button", "plan-btn");';
+      if (!s.includes(old)) throw new Error("plan button not found");
+      return s.replace(old, 'var nav = el("button", "plan-btn glass");');
+    },
+  },
+  {
+    name: "the cursor stays on the body when the plan opens",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "assets/js/floorplan.js",
+    /* showModal() puts the dialog in the top layer, above every z-index
+       on the page. Leaving the dot behind does not stop it tracking — it
+       just paints it underneath, which is why the plan was the one screen
+       on the site with no pointer of its own. */
+    mutate: (s) => {
+      const old = "        dlg.showModal();\n        carry(dlg);";
+      if (!s.includes(old)) throw new Error("carry call not found");
+      return s.replace(old, "        dlg.showModal();");
+    },
+  },
+  {
+    name: "a narrow window loses its pointer entirely",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "assets/css/chrome.css",
+    /* The pages hide the custom cursor below 768px; base.css suppresses
+       the system one by pointer type, which does not follow width. With
+       only one half of that pair in place, a laptop window dragged under
+       768px has nothing pointing at all — and nothing about the page
+       looks broken, because the page looks exactly the same. */
+    mutate: (s) => {
+      const old = '  :root[data-mode="workshop"] body,\n  :root[data-mode="workshop"] a,\n  :root[data-mode="workshop"] button,\n  :root[data-mode="workshop"] summary,\n  :root[data-mode="workshop"] [role="button"] {\n    cursor: auto;\n  }';
+      if (!s.includes(old)) throw new Error("narrow-screen cursor restore not found");
+      return s.replace(old, "");
+    },
+  },
 ];
 
 function checkFails(script, scope) {

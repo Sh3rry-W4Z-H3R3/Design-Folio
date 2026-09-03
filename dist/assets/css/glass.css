@@ -1,12 +1,18 @@
 /* ─── FLOATING GLASS CHROME ──────────────────────────────────────────
    The site's navigation is the floorplan, so there is no nav bar. What
-   remains on the page is three floating elements: the wordmark that
-   opens the plan, a back chip on case studies, and the plan panel.
+   floats on the page instead is ONE glass container in the top-right
+   corner holding the controls: a back chip on case studies, the
+   wordmark, quick contact, and the plan.
 
-   All three share one glass treatment, expressed as tokens rather than
-   literal values — the exhibition room inverts to a light ground in
-   Phase 4, and that should be a token swap, not a rewrite of every
-   surface.
+   One container, not four. Each control used to carry its own .glass,
+   which stacked four backdrop-filters side by side — and blur beside
+   blur beside blur reads as four separate widgets that happen to be
+   adjacent, rather than as one piece of chrome. The shell is the glass
+   now; the controls are shapes inside it.
+
+   The treatment is expressed as tokens rather than literal values, so
+   the light exhibition room is a token swap rather than a rewrite of
+   every surface.
    ──────────────────────────────────────────────────────────────────── */
 
 :root {
@@ -49,42 +55,50 @@
 /* Without blur the panel is a barely-tinted transparent box over live
    content — unreadable. Fall back to a near-solid ground. */
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .glass,
-  .rail > .glass {
+  .glass {
     background: var(--glass-solid);
   }
 }
 
-/* ── SHARED FLOATING RAIL ───────────────────────────────────
-   The wordmark and the back chip sit together, top-left, so they never
-   fight for the same corner. */
+/* ── THE RAIL: ONE GLASS CONTAINER ──────────────────────────
+   Top-right on every page. The left corner is where a logo lives and
+   reads as "home"; the right is where controls live and reads as "things
+   I can do" — which is what this row is.
+
+   The rail carries .glass itself, so the whole row is a single pane with
+   the controls sitting on it. It is a pill, because everything in it is
+   a pill. */
 .rail {
   position: fixed;
   top: var(--space-3);
-  /* Top-right on every page. The left corner is where a logo lives and
-     reads as "home"; the right is where controls live and reads as
-     "things I can do" — which is what this row is. */
   right: var(--space-3);
   z-index: 120;
   display: flex;
   align-items: center;
-  gap: var(--space-2);
-  /* The rail is a positioning shell only — clicks pass through the gaps
-     to the page beneath, but its children stay interactive. */
-  pointer-events: none;
-}
-.rail > * {
-  pointer-events: auto;
-}
-.rail > .glass {
+  gap: 0.3rem;
+  padding: 0.3rem;
+  border-radius: 999px;
+  /* Heavier than the dialog panel's tint. The panel can afford a thin one
+     because the dialog dims the page behind it first; the rail floats
+     over whatever the page happens to put there — a dark hero on one
+     page, a pale clay photograph on the next. */
   background: var(--glass-bg-rail);
 }
+/* After .rail, so the no-blur fallback still wins over the tint above. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .rail {
+    background: var(--glass-solid);
+  }
+}
 
-/* ── THE THREE CONTROLS ─────────────────────────────────────
+/* ── THE CONTROLS ───────────────────────────────────────────
    Wordmark, contact, plan — in that order, left to right, with the plan
-   in the corner. They share a height so the row reads as one object: set
-   once here rather than three times, because three paddings that happen
-   to agree today will not agree after the next change. */
+   in the corner. They share a height AND a radius so the row reads as one
+   object: set once here rather than four times, because four paddings
+   that happen to agree today will not agree after the next change.
+
+   Everything is a pill. The wordmark used to be a 2px rectangle beside a
+   999px contact pill, which made the row look assembled from parts. */
 :root {
   --rail-h: 2.15rem;
 }
@@ -97,6 +111,17 @@
   display: inline-flex;
   align-items: center;
   box-sizing: border-box;
+  border-radius: 999px;
+}
+
+/* The three that are not the contact button read as inset shapes on the
+   pane rather than as objects floating over it: a tint and a hairline,
+   no blur or shadow of their own — the shell already carries both. */
+.mark,
+.plan-btn,
+.back-chip {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-edge);
 }
 
 /* ── WORDMARK ───────────────────────────────────────────────
@@ -106,8 +131,7 @@
    building. */
 .mark {
   gap: 0.6rem;
-  padding: 0 0.85rem;
-  border-radius: 2px;
+  padding: 0 0.9rem;
   font-family: var(--serif);
   font-size: var(--text-7);
   font-weight: 300;
@@ -172,13 +196,13 @@
 }
 
 /* ── THE PLAN ───────────────────────────────────────────────
-   The building in miniature. Square, so it reads as a plan rather than
-   another pill, and in the corner where the controls end. */
+   The building in miniature, in the corner where the controls end. Round
+   like everything else in the row — the drawing inside it is what says
+   "plan", and it says it better than a square border did. */
 .plan-btn {
   justify-content: center;
   width: var(--rail-h);
   padding: 0;
-  border-radius: 2px;
   color: var(--fg);
   cursor: pointer;
   transition: border-color var(--fast);
@@ -213,11 +237,11 @@
 /* Each cell lights in the colour of the room it stands for, from the same
    tokens the rooms use — so a room that is recoloured is recoloured here
    too. Only meaningful once the glyph is large enough to aim at. */
-.plan-btn__glyph rect[data-room="physical"]:hover   { fill: var(--mint);  opacity: 1; }
-.plan-btn__glyph rect[data-room="digital"]:hover    { fill: var(--pink);  opacity: 1; }
-.plan-btn__glyph rect[data-room="exhibition"]:hover { fill: var(--cream); opacity: 1; }
-.plan-btn__glyph rect[data-room="play"]:hover       { fill: var(--gold);  opacity: 1; }
-.plan-btn__glyph rect[data-room="office"]:hover     { fill: var(--rose);  opacity: 1; }
+.plan-btn__glyph rect[data-plan-room="physical"]:hover   { fill: var(--mint);  opacity: 1; }
+.plan-btn__glyph rect[data-plan-room="digital"]:hover    { fill: var(--pink);  opacity: 1; }
+.plan-btn__glyph rect[data-plan-room="exhibition"]:hover { fill: var(--cream); opacity: 1; }
+.plan-btn__glyph rect[data-plan-room="play"]:hover       { fill: var(--gold);  opacity: 1; }
+.plan-btn__glyph rect[data-plan-room="office"]:hover     { fill: var(--rose);  opacity: 1; }
 
 /* ── BACK CHIP ──────────────────────────────────────────────
    Case studies only. Carries its room's accent so the way back is
@@ -225,7 +249,6 @@
 .back-chip {
   gap: 0.4rem;
   padding: 0 0.75rem;
-  border-radius: 2px;
   font-family: var(--sans);
   font-size: var(--text-2);
   font-weight: 700;
@@ -289,21 +312,51 @@
 /* ── THE ENTRANCE BEACON ────────────────────────────────────
    index.html only. The hero already says the name in full, so the rail
    does not repeat it: there the plan stands alone in the corner, larger,
-   and the wordmark and contact arrive once the hero has scrolled past. */
+   and the container and its other controls arrive once the hero has
+   scrolled past.
+
+   The wordmark and contact are display:none rather than opacity:0 here.
+   With the glass on the row itself, two invisible-but-present controls
+   would hold open an empty pill the width of the name — the old
+   opacity-only hide was invisible only because there was no container
+   behind it to leave empty. */
+.rail--beacon {
+  padding: 0;
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  transition:
+    padding var(--slow),
+    background var(--slow),
+    border-color var(--slow),
+    box-shadow var(--slow);
+}
+.rail--beacon.is-stuck {
+  padding: 0.3rem;
+  background: var(--glass-bg-rail);
+  border-color: var(--glass-edge);
+  border-top-color: var(--glass-edge-lit);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+}
+
 .rail--beacon .mark,
 .rail--beacon .hail {
-  opacity: 0;
-  pointer-events: none;
-  transform: translateX(0.5rem);
-  transition:
-    opacity var(--slow) var(--ease),
-    transform var(--slow) var(--ease);
+  display: none;
 }
 .rail--beacon.is-stuck .mark,
 .rail--beacon.is-stuck .hail {
-  opacity: 1;
-  pointer-events: auto;
-  transform: none;
+  display: inline-flex;
+  /* An animation rather than a transition, because there is no "before"
+     state to transition from once the element goes from display:none. */
+  animation: railArrive var(--slow) var(--ease) both;
+}
+@keyframes railArrive {
+  from { opacity: 0; transform: translateX(0.5rem); }
+  to   { opacity: 1; transform: none; }
 }
 
 .rail--beacon .plan-btn {
@@ -311,15 +364,11 @@
   width: 56px;
   background: transparent;
   border-color: transparent;
-  box-shadow: none;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
   transition:
     height var(--slow),
     width var(--slow),
     background var(--slow),
-    border-color var(--slow),
-    box-shadow var(--slow);
+    border-color var(--slow);
 }
 .rail--beacon .plan-btn__glyph {
   width: 40px;
@@ -328,12 +377,8 @@
 .rail--beacon.is-stuck .plan-btn {
   height: var(--rail-h);
   width: var(--rail-h);
-  background: var(--glass-bg-rail);
+  background: var(--glass-bg);
   border-color: var(--glass-edge);
-  border-top-color: var(--glass-edge-lit);
-  box-shadow: var(--glass-shadow);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
 }
 .rail--beacon.is-stuck .plan-btn__glyph {
   width: 15px;
@@ -367,10 +412,13 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .rail--beacon .mark,
-  .rail--beacon .hail,
+  .rail--beacon,
   .rail--beacon .plan-btn,
   .rail--beacon .plan-btn__glyph {
     transition: none;
+  }
+  .rail--beacon.is-stuck .mark,
+  .rail--beacon.is-stuck .hail {
+    animation: none;
   }
 }
