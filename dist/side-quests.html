@@ -484,9 +484,11 @@
         max-width: 46rem;
         margin: 0 0 var(--space-5);
       }
+      /* Two columns, not auto-fit. With four cards and a mix of shots
+         and text-only, auto-fit produced a three-up row and an orphan. */
       .code-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(min(26rem, 100%), 1fr));
         gap: 2px;
         background: var(--line);
         border: 1px solid var(--line);
@@ -496,12 +498,18 @@
         display: flex;
         flex-direction: column;
       }
+      /* contain, NOT cover. These are screenshots of code: cover crops
+         them mid-line and turns evidence into wallpaper. Letterboxing on
+         --surface-2 is the right trade — the point is that it can be
+         read. */
       .code-card__shot {
         display: block;
         width: 100%;
-        aspect-ratio: 4 / 3;
-        object-fit: cover;
+        max-height: 22rem;
+        object-fit: contain;
+        object-position: left top;
         background: var(--surface-2);
+        border-bottom: 1px solid var(--line);
       }
       .code-card__text {
         padding: var(--space-4);
