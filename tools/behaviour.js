@@ -746,6 +746,140 @@ const check = (name, pass, detail) => results.push({ name, pass, detail });
     await ctx.close();
   }
 
+  // 20. THE CASE STUDY SPINE (Edward Wairumbi's review).
+  //      Six beats, in order, and the order is the whole point: the
+  //      block this replaced named its four beats Problem, Insight,
+  //      Design Intent and Outcome, which say what KIND of thing each
+  //      card is but never why the next one had to happen.
+  //
+  //      Beats declare themselves with data-case-beat rather than by
+  //      class, so a page with its own component for a beat — Kala
+  //      Topi's tensions, Tarebook's mid-build pivot — still takes part
+  //      in the spine instead of being flattened into identical markup.
+  {
+    const SPINE = ["canti.html", "kala-topi.html", "cycle-arts.html", "tarebook.html"];
+    const ORDER = ["ps", "hard", "turn", "landed", "unblocked"];
+    const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+    const page = await ctx.newPage();
+
+    for (const file of SPINE) {
+      await page.goto(url(file));
+      await page.waitForTimeout(250);
+
+      const got = await page.evaluate(() => {
+        const beats = [...document.querySelectorAll("[data-case-beat]")];
+        const ps = document.querySelector('[data-case-beat="ps"]');
+        const hero = document.querySelector(".hero, .project-hero, header");
+        // "Directly under the hero" means: before any body section or
+        // full-bleed image. The old block was buried below the fold on
+        // two of the six pages that had it — placement is what rots.
+        // Prose sections only. A full-bleed image between the hero and
+        // the pair is hero furniture — the hook, then the claim — and
+        // counting it as "body" would fail pages that are doing the
+        // right thing. What must not come first is an argument.
+        const firstBody = document.querySelector(
+          ".case-section, .premise, .tensions, [data-case-beat='hard']"
+        );
+        const pos = (a, b) =>
+          a && b ? a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING : false;
+        const words = (sel) => {
+          const el = document.querySelector(sel);
+          return el ? el.textContent.trim().split(/\s+/).length : -1;
+        };
+        return {
+          order: beats.map((b) => b.getAttribute("data-case-beat")),
+          psCount: document.querySelectorAll('[data-case-beat="ps"]').length,
+          afterHero: pos(hero, ps),
+          beforeBody: pos(ps, firstBody),
+          problem: words(".case-ps__cell--problem .case-ps__text"),
+          solution: words(".case-ps__cell--solution .case-ps__text"),
+          // DOM order is necessary but not sufficient: a page could put
+          // the pair first and still bury it under two screens of hero.
+          // Measured, not proxied.
+          screensDown: ps ? (ps.getBoundingClientRect().top + scrollY) / innerHeight : 99,
+        };
+      });
+
+      check(`${file} carries exactly one problem/solution pair`, got.psCount === 1,
+        got.psCount + " found");
+      check(`${file} states it before any argument`,
+        got.afterHero && got.beforeBody,
+        `afterHero ${got.afterHero}, beforeBody ${got.beforeBody}`);
+      /* Two screens. Edward's note was "START with problem and solution
+         statements" — a pair a reviewer has to hunt for is not a start.
+         Tarebook originally sat at 1.97 screens behind its full-bleed
+         hero image, which passed this rule while plainly failing its
+         intent, so the pair was moved above that image rather than the
+         threshold being moved above the pair. */
+      check(`${file} states it within two screens`, got.screensDown <= 2,
+        got.screensDown.toFixed(2) + " screens down");
+      /* One sentence each. Edward asked for a SIMPLE problem and
+         solution statement; the cards this replaced ran about eighty
+         words apiece, which is an essay where a claim was wanted. */
+      check(`${file} problem is one sentence`, got.problem > 0 && got.problem <= 30,
+        got.problem + " words");
+      check(`${file} solution is one sentence`, got.solution > 0 && got.solution <= 30,
+        got.solution + " words");
+      /* The order check is what enforces "revisit the journey before
+         showcasing the final works" mechanically rather than by memory:
+         landed cannot precede turn. */
+      const seen = got.order.filter((b) => ORDER.includes(b));
+      const ranks = seen.map((b) => ORDER.indexOf(b));
+      check(`${file} runs its beats in order`,
+        seen.length === 5 && ranks.every((r, i) => i === 0 || r > ranks[i - 1]),
+        seen.join(" → "));
+    }
+    await ctx.close();
+  }
+
+  // 21. The spine is shared CSS reading room tokens, NOT the inline
+  //      copies it replaced. Those hardcoded `background: #0e0e0e` in
+  //      six separate pages, and Cycle Arts is in the EXHIBITION room,
+  //      which is light — a dark panel there is invisible on invisible.
+  //      Measured in the light room and a dark one.
+  {
+    const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+    const page = await ctx.newPage();
+    for (const file of ["canti.html", "cycle-arts.html"]) {
+      await page.goto(url(file));
+      await page.waitForTimeout(250);
+      const worst = await page.evaluate(() => {
+        const rgba = (c) => {
+          const m = (c.match(/[\d.]+/g) || []).map(Number);
+          return [m[0] || 0, m[1] || 0, m[2] || 0, m.length > 3 ? m[3] : 1];
+        };
+        const over = (t, b) => [0, 1, 2].map((i) => t[i] * t[3] + b[i] * (1 - t[3])).concat(1);
+        const lum = (c) => {
+          const f = (v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
+          return 0.2126 * f(c[0]) + 0.7152 * f(c[1]) + 0.0722 * f(c[2]);
+        };
+        const pageBg = rgba(getComputedStyle(document.body).backgroundColor);
+        let low = Infinity, who = "", seen = 0;
+        document.querySelectorAll("[data-case-beat]").forEach((beat) => {
+          beat.querySelectorAll("p, h2, span").forEach((el) => {
+            if (!el.textContent.trim()) return;
+            // Composite the element's own ground over the page's.
+            let ground = pageBg, node = el;
+            while (node && node !== document.body) {
+              const bg = rgba(getComputedStyle(node).backgroundColor);
+              if (bg[3] > 0) { ground = over(bg, pageBg); break; }
+              node = node.parentElement;
+            }
+            const ratio = (Math.max(lum(ground), lum(rgba(getComputedStyle(el).color))) + 0.05) /
+              (Math.min(lum(ground), lum(rgba(getComputedStyle(el).color))) + 0.05);
+            seen++;
+            if (ratio < low) { low = ratio; who = el.textContent.trim().slice(0, 32); }
+          });
+        });
+        return { low, who, seen };
+      });
+      check(`${file}: every spine beat reads on its ground`,
+        worst.seen > 10 && Number.isFinite(worst.low) && worst.low >= 4.5,
+        `${worst.seen} elements, worst "${worst.who}" at ${worst.low.toFixed(2)}:1`);
+    }
+    await ctx.close();
+  }
+
   await browser.close();
   server.close();
 

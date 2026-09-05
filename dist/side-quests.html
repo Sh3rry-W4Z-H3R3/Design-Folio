@@ -458,6 +458,72 @@
           transform: translateY(0);
         }
       }
+
+      /* ── CODE ───────────────────────────────────────────────
+         EDWARD: "coding is an extra, include examples in the side
+         quests page." So it lives here rather than in the rooms — a
+         supporting skill shown as one, not a headline service. */
+      .code-band {
+        padding: 0 var(--gutter) var(--space-7);
+        opacity: 0;
+        animation: fadeUp 0.8s var(--ease) 0.3s forwards;
+      }
+      .code-band__label {
+        font-family: var(--sans);
+        font-size: var(--text-1);
+        font-weight: 700;
+        letter-spacing: var(--ls-eyebrow);
+        text-transform: uppercase;
+        color: var(--accent);
+        margin: 0 0 var(--space-3);
+      }
+      .code-band__intro {
+        font-size: var(--text-4);
+        line-height: var(--lh-loose);
+        color: var(--fg-mid);
+        max-width: 46rem;
+        margin: 0 0 var(--space-5);
+      }
+      .code-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
+        gap: 2px;
+        background: var(--line);
+        border: 1px solid var(--line);
+      }
+      .code-card {
+        background: var(--surface);
+        display: flex;
+        flex-direction: column;
+      }
+      .code-card__shot {
+        display: block;
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
+        background: var(--surface-2);
+      }
+      .code-card__text {
+        padding: var(--space-4);
+      }
+      .code-card__what {
+        font-family: var(--sans);
+        font-size: var(--text-2);
+        font-weight: 700;
+        letter-spacing: var(--ls-track);
+        text-transform: uppercase;
+        color: var(--accent);
+        margin: 0 0 var(--space-2);
+      }
+      .code-card__body {
+        font-size: var(--text-3);
+        line-height: var(--lh-base);
+        color: var(--fg-mid);
+        margin: 0;
+      }
+      @media (max-width: 640px) {
+        .code-band { padding-bottom: var(--space-6); }
+      }
     </style>
   </head>
 
@@ -479,6 +545,76 @@
         detours that inform my professional practice.
       </p>
     </header>
+
+
+    <!-- ── CODE ───────────────────────────────────────────────── -->
+    <section class="code-band" aria-labelledby="code-heading">
+      <p class="code-band__label" id="code-heading">Code</p>
+      <p class="code-band__intro">
+        Code is an extra here, not the offer — it is what stops a design
+        getting diluted between the file and the live thing. Self-taught on
+        real client work, and it lives on this page rather than in the rooms
+        because that is honestly where it sits in the practice.
+      </p>
+      <div class="code-grid">
+        <div class="code-card">
+          <img
+            class="code-card__shot"
+            src="./imgs-digital/ASC/LiquidSnipper.webp"
+            alt="Shopify Liquid template snippet from the Alastair Smith Ceramics theme"
+            loading="lazy"
+          />
+          <div class="code-card__text">
+            <p class="code-card__what">Shopify Liquid</p>
+            <p class="code-card__body">
+              Theme structure written by hand rather than assembled from an
+              app, so the storefront matches the identity instead of the
+              template's idea of it. Alastair Smith Ceramics, Andra's Garden
+              Heaven.
+            </p>
+          </div>
+        </div>
+        <div class="code-card">
+          <img
+            class="code-card__shot"
+            src="./imgs-digital/ASC/LiquidCSSVariables.webp"
+            alt="CSS custom properties used as design tokens in a Shopify theme"
+            loading="lazy"
+          />
+          <div class="code-card__text">
+            <p class="code-card__what">Tokens in CSS</p>
+            <p class="code-card__body">
+              The palette and type scale as custom properties, so a brand
+              decision is one value changed in one place rather than a
+              find-and-replace across a theme.
+            </p>
+          </div>
+        </div>
+        <div class="code-card">
+          <div class="code-card__text">
+            <p class="code-card__what">Tarebook — IndexedDB</p>
+            <p class="code-card__body">
+              An offline-first PWA on Dexie. When the pricing maths needed
+              measured loss rather than a guessed setting, the schema went to
+              v4 with an auto-migration from v3 — written and tested in an
+              afternoon, in week two, because the alternative was maths that
+              could not be defended.
+            </p>
+          </div>
+        </div>
+        <div class="code-card">
+          <div class="code-card__text">
+            <p class="code-card__what">This site</p>
+            <p class="code-card__body">
+              Hand-written static HTML with a shared CSS layer and no build
+              step, plus a verification harness that plants deliberate bugs in
+              it to check the tests can actually fail. Deliberately editable by
+              someone who is not a front-end engineer — which is the point.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <main class="gallery-container">
       <div class="gallery-item" tabindex="0">

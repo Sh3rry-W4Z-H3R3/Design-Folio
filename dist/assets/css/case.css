@@ -1,0 +1,228 @@
+/* ─── THE CASE STUDY SPINE ───────────────────────────────────────────
+   Six beats, in order, on every case study:
+
+     0  hero              — unchanged, each page's own
+     1  .case-ps          — Problem / Solution
+     2  .case-hard        — what made it hard
+     3  .case-turn        — the decision that resolved it
+     4  (the page's own body sections — the journey)
+     5  .case-landed      — where it landed
+     6  .case-unblocked   — what it left the client able to do
+
+   The test the spine has to pass: read only the beat headings, top to
+   bottom, and you should get a coherent argument. That is the whole
+   point of it — the block this replaces had four beats named Problem,
+   Insight, Design Intent and Outcome, which say what KIND of thing each
+   card is but never why the next one had to happen.
+
+   ── TOKENS ONLY, NO LITERAL COLOURS ────────────────────────────────
+   Every surface here reads --surface / --surface-2 / --fg / --accent /
+   --line. Not one hex value. That is not tidiness, it is the whole
+   reason this file exists: the block it replaces was pasted inline into
+   six pages, each hardcoding `background: #0e0e0e`, and four of the
+   pages still needing a spine are in the EXHIBITION room, which is
+   light. A dark panel there is invisible on invisible, and this site has
+   already been bitten by that exact bug twice — once by the room tokens
+   themselves, once by the floorplan's ::backdrop.
+
+   If you add a rule here and reach for a hex code, you are about to
+   break the exhibition room. Reach for a token.
+   ──────────────────────────────────────────────────────────────────── */
+
+/* Shared shell for every beat: full-bleed band, gutter-padded content.
+   Case studies use --gutter-block, the fuller of the two gutters. */
+.case-beat {
+  padding: var(--space-7) var(--gutter);
+  border-top: 1px solid var(--line);
+}
+
+/* The label that names the beat. Same treatment across all six so the
+   spine reads as one system when you scan the page. */
+/* --fg-mid, not --accent. Measured: the exhibition room's accent is a
+   warm brown wall-label colour, and small uppercase text in it lands at
+   3.95:1 on that room's cream ground — under AA. The accent stays where
+   it is decorative (the solution cell's edge) or large (the `em` inside
+   a statement); anything set small and read as text uses the token meant
+   for exactly that. */
+.case-beat__label {
+  font-family: var(--sans);
+  font-size: var(--text-1);
+  font-weight: 700;
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--fg-mid);
+  margin: 0 0 var(--space-3);
+}
+
+/* ── BEAT 1 — PROBLEM / SOLUTION ────────────────────────────
+   Edward's frame: "client had x problem, i gave them y solution."
+   One sentence each, side by side, directly under the hero. This is the
+   five-second read — a reviewer scanning four case studies should get
+   both halves without scrolling.
+
+   Held to one sentence deliberately. The block this replaces ran ~80
+   words per card, which is an essay where a claim was wanted. */
+.case-ps {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  background: var(--line);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.case-ps__cell {
+  padding: var(--space-6) var(--gutter);
+  background: var(--surface);
+}
+/* The solution half carries the accent edge — the eye should land on
+   what he did, not on what was wrong. */
+.case-ps__cell--solution {
+  box-shadow: inset 0 3px 0 var(--accent);
+}
+.case-ps__label {
+  font-family: var(--sans);
+  font-size: var(--text-1);
+  font-weight: 700;
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--fg-mid);
+  margin: 0 0 var(--space-3);
+}
+/* NOTE: the problem label deliberately has NO colour of its own. It
+   started on --fg-dim to sit quieter than the solution's, which measured
+   3.29:1 on the office ground and 4.23:1 in the exhibition room — dim
+   enough to read as secondary, too dim to read. Both labels share
+   --fg-mid now, and the solution cell earns its emphasis from the accent
+   edge above it instead. */
+.case-ps__text {
+  font-family: var(--serif);
+  font-size: clamp(1.25rem, 2.1vw, 1.85rem);
+  font-weight: 300;
+  line-height: var(--lh-tight);
+  color: var(--fg);
+  margin: 0;
+}
+.case-ps__text em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+/* ── BEAT 2 — WHAT MADE IT HARD ─────────────────────────────
+   The hinge the whole argument turns on. Constraints explain why the
+   turn happened, and the turn explains why the making looks the way it
+   does. Without them a case study is a list of things that were done.
+
+   origin.html already had a constraints-panel and was the only page
+   whose middle read causally. This is that, generalised. */
+.case-hard {
+  background: var(--surface-2);
+}
+/* Body copy, not a label. The first cut of this used --text-2 with
+   --ls-label, which is the eyebrow treatment — at that size, tracked out,
+   a two-line sentence stops being readable and starts being texture. */
+.case-hard__intro {
+  font-size: var(--text-3);
+  line-height: var(--lh-base);
+  color: var(--fg-mid);
+  margin: 0 0 var(--space-5);
+  max-width: 46rem;
+}
+.case-hard__row {
+  display: grid;
+  grid-template-columns: minmax(7rem, 14rem) 1fr;
+  gap: var(--space-4);
+  padding: var(--space-3) 0;
+  border-top: 1px solid var(--line);
+}
+.case-hard__row:last-child {
+  border-bottom: 1px solid var(--line);
+}
+.case-hard__key {
+  font-family: var(--sans);
+  font-size: var(--text-2);
+  font-weight: 700;
+  letter-spacing: var(--ls-track);
+  text-transform: uppercase;
+  color: var(--fg-mid);
+}
+.case-hard__val {
+  font-size: var(--text-4);
+  line-height: var(--lh-base);
+  color: var(--fg-mid);
+}
+
+/* ── BEAT 3 — THE TURN ──────────────────────────────────────
+   One decision, named. Not a survey of considerations — the single move
+   that resolved the constraints above it. If a page needs two, one of
+   them is not the turn. */
+.case-turn__heading {
+  font-family: var(--serif);
+  font-size: clamp(1.6rem, 3.4vw, 2.9rem);
+  font-weight: 300;
+  line-height: var(--lh-tight);
+  color: var(--fg);
+  margin: 0 0 var(--space-4);
+  max-width: 22ch;
+}
+.case-turn__heading em {
+  font-style: italic;
+  color: var(--accent);
+}
+.case-turn__body {
+  font-size: var(--text-4);
+  line-height: var(--lh-loose);
+  color: var(--fg-mid);
+  max-width: 44rem;
+  margin: 0;
+}
+
+/* ── BEAT 5 — WHERE IT LANDED ───────────────────────────────
+   Outcome, with real numbers where the project has them. Where it has
+   none, the page says so rather than reaching for a plausible figure —
+   an invented metric in a portfolio is worse than a missing one. */
+.case-landed__body {
+  font-size: var(--text-4);
+  line-height: var(--lh-loose);
+  color: var(--fg-mid);
+  max-width: 44rem;
+  margin: 0;
+}
+
+/* ── BEAT 6 — WHAT IT UNBLOCKED ─────────────────────────────
+   What the client can now do without him. The rarest thing in a junior
+   folio, and the one that separates "delivered a file" from "left them
+   better off". Given its own ground so it doesn't read as a footnote to
+   the outcome. */
+.case-unblocked {
+  background: var(--surface);
+  border-top: 1px solid var(--accent-edge, var(--line-2));
+}
+.case-unblocked__body {
+  font-family: var(--serif);
+  font-size: clamp(1.15rem, 1.9vw, 1.5rem);
+  font-weight: 300;
+  line-height: var(--lh-snug);
+  color: var(--fg);
+  max-width: 40rem;
+  margin: 0;
+}
+.case-unblocked__body em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+/* ── NARROW SCREENS ─────────────────────────────────────────
+   The problem/solution pair stacks rather than shrinking to two columns
+   of two-word lines. The accent edge moves with the solution cell. */
+@media (max-width: 720px) {
+  .case-ps {
+    grid-template-columns: 1fr;
+  }
+  .case-beat {
+    padding: var(--space-6) var(--gutter);
+  }
+  .case-hard__row {
+    grid-template-columns: 1fr;
+    gap: var(--space-1);
+  }
+}

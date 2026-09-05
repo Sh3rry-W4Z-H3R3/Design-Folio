@@ -114,6 +114,7 @@
     <link rel="stylesheet" href="assets/css/chrome.css" />
     <link rel="stylesheet" href="assets/css/glass.css" />
     <link rel="stylesheet" href="assets/css/floorplan.css" />
+    <link rel="stylesheet" href="assets/css/case.css" />
     <style>
       :root {
         --bg: #0a0a0a;
@@ -308,53 +309,6 @@
         color: var(--fg);
       }
 
-      /* ── NARRATIVE FOUR-BLOCK ─────────────────────────────── */
-      .narrative-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 2px;
-      }
-      .narrative-card {
-        padding: var(--space-7) var(--space-6);
-        background: #0e0e0e;
-        border-top: 2px solid transparent;
-        transition:
-          border-color var(--fast),
-          background var(--fast);
-      }
-      .narrative-card:hover {
-        border-top-color: var(--accent);
-        background: #111;
-      }
-      .narrative-card__label {
-        font-family: var(--sans);
-        font-size: var(--text-1);
-        font-weight: 700;
-        letter-spacing: var(--ls-track);
-        text-transform: uppercase;
-        color: var(--accent);
-        margin-bottom: var(--space-3);
-      }
-      .narrative-card__heading {
-        font-family: var(--serif);
-        font-size: clamp(1.5rem, 2.2vw, 2.1rem);
-        font-weight: 300;
-        line-height: var(--lh-tight);
-        color: var(--fg);
-        margin-bottom: var(--space-3);
-      }
-      .narrative-card__heading em {
-        font-style: italic;
-      }
-      .narrative-card__body {
-        font-size: var(--text-4);
-        line-height: var(--lh-loose);
-        color: var(--fg-mid);
-        font-weight: 300;
-      }
-      .narrative-card__body p + p {
-        margin-top: 0.8em;
-      }
 
       /* ── STAT ROW ─────────────────────────────────────────── */
       .stat-row {
@@ -937,156 +891,74 @@
       />
     </div>
 
-    <!-- ── THE BRIEF ──────────────────────────────────────────── -->
-    <div class="case-section">
-      <div class="two-col">
-        <p class="section-label">The Brief</p>
-        <div class="body-text">
-          <p>
-            The self-directed brief was to design and build a luxury furniture
-            prototype suitable for sustainable batch production. The constraint
-            that shaped everything:
-            <strong
-              >recycled plastic had to be central to the material
-              language</strong
-            >, not a footnote. And it had to sit inside a cradle-to-cradle
-            framework — meaning the end of the product's life was part of the
-            design from the start.
-          </p>
-          <p>
-            The working assumption most furniture designers operate under is
-            that recycled plastic is a compromise material — something you use
-            when you can't use something better. The brief set out to disprove
-            that. If the design was right, the plastic wouldn't read as a
-            concession. It would read as a deliberate, considered material
-            choice, elevated by the company it was kept in.
-          </p>
-          <p>
-            One table. One prototype. As a proof of concept for a business model
-            that could work at scale.
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── NARRATIVE FOUR BLOCK ───────────────────────────────── -->
-    <div class="narrative-grid">
-      <div class="narrative-card">
-        <p class="narrative-card__label">Problem</p>
-        <h2 class="narrative-card__heading">
-          Recycled plastic has a<br /><em>perception problem</em>
-        </h2>
-        <p class="narrative-card__body">
-          Plastic recycling across the furniture industry is underutilised not
-          because of a technical problem, but a perception one. Consumers
-          associate recycled plastic with low quality, impermanence, and
-          compromise. Getting them to pay premium prices for a product that
-          contains it requires the design to do significant persuasive work —
-          material pairing, surface quality, and finish all have to argue for
-          the plastic's presence rather than apologise for it.
+    <!-- ── BEAT 1 — PROBLEM / SOLUTION ────────────────────────── -->
+    <div class="case-ps" data-case-beat="ps">
+      <div class="case-ps__cell case-ps__cell--problem">
+        <p class="case-ps__label">The problem</p>
+        <p class="case-ps__text">
+          Furniture buyers read recycled plastic as a compromise — something you
+          use when you can't use something better.
         </p>
       </div>
-      <div class="narrative-card">
-        <p class="narrative-card__label">Insight</p>
-        <h2 class="narrative-card__heading">
-          Pairing uplifts<br /><em>both materials</em>
-        </h2>
-        <p class="narrative-card__body">
-          The insight from research was that pairing recycled plastic with
-          established luxury materials — solid oak, mahogany — changes how the
-          plastic is read. The wood provides the quality reference point. The
-          plastic becomes a deliberate counterpoint rather than a default. The
-          contrast does the work: light against dark, synthetic against natural,
-          the familiar warmth of hardwood against the graphic quality of
-          compressed, multi-coloured recycled material. Each one makes the other
-          more interesting.
-        </p>
-      </div>
-      <div class="narrative-card">
-        <p class="narrative-card__label">Design Intent</p>
-        <h2 class="narrative-card__heading">
-          Built to last.<br /><em>Designed to be unmade.</em>
-        </h2>
-        <p class="narrative-card__body">
-          The table isn't just sustainable in its materials — it's sustainable
-          in its logic. The mahogany panel frames and plastic inserts are
-          removable. At the end of the product's lifecycle, those components are
-          returned to the maker, reworked into wall art, and the panels
-          replaced. The oak frame continues. Nothing goes to landfill. That
-          return loop isn't a sustainability footnote — it's the business model.
-          The table is the first transaction. The lifecycle is the ongoing
-          relationship.
-        </p>
-      </div>
-      <div class="narrative-card">
-        <p class="narrative-card__label">Outcome</p>
-        <h2 class="narrative-card__heading">
-          Degree show floor.<br /><em>New Designers, London.</em>
-        </h2>
-        <p class="narrative-card__body">
-          One full-scale prototype, shown at Gray's School of Art Degree Show in
-          2022. Selected as one of two RGU projects for New Designers Week Two,
-          London — the largest graduate design event in the UK. The piece held
-          up in both environments: the intimacy of a school show and the noise
-          of an industry event. The plastic didn't need defending. People picked
-          it up, turned it over, asked where to buy it. That was the answer to
-          the brief.
+      <div class="case-ps__cell case-ps__cell--solution">
+        <p class="case-ps__label">What I made</p>
+        <p class="case-ps__text">
+          A luxury table that pairs it with solid oak and mahogany, and
+          <em>comes apart</em> so the plastic comes back.
         </p>
       </div>
     </div>
 
-    <!-- ── DEGREE SHOW IMAGES ─────────────────────────────────── -->
-    <div class="img-grid img-grid--3">
-      <div class="img-slot img-slot--tall">
-        <img
-          src="./imgs-craft/Canti/CANTI HERO SHOT w Model-4.webp"
-          alt="CANTI-001 at Gray's School of Art Degree Show 2022"
-          loading="lazy"
-        />
-        <span class="img-slot__caption">Gray's Degree Show — 2022</span>
-      </div>
-      <div class="img-slot img-slot--tall">
-        <img
-          src="./imgs-craft/Canti/cantDetail.webp"
-          alt="CANTI-001 table detail — recycled plastic panels in mahogany frame"
-          loading="lazy"
-        />
-        <span class="img-slot__caption"
-          >Panel detail — SMILE Plastic in mahogany</span
+    <!-- ── BEAT 2 — WHAT MADE IT HARD ─────────────────────────── -->
+    <div class="case-beat case-hard" data-case-beat="hard">
+      <p class="case-beat__label">What made it hard</p>
+      <p class="case-hard__intro">
+        A self-directed brief, but not a free one. Four constraints set before
+        any drawing started, and every decision below follows from them.
+      </p>
+      <div class="case-hard__row">
+        <span class="case-hard__key">Material</span>
+        <span class="case-hard__val"
+          >Recycled plastic central to the material language — not a
+          footnote</span
         >
       </div>
-      <div class="img-slot img-slot--tall">
-        <img
-          src="./imgs-craft/Canti/ND1.webp"
-          alt="CANTI-001 at New Designers London 2022"
-          loading="lazy"
-        />
-        <span class="img-slot__caption">New Designers — London 2022</span>
+      <div class="case-hard__row">
+        <span class="case-hard__key">Lifecycle</span>
+        <span class="case-hard__val"
+          >Cradle-to-cradle: the end of the product's life designed in from the
+          start</span
+        >
+      </div>
+      <div class="case-hard__row">
+        <span class="case-hard__key">Production</span>
+        <span class="case-hard__val"
+          >Suitable for sustainable batch production, not a one-off</span
+        >
+      </div>
+      <div class="case-hard__row">
+        <span class="case-hard__key">Price</span>
+        <span class="case-hard__val"
+          >Had to earn a premium with the plastic visible, not hidden</span
+        >
       </div>
     </div>
 
-    <!-- ── STAT ROW ───────────────────────────────────────────── -->
-    <div class="stat-row">
-      <div class="stat-item">
-        <p class="stat-item__num"><em>8</em></p>
-        <p class="stat-item__label">
-          Layers of Indian ink — hand applied and sanded
-        </p>
-      </div>
-      <div class="stat-item">
-        <p class="stat-item__num"><em>18 hours</em></p>
-        <p class="stat-item__label">Sanding — across the full build</p>
-      </div>
-      <div class="stat-item">
-        <p class="stat-item__num"><em>2400</em></p>
-        <p class="stat-item__label">
-          Grit — max wet sanding grade on plastic panels
-        </p>
-      </div>
-      <div class="stat-item">
-        <p class="stat-item__num"><em>100+</em></p>
-        <p class="stat-item__label">Panel pattern ideas in Rhino / KeyShot</p>
-      </div>
+    <!-- ── BEAT 3 — THE TURN ──────────────────────────────────── -->
+    <div class="case-beat case-turn" data-case-beat="turn">
+      <p class="case-beat__label">The turn</p>
+      <h2 class="case-turn__heading">
+        Pairing uplifts <em>both</em> materials
+      </h2>
+      <p class="case-turn__body">
+        Pairing recycled plastic with established luxury materials changes how
+        the plastic is read. The wood provides the quality reference point; the
+        plastic becomes a deliberate counterpoint rather than a default. The
+        contrast does the work — light against dark, synthetic against natural,
+        the familiar warmth of hardwood against the graphic quality of
+        compressed, multi-coloured recycled material. Each one makes the other
+        more interesting.
+      </p>
     </div>
 
     <!-- ── MATERIAL SYSTEM ────────────────────────────────────── -->
@@ -1537,6 +1409,84 @@
           >CANTI-001 — degree show installation</span
         >
       </div>
+    </div>
+
+    <!-- ── BEAT 5 — WHERE IT LANDED ───────────────────────────── -->
+    <div class="case-beat case-landed" data-case-beat="landed">
+      <p class="case-beat__label">Where it landed</p>
+      <p class="case-landed__body">
+        One full-scale prototype, shown at Gray's School of Art Degree Show in
+        2022 and selected as one of two RGU projects for New Designers Week Two
+        in London — the largest graduate design event in the UK. It held up in
+        both environments: the intimacy of a school show and the noise of an
+        industry event. The plastic didn't need defending. People picked it up,
+        turned it over, asked where to buy it.
+      </p>
+    </div>
+
+    <!-- ── DEGREE SHOW IMAGES ─────────────────────────────────── -->
+    <div class="img-grid img-grid--3">
+      <div class="img-slot img-slot--tall">
+        <img
+          src="./imgs-craft/Canti/CANTI HERO SHOT w Model-4.webp"
+          alt="CANTI-001 at Gray's School of Art Degree Show 2022"
+          loading="lazy"
+        />
+        <span class="img-slot__caption">Gray's Degree Show — 2022</span>
+      </div>
+      <div class="img-slot img-slot--tall">
+        <img
+          src="./imgs-craft/Canti/cantDetail.webp"
+          alt="CANTI-001 table detail — recycled plastic panels in mahogany frame"
+          loading="lazy"
+        />
+        <span class="img-slot__caption"
+          >Panel detail — SMILE Plastic in mahogany</span
+        >
+      </div>
+      <div class="img-slot img-slot--tall">
+        <img
+          src="./imgs-craft/Canti/ND1.webp"
+          alt="CANTI-001 at New Designers London 2022"
+          loading="lazy"
+        />
+        <span class="img-slot__caption">New Designers — London 2022</span>
+      </div>
+    </div>
+
+    <!-- ── STAT ROW ───────────────────────────────────────────── -->
+    <div class="stat-row">
+      <div class="stat-item">
+        <p class="stat-item__num"><em>8</em></p>
+        <p class="stat-item__label">
+          Layers of Indian ink — hand applied and sanded
+        </p>
+      </div>
+      <div class="stat-item">
+        <p class="stat-item__num"><em>18 hours</em></p>
+        <p class="stat-item__label">Sanding — across the full build</p>
+      </div>
+      <div class="stat-item">
+        <p class="stat-item__num"><em>2400</em></p>
+        <p class="stat-item__label">
+          Grit — max wet sanding grade on plastic panels
+        </p>
+      </div>
+      <div class="stat-item">
+        <p class="stat-item__num"><em>100+</em></p>
+        <p class="stat-item__label">Panel pattern ideas in Rhino / KeyShot</p>
+      </div>
+    </div>
+
+    <!-- ── BEAT 6 — WHAT IT UNBLOCKED ─────────────────────────── -->
+    <div class="case-beat case-unblocked" data-case-beat="unblocked">
+      <p class="case-beat__label">What it unblocked</p>
+      <p class="case-unblocked__body">
+        The return loop isn't a sustainability footnote — it's <em>the business
+        model</em>. Panels and inserts come back to the maker, are reworked into
+        wall art and replaced; the oak frame continues. The table is the first
+        transaction. The lifecycle is the ongoing relationship.
+      </p>
     </div>
 
     <!-- ── SPEC ───────────────────────────────────────────────── -->

@@ -85,6 +85,7 @@
     <link rel="stylesheet" href="assets/css/chrome.css" />
     <link rel="stylesheet" href="assets/css/glass.css" />
     <link rel="stylesheet" href="assets/css/floorplan.css" />
+  <link rel="stylesheet" href="assets/css/case.css" />
 
   <style>
     :root {
@@ -403,6 +404,24 @@
   </section>
 
   <!-- HERO IMAGE — Pricing Card -->
+  <!-- ── BEAT 1 — PROBLEM / SOLUTION ────────────────────────── -->
+  <div class="case-ps" data-case-beat="ps">
+    <div class="case-ps__cell case-ps__cell--problem">
+      <p class="case-ps__label">The problem</p>
+      <p class="case-ps__text">
+        Potters who mix their own glazes don't know what a piece costs them to
+        make, so they price by feel.
+      </p>
+    </div>
+    <div class="case-ps__cell case-ps__cell--solution">
+      <p class="case-ps__label">What I built</p>
+      <p class="case-ps__text">
+        A cost calculator that turns studio numbers into
+        <em>a defensible price</em> — offline-first, on a phone, in the studio.
+      </p>
+    </div>
+  </div>
+
   <div class="hero-image">
     <img
       src="./imgs-digital/Tarebook/02-pricing-card-light.webp"
@@ -413,6 +432,121 @@
   </div>
 
   <!-- THE BRIEF -->
+  <!-- ── BEAT 2 — WHAT MADE IT HARD ─────────────────────────── -->
+  <div class="case-beat case-hard" data-case-beat="hard">
+    <p class="case-beat__label">What made it hard</p>
+    <p class="case-hard__intro">
+      Most of the difficulty was in what the product refuses to be. Every
+      "no" below is a feature someone asked for and a reason the v1 works.
+    </p>
+    <div class="case-hard__row">
+      <span class="case-hard__key">Scope</span>
+      <span class="case-hard__val"
+        >Not a recipe community, not a chemistry tool, not studio management
+        software — only what a glaze costs</span
+      >
+    </div>
+    <div class="case-hard__row">
+      <span class="case-hard__key">Context</span>
+      <span class="case-hard__val"
+        >Used in a studio with clay on both hands: mobile-first, works
+        offline, sync opt-in rather than a gate</span
+      >
+    </div>
+    <div class="case-hard__row">
+      <span class="case-hard__key">Onboarding</span>
+      <span class="case-hard__val"
+        >A new potter has to be finished in under a minute, or they never
+        start</span
+      >
+    </div>
+    <div class="case-hard__row">
+      <span class="case-hard__key">Honesty</span>
+      <span class="case-hard__val"
+        >The maths is only worth anything if the loss rate is measured rather
+        than guessed</span
+      >
+    </div>
+  </div>
+
+  <div class="case-section" data-case-beat="turn" style="border-bottom: 0; padding-bottom: var(--space-5);">
+    <div class="two-col">
+      <h2 class="section-label">A Mid-Build Pivot</h2>
+      <div class="body-text">
+        <p>Week 2. The pricing maths only works if loss rate is honest &mdash; not assumed. Most potters guess "10%" without ever counting what actually came out of the last kiln. So the original schema, which carried a single global loss-rate setting, wasn't going to survive contact with reality.</p>
+        <p>A whole new flow was added: <strong>kiln firings as first-class objects</strong>. Each firing logs pieces in / pieces out / glaze cost / firing cost. The loss rate becomes an emergent measurement from the user's last N firings, not a number they invented once at setup and forgot. Three screens, Dexie schema bumped to v4, auto-migration from v3 written and tested in an afternoon.</p>
+        <p><em>The kind of decision that costs an extra day in week 2 but means the maths is defensible by week 3.</em></p>
+      </div>
+    </div>
+  </div>
+  <div class="img-grid img-grid--3">
+    <div class="img-slot">
+      <img
+        src="./imgs-digital/Tarebook/14-kiln-list-light.webp"
+        alt="Tarebook Kiln list — saved firing logs with pieces in, pieces out, calculated loss rate"
+        width="1179" height="2556" loading="lazy"
+      />
+      <span class="img-slot__caption">Kiln list &middot; firing log as journal</span>
+    </div>
+    <div class="img-slot">
+      <img
+        src="./imgs-digital/Tarebook/15-kiln-new-light.webp"
+        alt="Tarebook New kiln firing form — pieces in, pieces out, glaze cost, firing cost"
+        width="1179" height="2556" loading="lazy"
+      />
+      <span class="img-slot__caption">New firing &middot; pieces in / pieces out / cost</span>
+    </div>
+    <div class="img-slot">
+      <img
+        src="./imgs-digital/Tarebook/16-firing-detail-light.webp"
+        alt="Tarebook Firing detail — breakdown of a completed firing with measured loss rate"
+        width="1179" height="2556" loading="lazy"
+      />
+      <span class="img-slot__caption">Firing detail &middot; measured loss replaces guessed loss</span>
+    </div>
+  </div>
+
+  <!-- IMG GRID — Settings + Sign In -->
+  <div class="img-grid img-grid--2">
+    <div class="img-slot">
+      <img
+        src="./imgs-digital/Tarebook/06-settings-dark.webp"
+        alt="Tarebook Settings screen in dark mode — theme toggle, metric/imperial segmented control"
+        width="1179" height="2556" loading="lazy"
+      />
+      <span class="img-slot__caption">Settings &middot; theme toggle, units swap converts without re-entry</span>
+    </div>
+    <div class="img-slot">
+      <img
+        src="./imgs-digital/Tarebook/07-sign-in-light.webp"
+        alt="Tarebook Sign In screen — magic-link passwordless auth, friendly cloud-sync messaging"
+        width="1179" height="2556" loading="lazy"
+      />
+      <span class="img-slot__caption">Sign in &middot; sync is opt-in, not a gatekeeper</span>
+    </div>
+  </div>
+
+  <!-- STAT ROW — What Shipped -->
+  <section class="stat-row">
+    <div>
+      <p class="stat-item__num"><em>30</em></p>
+      <p class="stat-item__label">TypeScript files, one job each</p>
+    </div>
+    <div>
+      <p class="stat-item__num"><em>173</em>KB</p>
+      <p class="stat-item__label">Main bundle gzipped</p>
+    </div>
+    <div>
+      <p class="stat-item__num"><em>v4</em></p>
+      <p class="stat-item__label">Dexie schema with auto-migration</p>
+    </div>
+    <div>
+      <p class="stat-item__num"><em>6</em></p>
+      <p class="stat-item__label">Screens, end-to-end, no dead ends</p>
+    </div>
+  </section>
+
+  <!-- WHAT SHIPPED -->
   <div class="case-section">
     <div class="two-col">
       <h2 class="section-label">The Brief</h2>
@@ -638,84 +772,6 @@
   </div>
 
   <!-- KILN TRACKING — Mid-Build Pivot -->
-  <div class="case-section" style="border-bottom: 0; padding-bottom: var(--space-5);">
-    <div class="two-col">
-      <h2 class="section-label">A Mid-Build Pivot</h2>
-      <div class="body-text">
-        <p>Week 2. The pricing maths only works if loss rate is honest &mdash; not assumed. Most potters guess "10%" without ever counting what actually came out of the last kiln. So the original schema, which carried a single global loss-rate setting, wasn't going to survive contact with reality.</p>
-        <p>A whole new flow was added: <strong>kiln firings as first-class objects</strong>. Each firing logs pieces in / pieces out / glaze cost / firing cost. The loss rate becomes an emergent measurement from the user's last N firings, not a number they invented once at setup and forgot. Three screens, Dexie schema bumped to v4, auto-migration from v3 written and tested in an afternoon.</p>
-        <p><em>The kind of decision that costs an extra day in week 2 but means the maths is defensible by week 3.</em></p>
-      </div>
-    </div>
-  </div>
-  <div class="img-grid img-grid--3">
-    <div class="img-slot">
-      <img
-        src="./imgs-digital/Tarebook/14-kiln-list-light.webp"
-        alt="Tarebook Kiln list — saved firing logs with pieces in, pieces out, calculated loss rate"
-        width="1179" height="2556" loading="lazy"
-      />
-      <span class="img-slot__caption">Kiln list &middot; firing log as journal</span>
-    </div>
-    <div class="img-slot">
-      <img
-        src="./imgs-digital/Tarebook/15-kiln-new-light.webp"
-        alt="Tarebook New kiln firing form — pieces in, pieces out, glaze cost, firing cost"
-        width="1179" height="2556" loading="lazy"
-      />
-      <span class="img-slot__caption">New firing &middot; pieces in / pieces out / cost</span>
-    </div>
-    <div class="img-slot">
-      <img
-        src="./imgs-digital/Tarebook/16-firing-detail-light.webp"
-        alt="Tarebook Firing detail — breakdown of a completed firing with measured loss rate"
-        width="1179" height="2556" loading="lazy"
-      />
-      <span class="img-slot__caption">Firing detail &middot; measured loss replaces guessed loss</span>
-    </div>
-  </div>
-
-  <!-- IMG GRID — Settings + Sign In -->
-  <div class="img-grid img-grid--2">
-    <div class="img-slot">
-      <img
-        src="./imgs-digital/Tarebook/06-settings-dark.webp"
-        alt="Tarebook Settings screen in dark mode — theme toggle, metric/imperial segmented control"
-        width="1179" height="2556" loading="lazy"
-      />
-      <span class="img-slot__caption">Settings &middot; theme toggle, units swap converts without re-entry</span>
-    </div>
-    <div class="img-slot">
-      <img
-        src="./imgs-digital/Tarebook/07-sign-in-light.webp"
-        alt="Tarebook Sign In screen — magic-link passwordless auth, friendly cloud-sync messaging"
-        width="1179" height="2556" loading="lazy"
-      />
-      <span class="img-slot__caption">Sign in &middot; sync is opt-in, not a gatekeeper</span>
-    </div>
-  </div>
-
-  <!-- STAT ROW — What Shipped -->
-  <section class="stat-row">
-    <div>
-      <p class="stat-item__num"><em>30</em></p>
-      <p class="stat-item__label">TypeScript files, one job each</p>
-    </div>
-    <div>
-      <p class="stat-item__num"><em>173</em>KB</p>
-      <p class="stat-item__label">Main bundle gzipped</p>
-    </div>
-    <div>
-      <p class="stat-item__num"><em>v4</em></p>
-      <p class="stat-item__label">Dexie schema with auto-migration</p>
-    </div>
-    <div>
-      <p class="stat-item__num"><em>6</em></p>
-      <p class="stat-item__label">Screens, end-to-end, no dead ends</p>
-    </div>
-  </section>
-
-  <!-- WHAT SHIPPED -->
   <div class="case-section">
     <div class="two-col">
       <h2 class="section-label">What Shipped</h2>
@@ -731,7 +787,7 @@
   </div>
 
   <!-- OUTCOME -->
-  <div class="case-section">
+  <div class="case-section" data-case-beat="landed">
     <div class="two-col">
       <h2 class="section-label">The Outcome</h2>
       <div class="body-text">
@@ -773,6 +829,17 @@
   </div>
 
   <!-- NEXT PROJECT -->
+  <!-- ── BEAT 6 — WHAT IT UNBLOCKED ─────────────────────────── -->
+  <div class="case-beat case-unblocked" data-case-beat="unblocked">
+    <p class="case-beat__label">What it unblocked</p>
+    <p class="case-unblocked__body">
+      A potter using this stops guessing. Every firing they log makes the next
+      price more accurate, so the tool gets <em>more</em> useful the longer
+      it's kept — and the number they quote a gallery is one they can defend
+      line by line rather than one they felt their way to.
+    </p>
+  </div>
+
   <section class="next-project" aria-label="Next project">
     <div>
       <p class="next-project__label">Next Project</p>
