@@ -226,3 +226,127 @@
     gap: var(--space-1);
   }
 }
+
+/* ─── CONE — the firing line, and the reveal ─────────────────────────
+   A hairline runs the height of the page and fills as you scroll, and
+   each beat lights as the fire passes it. Named for the pyrometric cone
+   that tells a potter how far a firing has actually got: it is a
+   progress reading, not a decoration, which is why it is a single line
+   and not a set of flourishes.
+
+   EVERYTHING HERE IS GATED ON :root.case-fx, WHICH ONLY JS SETS.
+   With JavaScript off, with motion reduced, or in editorial mode — the
+   fast path someone in a hurry opted into — none of these rules apply
+   and every beat is simply a readable block. The pre-reveal state has
+   to be opt-in rather than the default, or the page's resting state is
+   text nobody can see waiting on a script that may never run.
+   ──────────────────────────────────────────────────────────────────── */
+
+.case-rail {
+  position: fixed;
+  /* Inside the gutter, never over the text. */
+  left: max(0.7rem, calc(var(--gutter) * 0.4));
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--line-2);
+  z-index: 5;
+  pointer-events: none;
+}
+.case-rail__fire {
+  position: absolute;
+  left: -1px;
+  top: 0;
+  width: 3px;
+  height: 0;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    var(--accent) 18%,
+    var(--accent)
+  );
+  box-shadow: 0 0 12px 1px color-mix(in srgb, var(--accent) 45%, transparent);
+}
+/* The rail is ambient, and on a phone the gutter is 1.4rem — not enough
+   room for a line that isn't in the way. */
+@media (max-width: 620px) {
+  .case-rail { display: none; }
+}
+
+/* ── THE REVEAL ─────────────────────────────────────────────
+   Text settles up as its beat comes into view. Small on purpose: this
+   is a case study being read, not an entrance. */
+:root.case-fx [data-case-beat] .case-ps__text,
+:root.case-fx [data-case-beat] .case-turn__heading,
+:root.case-fx [data-case-beat] .case-hard__row,
+:root.case-fx [data-case-beat] .case-landed__body,
+:root.case-fx [data-case-beat] .case-unblocked__body {
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity 0.7s var(--ease),
+    transform 0.7s var(--ease);
+}
+:root.case-fx [data-case-beat].is-lit .case-ps__text,
+:root.case-fx [data-case-beat].is-lit .case-turn__heading,
+:root.case-fx [data-case-beat].is-lit .case-hard__row,
+:root.case-fx [data-case-beat].is-lit .case-landed__body,
+:root.case-fx [data-case-beat].is-lit .case-unblocked__body {
+  opacity: 1;
+  transform: none;
+}
+/* Constraint rows come in one after another, because they are a list
+   being read down rather than a block appearing. */
+:root.case-fx [data-case-beat] .case-hard__row:nth-child(2) { transition-delay: 0.05s; }
+:root.case-fx [data-case-beat] .case-hard__row:nth-child(3) { transition-delay: 0.1s; }
+:root.case-fx [data-case-beat] .case-hard__row:nth-child(4) { transition-delay: 0.15s; }
+:root.case-fx [data-case-beat] .case-hard__row:nth-child(5) { transition-delay: 0.2s; }
+:root.case-fx [data-case-beat] .case-hard__row:nth-child(6) { transition-delay: 0.25s; }
+
+/* ── IGNITION ───────────────────────────────────────────────
+   The label brightens; it does NOT turn accent-coloured. Small
+   uppercase text in the exhibition room's warm-brown accent measures
+   3.95:1 on cream — under AA — which is exactly why these labels were
+   moved off the accent in the first place. Lighting them with hue would
+   walk that failure straight back in. So the text codes by brightness,
+   --fg-mid to --fg, both of which pass on every room's ground, and the
+   accent goes on a tick beside it, which is decorative and carries no
+   contrast requirement. */
+:root.case-fx .case-beat__label,
+:root.case-fx .case-ps__label {
+  position: relative;
+  transition: color 0.5s var(--ease);
+}
+:root.case-fx [data-case-beat].is-lit .case-beat__label,
+:root.case-fx [data-case-beat].is-lit .case-ps__label {
+  color: var(--fg);
+}
+:root.case-fx .case-beat__label::before,
+:root.case-fx .case-ps__label::before {
+  content: "";
+  position: absolute;
+  left: -0.85rem;
+  top: 0.42em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  transform: scale(0);
+  transition: transform 0.45s var(--ease);
+}
+:root.case-fx [data-case-beat].is-lit .case-beat__label::before,
+:root.case-fx [data-case-beat].is-lit .case-ps__label::before {
+  transform: scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .case-rail { display: none; }
+}
+
+/* One frame with transitions off, while the hidden state is applied to
+   the beats below the fold. Without it the deferred script's class add
+   animates them from visible to hidden in front of the reader. */
+:root.case-fx-boot [data-case-beat] *,
+:root.case-fx-boot [data-case-beat] {
+  transition: none !important;
+}

@@ -387,6 +387,36 @@ const MUTATIONS = [
     },
   },
   {
+    name: "the reveal stops being gated on the script",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "assets/css/case.css",
+    /* The single most common way a scroll reveal ships broken: the
+       hidden state applies unconditionally, so with JavaScript off — or
+       blocked, or errored — the page's first frame is empty text waiting
+       on an observer that never runs. Nothing on screen looks wrong to
+       the person who wrote it, because their JS works. */
+    mutate: (s) => {
+      const old = ":root.case-fx [data-case-beat] .case-ps__text,";
+      if (!s.includes(old)) throw new Error("gated reveal block not found");
+      return s.replace(old, "[data-case-beat] .case-ps__text,");
+    },
+  },
+  {
+    name: "beats already on screen fade in under the reader",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "assets/js/case.js",
+    // The boot pass is what stops the deferred script animating
+    // already-visible text from opacity 1 down to 0 in front of someone
+    // who is looking straight at it.
+    mutate: (s) => {
+      const old = 'if (b.getBoundingClientRect().top < innerHeight * 0.9) b.classList.add("is-lit");';
+      if (!s.includes(old)) throw new Error("boot lighting pass not found");
+      return s.replace(old, 'if (false) b.classList.add("is-lit");');
+    },
+  },
+  {
     name: "a narrow window loses its pointer entirely",
     detectedBy: "behaviour.js",
     scope: [],

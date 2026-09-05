@@ -897,6 +897,88 @@ const check = (name, pass, detail) => results.push({ name, pass, detail });
     await ctx.close();
   }
 
+  // 22. THE CONE — the spine's one piece of motion.
+  //      The check that matters is not that it animates. It is that the
+  //      page is READABLE WITHOUT IT. Every rule that hides a beat is
+  //      gated behind a class only case.js sets, so no-JS, reduced
+  //      motion and editorial mode all get plain text. Get that
+  //      backwards and the site's first frame is empty, waiting on an
+  //      observer that may never run — which is the single most common
+  //      way a scroll reveal ships broken.
+  {
+    // (a) JavaScript off entirely.
+    const ctx = await browser.newContext({
+      viewport: { width: 1440, height: 900 },
+      javaScriptEnabled: false,
+    });
+    const page = await ctx.newPage();
+    await page.goto(url("canti.html"));
+    await page.waitForTimeout(200);
+    const noJs = await page.$$eval("[data-case-beat] p, [data-case-beat] h2", (els) =>
+      els.filter((e) => e.textContent.trim())
+         .map((e) => parseFloat(getComputedStyle(e).opacity))
+    );
+    check("with JS off every beat is still readable",
+      noJs.length > 6 && noJs.every((o) => o > 0.9),
+      `${noJs.length} elements, min opacity ${Math.min(...noJs)}`);
+    await ctx.close();
+  }
+  {
+    // (b) Reduced motion: the script bails, nothing is hidden, no rail.
+    const ctx = await browser.newContext({
+      viewport: { width: 1440, height: 900 },
+      reducedMotion: "reduce",
+    });
+    const page = await ctx.newPage();
+    await page.goto(url("canti.html"));
+    await page.waitForTimeout(400);
+    const r = await page.evaluate(() => ({
+      fx: document.documentElement.classList.contains("case-fx"),
+      rail: !!document.querySelector(".case-rail"),
+      min: Math.min(...[...document.querySelectorAll("[data-case-beat] p, [data-case-beat] h2")]
+        .filter((e) => e.textContent.trim())
+        .map((e) => parseFloat(getComputedStyle(e).opacity))),
+    }));
+    check("reduced motion leaves the spine alone", !r.fx && !r.rail && r.min > 0.9,
+      `fx ${r.fx}, rail ${r.rail}, min opacity ${r.min}`);
+    await ctx.close();
+  }
+  {
+    // (c) Workshop: the rail exists, and anything already on screen is
+    //     lit at load rather than fading in under a reader who is
+    //     already looking at it.
+    const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+    const page = await ctx.newPage();
+    await page.goto(url("westgarth.html"));
+    await page.waitForTimeout(500);
+    const boot = await page.evaluate(() => {
+      const inView = [...document.querySelectorAll("[data-case-beat]")]
+        .filter((b) => b.getBoundingClientRect().top < innerHeight * 0.9);
+      return {
+        fx: document.documentElement.classList.contains("case-fx"),
+        rail: !!document.querySelector(".case-rail"),
+        booted: !document.documentElement.classList.contains("case-fx-boot"),
+        inView: inView.length,
+        allLit: inView.every((b) => b.classList.contains("is-lit")),
+      };
+    });
+    check("workshop arms the cone", boot.fx && boot.rail);
+    check("the boot guard is released", boot.booted);
+    check("beats already on screen are lit at load", boot.inView > 0 && boot.allLit,
+      `${boot.inView} in view`);
+
+    // (d) The fire reads scroll position.
+    const before = await page.evaluate(() =>
+      parseFloat(getComputedStyle(document.querySelector(".case-rail__fire")).height));
+    await page.evaluate(() => scrollTo(0, document.body.scrollHeight * 0.6));
+    await page.waitForTimeout(300);
+    const after = await page.evaluate(() =>
+      parseFloat(getComputedStyle(document.querySelector(".case-rail__fire")).height));
+    check("the fire tracks the scroll", before < 5 && after > 100,
+      `${before}px -> ${after}px`);
+    await ctx.close();
+  }
+
   await browser.close();
   server.close();
 
