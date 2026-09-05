@@ -746,6 +746,264 @@ const check = (name, pass, detail) => results.push({ name, pass, detail });
     await ctx.close();
   }
 
+  // 20. THE CASE STUDY SPINE (Edward Wairumbi's review).
+  //      Six beats, in order, and the order is the whole point: the
+  //      block this replaced named its four beats Problem, Insight,
+  //      Design Intent and Outcome, which say what KIND of thing each
+  //      card is but never why the next one had to happen.
+  //
+  //      Beats declare themselves with data-case-beat rather than by
+  //      class, so a page with its own component for a beat — Kala
+  //      Topi's tensions, Tarebook's mid-build pivot — still takes part
+  //      in the spine instead of being flattened into identical markup.
+  {
+    /* All eighteen case studies. Listed rather than globbed: a page that
+       silently stops carrying the spine should fail here, and a glob over
+       whatever happens to be on disk would just stop checking it. */
+    const SPINE = [
+      "alastair-smith.html", "andras.html", "blend.html", "canti.html",
+      "cherry-vision.html", "clydeside.html", "crafted-by-design.html",
+      "cycle-arts.html", "graduate-in-residence.html", "greene-king.html",
+      "just-rite.html", "kala-topi.html", "multanni.html", "origin.html",
+      "sim-glasgow.html", "tarebook.html", "thudpuk.html", "westgarth.html",
+    ];
+    const ORDER = ["ps", "hard", "turn", "landed", "unblocked"];
+    const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+    const page = await ctx.newPage();
+
+    for (const file of SPINE) {
+      await page.goto(url(file));
+      await page.waitForTimeout(250);
+
+      const got = await page.evaluate(() => {
+        const beats = [...document.querySelectorAll("[data-case-beat]")];
+        const ps = document.querySelector('[data-case-beat="ps"]');
+        /* Four hero shapes across the eighteen: .hero, .project-hero, a
+           bare <header>, and westgarth's <main class="quick">. Naming
+           them beats a positional guess, and a page that grows a fifth
+           should fail here rather than be quietly skipped. */
+        const hero = document.querySelector(".hero, .project-hero, header, main.quick");
+        // "Directly under the hero" means: before any body section or
+        // full-bleed image. The old block was buried below the fold on
+        // two of the six pages that had it — placement is what rots.
+        // Prose sections only. A full-bleed image between the hero and
+        // the pair is hero furniture — the hook, then the claim — and
+        // counting it as "body" would fail pages that are doing the
+        // right thing. What must not come first is an argument.
+        const firstBody = document.querySelector(
+          ".case-section, .premise, .tensions, [data-case-beat='hard']"
+        );
+        const pos = (a, b) =>
+          a && b ? a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING : false;
+        const words = (sel) => {
+          const el = document.querySelector(sel);
+          return el ? el.textContent.trim().split(/\s+/).length : -1;
+        };
+        return {
+          order: beats.map((b) => b.getAttribute("data-case-beat")),
+          psCount: document.querySelectorAll('[data-case-beat="ps"]').length,
+          afterHero: pos(hero, ps),
+          beforeBody: pos(ps, firstBody),
+          problem: words(".case-ps__cell--problem .case-ps__text"),
+          solution: words(".case-ps__cell--solution .case-ps__text"),
+          // DOM order is necessary but not sufficient: a page could put
+          // the pair first and still bury it under two screens of hero.
+          // Measured, not proxied.
+          screensDown: ps ? (ps.getBoundingClientRect().top + scrollY) / innerHeight : 99,
+        };
+      });
+
+      check(`${file} carries exactly one problem/solution pair`, got.psCount === 1,
+        got.psCount + " found");
+      check(`${file} states it before any argument`,
+        got.afterHero && got.beforeBody,
+        `afterHero ${got.afterHero}, beforeBody ${got.beforeBody}`);
+      /* Two screens. Edward's note was "START with problem and solution
+         statements" — a pair a reviewer has to hunt for is not a start.
+         Tarebook originally sat at 1.97 screens behind its full-bleed
+         hero image, which passed this rule while plainly failing its
+         intent, so the pair was moved above that image rather than the
+         threshold being moved above the pair. */
+      check(`${file} states it within two screens`, got.screensDown <= 2,
+        got.screensDown.toFixed(2) + " screens down");
+      /* One sentence each. Edward asked for a SIMPLE problem and
+         solution statement; the cards this replaced ran about eighty
+         words apiece, which is an essay where a claim was wanted. */
+      check(`${file} problem is one sentence`, got.problem > 0 && got.problem <= 30,
+        got.problem + " words");
+      check(`${file} solution is one sentence`, got.solution > 0 && got.solution <= 30,
+        got.solution + " words");
+      /* The order check is what enforces "revisit the journey before
+         showcasing the final works" mechanically rather than by memory:
+         landed cannot precede turn. */
+      const seen = got.order.filter((b) => ORDER.includes(b));
+      const ranks = seen.map((b) => ORDER.indexOf(b));
+      check(`${file} runs its beats in order`,
+        seen.length === 5 && ranks.every((r, i) => i === 0 || r > ranks[i - 1]),
+        seen.join(" → "));
+    }
+    await ctx.close();
+  }
+
+  // 21. The spine is shared CSS reading room tokens, NOT the inline
+  //      copies it replaced. Those hardcoded `background: #0e0e0e` in
+  //      six separate pages, and Cycle Arts is in the EXHIBITION room,
+  //      which is light — a dark panel there is invisible on invisible.
+  //      Measured in the light room and a dark one.
+  {
+    const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+    const page = await ctx.newPage();
+    // One page per room: physical, the light exhibition room, digital,
+    // office-adjacent and play all resolve different token sets, and the
+    // light room is where a hardcoded dark panel would hide.
+    for (const file of ["canti.html", "cycle-arts.html", "tarebook.html",
+                        "crafted-by-design.html", "clydeside.html"]) {
+      await page.goto(url(file));
+      await page.waitForTimeout(250);
+      const worst = await page.evaluate(() => {
+        const rgba = (c) => {
+          const m = (c.match(/[\d.]+/g) || []).map(Number);
+          return [m[0] || 0, m[1] || 0, m[2] || 0, m.length > 3 ? m[3] : 1];
+        };
+        const over = (t, b) => [0, 1, 2].map((i) => t[i] * t[3] + b[i] * (1 - t[3])).concat(1);
+        const lum = (c) => {
+          const f = (v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
+          return 0.2126 * f(c[0]) + 0.7152 * f(c[1]) + 0.0722 * f(c[2]);
+        };
+        const pageBg = rgba(getComputedStyle(document.body).backgroundColor);
+        let low = Infinity, who = "", seen = 0;
+        document.querySelectorAll("[data-case-beat]").forEach((beat) => {
+          beat.querySelectorAll("p, h2, span").forEach((el) => {
+            if (!el.textContent.trim()) return;
+            // Composite the element's own ground over the page's.
+            let ground = pageBg, node = el;
+            while (node && node !== document.body) {
+              const bg = rgba(getComputedStyle(node).backgroundColor);
+              if (bg[3] > 0) { ground = over(bg, pageBg); break; }
+              node = node.parentElement;
+            }
+            const ratio = (Math.max(lum(ground), lum(rgba(getComputedStyle(el).color))) + 0.05) /
+              (Math.min(lum(ground), lum(rgba(getComputedStyle(el).color))) + 0.05);
+            seen++;
+            if (ratio < low) { low = ratio; who = el.textContent.trim().slice(0, 32); }
+          });
+        });
+        return { low, who, seen };
+      });
+      check(`${file}: every spine beat reads on its ground`,
+        worst.seen > 10 && Number.isFinite(worst.low) && worst.low >= 4.5,
+        `${worst.seen} elements, worst "${worst.who}" at ${worst.low.toFixed(2)}:1`);
+    }
+    await ctx.close();
+  }
+
+  // 22. THE CONE — the spine's one piece of motion.
+  //      The check that matters is not that it animates. It is that the
+  //      page is READABLE WITHOUT IT. Every rule that hides a beat is
+  //      gated behind a class only case.js sets, so no-JS, reduced
+  //      motion and editorial mode all get plain text. Get that
+  //      backwards and the site's first frame is empty, waiting on an
+  //      observer that may never run — which is the single most common
+  //      way a scroll reveal ships broken.
+  {
+    // (a) JavaScript off entirely.
+    const ctx = await browser.newContext({
+      viewport: { width: 1440, height: 900 },
+      javaScriptEnabled: false,
+    });
+    const page = await ctx.newPage();
+    await page.goto(url("canti.html"));
+    await page.waitForTimeout(200);
+    const noJs = await page.$$eval("[data-case-beat] p, [data-case-beat] h2", (els) =>
+      els.filter((e) => e.textContent.trim())
+         .map((e) => parseFloat(getComputedStyle(e).opacity))
+    );
+    check("with JS off every beat is still readable",
+      noJs.length > 6 && noJs.every((o) => o > 0.9),
+      `${noJs.length} elements, min opacity ${Math.min(...noJs)}`);
+    await ctx.close();
+  }
+  {
+    // (b) Reduced motion: the script bails, nothing is hidden, no rail.
+    const ctx = await browser.newContext({
+      viewport: { width: 1440, height: 900 },
+      reducedMotion: "reduce",
+    });
+    const page = await ctx.newPage();
+    await page.goto(url("canti.html"));
+    await page.waitForTimeout(400);
+    const r = await page.evaluate(() => ({
+      fx: document.documentElement.classList.contains("case-fx"),
+      rail: !!document.querySelector(".case-rail"),
+      min: Math.min(...[...document.querySelectorAll("[data-case-beat] p, [data-case-beat] h2")]
+        .filter((e) => e.textContent.trim())
+        .map((e) => parseFloat(getComputedStyle(e).opacity))),
+    }));
+    check("reduced motion leaves the spine alone", !r.fx && !r.rail && r.min > 0.9,
+      `fx ${r.fx}, rail ${r.rail}, min opacity ${r.min}`);
+    await ctx.close();
+  }
+  {
+    // (c) Workshop: the rail exists, and anything already on screen is
+    //     lit at load rather than fading in under a reader who is
+    //     already looking at it.
+    const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+    const page = await ctx.newPage();
+
+    /* Sample every frame from before the document runs. Reading the
+       settled state instead is what the first version of this check did,
+       and it could not fail: by the time it looked, the observer had lit
+       everything in view regardless of whether the boot pass existed.
+       The fault being tested is a DIP — text painted, then animated away
+       and back — so the measurement has to be the minimum across frames,
+       not the value at the end. */
+    await page.addInitScript(() => {
+      window.__dip = 1;
+      addEventListener("DOMContentLoaded", () => {
+        let n = 0;
+        (function sample() {
+          const el = document.querySelector("[data-case-beat] .case-ps__text");
+          if (el && el.getBoundingClientRect().top < innerHeight) {
+            window.__dip = Math.min(window.__dip, parseFloat(getComputedStyle(el).opacity));
+          }
+          if (++n < 40) requestAnimationFrame(sample);
+        })();
+      });
+    });
+
+    await page.goto(url("westgarth.html"));
+    await page.waitForTimeout(700);
+    const boot = await page.evaluate(() => {
+      const inView = [...document.querySelectorAll("[data-case-beat]")]
+        .filter((b) => b.getBoundingClientRect().top < innerHeight * 0.9);
+      return {
+        fx: document.documentElement.classList.contains("case-fx"),
+        rail: !!document.querySelector(".case-rail"),
+        booted: !document.documentElement.classList.contains("case-fx-boot"),
+        inView: inView.length,
+        allLit: inView.every((b) => b.classList.contains("is-lit")),
+      };
+    });
+    check("workshop arms the cone", boot.fx && boot.rail);
+    check("the boot guard is released", boot.booted);
+    check("beats already on screen are lit at load", boot.inView > 0 && boot.allLit,
+      `${boot.inView} in view`);
+    const dip = await page.evaluate(() => window.__dip);
+    check("an in-view beat never fades in under the reader", dip > 0.9,
+      "min opacity across the first 40 frames: " + dip);
+
+    // (d) The fire reads scroll position.
+    const before = await page.evaluate(() =>
+      parseFloat(getComputedStyle(document.querySelector(".case-rail__fire")).height));
+    await page.evaluate(() => scrollTo(0, document.body.scrollHeight * 0.6));
+    await page.waitForTimeout(300);
+    const after = await page.evaluate(() =>
+      parseFloat(getComputedStyle(document.querySelector(".case-rail__fire")).height));
+    check("the fire tracks the scroll", before < 5 && after > 100,
+      `${before}px -> ${after}px`);
+    await ctx.close();
+  }
+
   await browser.close();
   server.close();
 

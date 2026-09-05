@@ -78,6 +78,7 @@
     <link rel="stylesheet" href="assets/css/chrome.css" />
     <link rel="stylesheet" href="assets/css/glass.css" />
     <link rel="stylesheet" href="assets/css/floorplan.css" />
+    <link rel="stylesheet" href="assets/css/case.css" />
     <style>
     :root {
       --bg:       #0a0a0a;
@@ -125,14 +126,6 @@
     .body-text strong { color: var(--fg); font-weight: 500; }
     .body-text em { font-style: italic; color: var(--fg); }
 
-    /* NARRATIVE GRID */
-    .narrative-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
-    .narrative-card { padding: var(--space-7) var(--space-6); background: #0e0e0e; border-top: 2px solid transparent; transition: border-color var(--fast), background var(--fast); }
-    .narrative-card:hover { border-top-color: var(--accent); background: #111; }
-    .narrative-card__label { font-family: var(--sans); font-size: var(--text-1); font-weight: 700; letter-spacing: var(--ls-track); text-transform: uppercase; color: var(--accent); margin-bottom: var(--space-3); }
-    .narrative-card__heading { font-family: var(--serif); font-size: clamp(1.5rem, 2.2vw, 2.1rem); font-weight: 300; line-height: var(--lh-tight); color: var(--fg); margin-bottom: var(--space-3); }
-    .narrative-card__heading em { font-style: italic; }
-    .narrative-card__body { font-size: var(--text-4); line-height: var(--lh-loose); color: var(--fg-mid); font-weight: 300; }
 
     /* STAT ROW */
     .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
@@ -267,7 +260,6 @@
       .two-col { grid-template-columns: 1fr; gap: var(--space-6); }
       .section-label { position: static; }
       .case-section { padding: var(--space-7) var(--gutter); }
-      .narrative-grid { grid-template-columns: 1fr; }
       .stat-row { grid-template-columns: 1fr; }
       .img-grid--2, .img-grid--3 { grid-template-columns: 1fr; }
       .step { grid-template-columns: 3rem 1fr; gap: var(--space-3); }
@@ -298,6 +290,48 @@
     </div>
   </section>
 
+    <!-- ── BEAT 1 — PROBLEM / SOLUTION ────────────────────────── -->
+    <div class="case-ps" data-case-beat="ps">
+      <div class="case-ps__cell case-ps__cell--problem">
+        <p class="case-ps__label">The problem</p>
+        <p class="case-ps__text">A new beer garden meant tables in two zones with layouts that changed every weekend — and a table-numbering system that assumed they never would.</p>
+      </div>
+      <div class="case-ps__cell case-ps__cell--solution">
+        <p class="case-ps__label">What I made</p>
+        <p class="case-ps__text">Forty fired ceramic vessels with a <em>rewritable surface</em>: any table, any zone, renumbered in under a minute.</p>
+      </div>
+    </div>
+
+    <!-- ── BEAT 2 — WHAT MADE IT HARD ─────────────────────────── -->
+    <div class="case-beat case-hard" data-case-beat="hard">
+      <p class="case-beat__label">What made it hard</p>
+      <p class="case-hard__intro">The requirement was operational, but the object had to live in a room people drink in — and outdoors, on paving, in Scottish weather.</p>
+      <div class="case-hard__row">
+        <span class="case-hard__key">Change</span>
+        <span class="case-hard__val">Layouts differ every weekend, for private events, and across seasons</span>
+      </div>
+      <div class="case-hard__row">
+        <span class="case-hard__key">Two zones</span>
+        <span class="case-hard__val">Indoors and out, with the same system having to work in both</span>
+      </div>
+      <div class="case-hard__row">
+        <span class="case-hard__key">Outdoors</span>
+        <span class="case-hard__val">Uneven garden paving and weather, so low-centred and stable rather than tall</span>
+      </div>
+      <div class="case-hard__row">
+        <span class="case-hard__key">Timeline</span>
+        <span class="case-hard__val">40 units in one month, alongside THUDPUK development at TwoSix</span>
+      </div>
+    </div>
+
+    <!-- ── BEAT 3 — THE TURN ──────────────────────────────────── -->
+    <div class="case-beat case-turn" data-case-beat="turn">
+      <p class="case-beat__label">The turn</p>
+      <h2 class="case-turn__heading">The layout changes. <em>The surface shouldn't.</em></h2>
+      <p class="case-turn__body">Printed cards and plastic holders solve a fixed problem, and this problem was not fixed — every reprint is a reprint you do again next weekend. So the answer stopped being a better static solution and became a surface that absorbs the change entirely. A chalk-conditioned ceramic exterior takes any configuration in under a minute, and because it is fired ceramic rather than plastic it adds to the atmosphere of the room instead of adding noise to it.</p>
+    </div>
+
+
   <!-- IN-SITU WIDE SHOT -->
   <div class="img-full" style="aspect-ratio:16/7;">
     <img
@@ -306,30 +340,6 @@
       style="width:100%;height:100%;object-fit:cover;display:block;"
       loading="eager"
     />
-  </div>
-
-  <!-- NARRATIVE FOUR-BLOCK -->
-  <div class="narrative-grid">
-    <div class="narrative-card">
-      <p class="narrative-card__label">Problem</p>
-      <h2 class="narrative-card__heading">A new beer garden.<br><em>An old numbering system.</em></h2>
-      <p class="narrative-card__body">Greene King were expanding their pub and grill with a new beer garden. The addition created an immediate operational problem: tables now existed both inside and outside the venue, in two distinct zones with layouts that shifted regularly — different every weekend, different for private events, different across seasons. Existing systems assumed a static arrangement. Every reconfiguration broke them.</p>
-    </div>
-    <div class="narrative-card">
-      <p class="narrative-card__label">Insight</p>
-      <h2 class="narrative-card__heading">The layout changes.<br><em>The surface shouldn't.</em></h2>
-      <p class="narrative-card__body">Printed cards and plastic holders solve a fixed problem. Greene King's problem wasn't fixed. What they needed wasn't a better static solution — it was a surface that absorbed the change entirely. A rewritable exterior means any configuration of tables, in any zone, can be renumbered in under a minute. No reprinting. No replacing. The surface is the system.</p>
-    </div>
-    <div class="narrative-card">
-      <p class="narrative-card__label">Design Intent</p>
-      <h2 class="narrative-card__heading">Material that adds to<br><em>the room, not noise.</em></h2>
-      <p class="narrative-card__body">A fired ceramic vessel does something a printed card cannot: it contributes to the atmosphere of the space. The weight, texture, and permanence of the material signal care without demanding attention. The brief was functional — but the solution didn't have to look functional. Low-centred, stable on uneven garden paving, resistant to being knocked. A form that reads as intentional on a table.</p>
-    </div>
-    <div class="narrative-card">
-      <p class="narrative-card__label">Outcome</p>
-      <h2 class="narrative-card__heading">40 units. One month.<br><em>Delivered and trading.</em></h2>
-      <p class="narrative-card__body">The full run of 40 ceramic vessels was produced, finished, and delivered within one month alongside THUDPUK development at TwoSix Design — the only commission to be completed during the internship. Delivered ready for immediate use across both zones, chalk-conditioned so the surface was write-ready from day one with no ghosting.</p>
-    </div>
   </div>
 
   <!-- STAT ROW -->
@@ -484,6 +494,18 @@
   </div>
 
   <!-- NEXT -->
+    <!-- ── BEAT 5 — WHERE IT LANDED ───────────────────────────── -->
+    <div class="case-beat case-landed" data-case-beat="landed">
+      <p class="case-beat__label">Where it landed</p>
+      <p class="case-landed__body">The full run of 40 vessels was produced, finished and delivered inside one month — the only commission completed during the internship. Delivered chalk-conditioned so the surface was write-ready from day one, with no ghosting, across both zones.</p>
+    </div>
+
+    <!-- ── BEAT 6 — WHAT IT UNBLOCKED ─────────────────────────── -->
+    <div class="case-beat case-unblocked" data-case-beat="unblocked">
+      <p class="case-beat__label">What it unblocked</p>
+      <p class="case-unblocked__body">The venue reconfigures itself now. A private event, a summer layout, a weekend change — staff renumber in minutes with no reprint, no reorder and <em>no call to anyone</em>. The system absorbs a layout it has never seen before, which is the thing the printed cards could never do.</p>
+    </div>
+
   <div class="next-project">
     <div>
       <p class="next-project__label">Related Project</p>
@@ -511,5 +533,6 @@
   
 <script src="assets/js/chrome.js" defer></script>
 <script src="assets/js/floorplan.js" defer></script>
+    <script src="assets/js/case.js" defer></script>
 </body>
 </html>

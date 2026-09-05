@@ -315,6 +315,115 @@ const MUTATIONS = [
     },
   },
   {
+    name: "the problem/solution pair is buried below the argument",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "cycle-arts.html",
+    /* The fault the old four-card block actually had: it existed, it was
+       correct, and on two of the six pages carrying it you had to scroll
+       past the whole brief to reach it. Placement is what rots, because
+       nothing looks broken when it does. */
+    mutate: (s) => {
+      const i = s.indexOf('    <!-- ── BEAT 1 — PROBLEM / SOLUTION');
+      const j = s.indexOf('    <!-- ── BEAT 2 — WHAT MADE IT HARD');
+      if (i < 0 || j < 0) throw new Error("beat 1 not found");
+      const ps = s.slice(i, j);
+      const rest = s.slice(0, i) + s.slice(j);
+      const k = rest.indexOf('    <div class="next-project">');
+      if (k < 0) throw new Error("next-project not found");
+      return rest.slice(0, k) + ps + rest.slice(k);
+    },
+  },
+  {
+    name: "the problem statement grows back into an essay",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "canti.html",
+    // Edward asked for a SIMPLE problem statement. The cards this
+    // replaced ran ~80 words each, and prose creeps back one clause at a
+    // time unless something counts.
+    mutate: (s) => {
+      const old = "Furniture buyers read recycled plastic as a compromise — something you\n          use when you can't use something better.";
+      if (!s.includes(old)) throw new Error("problem statement not found");
+      return s.replace(old, old + " Plastic recycling across the furniture " +
+        "industry is underutilised not because of a technical problem but a " +
+        "perception one, and consumers associate recycled plastic with low " +
+        "quality, impermanence and compromise, which means getting them to " +
+        "pay premium prices requires the design to do significant persuasive " +
+        "work before it does anything else at all.");
+    },
+  },
+  {
+    name: "the spine runs its beats out of order",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "kala-topi.html",
+    /* Edward: "revisit the journey before showcasing the final works."
+       This is that rule as a machine check — the outcome cannot precede
+       the decision that produced it. Swapping two attributes is all it
+       takes to break the argument while leaving the page looking fine. */
+    mutate: (s) => {
+      if (!s.includes('data-case-beat="turn"')) throw new Error("no turn beat");
+      return s
+        .replace('data-case-beat="turn"', 'data-case-beat="__tmp"')
+        .replace('data-case-beat="landed"', 'data-case-beat="turn"')
+        .replace('data-case-beat="__tmp"', 'data-case-beat="landed"');
+    },
+  },
+  {
+    name: "a spine panel hardcodes a dark background again",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "assets/css/case.css",
+    /* The whole reason case.css exists. The block it replaced was pasted
+       inline into six pages, each hardcoding #0e0e0e, and Cycle Arts is
+       in the exhibition room, which is light — a dark panel there is
+       invisible on invisible. This is that bug, reintroduced in one
+       plausible-looking line. */
+    mutate: (s) => {
+      const old = ".case-hard {\n  background: var(--surface-2);\n}";
+      if (!s.includes(old)) throw new Error("case-hard block not found");
+      return s.replace(old, ".case-hard {\n  background: #0e0e0e;\n}");
+    },
+  },
+  {
+    name: "the reveal stops being gated on the script",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "assets/css/case.css",
+    /* The single most common way a scroll reveal ships broken: the
+       hidden state applies unconditionally, so with JavaScript off — or
+       blocked, or errored — the page's first frame is empty text waiting
+       on an observer that never runs. Nothing on screen looks wrong to
+       the person who wrote it, because their JS works. */
+    mutate: (s) => {
+      const old = ":root.case-fx [data-case-beat] .case-ps__text,";
+      if (!s.includes(old)) throw new Error("gated reveal block not found");
+      return s.replace(old, "[data-case-beat] .case-ps__text,");
+    },
+  },
+  {
+    name: "beats already on screen fade in under the reader",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "assets/js/case.js",
+    /* The boot pass is what stops the deferred script animating
+       already-visible text from opacity 1 down to 0 in front of someone
+       looking straight at it.
+
+       This was MISSED on its first run, and the mutation was right — the
+       check was wrong. It read the settled state 500ms after load, by
+       which point the observer had lit everything in view whether the
+       boot pass existed or not. The fault is a DIP, so the check samples
+       opacity every frame from before the document runs and asserts the
+       minimum, which reads 0 against this mutation. */
+    mutate: (s) => {
+      const old = 'if (b.getBoundingClientRect().top < innerHeight * 0.9) b.classList.add("is-lit");';
+      if (!s.includes(old)) throw new Error("boot lighting pass not found");
+      return s.replace(old, 'if (false) b.classList.add("is-lit");');
+    },
+  },
+  {
     name: "a narrow window loses its pointer entirely",
     detectedBy: "behaviour.js",
     scope: [],

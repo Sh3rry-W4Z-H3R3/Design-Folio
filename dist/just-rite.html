@@ -77,6 +77,7 @@
     <link rel="stylesheet" href="assets/css/chrome.css" />
     <link rel="stylesheet" href="assets/css/glass.css" />
     <link rel="stylesheet" href="assets/css/floorplan.css" />
+    <link rel="stylesheet" href="assets/css/case.css" />
     <style>
     :root{
       --bg:#0a0a0a;--fg:#ede9e1;--fg-dim:#7a7a7a;--fg-mid:#999;
@@ -263,6 +264,48 @@
     </div>
   </section>
 
+    <!-- ── BEAT 1 — PROBLEM / SOLUTION ────────────────────────── -->
+    <div class="case-ps" data-case-beat="ps">
+      <div class="case-ps__cell case-ps__cell--problem">
+        <p class="case-ps__label">The problem</p>
+        <p class="case-ps__text">A barbershop and cafe-bar didn't just need a sign designed — they needed someone to get it through Paisley Council's planning process before a single panel went up.</p>
+      </div>
+      <div class="case-ps__cell case-ps__cell--solution">
+        <p class="case-ps__label">What I made</p>
+        <p class="case-ps__text">A two-tier signage system designed <em>against the planning constraints</em>, then submitted, approved, produced and installed.</p>
+      </div>
+    </div>
+
+    <!-- ── BEAT 2 — WHAT MADE IT HARD ─────────────────────────── -->
+    <div class="case-beat case-hard" data-case-beat="hard">
+      <p class="case-beat__label">What made it hard</p>
+      <p class="case-hard__intro">Shopfront signage on a Scottish high street needs planning consent, and getting it wrong means the sign comes down again.</p>
+      <div class="case-hard__row">
+        <span class="case-hard__key">Consent</span>
+        <span class="case-hard__val">Illumination, size relative to the fascia and materials all specified before submission</span>
+      </div>
+      <div class="case-hard__row">
+        <span class="case-hard__key">Risk</span>
+        <span class="case-hard__val">An approval refused after production is a sign that comes back down at the client's cost</span>
+      </div>
+      <div class="case-hard__row">
+        <span class="case-hard__key">Legibility</span>
+        <span class="case-hard__val">Readable from the far end of the street, and in full darkness</span>
+      </div>
+      <div class="case-hard__row">
+        <span class="case-hard__key">Scope</span>
+        <span class="case-hard__val">Design, planning submission, approval management, production, installation — the full chain</span>
+      </div>
+    </div>
+
+    <!-- ── BEAT 3 — THE TURN ──────────────────────────────────── -->
+    <div class="case-beat case-turn" data-case-beat="turn">
+      <p class="case-beat__label">The turn</p>
+      <h2 class="case-turn__heading">Design <em>to the consent</em>, not to the sketch</h2>
+      <p class="case-turn__body">Six concept directions were explored, and each was pressure-tested against the planning constraints before going into the submission rather than after. Type weights, layout hierarchy and illumination treatment were settled as planning questions first and aesthetic ones second. That inversion is what the job needed: on a high street the constraint is not a limit you design around at the end, it decides whether the design gets to exist at all.</p>
+    </div>
+
+
   <!-- THE BRIEF -->
   <div class="case-section">
     <div class="two-col">
@@ -441,6 +484,22 @@
         background-position: center;
       "
     ></div>
+    <!-- This div closes .case-section above. It was missing before the
+         spine went in, so every block after "The Signage System" — the
+         image grids, the beats, next-project — was nested inside it. -->
+  </div>
+
+    <!-- ── BEAT 5 — WHERE IT LANDED ───────────────────────────── -->
+    <div class="case-beat case-landed" data-case-beat="landed">
+      <p class="case-beat__label">Where it landed</p>
+      <p class="case-landed__body">Approved by Paisley Council, produced and installed on the high street. The final system is a hierarchy: JUST RITE in illuminated white channel letters as the identity anchor, with BARBER in dimensional gold type below adding warmth and sector identity without competing with the name.</p>
+    </div>
+
+    <!-- ── BEAT 6 — WHAT IT UNBLOCKED ─────────────────────────── -->
+    <div class="case-beat case-unblocked" data-case-beat="unblocked">
+      <p class="case-beat__label">What it unblocked</p>
+      <p class="case-unblocked__body">They have a consented scheme on record. A second site, a replacement panel or a change of fascia starts from <em>an approved precedent</em> and drawings that already satisfied a planning officer, rather than from the beginning of the process again.</p>
+    </div>
 
     <div class="next-project">
       <div>
@@ -483,5 +542,6 @@
 
     <script src="assets/js/chrome.js" defer></script>
     <script src="assets/js/floorplan.js" defer></script>
+    <script src="assets/js/case.js" defer></script>
   </body>
 </html>

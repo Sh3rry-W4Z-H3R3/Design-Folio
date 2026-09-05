@@ -111,6 +111,7 @@
     <link rel="stylesheet" href="assets/css/chrome.css" />
     <link rel="stylesheet" href="assets/css/glass.css" />
     <link rel="stylesheet" href="assets/css/floorplan.css" />
+    <link rel="stylesheet" href="assets/css/case.css" />
         <style>
       :root {
         /* --accent / --accent-2 now come from rooms.css via
@@ -301,50 +302,6 @@
         color: var(--fg);
       }
 
-      /* NARRATIVE GRID */
-      .narrative-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 2px;
-      }
-      .narrative-card {
-        padding: var(--space-7) var(--space-6);
-        background: #0e0e0e;
-        border-top: 2px solid transparent;
-        transition:
-          border-color var(--fast),
-          background var(--fast);
-      }
-      .narrative-card:hover {
-        border-top-color: var(--accent);
-        background: #111;
-      }
-      .narrative-card__label {
-        font-family: var(--sans);
-        font-size: var(--text-1);
-        font-weight: 700;
-        letter-spacing: var(--ls-track);
-        text-transform: uppercase;
-        color: var(--accent);
-        margin-bottom: var(--space-3);
-      }
-      .narrative-card__heading {
-        font-family: var(--serif);
-        font-size: clamp(1.5rem, 2.2vw, 2.1rem);
-        font-weight: 300;
-        line-height: var(--lh-tight);
-        color: var(--fg);
-        margin-bottom: var(--space-3);
-      }
-      .narrative-card__heading em {
-        font-style: italic;
-      }
-      .narrative-card__body {
-        font-size: var(--text-4);
-        line-height: var(--lh-loose);
-        color: var(--fg-mid);
-        font-weight: 300;
-      }
 
       /* ORIGIN PANEL */
       .origin-panel {
@@ -850,9 +807,6 @@
         .case-section {
           padding: var(--space-7) var(--gutter);
         }
-        .narrative-grid {
-          grid-template-columns: 1fr;
-        }
         .img-grid--2,
         .img-grid--3 {
           grid-template-columns: 1fr;
@@ -921,6 +875,48 @@
       </div>
     </section>
 
+    <!-- ── BEAT 1 — PROBLEM / SOLUTION ────────────────────────── -->
+    <div class="case-ps" data-case-beat="ps">
+      <div class="case-ps__cell case-ps__cell--problem">
+        <p class="case-ps__label">The problem</p>
+        <p class="case-ps__text">The business is named in memory of a friend of the founders' family — so every design decision carried more weight than a garden-furniture brand usually does.</p>
+      </div>
+      <div class="case-ps__cell case-ps__cell--solution">
+        <p class="case-ps__label">What I made</p>
+        <p class="case-ps__text">An identity built around a mark that reads as <em>a tree before it reads as letters</em>, on a Shopify store that doesn't look like Shopify.</p>
+      </div>
+    </div>
+
+    <!-- ── BEAT 2 — WHAT MADE IT HARD ─────────────────────────── -->
+    <div class="case-beat case-hard" data-case-beat="hard">
+      <p class="case-beat__label">What made it hard</p>
+      <p class="case-hard__intro">A memorial name, a platform with a strong house style, and a category where photography usually fails the customer.</p>
+      <div class="case-hard__row">
+        <span class="case-hard__key">The name</span>
+        <span class="case-hard__val">A memorial from the client's family — it had to be worn lightly, never traded on</span>
+      </div>
+      <div class="case-hard__row">
+        <span class="case-hard__key">Platform</span>
+        <span class="case-hard__val">Shopify, because the client needed to manage stock without a developer on call</span>
+      </div>
+      <div class="case-hard__row">
+        <span class="case-hard__key">Category</span>
+        <span class="case-hard__val">Garden furniture online has a scale problem: a chair on white tells you nothing about the garden</span>
+      </div>
+      <div class="case-hard__row">
+        <span class="case-hard__key">Handover</span>
+        <span class="case-hard__val">Client-managed from launch day, so nothing could depend on me being there</span>
+      </div>
+    </div>
+
+    <!-- ── BEAT 3 — THE TURN ──────────────────────────────────── -->
+    <div class="case-beat case-turn" data-case-beat="turn">
+      <p class="case-beat__label">The turn</p>
+      <h2 class="case-turn__heading">The mark reads as a tree <em>before</em> it reads as letters</h2>
+      <p class="case-turn__body">A and G, overlaid and resolved, form a trunk — vertical strokes, a canopy at the top, roots at the base. Rooted, alive, reaching upward were the brief in everything but name, and the mark says all three without the story having to be told. The founders recognised it immediately, which is usually the sign a mark is working. Everything else followed from it, including the decision to shoot furniture in context rather than on white.</p>
+    </div>
+
+
     <!-- MACBOOK — strongest single asset -->
     <div
       class="img-full"
@@ -928,78 +924,14 @@
         aspect-ratio: 16/8;
         background-image: url(&quot;./imgs-digital/AGH/Macbook Mockup Front View UV.webp&quot;);
         background-size: cover;
-        background-color: #1c6f8d;
+        /* EDWARD: neutral, not blue — the blue was competing with the
+           screens it was meant to hold. NOTE: the mockup image itself
+           still carries a blue backdrop of its own; this only fixes the
+           CSS ground behind it, and the two need to match, so the image
+           wants re-exporting on a neutral before this reads right. */
+        background-color: #14161a;
       "
     ></div>
-
-    <!-- NARRATIVE FOUR-BLOCK -->
-    <div class="narrative-grid">
-      <div class="narrative-card">
-        <p class="narrative-card__label">Problem</p>
-        <h2 class="narrative-card__heading">
-          A name with weight.<br /><em>Worn lightly.</em>
-        </h2>
-        <p class="narrative-card__body">
-          Andra's Garden Heaven is named in memory of a friend — a man who
-          helped the founders build their early ventures (and garden) before he
-          passed. The name was not a marketing decision. It was a memorial from
-          the client's family to a dear friend the considered part of theirs.
-          That origin story meant every design decision carried unusual weight:
-          the brand needed warmth and optimism without sentimentality.
-        </p>
-      </div>
-      <div class="narrative-card">
-        <p class="narrative-card__label">Insight</p>
-        <h2 class="narrative-card__heading">
-          The mark reads as a tree<br /><em>before it reads as letters</em>
-        </h2>
-        <p class="narrative-card__body">
-          The logo is structural. A and G, overlaid and resolved, naturally form
-          a tree trunk. The vertical strokes of the letter forms and canopy at
-          the top with roots at the base. It reads as a tree before it reads as
-          letterforms. Rooted. Alive. Reaching upward. Those three qualities
-          were the brief in everything but name, and the mark delivers all three
-          without explaining itself.
-        </p>
-      </div>
-      <div class="narrative-card">
-        <p class="narrative-card__label">Design Intent</p>
-        <h2 class="narrative-card__heading">
-          Make it not look<br /><em>like Shopify.</em>
-        </h2>
-        <p class="narrative-card__body">
-          The platform choice was Shopify, driven by the client's need to manage
-          e-commerce inventory without a developer on call. The design challenge
-          was to make it not look like Shopify. Garden furniture retail online
-          has a specific problem: scale and context. A chair against a white
-          background tells you nothing about whether it'll look right in a
-          garden. The layout was built around lifestyle imagery — pieces in
-          situ, in light, in use. The mobile experience was prioritised
-          throughout because most garden furniture browsing happens on a phone.
-        </p>
-      </div>
-      <div class="narrative-card">
-        <p class="narrative-card__label">Outcome</p>
-        <h2 class="narrative-card__heading">
-          Live, trading,<br /><em>client-managed.</em>
-        </h2>
-        <p class="narrative-card__body">
-          Full brand identity, Shopify store build, print materials, and trade
-          show signage — all delivered and live. Full client training on Shopify
-          admin completed on launch day. The store is client-managed from day
-          one. Brand collateral consistent across digital and physical. The mark
-          the founders recognised immediately is now on every touchpoint. Live
-          at
-          <a
-            href="https://andrasgardenheaven.uk"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="live-page-link"
-            >andrasgardenheaven.uk</a
-          >.
-        </p>
-      </div>
-    </div>
 
     <!-- THE ORIGIN STORY PANEL -->
     <div class="origin-panel">
@@ -1417,6 +1349,18 @@
     </div>
 
     <!-- NEXT -->
+    <!-- ── BEAT 5 — WHERE IT LANDED ───────────────────────────── -->
+    <div class="case-beat case-landed" data-case-beat="landed">
+      <p class="case-beat__label">Where it landed</p>
+      <p class="case-landed__body">Full brand identity, Shopify store build, print materials and trade show signage — delivered and live. Client training on Shopify admin completed on launch day. The store has been client-managed from day one, and the mark the founders recognised is now on everything.</p>
+    </div>
+
+    <!-- ── BEAT 6 — WHAT IT UNBLOCKED ─────────────────────────── -->
+    <div class="case-beat case-unblocked" data-case-beat="unblocked">
+      <p class="case-beat__label">What it unblocked</p>
+      <p class="case-unblocked__body">They run it themselves. Stock, prices and pages change without a developer, the brand holds because the rules travel with the assets, and the trade-show and print collateral came from the same system — so the next banner or card is <em>a decision, not a commission</em>.</p>
+    </div>
+
     <div class="next-project">
       <div>
         <p class="next-project__label">Next Project</p>
@@ -1456,5 +1400,6 @@
     
     <script src="assets/js/chrome.js" defer></script>
     <script src="assets/js/floorplan.js" defer></script>
+    <script src="assets/js/case.js" defer></script>
   </body>
 </html>

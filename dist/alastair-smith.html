@@ -117,6 +117,7 @@
     <link rel="stylesheet" href="assets/css/chrome.css" />
     <link rel="stylesheet" href="assets/css/glass.css" />
     <link rel="stylesheet" href="assets/css/floorplan.css" />
+    <link rel="stylesheet" href="assets/css/case.css" />
     <style>
       :root {
         --bg: #0a0a0a;
@@ -307,53 +308,6 @@
         color: var(--fg);
       }
 
-      /* NARRATIVE GRID */
-      .narrative-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 2px;
-      }
-      .narrative-card {
-        padding: var(--space-7) var(--space-6);
-        background: #0e0e0e;
-        border-top: 2px solid transparent;
-        transition:
-          border-color var(--fast),
-          background var(--fast);
-      }
-      .narrative-card:hover {
-        border-top-color: var(--accent);
-        background: #111;
-      }
-      .narrative-card__label {
-        font-family: var(--sans);
-        font-size: var(--text-1);
-        font-weight: 700;
-        letter-spacing: var(--ls-track);
-        text-transform: uppercase;
-        color: var(--accent);
-        margin-bottom: var(--space-3);
-      }
-      .narrative-card__heading {
-        font-family: var(--serif);
-        font-size: clamp(1.5rem, 2.2vw, 2.1rem);
-        font-weight: 300;
-        line-height: var(--lh-tight);
-        color: var(--fg);
-        margin-bottom: var(--space-3);
-      }
-      .narrative-card__heading em {
-        font-style: italic;
-      }
-      .narrative-card__body {
-        font-size: var(--text-4);
-        line-height: var(--lh-loose);
-        color: var(--fg-mid);
-        font-weight: 300;
-      }
-      .narrative-card__body p + p {
-        margin-top: 0.8em;
-      }
 
       /* MARK SPLIT */
       .mark-split {
@@ -808,9 +762,6 @@
         .case-section {
           padding: var(--space-7) var(--gutter);
         }
-        .narrative-grid {
-          grid-template-columns: 1fr;
-        }
         .stat-row {
           grid-template-columns: 1fr 1fr;
         }
@@ -882,6 +833,48 @@
       </div>
     </section>
 
+    <!-- ── BEAT 1 — PROBLEM / SOLUTION ────────────────────────── -->
+    <div class="case-ps" data-case-beat="ps">
+      <div class="case-ps__cell case-ps__cell--problem">
+        <p class="case-ps__label">The problem</p>
+        <p class="case-ps__text">A working ceramicist making serious wood and gas-fired ware had no digital presence at all — nothing that matched what the objects were worth.</p>
+      </div>
+      <div class="case-ps__cell case-ps__cell--solution">
+        <p class="case-ps__label">What I made</p>
+        <p class="case-ps__text">A five-page site and full identity that holds <em>two visitors at once</em>: the one ready to buy and the one still deciding.</p>
+      </div>
+    </div>
+
+    <!-- ── BEAT 2 — WHAT MADE IT HARD ─────────────────────────── -->
+    <div class="case-beat case-hard" data-case-beat="hard">
+      <p class="case-beat__label">What made it hard</p>
+      <p class="case-hard__intro">Two audiences with opposite needs, one site, and a tone that had to sit between two things it would have been easy to become.</p>
+      <div class="case-hard__row">
+        <span class="case-hard__key">Audiences</span>
+        <span class="case-hard__val">Buyers want range, price and a basket; the curious want the maker — both journeys, simultaneously</span>
+      </div>
+      <div class="case-hard__row">
+        <span class="case-hard__key">Tone</span>
+        <span class="case-hard__val">Warm without being folksy, considered without being clinical — it had to feel like the ceramics</span>
+      </div>
+      <div class="case-hard__row">
+        <span class="case-hard__key">Platform</span>
+        <span class="case-hard__val">Shopify built on the development side, but activation the client's call, not mine</span>
+      </div>
+      <div class="case-hard__row">
+        <span class="case-hard__key">Starting point</span>
+        <span class="case-hard__val">No existing presence to build on and nothing to inherit</span>
+      </div>
+    </div>
+
+    <!-- ── BEAT 3 — THE TURN ──────────────────────────────────── -->
+    <div class="case-beat case-turn" data-case-beat="turn">
+      <p class="case-beat__label">The turn</p>
+      <h2 class="case-turn__heading">Two journeys. <em>One site</em> to hold both.</h2>
+      <p class="case-turn__body">Most ceramics sites serve one visitor adequately and the other badly. Rather than pick, the structure lets the two paths run in parallel and cross where it helps — range and price reachable in a click for the buyer, the maker and the making always one scroll away for the browser. The identity then followed the ware rather than the web: a dark chocolate pulled straight from Alastair's fired clay surfaces, and typography that could carry both the shop and the story.</p>
+    </div>
+
+
     <!-- WIDE CERAMICS IMAGE -->
     <div class="img-full" style="aspect-ratio: 21/8">
       <img
@@ -890,66 +883,6 @@
         style="width: 100%; height: 100%; object-fit: cover; display: block"
         loading="eager"
       />
-    </div>
-
-    <!-- NARRATIVE FOUR-BLOCK -->
-    <div class="narrative-grid">
-      <div class="narrative-card">
-        <p class="narrative-card__label">Problem</p>
-        <h2 class="narrative-card__heading">
-          The work was serious.<br /><em>The presence wasn't.</em>
-        </h2>
-        <p class="narrative-card__body">
-          Alastair Smith produces handcrafted, wood and gas-fired functional
-          wares — mugs, bowls, plates and sculptural objects made for everyday
-          use at Deemouth Artist Studios in Aberdeen. The ceramics are serious
-          work. The existing digital presence was non-existent. There was
-          nothing that matched the quality of the objects, nothing that told the
-          maker's story, and nothing that helped a browser become a buyer.
-        </p>
-      </div>
-      <div class="narrative-card">
-        <p class="narrative-card__label">Insight</p>
-        <h2 class="narrative-card__heading">
-          Two journeys.<br /><em>One site to hold both.</em>
-        </h2>
-        <p class="narrative-card__body">
-          Visitors to a ceramicist's site arrive in two different states of
-          mind. Some are ready to buy — they want to see the range, check the
-          price, and get to a basket. Others arrive curious about the maker and
-          need to be convinced. Most ceramics sites serve one of those journeys
-          adequately. This one had to hold both, simultaneously, without
-          compromising either. The navigation structure and the page hierarchy
-          were built around that tension.
-        </p>
-      </div>
-      <div class="narrative-card">
-        <p class="narrative-card__label">Design Intent</p>
-        <h2 class="narrative-card__heading">
-          Warm but not rustic.<br /><em>Professional but not cold.</em>
-        </h2>
-        <p class="narrative-card__body">
-          The brief was clear on tone: the site had to feel like the ceramics.
-          Warm without being folksy, considered without being clinical. The mark
-          set the tone. Everything else in the identity followed from it: a dark
-          chocolate primary colour pulled directly from Alastair's fired clay
-          surfaces, and typography that could carry both maker's voice and
-          commercial function.
-        </p>
-      </div>
-      <div class="narrative-card">
-        <p class="narrative-card__label">Outcome</p>
-        <h2 class="narrative-card__heading">
-          Live on Netlify.<br /><em>Shopify ready — not activated.</em>
-        </h2>
-        <p class="narrative-card__body">
-          Five-page coded site, live. Identity delivered: logo, wordmark,
-          brandmark variants, business cards. The Shopify store was built on the
-          development side but not activated at client's request. A working
-          ceramicist now has a web presence that reflects what the craft is
-          worth.
-        </p>
-      </div>
     </div>
 
     <!-- STAT ROW -->
@@ -1428,6 +1361,18 @@
     </div>
 
     <!-- NEXT -->
+    <!-- ── BEAT 5 — WHERE IT LANDED ───────────────────────────── -->
+    <div class="case-beat case-landed" data-case-beat="landed">
+      <p class="case-beat__label">Where it landed</p>
+      <p class="case-landed__body">Five-page coded site, live on Netlify. Identity delivered — logo, wordmark, brandmark variants, business cards. The Shopify store was built but left unactivated at the client's request. A working ceramicist now has a web presence that reflects what the craft is worth.</p>
+    </div>
+
+    <!-- ── BEAT 6 — WHAT IT UNBLOCKED ─────────────────────────── -->
+    <div class="case-beat case-unblocked" data-case-beat="unblocked">
+      <p class="case-beat__label">What it unblocked</p>
+      <p class="case-unblocked__body">The Shopify side is built and waiting, so switching the shop on is a decision rather than a project — no developer, no rebuild, <em>no second brief</em>. The identity travels with it: the same marks and the same palette already exist as the print and packaging the shop would need on day one.</p>
+    </div>
+
     <div class="next-project">
       <div>
         <p class="next-project__label">Next Project</p>
@@ -1468,5 +1413,6 @@
 
     <script src="assets/js/chrome.js" defer></script>
     <script src="assets/js/floorplan.js" defer></script>
+    <script src="assets/js/case.js" defer></script>
   </body>
 </html>

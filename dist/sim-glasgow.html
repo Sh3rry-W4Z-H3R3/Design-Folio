@@ -117,6 +117,7 @@
     <link rel="stylesheet" href="assets/css/chrome.css" />
     <link rel="stylesheet" href="assets/css/glass.css" />
     <link rel="stylesheet" href="assets/css/floorplan.css" />
+    <link rel="stylesheet" href="assets/css/case.css" />
         <style>
       :root {
         --bg: #0a0a0a;
@@ -929,6 +930,48 @@
       </div>
     </section>
 
+    <!-- ── BEAT 1 — PROBLEM / SOLUTION ────────────────────────── -->
+    <div class="case-ps" data-case-beat="ps">
+      <div class="case-ps__cell case-ps__cell--problem">
+        <p class="case-ps__label">The problem</p>
+        <p class="case-ps__text">Property games abstract the city away, and the economic rules are always handed down by the system rather than argued over by the people inside it.</p>
+      </div>
+      <div class="case-ps__cell case-ps__cell--solution">
+        <p class="case-ps__label">What I made</p>
+        <p class="case-ps__text">A persistent economy on a real map of Glasgow where <em>players vote the tax and mortgage rates</em> that govern everyone's income.</p>
+      </div>
+    </div>
+
+    <!-- ── BEAT 2 — WHAT MADE IT HARD ─────────────────────────── -->
+    <div class="case-beat case-hard" data-case-beat="hard">
+      <p class="case-beat__label">What made it hard</p>
+      <p class="case-hard__intro">Real economic mechanics in a browser game, on real geography, with the rules themselves up for election.</p>
+      <div class="case-hard__row">
+        <span class="case-hard__key">The map</span>
+        <span class="case-hard__val">Geographically accurate Glasgow, abstracted into a grid rather than invented</span>
+      </div>
+      <div class="case-hard__row">
+        <span class="case-hard__key">Scarcity</span>
+        <span class="case-hard__val">500 plots at MVP — fixed supply, so land has to actually be contested</span>
+      </div>
+      <div class="case-hard__row">
+        <span class="case-hard__key">The tick</span>
+        <span class="case-hard__val">Yield calculated on a five-minute global server tick for every player at once</span>
+      </div>
+      <div class="case-hard__row">
+        <span class="case-hard__key">The rules</span>
+        <span class="case-hard__val">Tax and mortgage rates set by monthly election, not by the designer</span>
+      </div>
+    </div>
+
+    <!-- ── BEAT 3 — THE TURN ──────────────────────────────────── -->
+    <div class="case-beat case-turn" data-case-beat="turn">
+      <p class="case-beat__label">The turn</p>
+      <h2 class="case-turn__heading">Let the players <em>set the rules</em></h2>
+      <p class="case-turn__body">The moment the tax rate stops being a constant and becomes a monthly vote, the game stops being a property game and becomes a political one. Your neighbour can vote for higher taxes and change what your land is worth. That single decision is what the five concentric rings, the fixed plot supply and the five-minute tick all exist to serve — scarcity and yield only matter if the terms governing them can be argued over, and one player, one vote is what makes the argument real.</p>
+    </div>
+
+
     <!-- ── THE CONCEPT ───────────────────────────────────────── -->
     <div class="case-section">
       <div class="two-col">
@@ -1464,6 +1507,18 @@
     </div>
 
     <!-- ── NEXT ───────────────────────────────────────────────── -->
+    <!-- ── BEAT 5 — WHERE IT LANDED ───────────────────────────── -->
+    <div class="case-beat case-landed" data-case-beat="landed">
+      <p class="case-beat__label">Where it landed</p>
+      <p class="case-landed__body">An MVP design: 500 plots across five concentric rings from outskirts to core, a five-minute yield tick, and a monthly election on tax and mortgage rates. The dashboard, politics, property and bank screens are designed and the framework specified; the economic questions it raises are still being worked out, which is the point of building it.</p>
+    </div>
+
+    <!-- ── BEAT 6 — WHAT IT UNBLOCKED ─────────────────────────── -->
+    <div class="case-beat case-unblocked" data-case-beat="unblocked">
+      <p class="case-beat__label">What it unblocked</p>
+      <p class="case-unblocked__body">The rules live in the ballot rather than in the build. Rebalancing the economy is <em>a vote, not a patch</em> — the players retune tax and mortgage rates themselves each month, so the thing that usually needs a developer and a release is already in their hands.</p>
+    </div>
+
     <div class="next-project">
       <div>
         <p class="next-project__label">Next Project</p>
@@ -1504,5 +1559,6 @@
 
     <script src="assets/js/chrome.js" defer></script>
     <script src="assets/js/floorplan.js" defer></script>
+    <script src="assets/js/case.js" defer></script>
   </body>
 </html>
