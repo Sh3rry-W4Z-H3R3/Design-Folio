@@ -407,9 +407,16 @@ const MUTATIONS = [
     detectedBy: "behaviour.js",
     scope: [],
     file: "assets/js/case.js",
-    // The boot pass is what stops the deferred script animating
-    // already-visible text from opacity 1 down to 0 in front of someone
-    // who is looking straight at it.
+    /* The boot pass is what stops the deferred script animating
+       already-visible text from opacity 1 down to 0 in front of someone
+       looking straight at it.
+
+       This was MISSED on its first run, and the mutation was right — the
+       check was wrong. It read the settled state 500ms after load, by
+       which point the observer had lit everything in view whether the
+       boot pass existed or not. The fault is a DIP, so the check samples
+       opacity every frame from before the document runs and asserts the
+       minimum, which reads 0 against this mutation. */
     mutate: (s) => {
       const old = 'if (b.getBoundingClientRect().top < innerHeight * 0.9) b.classList.add("is-lit");';
       if (!s.includes(old)) throw new Error("boot lighting pass not found");

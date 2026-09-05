@@ -949,8 +949,30 @@ const check = (name, pass, detail) => results.push({ name, pass, detail });
     //     already looking at it.
     const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
     const page = await ctx.newPage();
+
+    /* Sample every frame from before the document runs. Reading the
+       settled state instead is what the first version of this check did,
+       and it could not fail: by the time it looked, the observer had lit
+       everything in view regardless of whether the boot pass existed.
+       The fault being tested is a DIP — text painted, then animated away
+       and back — so the measurement has to be the minimum across frames,
+       not the value at the end. */
+    await page.addInitScript(() => {
+      window.__dip = 1;
+      addEventListener("DOMContentLoaded", () => {
+        let n = 0;
+        (function sample() {
+          const el = document.querySelector("[data-case-beat] .case-ps__text");
+          if (el && el.getBoundingClientRect().top < innerHeight) {
+            window.__dip = Math.min(window.__dip, parseFloat(getComputedStyle(el).opacity));
+          }
+          if (++n < 40) requestAnimationFrame(sample);
+        })();
+      });
+    });
+
     await page.goto(url("westgarth.html"));
-    await page.waitForTimeout(500);
+    await page.waitForTimeout(700);
     const boot = await page.evaluate(() => {
       const inView = [...document.querySelectorAll("[data-case-beat]")]
         .filter((b) => b.getBoundingClientRect().top < innerHeight * 0.9);
@@ -966,6 +988,9 @@ const check = (name, pass, detail) => results.push({ name, pass, detail });
     check("the boot guard is released", boot.booted);
     check("beats already on screen are lit at load", boot.inView > 0 && boot.allLit,
       `${boot.inView} in view`);
+    const dip = await page.evaluate(() => window.__dip);
+    check("an in-view beat never fades in under the reader", dip > 0.9,
+      "min opacity across the first 40 frames: " + dip);
 
     // (d) The fire reads scroll position.
     const before = await page.evaluate(() =>
