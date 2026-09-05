@@ -111,6 +111,7 @@
     <link rel="stylesheet" href="assets/css/chrome.css" />
     <link rel="stylesheet" href="assets/css/glass.css" />
     <link rel="stylesheet" href="assets/css/floorplan.css" />
+    <link rel="stylesheet" href="assets/css/case.css" />
         <style>
       :root {
         /* --accent / --accent-2 now come from rooms.css via
@@ -305,50 +306,6 @@
         color: var(--fg);
       }
 
-      /* NARRATIVE GRID */
-      .narrative-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 2px;
-      }
-      .narrative-card {
-        padding: var(--space-7) var(--space-6);
-        background: #0e0e0e;
-        border-top: 2px solid transparent;
-        transition:
-          border-color var(--fast),
-          background var(--fast);
-      }
-      .narrative-card:hover {
-        border-top-color: var(--accent);
-        background: #111;
-      }
-      .narrative-card__label {
-        font-family: var(--sans);
-        font-size: var(--text-1);
-        font-weight: 700;
-        letter-spacing: var(--ls-track);
-        text-transform: uppercase;
-        color: var(--accent);
-        margin-bottom: var(--space-3);
-      }
-      .narrative-card__heading {
-        font-family: var(--serif);
-        font-size: clamp(1.5rem, 2.2vw, 2.1rem);
-        font-weight: 300;
-        line-height: var(--lh-tight);
-        color: var(--fg);
-        margin-bottom: var(--space-3);
-      }
-      .narrative-card__heading em {
-        font-style: italic;
-      }
-      .narrative-card__body {
-        font-size: var(--text-4);
-        line-height: var(--lh-loose);
-        color: var(--fg-mid);
-        font-weight: 300;
-      }
 
       /* STAT ROW */
       .stat-row {
@@ -842,9 +799,6 @@
         .case-section {
           padding: var(--space-7) var(--gutter);
         }
-        .narrative-grid {
-          grid-template-columns: 1fr;
-        }
         .stat-row {
           grid-template-columns: 1fr;
         }
@@ -914,67 +868,19 @@
       </div>
     </section>
 
-    <!-- NARRATIVE FOUR-BLOCK -->
-    <div class="narrative-grid">
-      <div class="narrative-card">
-        <p class="narrative-card__label">Problem</p>
-        <h2 class="narrative-card__heading">
-          Recycled plastic has a<br /><em>perception problem</em>
-        </h2>
-        <p class="narrative-card__body">
-          Origin Plastics produce homeware from recycled injection-moulded
-          plastic — a material with real properties and genuine potential that
-          consumers consistently undervalue. The association with single-use
-          packaging runs deep. The word "recycled" reads as inferior rather than
-          responsible. That's not a material problem. It's a design problem. The
-          placement was about finding out whether design could close the gap.
-        </p>
+    <!-- ── BEAT 1 — PROBLEM / SOLUTION ────────────────────────── -->
+    <div class="case-ps" data-case-beat="ps">
+      <div class="case-ps__cell case-ps__cell--problem">
+        <p class="case-ps__label">The problem</p>
+        <p class="case-ps__text">Origin make homeware from recycled injection-moulded plastic — a material consumers consistently undervalue because &ldquo;recycled&rdquo; reads as inferior rather than responsible.</p>
       </div>
-      <div class="narrative-card">
-        <p class="narrative-card__label">Insight</p>
-        <h2 class="narrative-card__heading">
-          Form and finish have to<br /><em>do the reframing</em>
-        </h2>
-        <p class="narrative-card__body">
-          Survey research with 100+ respondents confirmed the perception gap was
-          bigger than the material gap. Recycled plastic isn't low quality —
-          it's low status. The way to reframe it isn't explanation. It's form:
-          objects with enough presence, tactility, and considered proportion
-          that the material reads as deliberate rather than default. The brief
-          became about designing objects where the plastic was the right choice,
-          not the only one available.
-        </p>
-      </div>
-      <div class="narrative-card">
-        <p class="narrative-card__label">Design Intent</p>
-        <h2 class="narrative-card__heading">
-          Handled with care,<br /><em>worth keeping</em>
-        </h2>
-        <p class="narrative-card__body">
-          The design intent across both concepts was the same: recycled plastic
-          handled with enough consideration becomes worth keeping. Continuous
-          curvature. Generous proportions. Surfaces that emphasise material
-          flow. The goal was homeware that a consumer would choose for its
-          quality — and then, if they chose to, be pleased about its
-          sustainability. Not sustainability first. Quality first. The argument
-          follows the object.
-        </p>
-      </div>
-      <div class="narrative-card">
-        <p class="narrative-card__label">Outcome</p>
-        <h2 class="narrative-card__heading">
-          Full digital concept.<br /><em>No physical prototype.</em>
-        </h2>
-        <p class="narrative-card__body">
-          Remote working meant no workshop access. The placement never reached
-          tooling. What exists is a complete design process — survey research,
-          two rounds of ideation and CAD development, a manufacturing-informed
-          pivot between typologies, and final KeyShot renders of the lamp
-          concept. A portion of the work was retained internally by Origin. The
-          process holds up even without a physical end point.
-        </p>
+      <div class="case-ps__cell case-ps__cell--solution">
+        <p class="case-ps__label">What I made</p>
+        <p class="case-ps__text">Homeware whose <em>form and finish</em> do the reframing, so the material reads as deliberate rather than default.</p>
       </div>
     </div>
+
+
 
     <!-- STAT ROW -->
     <div class="stat-row">
@@ -1005,7 +911,7 @@
     </div>
 
     <!-- BRIEF + CONSTRAINTS -->
-    <div class="case-section">
+    <div class="case-section" data-case-beat="hard">
       <div class="two-col">
         <p class="section-label">The Constraints</p>
         <div class="constraints-panel">
@@ -1042,6 +948,13 @@
           </div>
         </div>
       </div>
+
+    <!-- ── BEAT 3 — THE TURN ──────────────────────────────────── -->
+    <div class="case-beat case-turn" data-case-beat="turn">
+      <p class="case-beat__label">The turn</p>
+      <h2 class="case-turn__heading">Form and finish have to do <em>the reframing</em></h2>
+      <p class="case-turn__body">Survey research with 100+ respondents confirmed the perception gap was bigger than the material gap: recycled plastic isn't low quality, it's low status. Explanation doesn't fix status — a label saying &ldquo;recycled&rdquo; is still asking to be forgiven. Form does. Objects with enough presence, tactility and considered proportion read as chosen, and the sustainability becomes something a buyer is pleased about afterwards rather than something they had to accept first.</p>
+    </div>
     </div>
 
     <!-- IDEATION IMAGES -->
@@ -1436,6 +1349,18 @@
     </div>
 
     <!-- NEXT -->
+    <!-- ── BEAT 5 — WHERE IT LANDED ───────────────────────────── -->
+    <div class="case-beat case-landed" data-case-beat="landed">
+      <p class="case-beat__label">Where it landed</p>
+      <p class="case-landed__body">A complete design process rather than a product: survey research, two rounds of ideation and CAD, a manufacturing-informed pivot between typologies, and final KeyShot renders of the lamp. Remote working meant no workshop access, so it never reached tooling and no physical prototype exists. A portion of the work was retained internally by Origin.</p>
+    </div>
+
+    <!-- ── BEAT 6 — WHAT IT UNBLOCKED ─────────────────────────── -->
+    <div class="case-beat case-unblocked" data-case-beat="unblocked">
+      <p class="case-beat__label">What it unblocked</p>
+      <p class="case-unblocked__body">The constraint set is the part that outlives the placement. Shot weight, draft angles, undercuts and part count are written down against real machine limits, so the next typology Origin put through this process starts from <em>a costed envelope</em> rather than from a sketch that tooling will later reject.</p>
+    </div>
+
     <div class="next-project">
       <div>
         <p class="next-project__label">Next</p>

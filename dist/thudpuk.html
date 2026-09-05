@@ -117,6 +117,7 @@
     <link rel="stylesheet" href="assets/css/chrome.css" />
     <link rel="stylesheet" href="assets/css/glass.css" />
     <link rel="stylesheet" href="assets/css/floorplan.css" />
+    <link rel="stylesheet" href="assets/css/case.css" />
         <style>
       :root {
         --gold: #c8b882;
@@ -312,63 +313,6 @@
         color: var(--fg);
       }
 
-      /* ── NARRATIVE FOUR-BLOCK ─────────────────────────────── */
-      /* Mirrors the screenshot structure: Problem / Insight / Design Intent / Outcome */
-      .narrative-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 2px;
-      }
-      .narrative-card {
-        padding: var(--space-6) var(--space-6);
-        background: #0e0e0e;
-        border-top: 2px solid transparent;
-        transition:
-          border-color var(--fast),
-          background var(--fast);
-      }
-      .narrative-card:hover {
-        border-top-color: var(--gold);
-        background: #111;
-      }
-      .narrative-card__label {
-        font-family: var(--sans);
-        font-size: var(--text-1);
-        font-weight: 700;
-        letter-spacing: var(--ls-track);
-        text-transform: uppercase;
-        color: var(--gold);
-        margin-bottom: var(--space-3);
-      }
-      .narrative-card__heading {
-        font-family: var(--serif);
-        font-size: clamp(1.5rem, 2.2vw, 2rem);
-        font-weight: 300;
-        line-height: var(--lh-tight);
-        color: var(--fg);
-        margin-bottom: var(--space-3);
-      }
-      .narrative-card__heading em {
-        font-style: italic;
-      }
-      .narrative-card__body {
-        font-size: var(--text-4);
-        line-height: var(--lh-loose);
-        color: var(--fg-mid);
-        font-weight: 300;
-      }
-      .narrative-card__body li {
-        list-style: none;
-        padding-left: var(--space-3);
-        position: relative;
-        margin-top: 0.4em;
-      }
-      .narrative-card__body li::before {
-        content: "—";
-        position: absolute;
-        left: 0;
-        color: var(--gold);
-      }
 
       /* ── PROCESS STEPS ────────────────────────────────────── */
       .process-steps {
@@ -789,9 +733,6 @@
         .case-section {
           padding: var(--space-7) var(--gutter);
         }
-        .narrative-grid {
-          grid-template-columns: 1fr;
-        }
         .stat-row {
           grid-template-columns: 1fr 1fr;
         }
@@ -863,121 +804,47 @@
       </div>
     </section>
 
-    <!-- ── NARRATIVE BLOCK — Brief ───────────────────────────── -->
-    <div class="case-section">
-      <div class="two-col">
-        <p class="section-label">The Brief</p>
-        <div class="body-text">
-          <p>
-            TwoSix Design needed a product they could manufacture and sell
-            directly — a small throwing and flying toy that could retail at
-            <strong>£10 while keeping unit costs low enough to be viable</strong
-            >. Recycled plastic. Simple geometry. One or two-part tooling. Safe
-            flight behaviour that a non-expert could reproduce with a casual
-            throw.
-          </p>
-          <p>
-            That's the whole brief. Clean in theory, genuinely difficult in
-            practice. Aerodynamics are unforgiving and injection moulding
-            geometry has very specific demands. The two constraints don't
-            naturally want to cooperate.
-          </p>
-        </div>
+    <!-- ── BEAT 1 — PROBLEM / SOLUTION ────────────────────────── -->
+    <div class="case-ps" data-case-beat="ps">
+      <div class="case-ps__cell case-ps__cell--problem">
+        <p class="case-ps__label">The problem</p>
+        <p class="case-ps__text">A flying toy has to be aerodynamic and cheap to injection-mould, and the geometry that makes one true tends to make the other impossible.</p>
+      </div>
+      <div class="case-ps__cell case-ps__cell--solution">
+        <p class="case-ps__label">What I made</p>
+        <p class="case-ps__text">A radially symmetric form that flies by <em>symmetry rather than by wing profile</em> — so the tooling stays simple.</p>
       </div>
     </div>
 
-    <!-- ── STAT ROW ───────────────────────────────────────────── -->
-    <div class="stat-row">
-      <div class="stat-item">
-        <p class="stat-item__num">£<em>10</em></p>
-        <p class="stat-item__label">Target retail price</p>
+    <!-- ── BEAT 2 — WHAT MADE IT HARD ─────────────────────────── -->
+    <div class="case-beat case-hard" data-case-beat="hard">
+      <p class="case-beat__label">What made it hard</p>
+      <p class="case-hard__intro">The whole project is one tension held in tooling. Every constraint below pulls against flight, and none of them was negotiable.</p>
+      <div class="case-hard__row">
+        <span class="case-hard__key">Flight</span>
+        <span class="case-hard__val">Thin asymmetric profiles, complex curvature and variable cross-sections are what fly well</span>
       </div>
-      <div class="stat-item">
-        <p class="stat-item__num"><em>30</em>+</p>
-        <p class="stat-item__label">PLA prototypes — 3 days</p>
+      <div class="case-hard__row">
+        <span class="case-hard__key">Moulding</span>
+        <span class="case-hard__val">Those are exactly the properties that make injection moulding expensive or impossible</span>
       </div>
-      <div class="stat-item">
-        <p class="stat-item__num"><em>2</em></p>
-        <p class="stat-item__label">Max mould parts</p>
+      <div class="case-hard__row">
+        <span class="case-hard__key">Material</span>
+        <span class="case-hard__val">Recycled plastic, with tooling cost recoverable at a realistic batch</span>
       </div>
-      <div class="stat-item">
-        <p class="stat-item__num"><em>1</em></p>
-        <p class="stat-item__label">Final production-ready form</p>
+      <div class="case-hard__row">
+        <span class="case-hard__key">Branding</span>
+        <span class="case-hard__val">TwoSix identity resolved into the surface without adding tooling complexity</span>
       </div>
     </div>
 
-    <!-- ── NARRATIVE FOUR-BLOCK ──────────────────────────────── -->
-    <div class="narrative-grid">
-      <div class="narrative-card">
-        <p class="narrative-card__label">Problem</p>
-        <h2 class="narrative-card__heading">
-          Aerodynamics and<br /><em>DFM don't get on</em>
-        </h2>
-        <p class="narrative-card__body">
-          Flying toys work through specific relationships between edge geometry,
-          thickness, weight distribution, and spin. The shapes that fly well
-          tend to have thin asymmetric profiles, complex curvature, and variable
-          cross-sections — exactly the properties that make injection moulding
-          expensive or impossible. The brief required both things working
-          simultaneously within a £10 retail price ceiling. That's a real design
-          problem, not just a styling exercise.
-        </p>
-      </div>
-      <div class="narrative-card">
-        <p class="narrative-card__label">Insight</p>
-        <h2 class="narrative-card__heading">
-          Symmetry is the<br /><em>manufacturing shortcut</em>
-        </h2>
-        <p class="narrative-card__body">
-          The key insight from early testing was that radially symmetric forms —
-          discs, rings, boomerang profiles — could achieve consistent flight
-          through symmetry alone, without needing the complex asymmetric wing
-          profiles of a traditional frisbee. Symmetry reduces the number of
-          variables, simplifies the tooling geometry, and makes flight behaviour
-          more predictable for a casual user. The design language of the toy
-          came directly from that manufacturing logic, not from aesthetic
-          preference.
-        </p>
-      </div>
-      <div class="narrative-card">
-        <p class="narrative-card__label">Design Intent</p>
-        <h2 class="narrative-card__heading">
-          Let the <em>constraints</em><br />write the form
-        </h2>
-        <div class="narrative-card__body">
-          <p style="margin-bottom: 0.8rem">
-            Every formal decision had to justify itself against one of two
-            criteria: does it improve flight, or does it make the mould cheaper?
-            The intent was to never resolve that tension arbitrarily — if a
-            shape change helped aerodynamics but complicated tooling, it had to
-            earn its place through testing, not assumption. The constraints
-            were:
-          </p>
-          <ul>
-            <li>Recycled PLA / injected plastic only</li>
-            <li>1–2 part mould geometry — no side actions</li>
-            <li>Consistent, safe, catchable flight path</li>
-            <li>Brand integration without adding tooling complexity</li>
-          </ul>
-        </div>
-      </div>
-      <div class="narrative-card">
-        <p class="narrative-card__label">Outcome</p>
-        <h2 class="narrative-card__heading">
-          Production-ready,<br /><em>studio wasn't</em>
-        </h2>
-        <p class="narrative-card__body">
-          The final form hit the brief. Manufactureable geometry, predictable
-          flight, TwoSix branding resolved into the surface without additional
-          tooling complexity. High-resolution CAD outputs and KeyShot renders
-          were prepared to support tooling conversations. The design was ready
-          for production. TwoSix Design folded due to financial difficulties
-          before that conversation happened. The project stands as a complete
-          design process — right up to the point where production would have
-          started.
-        </p>
-      </div>
+    <!-- ── BEAT 3 — THE TURN ──────────────────────────────────── -->
+    <div class="case-beat case-turn" data-case-beat="turn">
+      <p class="case-beat__label">The turn</p>
+      <h2 class="case-turn__heading">Symmetry is the <em>manufacturing shortcut</em></h2>
+      <p class="case-turn__body">Early testing showed that radially symmetric forms — discs, rings, boomerang profiles — reach consistent flight through symmetry alone, without the complex asymmetric wing profile a traditional frisbee needs. Symmetry cuts the number of variables, simplifies the tooling geometry and makes flight predictable at the same time. After that every formal decision had one of two jobs: improve flight, or make the mould cheaper. Anything that helped one and hurt the other had to earn its place through testing rather than assumption.</p>
     </div>
+
 
     <!-- ── RENDER IMAGE ───────────────────────────────────────── -->
     <div class="img-full" style="aspect-ratio: 16/7">
@@ -1284,6 +1151,18 @@
     </div>
 
     <!-- ── NEXT PROJECT ───────────────────────────────────────── -->
+    <!-- ── BEAT 5 — WHERE IT LANDED ───────────────────────────── -->
+    <div class="case-beat case-landed" data-case-beat="landed">
+      <p class="case-beat__label">Where it landed</p>
+      <p class="case-landed__body">The final form hit the brief — manufacturable geometry, predictable flight, and TwoSix branding resolved into the surface with no additional tooling complexity. High-resolution CAD and KeyShot renders were prepared to support tooling conversations. The design was production-ready; TwoSix Design folded due to financial difficulty before it got there.</p>
+    </div>
+
+    <!-- ── BEAT 6 — WHAT IT UNBLOCKED ─────────────────────────── -->
+    <div class="case-beat case-unblocked" data-case-beat="unblocked">
+      <p class="case-beat__label">What it unblocked</p>
+      <p class="case-unblocked__body">The symmetry finding is the transferable part, and it outlived the studio. It converts an aerodynamics problem into a tooling problem with fewer variables — <em>a rule, not a result</em> — and it applies to any spun or thrown toy that has to survive a real mould-cost conversation.</p>
+    </div>
+
     <div class="next-project">
       <div>
         <p class="next-project__label">Related Project</p>

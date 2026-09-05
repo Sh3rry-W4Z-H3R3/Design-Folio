@@ -757,7 +757,16 @@ const check = (name, pass, detail) => results.push({ name, pass, detail });
   //      Topi's tensions, Tarebook's mid-build pivot — still takes part
   //      in the spine instead of being flattened into identical markup.
   {
-    const SPINE = ["canti.html", "kala-topi.html", "cycle-arts.html", "tarebook.html"];
+    /* All eighteen case studies. Listed rather than globbed: a page that
+       silently stops carrying the spine should fail here, and a glob over
+       whatever happens to be on disk would just stop checking it. */
+    const SPINE = [
+      "alastair-smith.html", "andras.html", "blend.html", "canti.html",
+      "cherry-vision.html", "clydeside.html", "crafted-by-design.html",
+      "cycle-arts.html", "graduate-in-residence.html", "greene-king.html",
+      "just-rite.html", "kala-topi.html", "multanni.html", "origin.html",
+      "sim-glasgow.html", "tarebook.html", "thudpuk.html", "westgarth.html",
+    ];
     const ORDER = ["ps", "hard", "turn", "landed", "unblocked"];
     const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
     const page = await ctx.newPage();
@@ -769,7 +778,11 @@ const check = (name, pass, detail) => results.push({ name, pass, detail });
       const got = await page.evaluate(() => {
         const beats = [...document.querySelectorAll("[data-case-beat]")];
         const ps = document.querySelector('[data-case-beat="ps"]');
-        const hero = document.querySelector(".hero, .project-hero, header");
+        /* Four hero shapes across the eighteen: .hero, .project-hero, a
+           bare <header>, and westgarth's <main class="quick">. Naming
+           them beats a positional guess, and a page that grows a fifth
+           should fail here rather than be quietly skipped. */
+        const hero = document.querySelector(".hero, .project-hero, header, main.quick");
         // "Directly under the hero" means: before any body section or
         // full-bleed image. The old block was buried below the fold on
         // two of the six pages that had it — placement is what rots.
@@ -840,7 +853,11 @@ const check = (name, pass, detail) => results.push({ name, pass, detail });
   {
     const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
     const page = await ctx.newPage();
-    for (const file of ["canti.html", "cycle-arts.html"]) {
+    // One page per room: physical, the light exhibition room, digital,
+    // office-adjacent and play all resolve different token sets, and the
+    // light room is where a hardcoded dark panel would hide.
+    for (const file of ["canti.html", "cycle-arts.html", "tarebook.html",
+                        "crafted-by-design.html", "clydeside.html"]) {
       await page.goto(url(file));
       await page.waitForTimeout(250);
       const worst = await page.evaluate(() => {
