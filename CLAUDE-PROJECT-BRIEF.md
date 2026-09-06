@@ -1,3 +1,14 @@
+> **SUPERSEDED IN PART — read `CLAUDE.md` and `docs/HANDOFF.md` first.**
+>
+> This brief was written before the 2026 rebuild and its opening sections
+> are now wrong: the site is deployed, the mobile nav it describes no
+> longer exists (the floorplan is the navigation), and the token values
+> below predate `dist/tokens.css` and `dist/assets/css/rooms.css`, which
+> are the real source now.
+>
+> What is still good here: who Sherjeel is, the projects and their facts,
+> the copy voice, and the SEO work. Treat the rest as history.
+
 # Sherjeel Hussain Portfolio — Claude Project Brief
 
 You are helping Sherjeel Hussain get his personal portfolio website live at **sherjeelhussain.com**, hosted on **Cloudflare Pages** via **GitHub** (`https://github.com/Sh3rry-W4Z-H3R3`).

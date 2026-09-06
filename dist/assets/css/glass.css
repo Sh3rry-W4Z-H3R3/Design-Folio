@@ -31,16 +31,47 @@
   --glass-bg-rail: rgba(14, 14, 14, 0.55);
 }
 
-/* The exhibition room is light, so its glass sits on a pale ground and
-   needs dark edges rather than light ones. Defined here so activating
-   that room in Phase 4 does not mean revisiting this file. */
-[data-room="exhibition"] {
-  --glass-bg: rgba(26, 24, 21, 0.05);
-  --glass-edge: rgba(26, 24, 21, 0.14);
-  --glass-edge-lit: rgba(255, 255, 255, 0.5);
-  --glass-shadow: 0 8px 32px rgba(90, 80, 65, 0.18);
-  --glass-solid: rgba(242, 236, 225, 0.94);
-  --glass-bg-rail: rgba(242, 236, 225, 0.62);
+/* ── THE CHROME IS NOT IN THE ROOM ──────────────────────────
+   The rail and the floorplan are the same dark object on every page,
+   including the light exhibition one. They are how you move between
+   rooms, so belonging to one of them was the mistake: a visitor learns
+   the nav once, and it should not change identity underneath them.
+
+   This block used to invert the glass for the exhibition room, which
+   gave that page a pale nav on a pale ground — the "too light" it was
+   reported as. Rather than tuning that inversion, the chrome now resets
+   the neutral tokens for its own subtree, so every rule inside it reads
+   dark-room values wherever the page happens to be standing.
+
+   --accent is the exception: it comes from --accent-chrome, because the
+   exhibition room's own accent is a deep green tuned for a cream wall
+   and would nearly vanish on near-black. There it hands over the bright
+   mint instead, at 8.42:1. */
+.rail,
+.plan {
+  --fg: #ede9e1;
+  --fg-mid: rgba(237, 233, 225, 0.62);
+  --fg-dim: rgba(237, 233, 225, 0.42);
+  --line: rgba(237, 233, 225, 0.1);
+  --line-2: rgba(237, 233, 225, 0.18);
+  --surface: #141414;
+  --surface-2: #101010;
+  --accent: var(--accent-chrome);
+  --glass-bg: rgba(237, 233, 225, 0.055);
+  --glass-edge: rgba(237, 233, 225, 0.13);
+  --glass-edge-lit: rgba(237, 233, 225, 0.22);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  --glass-solid: rgba(14, 14, 14, 0.93);
+  /* 0.92, not the 0.55 the dark rooms used. A translucent veil takes its
+     colour from whatever is behind it, so the same 55% black that reads
+     near-black over a dark page composited to mid-grey over the
+     exhibition room's cream — the nav looked like a different component
+     on that one page. At 0.92 the ground barely shows through, so the
+     rail is the same dark object everywhere; measured, it lands at rgb
+     32 over cream against rgb 13 over the dark rooms, where 0.55 gave
+     116 against 12. The blur survives, which is the part worth keeping. */
+  --glass-bg-rail: rgba(14, 14, 14, 0.92);
+  color-scheme: dark;
 }
 
 .glass {

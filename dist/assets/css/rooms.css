@@ -30,6 +30,18 @@
   --fg-on-media: var(--fg);
   --fg-on-media-mid: var(--fg-mid);
   --fg-on-media-dim: var(--fg-dim);
+  /* The accent, for text sitting ON a photograph. Same reason
+     --fg-on-media exists: a picture with a scrim over it is dark in
+     every room, so an accent tuned for a pale wall disappears on it. */
+  --accent-on-media: var(--accent);
+
+  /* The accent the floating chrome uses. The rail and the floorplan are
+     dark on EVERY page, so a room whose own accent is tuned for a light
+     ground needs a second one that works on near-black. In the five dark
+     rooms these are the same colour; only the exhibition room differs.
+     Declared as a literal, never as var(--accent), because the chrome
+     sets --accent FROM this and the two would form a cycle. */
+  --accent-chrome: var(--pink);
 }
 
 /* ── DIGITAL & BRAND ────────────────────────────────────────
@@ -39,6 +51,7 @@
   --accent-2: var(--mint);
   --accent-soft: rgba(232, 84, 122, 0.08);
   --accent-edge: rgba(232, 84, 122, 0.3);
+  --accent-chrome: var(--pink);
 }
 
 /* ── INDUSTRIAL & PHYSICAL ──────────────────────────────────
@@ -49,6 +62,7 @@
   --accent-2: var(--pink);
   --accent-soft: rgba(109, 191, 158, 0.08);
   --accent-edge: rgba(109, 191, 158, 0.3);
+  --accent-chrome: var(--mint);
 }
 
 /* ── PLAY ───────────────────────────────────────────────────
@@ -67,6 +81,7 @@
   --bg: #000000;
   --surface: #0d0d0d;
   --surface-2: #080808;
+  --accent-chrome: var(--gold);
 }
 
 /* ── OFFICE ─────────────────────────────────────────────────
@@ -78,6 +93,7 @@
   --accent-2: var(--mint);
   --accent-soft: rgba(240, 145, 159, 0.08);
   --accent-edge: rgba(240, 145, 159, 0.3);
+  --accent-chrome: var(--rose);
 }
 
 /* ── EXHIBITION ─────────────────────────────────────────────
@@ -95,23 +111,42 @@
    ─────────────────────────────────────────────────────────── */
 [data-room="exhibition"] {
   --bg: var(--cream);
-  --fg: #1a1815;
-  --fg-mid: #55504a;
-  --fg-dim: #7d766c;
-  --line: #ddd6c9;
-  --line-2: #c9c0b0;
+
+  /* Black, and the mid-tones pulled well down with it. The room read as
+     a white-out because everything in it sat within a few percent of the
+     wall: measured, the panels were LIGHTER than the ground they sat on
+     (1.11:1, the wrong way round) and the hairlines were at 1.23:1. A
+     gallery is white walls and dark everything-else, not white on white. */
+  --fg: #000000;
+  --fg-mid: #3a3630;
+  --fg-dim: #5f594f;
+  --line: #cabfa9;
+  --line-2: #a89e8c;
   --scrim: rgba(242, 236, 225, 0.92);
-  /* Warm brown — reads as a wall label rather than a UI accent. */
-  --accent: #8a6a4a;
+
+  /* Deep kiln green — the same family as --mint, taken down far enough
+     to carry text on a pale ground. Measured on this room's three
+     surfaces: 6.26:1 on the wall, 5.60 on --surface, 4.96 on --surface-2,
+     so it passes AA as text anywhere in the room. --mint itself is
+     1.86:1 here, which is why the room cannot simply borrow it. */
+  --accent: #276048;
   --accent-2: var(--mint);
-  --accent-soft: rgba(138, 106, 74, 0.07);
-  --accent-edge: rgba(138, 106, 74, 0.28);
+  --accent-soft: rgba(39, 96, 72, 0.08);
+  --accent-edge: rgba(39, 96, 72, 0.3);
+  /* On the dark chrome the bright mint is right, and reads at 8.42:1. */
+  --accent-chrome: var(--mint);
 
-  /* Lighter than the wall, like a gallery label card. */
-  --surface: #fbf8f2;
-  --surface-2: #ece5d8;
+  /* DARKER than the wall, not lighter. A label card in a gallery sits
+     against the wall; it does not glow. */
+  --surface: #e7e0d2;
+  --surface-2: #dcd3c2;
 
-  /* The photographs did not get lighter just because the room did. */
+  /* The photographs did not get lighter just because the room did. The
+     accent has the same problem: the deep green is built for the cream
+     wall and vanishes into a dark hero image, which is exactly what
+     happened to the Cycle Arts eyebrow when the room's accent moved off
+     the old warm brown. On media it hands over to the bright mint. */
+  --accent-on-media: var(--mint);
   --fg-on-media: #ede9e1;
   --fg-on-media-mid: rgba(237, 233, 225, 0.72);
   --fg-on-media-dim: rgba(237, 233, 225, 0.5);

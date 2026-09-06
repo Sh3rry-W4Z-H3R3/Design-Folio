@@ -17,12 +17,9 @@
      to be put back explicitly or the plan pins to the top-left. */
   margin: auto;
 }
-/* The scrim behind the panel follows the room. It was a fixed near-black,
-   which is right in five rooms and wrong in the sixth: the exhibition
-   room's glass tokens are built for a pale ground, so a dark scrim gave
-   it a dark panel wearing the light room's near-black text — every room
-   name at 1.2:1 on it. The panel and the thing it sits on have to be lit
-   the same way.
+/* One scrim, every room. The panel is dark everywhere now — .rail and
+   .plan carry their own dark tokens regardless of the page's room — so
+   the light-room counterpart this block used to need is gone with it.
 
    Literal values rather than a custom property: ::backdrop only began
    inheriting from its originating element in recent Chrome, and a var()
@@ -31,9 +28,6 @@
   background: rgba(6, 6, 6, 0.82);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
-}
-[data-room="exhibition"] .plan::backdrop {
-  background: rgba(210, 202, 188, 0.86);
 }
 
 /* Background, border and shadow come from .glass, which the dialog also
@@ -98,10 +92,6 @@
       transparent 0 7px,
       var(--plan-hatch, rgba(237, 233, 225, 0.018)) 7px 8px
     );
-}
-/* Hatching is drawn in ink, and in the light room the ink is dark. */
-[data-room="exhibition"] .plan__box {
-  --plan-hatch: rgba(26, 24, 21, 0.05);
 }
 
 .plan__rooms {

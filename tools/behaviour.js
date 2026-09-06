@@ -524,7 +524,7 @@ const check = (name, pass, detail) => results.push({ name, pass, detail });
     const ROOMS = {
       "craft.html": ["physical", "#6dbf9e"],
       "digital.html": ["digital", "#e8547a"],
-      "exhibitions.html": ["exhibition", "#8a6a4a"],
+      "exhibitions.html": ["exhibition", "#276048"],
       "side-quests.html": ["play", "#c8b882"],
       "about.html": ["office", "#f0919f"],
       "contact.html": ["office", "#f0919f"],
@@ -1001,6 +1001,103 @@ const check = (name, pass, detail) => results.push({ name, pass, detail });
       parseFloat(getComputedStyle(document.querySelector(".case-rail__fire")).height));
     check("the fire tracks the scroll", before < 5 && after > 100,
       `${before}px -> ${after}px`);
+    await ctx.close();
+  }
+
+  // 23. THE LIGHT ROOM, AFTER THE "TOO WHITE" REPORT.
+  //      Three properties, each one a thing that was wrong.
+  {
+    const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+    const page = await ctx.newPage();
+    await page.goto(url("exhibitions.html"));
+    await page.waitForTimeout(300);
+
+    const lum = (c) => {
+      const [r, g, b] = (c.match(/\d+/g) || []).slice(0, 3).map(Number);
+      const f = (v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
+      return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b);
+    };
+    const ratio = (a, b) => (Math.max(lum(a), lum(b)) + 0.05) / (Math.min(lum(a), lum(b)) + 0.05);
+
+    const tok = await page.evaluate(() => {
+      const cs = getComputedStyle(document.documentElement);
+      const hex = (n) => {
+        const el = document.createElement("span");
+        el.style.color = cs.getPropertyValue(n).trim();
+        document.body.appendChild(el);
+        const c = getComputedStyle(el).color;
+        el.remove();
+        return c;
+      };
+      return { bg: hex("--bg"), fg: hex("--fg"), accent: hex("--accent"),
+               surface: hex("--surface"), surface2: hex("--surface-2"),
+               line: hex("--line") };
+    });
+
+    /* (a) The panels must be DARKER than the wall. They were lighter —
+       #fbf8f2 sitting on #f2ece1 — which is what made the room read as a
+       white-out: every surface within a few percent of every other. */
+    check("the light room's panels sit darker than its wall",
+      lum(tok.surface) < lum(tok.bg) && lum(tok.surface2) < lum(tok.surface),
+      `bg ${tok.bg}, surface ${tok.surface}, surface-2 ${tok.surface2}`);
+
+    /* (b) The accent has to carry text on all three of this room's
+       grounds. --mint is 1.86:1 here, which is why the room gets a
+       deepened green of its own rather than borrowing the palette's. */
+    for (const [name, ground] of [["wall", tok.bg], ["surface", tok.surface], ["surface-2", tok.surface2]]) {
+      const r = ratio(tok.accent, ground);
+      check(`the light room's accent reads on its ${name}`, r >= 4.5, r.toFixed(2) + ":1");
+    }
+
+    /* (c) The hairlines have to be visible against the wall, or the
+       structure disappears and everything floats. */
+    check("the light room's hairlines are visible",
+      ratio(tok.line, tok.bg) >= 1.4, ratio(tok.line, tok.bg).toFixed(2) + ":1");
+    await ctx.close();
+  }
+
+  // 24. THE CHROME IS THE SAME OBJECT IN EVERY ROOM.
+  //      The rail and the floorplan used to invert with the exhibition
+  //      room, which gave that one page a pale nav on a pale ground. A
+  //      visitor learns the navigation once; it should not change
+  //      identity underneath them when they walk into a different room.
+  {
+    const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+    const page = await ctx.newPage();
+    const seen = {};
+    for (const file of ["craft.html", "exhibitions.html", "cycle-arts.html", "digital.html"]) {
+      await page.goto(url(file));
+      await page.waitForTimeout(300);
+      seen[file] = await page.evaluate(() => {
+        const rail = document.querySelector(".rail");
+        const mark = document.querySelector(".mark__name");
+        return {
+          rail: getComputedStyle(rail).backgroundColor,
+          fg: getComputedStyle(mark).color,
+        };
+      });
+    }
+    const vals = Object.values(seen);
+    check("every page paints the rail the same", vals.every((v) => v.rail === vals[0].rail),
+      Object.entries(seen).map(([f, v]) => `${f} ${v.rail}`).join(" | "));
+    check("every page paints the wordmark the same", vals.every((v) => v.fg === vals[0].fg),
+      Object.entries(seen).map(([f, v]) => `${f} ${v.fg}`).join(" | "));
+
+    /* And it has to actually be dark once composited over a light page,
+       not merely declared dark. A 55% black veil reads near-black over a
+       dark ground and mid-grey over cream — same rule, two different
+       objects, which is exactly what was reported. */
+    await page.goto(url("exhibitions.html"));
+    await page.waitForTimeout(300);
+    const composited = await page.evaluate(() => {
+      const rgba = (c) => (c.match(/[\d.]+/g) || []).map(Number);
+      const rail = rgba(getComputedStyle(document.querySelector(".rail")).backgroundColor);
+      const page_ = rgba(getComputedStyle(document.body).backgroundColor);
+      const a = rail.length > 3 ? rail[3] : 1;
+      return [0, 1, 2].map((i) => Math.round(rail[i] * a + page_[i] * (1 - a)));
+    });
+    check("the rail is still dark once composited over the light room",
+      Math.max(...composited) < 70, "rgb(" + composited.join(", ") + ")");
     await ctx.close();
   }
 

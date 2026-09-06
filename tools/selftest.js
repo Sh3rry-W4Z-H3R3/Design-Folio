@@ -272,20 +272,18 @@ const MUTATIONS = [
       return s.replace(old, "      a.dataset.planRoom = r.id;\n      a.dataset.room = r.id;\n      // The monitor/pot cursor icons");
     },
   },
-  {
-    name: "the light room's plan loses its own scrim",
-    detectedBy: "behaviour.js",
-    scope: [],
-    file: "assets/css/floorplan.css",
-    // A light panel over a near-black backdrop: the exhibition room's
-    // glass tokens are built for a pale ground, and the dialog was
-    // painting one it could not sit on.
-    mutate: (s) => {
-      const old = '[data-room="exhibition"] .plan::backdrop {\n  background: rgba(210, 202, 188, 0.86);\n}';
-      if (!s.includes(old)) throw new Error("light-room backdrop not found");
-      return s.replace(old, "");
-    },
-  },
+  /* REMOVED: "the light room's plan loses its own scrim".
+     It deleted [data-room="exhibition"] .plan::backdrop, which no longer
+     exists — the plan is dark in every room now, so there is no
+     light-room scrim to lose. It reported ERROR rather than MISSED, and
+     that distinction is the point: a mutation that cannot be applied is
+     a broken mutation and says nothing about the check it aimed at.
+
+     The check it served — "every room name reads on the plan" — is now
+     covered by "the chrome starts following the room again", which drops
+     the chrome's own --fg and lets the light room's near-black text onto
+     the dark panel. Confirmed failing at 1.84:1 before this was
+     removed, rather than assumed. */
   {
     name: "each rail control carries its own glass again",
     detectedBy: "behaviour.js",
@@ -421,6 +419,50 @@ const MUTATIONS = [
       const old = 'if (b.getBoundingClientRect().top < innerHeight * 0.9) b.classList.add("is-lit");';
       if (!s.includes(old)) throw new Error("boot lighting pass not found");
       return s.replace(old, 'if (false) b.classList.add("is-lit");');
+    },
+  },
+  {
+    name: "the light room's panels go back to glowing",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "assets/css/rooms.css",
+    /* The "too white" report, as a single value. --surface was LIGHTER
+       than the wall it sat on — 1.11:1, the wrong way round — so every
+       panel in the room floated within a couple of percent of every
+       other and the page read as an undifferentiated white-out. */
+    mutate: (s) => {
+      const old = "  --surface: #e7e0d2;\n  --surface-2: #dcd3c2;";
+      if (!s.includes(old)) throw new Error("light-room surfaces not found");
+      return s.replace(old, "  --surface: #fbf8f2;\n  --surface-2: #ece5d8;");
+    },
+  },
+  {
+    name: "the light room borrows the palette's mint as its accent",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "assets/css/rooms.css",
+    // --mint measures 1.86:1 on this room's cream wall. It is the right
+    // green and the wrong lightness, which is the whole reason the room
+    // carries a deepened one of its own.
+    mutate: (s) => {
+      const old = "  --accent: #276048;";
+      if (!s.includes(old)) throw new Error("light-room accent not found");
+      return s.replace(old, "  --accent: var(--mint);");
+    },
+  },
+  {
+    name: "the chrome starts following the room again",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "assets/css/glass.css",
+    /* Drop the chrome's own foreground and the rail inherits the light
+       room's near-black text on its dark ground. This is the shape of
+       the original bug: the nav changing identity depending on which
+       room the visitor happens to be standing in. */
+    mutate: (s) => {
+      const old = "  --fg: #ede9e1;\n  --fg-mid: rgba(237, 233, 225, 0.62);";
+      if (!s.includes(old)) throw new Error("chrome token block not found");
+      return s.replace(old, "  --fg-mid: rgba(237, 233, 225, 0.62);");
     },
   },
   {
