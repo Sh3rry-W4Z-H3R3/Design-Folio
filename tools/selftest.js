@@ -272,20 +272,18 @@ const MUTATIONS = [
       return s.replace(old, "      a.dataset.planRoom = r.id;\n      a.dataset.room = r.id;\n      // The monitor/pot cursor icons");
     },
   },
-  {
-    name: "the light room's plan loses its own scrim",
-    detectedBy: "behaviour.js",
-    scope: [],
-    file: "assets/css/floorplan.css",
-    // A light panel over a near-black backdrop: the exhibition room's
-    // glass tokens are built for a pale ground, and the dialog was
-    // painting one it could not sit on.
-    mutate: (s) => {
-      const old = '[data-room="exhibition"] .plan::backdrop {\n  background: rgba(210, 202, 188, 0.86);\n}';
-      if (!s.includes(old)) throw new Error("light-room backdrop not found");
-      return s.replace(old, "");
-    },
-  },
+  /* REMOVED: "the light room's plan loses its own scrim".
+     It deleted [data-room="exhibition"] .plan::backdrop, which no longer
+     exists — the plan is dark in every room now, so there is no
+     light-room scrim to lose. It reported ERROR rather than MISSED, and
+     that distinction is the point: a mutation that cannot be applied is
+     a broken mutation and says nothing about the check it aimed at.
+
+     The check it served — "every room name reads on the plan" — is now
+     covered by "the chrome starts following the room again", which drops
+     the chrome's own --fg and lets the light room's near-black text onto
+     the dark panel. Confirmed failing at 1.84:1 before this was
+     removed, rather than assumed. */
   {
     name: "each rail control carries its own glass again",
     detectedBy: "behaviour.js",
