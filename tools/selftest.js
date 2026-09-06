@@ -424,6 +424,50 @@ const MUTATIONS = [
     },
   },
   {
+    name: "the light room's panels go back to glowing",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "assets/css/rooms.css",
+    /* The "too white" report, as a single value. --surface was LIGHTER
+       than the wall it sat on — 1.11:1, the wrong way round — so every
+       panel in the room floated within a couple of percent of every
+       other and the page read as an undifferentiated white-out. */
+    mutate: (s) => {
+      const old = "  --surface: #e7e0d2;\n  --surface-2: #dcd3c2;";
+      if (!s.includes(old)) throw new Error("light-room surfaces not found");
+      return s.replace(old, "  --surface: #fbf8f2;\n  --surface-2: #ece5d8;");
+    },
+  },
+  {
+    name: "the light room borrows the palette's mint as its accent",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "assets/css/rooms.css",
+    // --mint measures 1.86:1 on this room's cream wall. It is the right
+    // green and the wrong lightness, which is the whole reason the room
+    // carries a deepened one of its own.
+    mutate: (s) => {
+      const old = "  --accent: #276048;";
+      if (!s.includes(old)) throw new Error("light-room accent not found");
+      return s.replace(old, "  --accent: var(--mint);");
+    },
+  },
+  {
+    name: "the chrome starts following the room again",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "assets/css/glass.css",
+    /* Drop the chrome's own foreground and the rail inherits the light
+       room's near-black text on its dark ground. This is the shape of
+       the original bug: the nav changing identity depending on which
+       room the visitor happens to be standing in. */
+    mutate: (s) => {
+      const old = "  --fg: #ede9e1;\n  --fg-mid: rgba(237, 233, 225, 0.62);";
+      if (!s.includes(old)) throw new Error("chrome token block not found");
+      return s.replace(old, "  --fg-mid: rgba(237, 233, 225, 0.62);");
+    },
+  },
+  {
     name: "a narrow window loses its pointer entirely",
     detectedBy: "behaviour.js",
     scope: [],

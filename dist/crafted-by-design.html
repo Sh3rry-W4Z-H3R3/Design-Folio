@@ -101,7 +101,7 @@
         font-weight: 700;
         letter-spacing: var(--ls-eyebrow);
         text-transform: uppercase;
-        color: var(--accent);
+        color: var(--accent-on-media);
         margin-bottom: var(--space-4);
         display: flex;
         align-items: center;
@@ -131,13 +131,13 @@
         grid-template-columns: repeat(4, 1fr);
         gap: 2px;
         margin: var(--space-6) 0 0;
-        border-top: 1px solid #1a1a1a;
+        border-top: 1px solid var(--line);
         opacity: 0;
         animation: fadeUp 0.8s var(--ease) 0.3s forwards;
       }
       .meta-strip__item {
         padding: var(--space-5) var(--gutter);
-        border-right: 1px solid #1a1a1a;
+        border-right: 1px solid var(--line);
       }
       .meta-strip__item:last-child {
         border-right: none;
@@ -211,7 +211,7 @@
 
       .section {
         padding: var(--space-8) var(--gutter);
-        border-top: 1px solid #1a1a1a;
+        border-top: 1px solid var(--line);
       }
       .section--split {
         display: grid;
@@ -333,12 +333,12 @@
         grid-template-columns: 1fr 2fr;
         gap: var(--space-6);
         padding: var(--space-6) 0;
-        border-bottom: 1px solid #1a1a1a;
+        border-bottom: 1px solid var(--line);
         counter-increment: step;
         align-items: start;
       }
       .process-step:first-child {
-        border-top: 1px solid #1a1a1a;
+        border-top: 1px solid var(--line);
       }
       .process-step__num {
         font-family: var(--sans);
@@ -380,7 +380,7 @@
       .stat {
         padding: var(--space-6) var(--space-5);
         background: var(--surface);
-        border-top: 1px solid #222;
+        border-top: 1px solid var(--line-2);
         transition: border-top-color var(--fast);
       }
       .stat:hover {
@@ -412,7 +412,7 @@
         text-decoration: none;
         color: inherit;
         padding: var(--space-8) var(--gutter);
-        border-top: 1px solid #1a1a1a;
+        border-top: 1px solid var(--line);
         position: relative;
         overflow: hidden;
         transition: background var(--fast);
@@ -549,10 +549,10 @@
         }
         .meta-strip__item {
           border-right: none;
-          border-bottom: 1px solid #1a1a1a;
+          border-bottom: 1px solid var(--line);
         }
         .meta-strip__item:nth-child(odd) {
-          border-right: 1px solid #1a1a1a;
+          border-right: 1px solid var(--line);
         }
         .section--split {
           grid-template-columns: 1fr;
