@@ -99,7 +99,7 @@ behaviour.js §25–28 and a mutation in `selftest.js`.
 |---|---|
 | No CSP at all, on a site that loads a third-party script (gtag) and stylesheet (Google Fonts) | Full policy in `dist/_headers`, measured against all 27 pages and against five attack probes |
 | No HSTS, no `Permissions-Policy`, no COOP | Added. HSTS deliberately **without** `preload` |
-| Private working notes published on the CDN — `dist/imgs-digital/Tarebook/folio/` served README, draft LinkedIn/IG/recruiter copy and a puppeteer script, unreferenced by any page | Moved to `docs/tarebook-folio-source/` |
+| Private working notes published on the CDN — `dist/imgs-digital/Tarebook/folio/` served README, draft LinkedIn/IG/recruiter copy and a puppeteer script, unreferenced by any page | Moved to `docs/tarebook-folio-source/` — off the CDN, but see the note on repo visibility below |
 | Contact form promised "straight to my inbox" but posts to a `mailto:`, which arrives untitled with the body as `name=…&email=…` | Handler builds a titled, prose draft and says on screen that the visitor still has to press send |
 | `novalidate` also disabled the native email check, so `not-an-email` submitted happily | Validated per-field with `checkValidity()`, which novalidate does not affect |
 | `CURRENT_BY_PAGE[page]` read the prototype chain — `page` is URL-derived and 404.html has no `data-room`, so `/__proto__` resolved to `Object.prototype` | `hasOwnProperty` guard, matching the one `ROOM_PAGES` already had |
@@ -114,6 +114,30 @@ behaviour.js §25–28 and a mutation in `selftest.js`.
 - No mixed content; every subresource is https.
 - `tools/` uses `spawnSync` with `process.execPath` and fixed paths — no
   shell, no interpolation.
+
+### The repo is public, and that limits one of those fixes
+
+`Sh3rry-W4Z-H3R3/Design-Folio` is a **public** repository. Two consequences,
+neither of them a vulnerability but both worth knowing:
+
+- Moving the Tarebook notes out of `dist/` took them off the CDN — off
+  sherjeelhussain.com, out of the deploy payload, and out of reach of
+  anything crawling the domain. It did **not** make them private: they are
+  still readable at the repo's `docs/` path, and they have been in git
+  history since `a49e127` regardless, so deleting them now would not
+  retract them either. Nothing in them is a credential — all five files
+  were read — so this is draft copy being visible, not a breach.
+- More generally: **everything committed here is public**, including the
+  421 MB `src-images/` and `Conversions/`. That is a reasonable choice for
+  a portfolio, but it is worth holding deliberately rather than by default,
+  because it is the rule that decides whether a future commit is safe.
+
+If the working material matters, making the repo private is the fix, and it
+is one click. A history rewrite would be disproportionate for draft folio
+copy.
+
+Checked while establishing this: no Cloudflare account id, API token or
+deploy credential is tracked anywhere in the repo.
 
 **His call, not patched**
 
