@@ -85,8 +85,8 @@ the attribute. The harness checks the *sequence*, not the markup.
 
 ```bash
 node tools/verify.js      # smoke, cursor, behaviour, links, responsive
-node tools/behaviour.js   # 219 checks, ~40s — the useful one while working
-node tools/selftest.js    # 30 deliberate bugs, proves the checks can fail
+node tools/behaviour.js   # 247 checks, ~60s — the useful one while working
+node tools/selftest.js    # 45 deliberate bugs, proves the checks can fail
 ```
 
 `selftest.js` plants a known bug, asserts the matching check goes red, and
@@ -120,6 +120,35 @@ is Sherjeel's to supply.
   line you actually needed, and you cannot then quote a result.
 
 ---
+
+## Security posture
+
+The whole defence is `dist/_headers`, because there is no server to attack.
+It carries a CSP, HSTS, `Permissions-Policy`, COOP, nosniff, Referrer-Policy
+and `X-Frame-Options`, all asserted by behaviour.js §25.
+
+Three things about it are load-bearing:
+
+- **The file has no line continuation.** A wrapped value is read as a new
+  header name and dropped in silence, taking the policy with it. The CSP is
+  one long line on purpose, and a check enforces that.
+- **`script-src` carries `'unsafe-inline'`** and that is a deliberate
+  weakening, not an oversight — the blocking mode script, the gtag config
+  and the per-page scripts are all inline, hashes would break on every
+  hand-edit, and nonces need a server. What the policy still buys is a
+  closed list of script origins and a narrow `connect-src`/`img-src`, so an
+  injected script cannot fetch a payload or beacon the contact form out.
+- **Adding a third party means adding it to the CSP.** That friction is the
+  point. Today the list is Google Fonts and Google Analytics, nothing else.
+
+`dist/` is the deploy root on all three hosts, so **anything dropped in it
+is published**. A Tarebook working folder went out that way — draft
+recruiter copy and a puppeteer script, unreferenced by any page and so
+invisible to link checking. §26 walks the directory instead.
+
+The contact form is the only typed input on the site. It has no backend:
+submitting hands a draft to the visitor's own mail client, so *they* still
+have to press send, and the page says so. See `dist/contact.html`.
 
 ## House style
 

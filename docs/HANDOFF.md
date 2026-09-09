@@ -15,8 +15,8 @@ corner) and **#9** (the case-study spine, Edward's review, the Cone).
 
 | | |
 |---|---|
-| behaviour checks | 219 |
-| selftest mutations | 30 |
+| behaviour checks | 247 |
+| selftest mutations | 45 |
 | smoke | 26/27 (the missing portrait) |
 | responsive | 27 pages × 11 widths, clean |
 | `dist/` | 297 MB |
@@ -87,6 +87,48 @@ composited to mid-grey over cream while reading near-black over the dark
 rooms. Declaring it dark was not enough to make it look dark.
 
 ---
+
+## The security pass
+
+Findings, and what happened to each. Everything asserted here has a check in
+behaviour.js §25–28 and a mutation in `selftest.js`.
+
+**Fixed**
+
+| Found | Fix |
+|---|---|
+| No CSP at all, on a site that loads a third-party script (gtag) and stylesheet (Google Fonts) | Full policy in `dist/_headers`, measured against all 27 pages and against five attack probes |
+| No HSTS, no `Permissions-Policy`, no COOP | Added. HSTS deliberately **without** `preload` |
+| Private working notes published on the CDN — `dist/imgs-digital/Tarebook/folio/` served README, draft LinkedIn/IG/recruiter copy and a puppeteer script, unreferenced by any page | Moved to `docs/tarebook-folio-source/` |
+| Contact form promised "straight to my inbox" but posts to a `mailto:`, which arrives untitled with the body as `name=…&email=…` | Handler builds a titled, prose draft and says on screen that the visitor still has to press send |
+| `novalidate` also disabled the native email check, so `not-an-email` submitted happily | Validated per-field with `checkValidity()`, which novalidate does not affect |
+| `CURRENT_BY_PAGE[page]` read the prototype chain — `page` is URL-derived and 404.html has no `data-room`, so `/__proto__` resolved to `Object.prototype` | `hasOwnProperty` guard, matching the one `ROOM_PAGES` already had |
+
+**Checked and clean** — worth knowing so it is not re-audited:
+
+- All **60** `target="_blank"` anchors already carry `rel="noopener"`.
+- Every `innerHTML` in the shared JS is a static string literal. No
+  interpolation, no external data, so no DOM-XSS sink.
+- No secrets committed, no `.env`, no credentials in history.
+- No iframes, no `postMessage`, no `eval`, no `document.write`.
+- No mixed content; every subresource is https.
+- `tools/` uses `spawnSync` with `process.execPath` and fixed paths — no
+  shell, no interpolation.
+
+**His call, not patched**
+
+- **A real form endpoint.** A Cloudflare Function on the Worker that already
+  serves the site, or Formspree. Both need an account and an API key. Until
+  then the form depends on the visitor having a mail client *and* pressing
+  send. This is the one finding with a business consequence, and it is
+  worth doing.
+- **Analytics consent.** gtag loads unconditionally on all 26 pages with no
+  consent gate and no `anonymize_ip`. For a UK-based practice, PECR/UK GDPR
+  want consent for non-essential analytics cookies. A banner is a design
+  decision and a product decision, so it was flagged rather than built.
+- **SRI** is not possible on either third party — the gtag loader and the
+  Google Fonts CSS both change content under a stable URL, so a pinned hash
+  would break them. Noted so it does not get "fixed" later.
 
 ## Waiting on Sherjeel
 

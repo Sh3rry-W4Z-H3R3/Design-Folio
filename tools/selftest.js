@@ -481,6 +481,209 @@ const MUTATIONS = [
       return s.replace(old, "");
     },
   },
+
+  /* ── THE RESPONSE HEADERS ───────────────────────────────────────────
+     A static site has no code path to attack; what it has is whatever the
+     CDN sends with the file. Every one of these deletes or widens one
+     directive and leaves the site looking completely normal, which is
+     exactly why they need a check rather than an eyeball. */
+  {
+    name: "the CSP is dropped altogether",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "_headers",
+    mutate: (s) => {
+      const line = s.split("\n").find((l) => /^\s+Content-Security-Policy:/.test(l));
+      if (!line) throw new Error("CSP line not found");
+      return s.replace(line + "\n", "");
+    },
+  },
+  {
+    name: "the CSP lets script load from any https origin",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "_headers",
+    /* The tempting fix when a third-party script is blocked, and it
+       gives away most of what the policy was buying: any origin can now
+       serve executable code to the page. */
+    mutate: (s) => {
+      const old = "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com;";
+      if (!s.includes(old)) throw new Error("script-src not found");
+      return s.replace(old, "script-src 'self' 'unsafe-inline' https:;");
+    },
+  },
+  {
+    name: "the CSP allows eval",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "_headers",
+    mutate: (s) => {
+      const old = "script-src 'self' 'unsafe-inline'";
+      if (!s.includes(old)) throw new Error("script-src not found");
+      return s.replace(old, "script-src 'self' 'unsafe-inline' 'unsafe-eval'");
+    },
+  },
+  {
+    name: "connect-src opens up, so a script could beacon anywhere",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "_headers",
+    /* This is the directive that matters most on this site, because the
+       contact page is the one place a visitor types anything. */
+    mutate: (s) => {
+      const m = s.match(/connect-src [^;]*;/);
+      if (!m) throw new Error("connect-src not found");
+      return s.replace(m[0], "connect-src *;");
+    },
+  },
+  {
+    name: "base-uri is dropped, so a <base> tag could rewrite every link",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "_headers",
+    mutate: (s) => {
+      const old = " base-uri 'self';";
+      if (!s.includes(old)) throw new Error("base-uri not found");
+      return s.replace(old, "");
+    },
+  },
+  {
+    name: "object-src stops being none",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "_headers",
+    mutate: (s) => {
+      const old = "object-src 'none';";
+      if (!s.includes(old)) throw new Error("object-src not found");
+      return s.replace(old, "object-src 'self';");
+    },
+  },
+  {
+    name: "the CSP is wrapped onto a second line",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "_headers",
+    /* The failure mode this file's own comment warns about: there is no
+       continuation syntax, so the second line is read as a new header
+       name and dropped. The policy silently loses half of itself and
+       nothing about the deploy looks wrong. */
+    mutate: (s) => {
+      const old = "; connect-src 'self'";
+      if (!s.includes(old)) throw new Error("split point not found");
+      return s.replace(old, ";\n    connect-src 'self'");
+    },
+  },
+  {
+    name: "HSTS is quietly submitted for preload",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "_headers",
+    /* Reversing this takes months and a browser release rather than a
+       deploy, so it should never arrive as a side effect of an edit. */
+    mutate: (s) => {
+      const old = "Strict-Transport-Security: max-age=31536000; includeSubDomains";
+      if (!s.includes(old)) throw new Error("HSTS not found");
+      return s.replace(old, old + "; preload");
+    },
+  },
+  {
+    name: "HSTS drops to a token max-age",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "_headers",
+    mutate: (s) => {
+      const old = "max-age=31536000; includeSubDomains";
+      if (!s.includes(old)) throw new Error("HSTS not found");
+      return s.replace(old, "max-age=600; includeSubDomains");
+    },
+  },
+  {
+    name: "the camera and mic permissions are handed back",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "_headers",
+    mutate: (s) => {
+      const line = s.split("\n").find((l) => /^\s+Permissions-Policy:/.test(l));
+      if (!line) throw new Error("Permissions-Policy not found");
+      return s.replace(line + "\n", "");
+    },
+  },
+  {
+    name: "a working folder is left in the deploy root",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "imgs-digital/Tarebook/case-study.md",
+    /* How the Tarebook notes got onto the CDN in the first place: dropped
+       into dist/ next to the screenshots they describe, unreferenced by
+       any page, and therefore invisible to every check that walks links
+       instead of walking the directory. It was a whole folio/ folder;
+       one file in a directory that already exists proves the same check
+       and leaves nothing behind to tidy up. */
+    creates: true,
+    mutate: () => "# TareBook\n\nDraft case study copy, not meant to be public.\n",
+  },
+  {
+    name: "the URL-derived room lookup loses its guard",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "assets/js/floorplan.js",
+    /* 404.html has no data-room, and both hosts serve it for any path
+       that does not match a file — so this lookup's key is whatever the
+       visitor typed. Unguarded, /__proto__ resolves to Object.prototype
+       and the page decides it is standing in a room that does not
+       exist. */
+    mutate: (s) => {
+      const old = "var current = here || (own.call(CURRENT_BY_PAGE, page) ? CURRENT_BY_PAGE[page] : null) || null;";
+      if (!s.includes(old)) throw new Error("guarded lookup not found");
+      return s.replace(old, "var current = here || CURRENT_BY_PAGE[page] || null;");
+    },
+  },
+
+  /* ── THE CONTACT FORM ───────────────────────────────────────────────
+     The only typed input on the site, and the one thing on it with a
+     business consequence when it breaks. */
+  {
+    name: "the form goes back to handing over an untitled draft",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "contact.html",
+    /* The state this shipped in: the browser's own mailto: submission,
+       which arrives with no subject and the body written as form
+       encoding. */
+    mutate: (s) => {
+      const old = "          window.location.href =";
+      if (!s.includes(old)) throw new Error("handoff not found");
+      return s.replace(old, "          if (true) return;\n          window.location.href =");
+    },
+  },
+  {
+    name: "a malformed email address is accepted again",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "contact.html",
+    /* novalidate switches off the native email check, so without this
+       the field's type="email" is decoration and a typo'd address is a
+       reply that never arrives. */
+    mutate: (s) => {
+      const old = "if (email && email.value.trim() && !email.checkValidity()) {";
+      if (!s.includes(old)) throw new Error("email validity check not found");
+      return s.replace(old, "if (false) {");
+    },
+  },
+  {
+    name: "the form stops telling the visitor to press send",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "contact.html",
+    /* Without it the page implies the message is gone, which is the part
+       that actually loses enquiries: the draft sits unsent in a mail
+       client the visitor has already closed. */
+    mutate: (s) => {
+      const old = "\"Your mail app should be opening with this ready to go — you'll need to press send there. If nothing opened, email \",";
+      if (!s.includes(old)) throw new Error("status copy not found");
+      return s.replace(old, '"Thanks — your message has been sent.",');
+    },
+  },
 ];
 
 function checkFails(script, scope) {
@@ -514,8 +717,19 @@ function checkFails(script, scope) {
    back. That survives SIGKILL, a timeout, and a container restart. */
 const JOURNAL = path.join(__dirname, ".selftest-journal.json");
 
+/* `original === null` means the file did not exist before the mutation,
+   so putting it back means deleting it. That is what lets a mutation add
+   a stray file to dist/ — the only way to prove the check that says
+   nothing but the site gets published can actually fail. */
 function journalWrite(file, original) {
   fs.writeFileSync(JOURNAL, JSON.stringify({ file, original }));
+}
+function restore(file, original) {
+  if (original === null) {
+    if (fs.existsSync(file)) fs.unlinkSync(file);
+    return;
+  }
+  fs.writeFileSync(file, original);
 }
 function journalClear() {
   if (fs.existsSync(JOURNAL)) fs.unlinkSync(JOURNAL);
@@ -527,7 +741,7 @@ function journalClear() {
 if (fs.existsSync(JOURNAL)) {
   try {
     const { file, original } = JSON.parse(fs.readFileSync(JOURNAL, "utf8"));
-    fs.writeFileSync(file, original);
+    restore(file, original === undefined ? "" : original);
     console.log(`recovered a mutation left by an interrupted run: ${path.relative(ROOT, file)}\n`);
   } catch (e) {
     console.error("Could not replay the journal — restore by hand:\n" + e.message);
@@ -556,19 +770,22 @@ process.on("uncaughtException", panic);
 const results = [];
 for (const m of MUTATIONS) {
   const full = path.join(DIST, m.file);
-  const original = fs.readFileSync(full, "utf8");
+  // A `creates` mutation writes a file that is not there yet; everything
+  // else edits one that is.
+  const original = m.creates ? null : fs.readFileSync(full, "utf8");
   let caught = false;
   let error = null;
   try {
     // Journal first: between this line and the restore below, the file
     // on disk is wrong, and only the journal knows how to put it right.
     journalWrite(full, original);
+    fs.mkdirSync(path.dirname(full), { recursive: true });
     fs.writeFileSync(full, m.mutate(original));
     caught = checkFails(m.detectedBy, m.scope);
   } catch (e) {
     error = e.message;
   } finally {
-    fs.writeFileSync(full, original);
+    restore(full, original);
     journalClear();
   }
   results.push({ ...m, caught, error });

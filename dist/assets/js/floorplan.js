@@ -99,7 +99,19 @@
     "contact.html": "office",
   };
   var page = location.pathname.split("/").pop() || "index.html";
-  var current = here || CURRENT_BY_PAGE[page] || null;
+  /* `page` is the only value in this file that comes from the URL, and on
+     404.html — which has no data-room, so the lookup below is actually
+     reached, and which both hosts serve for ANY unmatched path — it is
+     whatever the visitor typed. A bare CURRENT_BY_PAGE[page] therefore
+     reads the prototype chain: /__proto__ returns Object.prototype and
+     /constructor returns Object, either of which is truthy and makes
+     `current` a non-room. Nothing renders it, so it degraded quietly
+     rather than breaking, but it degraded by luck.
+
+     hasOwnProperty is how the ROOM_PAGES lookup twenty lines down already
+     guards itself; this one was just missed. */
+  var own = Object.prototype.hasOwnProperty;
+  var current = here || (own.call(CURRENT_BY_PAGE, page) ? CURRENT_BY_PAGE[page] : null) || null;
 
   /* Pages that ARE a room rather than sitting inside one. Everything else
      carrying a data-room is a case study, and gets a back chip pointing
@@ -124,7 +136,7 @@
 
   // A case study is a page with a room that is not itself a room page.
   var parent = null;
-  if (current && !Object.prototype.hasOwnProperty.call(ROOM_PAGES, page)) {
+  if (current && !own.call(ROOM_PAGES, page)) {
     parent = roomById(current);
   }
 
