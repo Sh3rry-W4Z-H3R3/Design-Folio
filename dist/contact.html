@@ -494,6 +494,22 @@
         font-weight: 300;
         font-family: var(--body);
       }
+      /* Tokens, not literals. This page is the office room today, but a
+         hardcoded colour here is how the exhibition room broke four
+         times. No `display` is set, so [hidden] keeps working. */
+      .form-status {
+        margin-top: var(--space-3);
+        padding-left: var(--space-3);
+        border-left: 2px solid var(--accent);
+        font-family: var(--body);
+        font-size: var(--text-3);
+        font-weight: 300;
+        line-height: 1.55;
+        color: var(--fg-mid);
+      }
+      .form-status a {
+        color: var(--accent);
+      }
       .btn-send {
         font-family: var(--sans);
         font-size: var(--text-2);
@@ -855,7 +871,32 @@
         </p>
       </div>
 
-      <!-- Replace action with your Formspree endpoint or Cloudflare Function -->
+      <!-- ── WHERE THIS FORM ACTUALLY GOES ─────────────────────────
+           Nowhere server-side: there is no backend. Submitting hands a
+           mailto: URL to the visitor's own mail client, which means THEY
+           still have to press send in it. Measured in Chromium: the
+           browser's own version of this arrives with no subject line at
+           all and the body written as `name=Test%20Person`, `email=…`.
+           A visitor who closes that draft believes they have sent
+           something. The page used to promise it came "straight to my
+           inbox", which was never true of a mailto: form.
+
+           So the handler at the foot of this page takes the submit over
+           and builds the URL itself, with a real subject and a body that
+           reads like a message, and says on screen what is happening.
+
+           The `action` here is the no-JS fallback: with scripting off the
+           form behaves exactly as it did before, which is worse but not
+           nothing.
+
+           A real endpoint is the proper fix — a Cloudflare Function on
+           the Worker that already serves this site, or Formspree — and
+           both need an account and an API key, so that is Sherjeel's
+           call. Noted in docs/HANDOFF.md.
+
+           `novalidate` is deliberate and stays: it suppresses the
+           browser's own error bubbles so the handler can style invalid
+           fields itself. It does not mean unvalidated. -->
       <form
         action="mailto:sherjeelhussain9927@hotmail.com"
         method="POST"
@@ -922,6 +963,11 @@
             Send message <span class="arrow">→</span>
           </button>
         </div>
+
+        <!-- The handler's voice. Empty and hidden until it has something
+             to say; role=status so a screen reader hears it without the
+             focus being yanked. -->
+        <p class="form-status" role="status" aria-live="polite" hidden></p>
       </form>
     </div>
 
@@ -1016,26 +1062,127 @@
         }
       }
 
-      // Basic form validation feedback
+      /* ── THE FORM'S DELIVERY PATH ─────────────────────────────
+         There is no server behind this site, so "send" means handing a
+         mailto: URL to whatever mail client the visitor has. The browser
+         will do that on its own from the form's action, but it does two
+         things badly, both measured in Chromium rather than assumed:
+
+           - no subject line at all, so the mail arrives untitled and
+             reads like spam;
+           - the body written as `name=Test%20Person`, `email=…`,
+             `message=…` — form encoding, not prose.
+
+         And `novalidate` — which the form needs so the browser does not
+         draw its own error bubbles over styled fields — also switches
+         off the native email check. `not-an-email` submitted happily,
+         which means a typo'd address is a reply that never arrives.
+
+         So: validate properly, build the URL properly, and then say out
+         loud that the mail client is opening and the visitor still has
+         to press send there. That last part is the honest bit. Nothing
+         here reaches Sherjeel's inbox on its own.
+
+         With scripting off, none of this runs and the form falls back to
+         its mailto: action — the old behaviour, which is poor but is not
+         silence. */
       const form = document.querySelector("form");
+      const status = document.querySelector(".form-status");
+      const INBOX = "sherjeelhussain9927@hotmail.com";
+
+      function flag(field) {
+        field.style.borderBottomColor = "#e8547a";
+        field.addEventListener(
+          "input",
+          () => {
+            field.style.borderBottomColor = "";
+          },
+          { once: true },
+        );
+      }
+
+      /* Built with createElement/textContent rather than innerHTML on
+         purpose: everything interpolated here came out of a text input.
+         A template string would be an XSS sink in the one place on this
+         site that handles typed input. */
+      function say(parts) {
+        if (!status) return;
+        status.textContent = "";
+        parts.forEach((part) => {
+          if (typeof part === "string") {
+            status.appendChild(document.createTextNode(part));
+          } else {
+            const a = document.createElement("a");
+            a.href = part.href;
+            a.textContent = part.text;
+            status.appendChild(a);
+          }
+        });
+        status.hidden = false;
+      }
+
       if (form) {
         form.addEventListener("submit", (e) => {
-          const required = form.querySelectorAll("[required]");
-          let valid = true;
-          required.forEach((field) => {
+          let firstBad = null;
+
+          form.querySelectorAll("[required]").forEach((field) => {
             if (!field.value.trim()) {
-              valid = false;
-              field.style.borderBottomColor = "#e8547a";
-              field.addEventListener(
-                "input",
-                () => {
-                  field.style.borderBottomColor = "";
-                },
-                { once: true },
-              );
+              flag(field);
+              firstBad = firstBad || field;
             }
           });
-          if (!valid) e.preventDefault();
+
+          /* checkValidity() on the input is not affected by the form's
+             novalidate, so type="email" still tells us whether the
+             address is well-formed. Only asked once the field is
+             non-empty, so a blank one is not reported twice. */
+          const email = form.querySelector("#email");
+          if (email && email.value.trim() && !email.checkValidity()) {
+            flag(email);
+            firstBad = firstBad || email;
+          }
+
+          if (firstBad) {
+            e.preventDefault();
+            firstBad.focus();
+            say([
+              firstBad === email && email.value.trim()
+                ? "That email address doesn't look right — I'd have no way to reply."
+                : "A couple of fields still need filling in.",
+            ]);
+            return;
+          }
+
+          // Take the submit over so the draft is a readable message.
+          e.preventDefault();
+
+          const type = form.querySelector("#type");
+          const kind = type.options[type.selectedIndex].textContent.trim();
+          const from = form.querySelector("#name").value.trim();
+          const addr = email.value.trim();
+
+          const body = [
+            form.querySelector("#message").value.trim(),
+            "",
+            "—",
+            from + " <" + addr + ">",
+            "Enquiry type: " + kind,
+            "Sent from sherjeelhussain.com",
+          ].join("\n");
+
+          say([
+            "Your mail app should be opening with this ready to go — you'll need to press send there. If nothing opened, email ",
+            { href: "mailto:" + INBOX, text: INBOX },
+            " directly and it'll reach me just the same.",
+          ]);
+
+          window.location.href =
+            "mailto:" +
+            INBOX +
+            "?subject=" +
+            encodeURIComponent("Enquiry via sherjeelhussain.com — " + kind) +
+            "&body=" +
+            encodeURIComponent(body);
         });
       }
     </script>

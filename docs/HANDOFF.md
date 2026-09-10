@@ -15,8 +15,8 @@ corner) and **#9** (the case-study spine, Edward's review, the Cone).
 
 | | |
 |---|---|
-| behaviour checks | 219 |
-| selftest mutations | 30 |
+| behaviour checks | 248 |
+| selftest mutations | 46 |
 | smoke | 26/27 (the missing portrait) |
 | responsive | 27 pages × 11 widths, clean |
 | `dist/` | 297 MB |
@@ -87,6 +87,72 @@ composited to mid-grey over cream while reading near-black over the dark
 rooms. Declaring it dark was not enough to make it look dark.
 
 ---
+
+## The security pass
+
+Findings, and what happened to each. Everything asserted here has a check in
+behaviour.js §25–28 and a mutation in `selftest.js`.
+
+**Fixed**
+
+| Found | Fix |
+|---|---|
+| No CSP at all, on a site that loads a third-party script (gtag) and stylesheet (Google Fonts) | Full policy in `dist/_headers`, measured against all 27 pages and against five attack probes |
+| No HSTS, no `Permissions-Policy`, no COOP | Added. HSTS deliberately **without** `preload` |
+| Private working notes published on the CDN — `dist/imgs-digital/Tarebook/folio/` served README, draft LinkedIn/IG/recruiter copy and a puppeteer script, unreferenced by any page | Moved to `docs/tarebook-folio-source/` — off the CDN, but see the note on repo visibility below |
+| Contact form promised "straight to my inbox" but posts to a `mailto:`, which arrives untitled with the body as `name=…&email=…` | Handler builds a titled, prose draft and says on screen that the visitor still has to press send |
+| `novalidate` also disabled the native email check, so `not-an-email` submitted happily | Validated per-field with `checkValidity()`, which novalidate does not affect |
+| `CURRENT_BY_PAGE[page]` read the prototype chain — `page` is URL-derived and 404.html has no `data-room`, so `/__proto__` resolved to `Object.prototype` | `hasOwnProperty` guard, matching the one `ROOM_PAGES` already had |
+
+**Checked and clean** — worth knowing so it is not re-audited:
+
+- All **60** `target="_blank"` anchors already carry `rel="noopener"`.
+- Every `innerHTML` in the shared JS is a static string literal. No
+  interpolation, no external data, so no DOM-XSS sink.
+- No secrets committed, no `.env`, no credentials in history.
+- No iframes, no `postMessage`, no `eval`, no `document.write`.
+- No mixed content; every subresource is https.
+- `tools/` uses `spawnSync` with `process.execPath` and fixed paths — no
+  shell, no interpolation.
+
+### The repo is public, and that limits one of those fixes
+
+`Sh3rry-W4Z-H3R3/Design-Folio` is a **public** repository. Two consequences,
+neither of them a vulnerability but both worth knowing:
+
+- Moving the Tarebook notes out of `dist/` took them off the CDN — off
+  sherjeelhussain.com, out of the deploy payload, and out of reach of
+  anything crawling the domain. It did **not** make them private: they are
+  still readable at the repo's `docs/` path, and they have been in git
+  history since `a49e127` regardless, so deleting them now would not
+  retract them either. Nothing in them is a credential — all five files
+  were read — so this is draft copy being visible, not a breach.
+- More generally: **everything committed here is public**, including the
+  421 MB `src-images/` and `Conversions/`. That is a reasonable choice for
+  a portfolio, but it is worth holding deliberately rather than by default,
+  because it is the rule that decides whether a future commit is safe.
+
+If the working material matters, making the repo private is the fix, and it
+is one click. A history rewrite would be disproportionate for draft folio
+copy.
+
+Checked while establishing this: no Cloudflare account id, API token or
+deploy credential is tracked anywhere in the repo.
+
+**His call, not patched**
+
+- **A real form endpoint.** A Cloudflare Function on the Worker that already
+  serves the site, or Formspree. Both need an account and an API key. Until
+  then the form depends on the visitor having a mail client *and* pressing
+  send. This is the one finding with a business consequence, and it is
+  worth doing.
+- **Analytics consent.** gtag loads unconditionally on all 26 pages with no
+  consent gate and no `anonymize_ip`. For a UK-based practice, PECR/UK GDPR
+  want consent for non-essential analytics cookies. A banner is a design
+  decision and a product decision, so it was flagged rather than built.
+- **SRI** is not possible on either third party — the gtag loader and the
+  Google Fonts CSS both change content under a stable URL, so a pinned hash
+  would break them. Noted so it does not get "fixed" later.
 
 ## Waiting on Sherjeel
 

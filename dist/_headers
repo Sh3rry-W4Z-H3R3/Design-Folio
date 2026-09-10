@@ -14,10 +14,53 @@
 # below only work if each platform resolves overlapping rules the same
 # way. Scoping cache policy to the paths that actually need it removes
 # that dependency entirely.
+#
+# ── ON THE CSP BELOW ──────────────────────────────────────────────────
+# It is one line because this file has no continuation syntax: a wrapped
+# value is read as a new header name and silently dropped.
+#
+# `script-src` carries 'unsafe-inline', and that is a real weakening
+# rather than an oversight. Three kinds of inline script are load-bearing
+# here: the blocking mode script that sets data-mode before first paint,
+# the gtag config, and the per-page scripts. Hashes are the alternative,
+# and they would break the moment a page is hand-edited — which is how
+# this site is maintained. Nonces need a server that renders; this is
+# static files on a CDN.
+#
+# So the CSP is not an XSS cure here. What it does buy, and the reason
+# it is worth having:
+#   - no script can load from an origin that is not listed, so injected
+#     markup cannot pull in a remote payload;
+#   - `connect-src` and `img-src` are narrow, so a script that did run
+#     could not beacon the contact form's contents to an arbitrary host;
+#   - `base-uri` stops a <base> tag rewriting every relative URL on the
+#     page;
+#   - `object-src`/`frame-src 'none'` remove plugin and frame vectors
+#     outright.
+#
+# The allowed third parties are exactly the two the site actually uses:
+# Google Fonts (stylesheet + font files) and Google Analytics. Adding a
+# fourth means adding it here, and that is deliberate friction.
+#
+# ── HSTS WITHOUT preload ──────────────────────────────────────────────
+# `preload` is left off on purpose. Submitting a domain to the browser
+# preload list is close to irreversible — removal takes months and ships
+# with the next browser release, not the next deploy — and it would apply
+# to every present and future subdomain of sherjeelhussain.com. max-age
+# on its own is reversible: serve a smaller value and returning browsers
+# take it. Add preload only as a deliberate, separate decision.
+#
+# Comments live above this block rather than inside it: the two hosts
+# document `#` at the start of a line, and a comment between header
+# lines is not a form either of them promises to parse.
 /*
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   X-Frame-Options: SAMEORIGIN
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://www.googletagmanager.com https://www.google-analytics.com; connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'self' mailto:; frame-ancestors 'self'; upgrade-insecure-requests
+  Permissions-Policy: accelerometer=(), autoplay=(), camera=(), display-capture=(), encrypted-media=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), usb=(), xr-spatial-tracking=()
+  Cross-Origin-Opener-Policy: same-origin
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
 
 # Images are content-addressed in practice — a changed image gets a new
 # filename — so they can be cached hard and never revalidated.

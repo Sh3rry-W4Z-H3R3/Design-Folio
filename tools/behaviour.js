@@ -23,8 +23,21 @@ const MIME = { ".html": "text/html", ".css": "text/css", ".js": "text/javascript
 
 const server = http.createServer((req, res) => {
   const rel = decodeURIComponent(req.url.split("?")[0]).replace(/^\/+/, "") || "index.html";
-  const file = path.join(DIST, rel);
+  let file = path.join(DIST, rel);
   if (!file.startsWith(DIST) || !fs.existsSync(file) || fs.statSync(file).isDirectory()) {
+    /* Both hosts answer an unmatched path with 404.html rather than a bare
+       404, and that page is the one whose URL a visitor picks — it is the
+       only place on the site where location.pathname is arbitrary. Serving
+       it here makes the harness match production so that can be tested.
+
+       Only for extensionless paths: a missing .html or .webp still 404s,
+       so nothing that relied on a real miss changes behaviour. */
+    if (!path.extname(rel)) {
+      file = path.join(DIST, "404.html");
+      res.writeHead(404, { "content-type": "text/html" });
+      fs.createReadStream(file).pipe(res);
+      return;
+    }
     res.writeHead(404).end("not found");
     return;
   }
@@ -1098,6 +1111,219 @@ const check = (name, pass, detail) => results.push({ name, pass, detail });
     });
     check("the rail is still dark once composited over the light room",
       Math.max(...composited) < 70, "rgb(" + composited.join(", ") + ")");
+    await ctx.close();
+  }
+
+  // 25. THE RESPONSE HEADERS.
+  //      A static site's only real defence is what the CDN sends with the
+  //      file. These are read from dist/_headers rather than from a live
+  //      response because that file IS the deployed configuration on both
+  //      hosts — and because a typo here fails open and silently.
+  {
+    const raw = fs.readFileSync(path.join(DIST, "_headers"), "utf8");
+
+    /* Parse the way the hosts do: a pattern at column 0, then indented
+       "Name: value" lines. Comments and blanks are skipped. */
+    const rules = [];
+    let cur = null;
+    for (const line of raw.split("\n")) {
+      if (!line.trim() || line.trim().startsWith("#")) continue;
+      if (!/^\s/.test(line)) { cur = { pattern: line.trim(), headers: {} }; rules.push(cur); continue; }
+      if (cur) {
+        const i = line.indexOf(":");
+        if (i > 0) cur.headers[line.slice(0, i).trim()] = line.slice(i + 1).trim();
+      }
+    }
+    const site = (rules.find((r) => r.pattern === "/*") || { headers: {} }).headers;
+
+    for (const h of [
+      "X-Content-Type-Options",
+      "Referrer-Policy",
+      "X-Frame-Options",
+      "Content-Security-Policy",
+      "Permissions-Policy",
+      "Strict-Transport-Security",
+    ]) {
+      check(`every response carries ${h}`, Boolean(site[h]), site[h] || "absent");
+    }
+
+    const csp = site["Content-Security-Policy"] || "";
+    const dir = (name) => {
+      const m = csp.match(new RegExp("(?:^|;)\\s*" + name + "\\s([^;]*)"));
+      return m ? m[1].trim() : null;
+    };
+
+    /* A CSP is only as good as its narrowest directive. Each of these was
+       a live hole before the policy existed, and each has a mutation. */
+    check("the CSP defaults to self", dir("default-src") === "'self'", dir("default-src"));
+    check("the CSP names an explicit script source", /script-src/.test(csp), csp.slice(0, 60));
+
+    const script = dir("script-src") || "";
+    check("no script may load from an arbitrary origin",
+      !/(^|\s)(\*|https:)(\s|$)/.test(script), script);
+    check("the CSP does not permit eval", !/unsafe-eval/.test(csp), script);
+
+    /* connect-src is what stops a script that DID run from posting the
+       contact form's contents somewhere. 'self' plus named hosts only. */
+    const connect = dir("connect-src") || "";
+    check("exfiltration is limited to named hosts",
+      Boolean(connect) && !/(^|\s)(\*|https:)(\s|$)/.test(connect), connect || "absent");
+
+    for (const [name, want] of [["object-src", "'none'"], ["frame-src", "'none'"], ["base-uri", "'self'"]]) {
+      check(`the CSP sets ${name} to ${want}`, dir(name) === want, dir(name) || "absent");
+    }
+
+    /* The file format has no line continuation: a wrapped value is read as
+       a new header name and dropped without complaint, which would take
+       the whole policy with it. */
+    check("the CSP is a single unwrapped line",
+      raw.split("\n").filter((l) => /^\s+Content-Security-Policy:/.test(l)).length === 1 &&
+        !/Content-Security-Policy:[^\n]*\n\s{4,}[a-z-]+ /.test(raw),
+      "one line");
+
+    const hsts = site["Strict-Transport-Security"] || "";
+    const age = (hsts.match(/max-age=(\d+)/) || [])[1];
+    check("HSTS lasts at least a year", Number(age) >= 31536000, hsts);
+    /* preload is close to irreversible and is a separate decision. */
+    check("HSTS is not preloaded without asking", !/preload/.test(hsts), hsts);
+
+    const pp = site["Permissions-Policy"] || "";
+    for (const feat of ["camera", "microphone", "geolocation"]) {
+      check(`${feat} is denied to the page and its third parties`,
+        new RegExp(feat + "=\\(\\)").test(pp), pp ? "set" : "absent");
+    }
+  }
+
+  // 26. NOTHING BUT THE SITE IS PUBLISHED.
+  //      dist/ is the deploy root on all three hosts, so anything dropped
+  //      in it is on the CDN. A Tarebook working folder went out this way:
+  //      README, draft LinkedIn and recruiter copy, and a puppeteer
+  //      script, none of them linked from any page.
+  {
+    const OK_EXT = /\.(html|css|js|jpg|jpeg|png|webp|avif|gif|svg|ico|woff2?|ttf|mp4|webm|glb|pdf)$/i;
+    const OK_NAME = new Set(["_headers", "_redirects", "robots.txt", "sitemap.xml", ".gitkeep"]);
+    const stray = [];
+    (function walk(dir) {
+      for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+        const full = path.join(dir, e.name);
+        if (e.isDirectory()) { walk(full); continue; }
+        if (OK_NAME.has(e.name) || OK_EXT.test(e.name)) continue;
+        stray.push(path.relative(DIST, full));
+      }
+    })(DIST);
+    check("no source or notes files are published", stray.length === 0,
+      stray.length ? stray.slice(0, 6).join(", ") : "clean");
+  }
+
+  // 27. THE ONE URL-DERIVED VALUE IS GUARDED.
+  //      404.html has no data-room, so floorplan.js falls through to its
+  //      CURRENT_BY_PAGE lookup — keyed on the last path segment, which on
+  //      a page the hosts serve for ANY unmatched path is whatever the
+  //      visitor typed. Unguarded, /__proto__ reads Object.prototype.
+  {
+    /* Asserted against the SOURCE, not the rendered page, and the reason
+       is worth writing down because the first version of this check got
+       it wrong. Loading /__proto__ and checking the nav still works
+       passes whether the guard is there or not: an inherited key
+       resolves to Object.prototype or a function, roomById() matches
+       neither, and the page renders exactly as it does when the lookup
+       returns null. The mutation went MISSED, which is the suite doing
+       its job — the check could not fail.
+
+       The hazard is latent rather than absent. It becomes a real bug the
+       moment CURRENT_BY_PAGE gains an entry whose inherited namesake is
+       a string, or `current` is used somewhere that assumes one. So what
+       has to be protected is the guard itself. */
+    const fp = fs.readFileSync(path.join(DIST, "assets/js/floorplan.js"), "utf8");
+    /* Comments first. The block above the lookup explains the bug by
+       quoting `CURRENT_BY_PAGE[page]`, so counting raw occurrences finds
+       two and the check fails against correct code — which it did, and a
+       check that fails on a clean tree is worse than no check: every
+       mutation then looks caught because the suite was already red. */
+    const code = fp
+      .replace(/\/\*[\s\S]*?\*\//g, "")
+      .replace(/(^|[^:])\/\/.*$/gm, "$1");
+    const reads = (code.match(/CURRENT_BY_PAGE\s*\[/g) || []).length;
+    const guarded = /own\.call\(CURRENT_BY_PAGE,\s*page\)\s*\?\s*CURRENT_BY_PAGE\[page\]\s*:\s*null/.test(code);
+    check("the URL-derived room lookup only reads own properties",
+      guarded && reads === 1, `${reads} read(s), guarded=${guarded}`);
+
+    /* Separately, and for its own sake: 404.html is the one page whose
+       URL a visitor picks, and the one most easily forgotten when the
+       shared chrome changes. It still has to carry a nav. */
+    const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+    const page = await ctx.newPage();
+    const broken = [];
+    for (const p of ["__proto__", "constructor", "toString", "valueOf"]) {
+      const errs = [];
+      page.on("pageerror", (e) => errs.push(e.message));
+      await page.goto(`http://localhost:${port}/${p}`);
+      await page.waitForTimeout(250);
+      const rail = await page.locator(".rail").count();
+      const btn = await page.locator(".plan-btn").count();
+      if (rail !== 1 || btn !== 1 || errs.length) broken.push(`${p}: rail=${rail} btn=${btn} err=${errs.length}`);
+      page.removeAllListeners("pageerror");
+    }
+    check("an unmatched path still gets a working nav", broken.length === 0,
+      broken.length ? broken.join(" | ") : "404 carries the chrome");
+    await ctx.close();
+  }
+
+  // 28. THE CONTACT FORM IS THE ONLY TYPED INPUT ON THE SITE.
+  //      Its action is a mailto:, so "send" means handing a draft to the
+  //      visitor's mail client. The browser's own version of that arrives
+  //      untitled with the body written as `name=…&email=…`, and because
+  //      the form is novalidate — needed so it can style its own errors —
+  //      the native email check is off too. All three are asserted here.
+  {
+    const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+    const page = await ctx.newPage();
+
+    const submit = async (fill) => {
+      let handoff = null;
+      const onConsole = (m) => { if (/external handler/.test(m.text())) handoff = m.text(); };
+      page.on("console", onConsole);
+      await page.goto(url("contact.html"));
+      await page.waitForTimeout(250);
+      if (fill) await fill(page);
+      await page.click("button[type=submit]");
+      await page.waitForTimeout(700);
+      const shown = await page.locator(".form-status").isVisible().catch(() => false);
+      const said = shown ? (await page.locator(".form-status").textContent()).trim() : "";
+      page.removeListener("console", onConsole);
+      return { handoff, shown, said };
+    };
+
+    const empty = await submit(null);
+    check("an empty enquiry is refused, and says so",
+      !empty.handoff && empty.shown, empty.said || "silent");
+
+    const bad = await submit(async (p) => {
+      await p.fill("#name", "Test Person");
+      await p.fill("#email", "not-an-email");
+      await p.selectOption("#type", "employment");
+      await p.fill("#message", "Hello");
+    });
+    check("a malformed address is refused rather than emailed",
+      !bad.handoff && bad.shown, bad.said || "accepted it");
+
+    const good = await submit(async (p) => {
+      await p.fill("#name", "Ada Lovelace");
+      await p.fill("#email", "ada@example.com");
+      await p.selectOption("#type", "brand-web");
+      await p.fill("#message", "Need a brand and a site.");
+    });
+    const draft = good.handoff ? decodeURIComponent(good.handoff) : "";
+    check("a valid enquiry opens a draft", Boolean(good.handoff), good.handoff ? "handed off" : "nothing happened");
+    /* The subject is the difference between an enquiry and something that
+       looks like spam, and the browser's own submission has none. */
+    check("the draft carries a subject line", /subject=\S/.test(draft), draft.slice(0, 80));
+    check("the draft reads as prose, not form encoding",
+      draft.includes("Need a brand and a site.") && !/body=name%3D|body=name=/.test(draft),
+      draft.slice(draft.indexOf("body="), draft.indexOf("body=") + 60));
+    /* And the visitor has to be told they are not finished. */
+    check("the visitor is told they still have to press send",
+      /press send/i.test(good.said), good.said.slice(0, 70));
     await ctx.close();
   }
 
