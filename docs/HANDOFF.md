@@ -15,8 +15,8 @@ corner) and **#9** (the case-study spine, Edward's review, the Cone).
 
 | | |
 |---|---|
-| behaviour checks | 247 |
-| selftest mutations | 45 |
+| behaviour checks | 248 |
+| selftest mutations | 46 |
 | smoke | 26/27 (the missing portrait) |
 | responsive | 27 pages × 11 widths, clean |
 | `dist/` | 297 MB |

@@ -1221,6 +1221,36 @@ const check = (name, pass, detail) => results.push({ name, pass, detail });
   //      a page the hosts serve for ANY unmatched path is whatever the
   //      visitor typed. Unguarded, /__proto__ reads Object.prototype.
   {
+    /* Asserted against the SOURCE, not the rendered page, and the reason
+       is worth writing down because the first version of this check got
+       it wrong. Loading /__proto__ and checking the nav still works
+       passes whether the guard is there or not: an inherited key
+       resolves to Object.prototype or a function, roomById() matches
+       neither, and the page renders exactly as it does when the lookup
+       returns null. The mutation went MISSED, which is the suite doing
+       its job — the check could not fail.
+
+       The hazard is latent rather than absent. It becomes a real bug the
+       moment CURRENT_BY_PAGE gains an entry whose inherited namesake is
+       a string, or `current` is used somewhere that assumes one. So what
+       has to be protected is the guard itself. */
+    const fp = fs.readFileSync(path.join(DIST, "assets/js/floorplan.js"), "utf8");
+    /* Comments first. The block above the lookup explains the bug by
+       quoting `CURRENT_BY_PAGE[page]`, so counting raw occurrences finds
+       two and the check fails against correct code — which it did, and a
+       check that fails on a clean tree is worse than no check: every
+       mutation then looks caught because the suite was already red. */
+    const code = fp
+      .replace(/\/\*[\s\S]*?\*\//g, "")
+      .replace(/(^|[^:])\/\/.*$/gm, "$1");
+    const reads = (code.match(/CURRENT_BY_PAGE\s*\[/g) || []).length;
+    const guarded = /own\.call\(CURRENT_BY_PAGE,\s*page\)\s*\?\s*CURRENT_BY_PAGE\[page\]\s*:\s*null/.test(code);
+    check("the URL-derived room lookup only reads own properties",
+      guarded && reads === 1, `${reads} read(s), guarded=${guarded}`);
+
+    /* Separately, and for its own sake: 404.html is the one page whose
+       URL a visitor picks, and the one most easily forgotten when the
+       shared chrome changes. It still has to carry a nav. */
     const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
     const page = await ctx.newPage();
     const broken = [];
@@ -1234,8 +1264,8 @@ const check = (name, pass, detail) => results.push({ name, pass, detail });
       if (rail !== 1 || btn !== 1 || errs.length) broken.push(`${p}: rail=${rail} btn=${btn} err=${errs.length}`);
       page.removeAllListeners("pageerror");
     }
-    check("a crafted path still gets a working nav", broken.length === 0,
-      broken.length ? broken.join(" | ") : "prototype keys handled");
+    check("an unmatched path still gets a working nav", broken.length === 0,
+      broken.length ? broken.join(" | ") : "404 carries the chrome");
     await ctx.close();
   }
 

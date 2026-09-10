@@ -85,13 +85,24 @@ the attribute. The harness checks the *sequence*, not the markup.
 
 ```bash
 node tools/verify.js      # smoke, cursor, behaviour, links, responsive
-node tools/behaviour.js   # 247 checks, ~60s — the useful one while working
-node tools/selftest.js    # 45 deliberate bugs, proves the checks can fail
+node tools/behaviour.js   # 248 checks, ~60s — the useful one while working
+node tools/selftest.js    # 46 deliberate bugs, proves the checks can fail
 ```
 
 `selftest.js` plants a known bug, asserts the matching check goes red, and
 restores. **A check without a mutation is not evidence.** If you add a check,
 add a mutation.
+
+Two ways that has gone wrong here, both worth recognising:
+
+- **A check that cannot fail.** The mutation reports MISSED. Usually the
+  check asserts something that was never broken — the guard on the
+  URL-derived room lookup has no observable effect on a rendered page, so
+  a check that loaded the page passed either way.
+- **A check that fails on a clean tree.** Far worse, and quieter: every
+  mutation then reports *caught*, because `checkFails` only asks whether
+  the run exited non-zero. Always confirm the baseline is green before
+  believing a selftest tally.
 
 Expect **26/27 smoke** — `about.html`'s missing portrait is pre-existing and
 is Sherjeel's to supply.

@@ -631,11 +631,37 @@ const MUTATIONS = [
        that does not match a file — so this lookup's key is whatever the
        visitor typed. Unguarded, /__proto__ resolves to Object.prototype
        and the page decides it is standing in a room that does not
-       exist. */
+       exist.
+
+       This one went MISSED on its first run, and the reason is worth
+       keeping: the check it was written against loaded /__proto__ and
+       asserted the nav still worked, which it does either way. An
+       inherited key gives roomById() something no room id equals, so the
+       unguarded page renders identically to the guarded one. The hazard
+       is latent — it lands the moment CURRENT_BY_PAGE gains an entry —
+       so the check now protects the guard itself, and this mutation
+       removes it. */
     mutate: (s) => {
       const old = "var current = here || (own.call(CURRENT_BY_PAGE, page) ? CURRENT_BY_PAGE[page] : null) || null;";
       if (!s.includes(old)) throw new Error("guarded lookup not found");
       return s.replace(old, "var current = here || CURRENT_BY_PAGE[page] || null;");
+    },
+  },
+
+  {
+    name: "the 404 page loses the shared chrome",
+    detectedBy: "behaviour.js",
+    scope: [],
+    file: "404.html",
+    /* Every other page's nav is covered by a check that walks the real
+       pages. 404.html is not one of them — it is reached by typing a URL
+       that matches no file — so it is the page that quietly gets left
+       behind when the chrome changes, and the one page whose address a
+       stranger chooses. */
+    mutate: (s) => {
+      const old = '<script src="assets/js/floorplan.js" defer></script>';
+      if (!s.includes(old)) throw new Error("floorplan script tag not found");
+      return s.replace(old, "");
     },
   },
 
